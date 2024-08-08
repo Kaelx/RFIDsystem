@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="container py-5 text-center">
+        <div class="card">
+            <div id="clock"></div>
+            <div id="date"></div>
+        </div>
+    </div>
+
+
+    <h1 class="text-center">Please scan your RFID!</h1>
+    <form id="rfid-form">
+        <input type="text" id="rfid" name="rfid" required autofocus>
+    </form>
+
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        const date = now.toLocaleDateString();
+        document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+        document.getElementById('date').innerText = date;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+
+    $(document).ready(function() {
+        setInterval(function() {
+            $('#rfid').focus();
+        }, 500);
+
+        $('body').mousemove(function() {
+            $('#rfid').focus();
+        });
+
+        $('#rfid').keypress(function(e) {
+            if (e.which == 13) {
+                alert($(this).val());
+            }
+        });
+    });
+</script>
