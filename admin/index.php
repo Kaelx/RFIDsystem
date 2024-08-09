@@ -36,10 +36,6 @@ session_start();
                     </li>
             </div>
         </div>
-
-        <div class="position-fixed top-0 end-0 m-3">
-            <div id="screenIcon" class="fa fa-maximize fa-2x"></div>
-        </div>
     </nav>
 
 

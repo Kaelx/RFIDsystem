@@ -8,42 +8,4 @@
         })
     }
 
-
-    $(document).ready(function() {
-
-        let isFullscreen = false;
-
-        $('#screenIcon').click(function() {
-            if (!isFullscreen) {
-                enterFullscreen(document.documentElement);
-                $(this).removeClass('fa-maximize').addClass('fa-minimize');
-            } else {
-                exitFullscreen();
-                $(this).removeClass('fa-minimize').addClass('fa-maximize');
-            }
-            isFullscreen = !isFullscreen;
-        });
-
-
-
-        $(document).on('fullscreenchange', function() {
-            if (!document.fullscreenElement) {
-                $('#screenIcon').removeClass('fa-minimize').addClass('fa-maximize');
-                isFullscreen = false;
-            } else {
-                $('#screenIcon').removeClass('fa-maximize').addClass('fa-minimize');
-                isFullscreen = true;
-            }
-        });
-
-
-
-        function enterFullscreen(element) {
-            if (element.requestFullscreen) element.requestFullscreen();
-        }
-
-        function exitFullscreen() {
-            if (document.exitFullscreen) document.exitFullscreen();
-        }
-    });
 </script>
