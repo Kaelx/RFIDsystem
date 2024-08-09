@@ -34,6 +34,10 @@ session_start();
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=about">About</a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="ajax.php?action=logout">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
