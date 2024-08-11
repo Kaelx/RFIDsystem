@@ -5,7 +5,6 @@
             var href = $(this).attr('href');
             if (href && href.indexOf('page=' + page) !== -1) {
                 $(this).addClass('active');
-                $(this).closest('.nav-item').addClass('menu-open'); // Open the parent menu if it's a sub-item
             }
         });
     }

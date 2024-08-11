@@ -68,7 +68,7 @@ if (!isset($_SESSION['login_id'])) {
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item menu-open">
+            <li class="nav-item">
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
                 <i class="fa fa-gauge nav-icon"></i>
