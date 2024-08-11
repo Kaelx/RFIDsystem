@@ -29,7 +29,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- Preloader -->
     <!-- <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="../assets/defaults/evsu-logo.png" alt="evsu" width="150">
+      <img class="animation__shake" src="assets/defaults/evsu-logo.png" alt="evsu" width="150">
     </div> -->
 
     <!-- Navbar -->
@@ -83,7 +83,7 @@ if (!isset($_SESSION['login_id'])) {
               </a>
             </li>
 
-            <li class="nav-header">Examples</li>
+            <li class="nav-header">Others</li>
             <li class="nav-item">
               <a href="index.php?page=test" class="nav-link">
                 <i class="nav-icon fa fa-table"></i>
