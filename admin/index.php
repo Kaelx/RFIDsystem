@@ -71,14 +71,14 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-item menu-open">
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
-                <i class="fas fa-table nav-icon"></i>
+                <i class="fa fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
             </li>
             </li>
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
-                <i class="fas fa-table nav-icon"></i>
+                <i class="fa fa-table nav-icon"></i>
                 <p>Scan RFID</p>
               </a>
             </li>
@@ -86,22 +86,22 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">EXAMPLES</li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
+                <i class="nav-icon fa fa-table"></i>
                 <p>
                   Tables
-                  <i class="fas fa-angle-left right"></i>
+                  <i class="fa fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-circle nav-icon"></i>
                     <p>Simple Tables</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-circle nav-icon"></i>
                     <p>DataTables</p>
                   </a>
                 </li>
@@ -109,18 +109,16 @@ if (!isset($_SESSION['login_id'])) {
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon fa fa-calendar-alt"></i>
                 <p>
                   Calendar
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon far fa-image"></i>
-                <p>
-                  Gallery
-                </p>
+              <a href="index.php?page=about" class="nav-link">
+                <i class="nav-icon fa fa-circle-info"></i>
+                <p>About</p>
               </a>
             </li>
           </ul>

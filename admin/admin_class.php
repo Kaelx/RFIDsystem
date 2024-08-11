@@ -25,6 +25,7 @@ class Action
 			unset($_SESSION[$key]);
 		}
         header('location: index');
+        exit();
 	}
 
 
