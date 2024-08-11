@@ -2,7 +2,7 @@
     <form id="login-form">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" autofocus required>
+            <input type="text" class="form-control" id="username" name="username" autocomplete="username" autofocus required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>

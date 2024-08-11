@@ -27,9 +27,9 @@ if (!isset($_SESSION['login_id'])) {
   <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="../assets/defaults/evsu-logo.png" alt="evsu" height="60" width="60">
-    </div>
+    <!-- <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="../assets/defaults/evsu-logo.png" alt="evsu" width="150">
+    </div> -->
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -46,7 +46,7 @@ if (!isset($_SESSION['login_id'])) {
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="index.php?page=setting">Settings</a></li>
             <li><a class="dropdown-item" href="ajax.php?action=logout">Logout</a></li>
           </ul>
         </li>
@@ -78,40 +78,17 @@ if (!isset($_SESSION['login_id'])) {
             </li>
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
-                <i class="fa fa-table nav-icon"></i>
+                <i class="fa fa-qrcode nav-icon"></i>
                 <p>Scan RFID</p>
               </a>
             </li>
 
-            <li class="nav-header">EXAMPLES</li>
+            <li class="nav-header">Examples</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="index.php?page=test" class="nav-link">
                 <i class="nav-icon fa fa-table"></i>
                 <p>
-                  Tables
-                  <i class="fa fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>Simple Tables</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="fa fa-circle nav-icon"></i>
-                    <p>DataTables</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-calendar-alt"></i>
-                <p>
-                  Calendar
+                  Test
                 </p>
               </a>
             </li>
@@ -130,7 +107,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- Main content -->
     <?php
-    $allowed_pages = ['home', 'about', 'rfid'];
+    $allowed_pages = ['home', 'about', 'rfid', 'test','setting'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
