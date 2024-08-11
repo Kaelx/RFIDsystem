@@ -45,7 +45,7 @@ if (!isset($_SESSION['login_id'])) {
       <ul class="navbar-nav ml-auto">
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i><span> <?php echo $_SESSION['login_fname']; ?></span></a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="index.php?page=setting">Settings</a></li>
             <li><a class="dropdown-item" href="ajax.php?action=logout">Logout</a></li>
@@ -69,13 +69,12 @@ if (!isset($_SESSION['login_id'])) {
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
+          <li class="nav-header">Main</li>
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
                 <i class="fa fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
-            </li>
             </li>
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
