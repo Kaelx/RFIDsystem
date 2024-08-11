@@ -105,7 +105,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
 
-    <!-- Main content -->
+    <!-- content -->
     <?php
     $allowed_pages = ['home', 'about', 'rfid', 'test','setting'];
 
