@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if (isset($_SESSION['login_id'])) {
+    header('Location: ../');
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,10 +17,6 @@ session_start();
     <?php
     include 'header.php';
     include 'db_connect.php';
-
-    if (isset($_SESSION['login_id'])) {
-        header('Location: ../');
-    }
 
     ?>
 
