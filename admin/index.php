@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// error_reporting(0);
+
+
 if (!isset($_SESSION['login_id'])) {
   header('Location: ../');
 }
@@ -39,7 +42,7 @@ if (!isset($_SESSION['login_id'])) {
 
       <!-- Navbar-->
       <ul class="navbar-nav ml-auto">
-        
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -127,11 +130,11 @@ if (!isset($_SESSION['login_id'])) {
 
 
 
-
+    <!-- Main content -->
     <?php
-    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+    $allowed_pages = ['home', 'about', 'rfid'];
 
-    $allowed_pages = ['home', 'rfid'];
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
     if (in_array($page, $allowed_pages)) {
       include $page . '.php';
@@ -144,6 +147,11 @@ if (!isset($_SESSION['login_id'])) {
   </div>
 
 
+
+
+
+
+  </div>
 </body>
 
 
