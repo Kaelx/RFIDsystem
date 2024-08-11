@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 
 // error_reporting(0);
 
@@ -132,6 +133,8 @@ if (!isset($_SESSION['login_id'])) {
 
 <?php
 include 'footer.php';
+
+ob_end_flush();
 ?>
 
 
