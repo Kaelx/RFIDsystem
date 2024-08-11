@@ -47,7 +47,7 @@
 
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-warning">
+            <div class="small-box bg-purple">
               <div class="inner">
                 <h3>4</h3>
 
