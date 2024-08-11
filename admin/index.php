@@ -1,74 +1,155 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['login_id'])) {
+  header('Location: ../');
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFID SYSTEM</title>
 
-    <?php
-    include 'header.php';
-
-    if (!isset($_SESSION['login_id'])) {
-        header('Location: ../');
-    }
-    ?>
+  <?php
+  include 'header.php';
+  ?>
 
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=about">About</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="ajax.php?action=logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="../assets/defaults/evsu-logo.png" alt="evsu" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+
+      <!-- Navbar-->
+      <ul class="navbar-nav ml-auto">
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="ajax.php?action=logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+
     </nav>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="" class="brand-link hover">
+        <img src="../assets/defaults/evsu-logo.png" alt="evsu Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">EVSU RFID</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item menu-open">
+            <li class="nav-item">
+              <a href="index.php?page=home" class="nav-link">
+                <i class="fas fa-table nav-icon"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            </li>
+            <li class="nav-item">
+              <a href="index.php?page=rfid" class="nav-link">
+                <i class="fas fa-table nav-icon"></i>
+                <p>Scan RFID</p>
+              </a>
+            </li>
+
+            <li class="nav-header">EXAMPLES</li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Tables
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Simple Tables</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>DataTables</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                  Calendar
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon far fa-image"></i>
+                <p>
+                  Gallery
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
 
 
 
     <?php
-    $page = isset($_GET['page']) ? $_GET['page'] : "home";
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-    $allowed_pages = ['home', 'about'];
+    $allowed_pages = ['home', 'rfid'];
+
     if (in_array($page, $allowed_pages)) {
-        include $page . '.php';
+      include $page . '.php';
     } else {
-        header('Location: index?page=home');
+      header('Location: index.php?page=home');
     }
     ?>
 
+
+  </div>
+
+
 </body>
+
 
 <?php
 include 'footer.php';
 ?>
 
-
-
-<script>
-    window.onload = function() {
-        start_load();
-
-        end_load();
-    };
-</script>
 
 </html>
