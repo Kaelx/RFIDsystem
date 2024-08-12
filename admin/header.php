@@ -14,8 +14,13 @@
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
-
-
+<!-- google font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+<!-- datatables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css">
+<script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js"></script>
+
+
+<!-- custom css -->
 <link rel="stylesheet" href="css/style.css">

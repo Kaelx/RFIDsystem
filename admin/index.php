@@ -59,7 +59,7 @@ if (!isset($_SESSION['login_id'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
-        <img src="../assets/defaults/evsu-logo.png" alt="evsu Logo" class="brand-image img-circle elevation-3">
+        <img src="assets/defaults/evsu-logo.png" alt="evsu Logo" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">EVSU RFID</span>
       </a>
 
@@ -69,13 +69,21 @@ if (!isset($_SESSION['login_id'])) {
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">Main</li>
+            <li class="nav-header">Main</li>
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
                 <i class="fa fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=data" class="nav-link">
+                <i class="fa fa-id-card nav-icon"></i>
+                <p>Register</p>
+              </a>
+            </li>
+
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
                 <i class="fa fa-qrcode nav-icon"></i>
@@ -107,7 +115,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'about', 'rfid', 'test','setting'];
+    $allowed_pages = ['home', 'about', 'rfid', 'test', 'setting', 'register', 'data'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

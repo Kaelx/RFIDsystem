@@ -1,5 +1,5 @@
     <h1>Login</h1>
-    <form id="login-form">
+    <form action="#" id="login-form">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" autocomplete="username" autofocus required>
