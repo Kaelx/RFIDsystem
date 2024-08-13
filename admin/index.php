@@ -75,38 +75,40 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">Main</li>
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
-                <i class="fa fa-gauge nav-icon"></i>
+              <i class="fa-solid fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
             </li>
 
             <li class="nav-item">
               <a href="index.php?page=data" class="nav-link">
-                <i class="fa fa-id-card nav-icon"></i>
+                <i class="fa-solid fa-id-card nav-icon"></i>
                 <p>Register</p>
               </a>
             </li>
 
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
-                <i class="fa fa-qrcode nav-icon"></i>
+                <i class="fa-solid fa-qrcode nav-icon"></i>
                 <p>Scan RFID</p>
               </a>
             </li>
 
             <li class="nav-header">Others</li>
             <li class="nav-item">
-              <a href="index.php?page=test" class="nav-link">
-                <i class="nav-icon fa fa-table"></i>
+              <a href="index.php?page=category" class="nav-link">
+              <i class="fa-solid fa-bars-progress nav-icon"></i>
                 <p>
-                  Test
+                  Manage Category
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="index.php?page=about" class="nav-link">
-                <i class="nav-icon fa fa-circle-info"></i>
-                <p>About</p>
+              <a href="index.php?page=accountmanage" class="nav-link">
+              <i class="fa-solid fa-users nav-icon"></i>
+                <p>
+                  Manage Account
+                </p>
               </a>
             </li>
           </ul>
@@ -118,7 +120,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'about', 'rfid', 'test', 'setting', 'register', 'data'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data','accountmanage'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

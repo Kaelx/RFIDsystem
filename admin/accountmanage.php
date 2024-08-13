@@ -1,6 +1,6 @@
 <div class="content-wrapper">
     <div class="container">'
-        <h1>Test page</h1>
-        <p>this is test page.</p>
+        <h1>Account page</h1>
+        <p>this is account page.</p>
     </div>
 </div>

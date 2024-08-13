@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-hover compact">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -50,5 +50,7 @@
 </div>
 
 <script>
-    $('table').dataTable();
+    $('table').DataTable({
+        ordering:  false
+    });
 </script>
