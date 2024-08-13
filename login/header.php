@@ -14,9 +14,5 @@
 <!-- google font CDN -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-<!-- datatables CDN -->
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
-<script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
-
 <!-- custom css -->
 <link rel="stylesheet" href="../css/style.css">
