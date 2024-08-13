@@ -44,13 +44,16 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Navbar-->
       <ul class="navbar-nav ml-auto">
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i><span> <?php echo $_SESSION['login_fname']; ?></span></a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="index.php?page=setting">Settings</a></li>
-            <li><a class="dropdown-item" href="ajax.php?action=logout">Logout</a></li>
-          </ul>
-        </li>
+      <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+    <li><a class="dropdown-item " href="index.php?page=setting">Settings</a></li>
+    <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
+  </ul>
+</li>
+
       </ul>
 
     </nav>
