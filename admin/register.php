@@ -44,6 +44,9 @@
                     <label for="program">School Program</label>
                     <input type="text" class="form-control" id="program" name="program">
                 </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="index.php?page=data" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </section>

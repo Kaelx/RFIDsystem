@@ -72,7 +72,9 @@ if (!isset($_SESSION['login_id'])) {
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
             <li class="nav-header">Main</li>
+
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
               <i class="fa-solid fa-gauge nav-icon"></i>
@@ -95,6 +97,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <li class="nav-header">Others</li>
+            
             <li class="nav-item">
               <a href="index.php?page=category" class="nav-link">
               <i class="fa-solid fa-bars-progress nav-icon"></i>
@@ -103,6 +106,7 @@ if (!isset($_SESSION['login_id'])) {
                 </p>
               </a>
             </li>
+
             <li class="nav-item">
               <a href="index.php?page=accountmanage" class="nav-link">
               <i class="fa-solid fa-users nav-icon"></i>
@@ -111,6 +115,7 @@ if (!isset($_SESSION['login_id'])) {
                 </p>
               </a>
             </li>
+
           </ul>
         </nav>
       </div>

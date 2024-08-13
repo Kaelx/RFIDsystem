@@ -5,8 +5,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <!-- button -->
-                    <a href="index.php?page=register" class="btn btn-primary">Register</a>
-                    <button type="button" class="btn btn-secondary">Import</button>
+                    <a href="index.php?page=register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                    <button type="button" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</button>
                 </div>
             </div>
         </div>
