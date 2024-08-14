@@ -123,7 +123,7 @@ if (!isset($_SESSION['login_id'])) {
     </aside>
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem;">
+    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
@@ -165,6 +165,8 @@ if (!isset($_SESSION['login_id'])) {
         </div>
       </div>
     </div>
+
+
     <div class="modal fade" id="uni_modal" role='dialog'>
       <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -180,6 +182,7 @@ if (!isset($_SESSION['login_id'])) {
         </div>
       </div>
     </div>
+    <!-- end modal -->
 
 
 

@@ -1,17 +1,31 @@
 <div class="content-wrapper">
-    <div class="container py-5 text-center">
-        <div class="card">
-            <div id="clock"></div>
-            <div id="date"></div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                </div>
+            </div>
         </div>
     </div>
 
 
-<h1 class="text-center">Please scan your RFID!</h1>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <center>
+            <div class="card">
+                <div id="clock"></div>
+                <div id="date"></div>
+            </div>
+        </center>
+        <h1 class="text-center">Please scan your RFID!</h1>
 
 <div id="rfid-form">
     <input type="text" id="rfid" name="rfid" required autofocus>
 </div>
+        </div>
+    </section>
 
 </div>
 

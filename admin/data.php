@@ -19,23 +19,25 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover compact">
+                        <table class="table table-hover table-bordered compact">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Department</th>
-                                    <th>Program</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Student ID</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Department</th>
+                                    <th class="text-center">Program</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>2021-30174</td>
                                     <td>natnat gege</td>
                                     <td>Computer studies</td>
                                     <td>Informatioon Tech</td>
                                     <td>natnat@example.com</td>
-                                    <td>
+                                    <td class="text-center">
                                         <button class="btn btn-success"> View</button>
                                     </td>
                                 </tr>

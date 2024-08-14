@@ -2,9 +2,8 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Categories</h1>
                 </div>
             </div>
         </div>
@@ -48,11 +47,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover compact">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th class="text-center">Name</th>
+                                                <th class="text-center">People</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -68,8 +67,8 @@
                                                         <?php echo $row['cat_name'] ?>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-sm btn-primary edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['cat_name'] ?>">Edit</button>
-                                                        <button class="btn btn-sm btn-danger delete_cat" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+                                                        <button class="btn btn-sm btn-secondary col-sm-3 edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['cat_name'] ?>">Edit</button>
+                                                        <button class="btn btn-sm btn-danger col-sm-3 delete_cat" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
@@ -121,11 +120,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover compact">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Department</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -141,8 +140,8 @@
                                                         <?php echo $row['dept_name'] ?>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-sm btn-primary edit_cat2 " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>">Edit</button>
-                                                        <button class="btn btn-sm btn-danger delete_cat2" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+                                                        <button class="btn btn-sm btn-secondary col-sm-3 edit_cat2 " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>">Edit</button>
+                                                        <button class="btn btn-sm btn-danger col-sm-3 delete_cat2" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
@@ -165,8 +164,9 @@
 
 <script>
     $('table').DataTable({
-        searching: false,
-        ordering: false
+        ordering: false,
+        paging: false,
+        scrollY: 225
     })
 
 
@@ -186,13 +186,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'success')
+                    alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.reload()
-                    }, 1000)
+                    }, 1500)
 
                 }else{
                     alert_toast("An error occured", 'danger')
@@ -217,13 +217,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'success')
+                    alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.reload()
-                    }, 1000)
+                    }, 1500)
 
                 }else{
                     alert_toast("An error occured", 'danger')
@@ -253,7 +253,7 @@
     })
 
     $('.delete_cat2').click(function() {
-        _conf("Are you sure to delete this category?", "delete_cat2", [$(this).attr('data-id')])
+        _conf("Are you sure to delete this department?", "delete_cat2", [$(this).attr('data-id')])
     })
 
 
@@ -264,10 +264,10 @@
 			data:{id:$id},
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
+					alert_toast("Data successfully deleted",'warning')
 					setTimeout(function(){
 						location.reload()
-					},1000)
+					},1500)
 
 				}
 			}
@@ -281,10 +281,10 @@
 			data:{id:$id},
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
+					alert_toast("Data successfully deleted",'warning')
 					setTimeout(function(){
 						location.reload()
-					},1000)
+					},1500)
 
 				}
 			}
