@@ -1,8 +1,10 @@
 <?php
 session_start();
-ob_start();
+// ob_start();
 
 // error_reporting(0);
+
+include 'db_connect.php';
 
 
 if (!isset($_SESSION['login_id'])) {
@@ -44,18 +46,17 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Navbar-->
       <ul class="navbar-nav ml-auto">
 
-      <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-    <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
-  </a>
-  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item " href="index.php?page=setting">Settings</a></li>
-    <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
-  </ul>
-</li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item " href="index.php?page=setting">Settings</a></li>
+            <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
+          </ul>
+        </li>
 
       </ul>
-
     </nav>
 
     <!-- Main Sidebar Container -->
@@ -77,7 +78,7 @@ if (!isset($_SESSION['login_id'])) {
 
             <li class="nav-item">
               <a href="index.php?page=home" class="nav-link">
-              <i class="fa-solid fa-gauge nav-icon"></i>
+                <i class="fa-solid fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
             </li>
@@ -97,10 +98,10 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <li class="nav-header">Others</li>
-            
+
             <li class="nav-item">
               <a href="index.php?page=category" class="nav-link">
-              <i class="fa-solid fa-bars-progress nav-icon"></i>
+                <i class="fa-solid fa-bars-progress nav-icon"></i>
                 <p>
                   Manage Category
                 </p>
@@ -109,7 +110,7 @@ if (!isset($_SESSION['login_id'])) {
 
             <li class="nav-item">
               <a href="index.php?page=accountmanage" class="nav-link">
-              <i class="fa-solid fa-users nav-icon"></i>
+                <i class="fa-solid fa-users nav-icon"></i>
                 <p>
                   Manage Account
                 </p>
@@ -121,11 +122,20 @@ if (!isset($_SESSION['login_id'])) {
       </div>
     </aside>
 
+    <!-- Toast Alert -->
+    <div class="position-fixed" style="top: 100; right: 0; padding: 1rem;">
+      <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body text-white">
+        </div>
+      </div>
+    </div>
+
+
 
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data','accountmanage'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -135,6 +145,42 @@ if (!isset($_SESSION['login_id'])) {
       header('Location: index.php?page=home');
     }
     ?>
+
+
+
+    <!-- modal -->
+    <div class="modal fade" id="confirm_modal" role='dialog'>
+      <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+          </div>
+          <div class="modal-body">
+            <div id="delete_content"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="uni_modal" role='dialog'>
+      <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
   </div>
@@ -151,7 +197,7 @@ if (!isset($_SESSION['login_id'])) {
 <?php
 include 'footer.php';
 
-ob_end_flush();
+// ob_end_flush();
 ?>
 
 

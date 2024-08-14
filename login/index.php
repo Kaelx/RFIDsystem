@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include 'db_connect.php';
+
 if (isset($_SESSION['login_id'])) {
     header('Location: ../');
 }
@@ -50,30 +52,6 @@ include 'footer.php';
 
         end_load();
     };
-
-    $(document).ready(function() {
-        $('#login-form').submit(function(e) {
-            e.preventDefault()
-            start_load()
-            $.ajax({
-                url: 'ajax.php?action=login',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function(resp) {
-                    end_load()
-                    if (resp == 1) {
-                        location.href = 'index.php?page=home';
-                    } else if (resp == 2) {
-                        alert('Wrong password.');
-                    } else if (resp == 3) {
-                        alert('No account found.');
-                    } else {
-                        alert('An error occured.')
-                    }
-                }
-            })
-        })
-    })
 </script>
 
 </html>

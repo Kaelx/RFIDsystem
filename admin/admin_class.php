@@ -29,6 +29,26 @@ class Action
 	}
 
 
+	function save_category(){
+		extract($_POST);
+		$data = " cat_name = '$name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO category set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE category set ".$data." where id=".$id);
+		}
+		if($save)
+			return 1;
+	}
+
+
+	function delete_category(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM category where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
 
 
 
