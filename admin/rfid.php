@@ -13,17 +13,17 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-        <center>
-            <div class="card">
-                <div id="clock"></div>
-                <div id="date"></div>
-            </div>
-        </center>
-        <h1 class="text-center">Please scan your RFID!</h1>
+            <center>
+                <div class="card">
+                    <div id="clock"></div>
+                    <div id="date"></div>
+                </div>
+            </center>
+            <h1 class="text-center">Please scan your RFID!</h1>
 
-<div id="rfid-form">
-    <input type="text" id="rfid" name="rfid" required autofocus>
-</div>
+            <div id="rfid-form">
+                <input type="text" id="rfid" name="rfid" required autofocus>
+            </div>
         </div>
     </section>
 
@@ -59,7 +59,9 @@
 
         $('#rfid').keypress(function(e) {
             if (e.which == 13) {
-                alert($(this).val());
+                const currentTime = document.getElementById('clock').innerText;
+                const currentDate = document.getElementById('date').innerText;
+                alert(`RFID: ${$(this).val()}\nTime: ${currentTime}\nDate: ${currentDate}`);
                 location.reload();
             }
         });
