@@ -1,6 +1,6 @@
 <?php
 session_start();
-// ob_start();
+ob_start();
 
 // error_reporting(0);
 
@@ -123,9 +123,9 @@ if (!isset($_SESSION['login_id'])) {
     </aside>
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top: 100; right: 0; padding: 1rem;">
+    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body text-white">
+        <div class="toast-body text-white" style="font-size:18px;">
         </div>
       </div>
     </div>
@@ -196,8 +196,6 @@ if (!isset($_SESSION['login_id'])) {
 
 <?php
 include 'footer.php';
-
-// ob_end_flush();
 ?>
 
 
