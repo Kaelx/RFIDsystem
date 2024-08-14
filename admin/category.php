@@ -121,7 +121,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
@@ -138,11 +138,11 @@
                                                 <tr>
                                                     <td class="text-center"><?php echo $i++ ?></td>
                                                     <td class="">
-                                                        <?php echo $row['name'] ?>
+                                                        <?php echo $row['dept_name'] ?>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-sm btn-primary edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>">Edit</button>
-                                                        <button class="btn btn-sm btn-danger delete_cat" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+                                                        <button class="btn btn-sm btn-primary edit_cat2 " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>">Edit</button>
+                                                        <button class="btn btn-sm btn-danger delete_cat2" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
                                                     </td>
                                                 </tr>
                                             <?php endwhile; ?>
@@ -201,9 +201,47 @@
         })
     })
 
+    $('#set2-category').submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+            url: 'ajax.php?action=save_category2',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully added", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1000)
+
+                } else if (resp == 2) {
+                    alert_toast("Data successfully updated", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1000)
+
+                }else{
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    })
+
 
 	$('.edit_cat').click(function(){
 		var cat = $('#set-category')
+		cat.get(0).reset()
+		cat.find("[name='id']").val($(this).attr('data-id'))
+		cat.find("[name='name']").val($(this).attr('data-name'))
+	})
+
+    $('.edit_cat2').click(function(){
+		var cat = $('#set2-category')
 		cat.get(0).reset()
 		cat.find("[name='id']").val($(this).attr('data-id'))
 		cat.find("[name='name']").val($(this).attr('data-name'))
@@ -214,10 +252,31 @@
         _conf("Are you sure to delete this category?", "delete_cat", [$(this).attr('data-id')])
     })
 
+    $('.delete_cat2').click(function() {
+        _conf("Are you sure to delete this category?", "delete_cat2", [$(this).attr('data-id')])
+    })
+
 
 	function delete_cat($id){
 		$.ajax({
 			url:'ajax.php?action=delete_category',
+			method:'POST',
+			data:{id:$id},
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully deleted",'success')
+					setTimeout(function(){
+						location.reload()
+					},1000)
+
+				}
+			}
+		})
+	}
+
+    function delete_cat2($id){
+		$.ajax({
+			url:'ajax.php?action=delete_category2',
 			method:'POST',
 			data:{id:$id},
 			success:function(resp){

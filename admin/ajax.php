@@ -17,8 +17,21 @@ if($action == "save_category"){
 		echo $save;
 }
 
+
+if($action == "save_category2"){
+	$save = $crud->save_category2();
+	if($save)
+		echo $save;
+}
+
 if($action == "delete_category"){
 	$save = $crud->delete_category();
+	if($save)
+		echo $save;
+}
+
+if($action == "delete_category2"){
+	$save = $crud->delete_category2();
 	if($save)
 		echo $save;
 }

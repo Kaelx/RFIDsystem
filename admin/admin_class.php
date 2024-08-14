@@ -34,17 +34,40 @@ class Action
 		$data = " cat_name = '$name' ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO category set ".$data);
+			if($save)
+			return 1;
 		}else{
 			$save = $this->db->query("UPDATE category set ".$data." where id=".$id);
+			if($save)
+			return 2;
 		}
-		if($save)
+	}
+
+	function save_category2(){
+		extract($_POST);
+		$data = " dept_name = '$name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO department set ".$data);
+			if($save)
 			return 1;
+		}else{
+			$save = $this->db->query("UPDATE department set ".$data." where id=".$id);
+			if($save)
+			return 2;
+		}
 	}
 
 
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+	function delete_category2(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM department where id = ".$id);
 		if($delete)
 			return 1;
 	}
