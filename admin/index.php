@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 
-// error_reporting(0);
+// error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -211,6 +211,8 @@ if (!isset($_SESSION['login_id'])) {
 
 <?php
 include 'footer.php';
+
+// ob_end_flush();
 ?>
 
 

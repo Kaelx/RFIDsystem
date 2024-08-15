@@ -15,7 +15,7 @@
         <div class="container-fluid">
 
             <div class="card" id="card-type-of-people">
-                <div class="card-header">
+                <div class="card-header text-bold">
                     Type of People
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -95,7 +95,7 @@
 
 
             <div class="card" id="card-school-department">
-                <div class="card-header">
+                <div class="card-header text-bold">
                     School Department
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -173,7 +173,7 @@
 
 
             <div class="card" id="card-school-program">
-                <div class="card-header">
+                <div class="card-header text-bold">
                     School Program
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
