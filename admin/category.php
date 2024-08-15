@@ -57,7 +57,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
-                                                        <th class="text-center">People</th>
+                                                        <th class="text-center w-50">People</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -136,7 +136,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
-                                                        <th class="text-center">Department</th>
+                                                        <th class="text-center w-50">Department</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -214,7 +214,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
-                                                        <th class="text-center">Program</th>
+                                                        <th class="text-center w-50">Program</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
