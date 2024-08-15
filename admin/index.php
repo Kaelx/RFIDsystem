@@ -26,7 +26,7 @@ if (!isset($_SESSION['login_id'])) {
 
 </head>
 
-<body class="hold-transition">
+<body class="hold-transition layout-fixed">
   <div class="wrapper">
 
     <!-- Preloader -->
@@ -35,7 +35,7 @@ if (!isset($_SESSION['login_id'])) {
     </div> -->
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">

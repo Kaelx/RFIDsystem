@@ -11,3 +11,8 @@
 .sidebar .nav-header{
     color: orange;
 }
+
+
+body, .content-wrapper {
+    padding-top: 25px;
+}
