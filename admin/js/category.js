@@ -205,11 +205,13 @@ $('.btn-tool').on('click', function () {
     var card = $(this).closest('.card');
     var cardId = card.attr('id');
     var isCollapsed = card.hasClass('collapsed-card');
-    location.reload();
 
     if (isCollapsed) {
         localStorage.setItem(cardId, 'false');
         $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
+        setTimeout(function () {
+            location.reload();
+        }, 450);
     } else {
         localStorage.setItem(cardId, 'true');
         $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
