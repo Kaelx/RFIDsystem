@@ -20,19 +20,19 @@
                 <input type="hidden" name="id">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" name="fname" required>
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" name="fname" id="fname" required>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" name="lname" required>
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" name="lname" id="lname" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>Type</label>
-                        <select name="type_id" class="form-control" required>
+                        <label for="type_id">Type</label>
+                        <select class="form-control" name="type_id" id="type_id" required>
                             <option value="" selected disabled>-- Select Role --</option>
                             <?php
                             $type = $conn->query("SELECT * FROM category order by id asc ");
@@ -43,20 +43,20 @@
                         </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>Student ID</label>
-                        <input type="text" class="form-control" name="studentid" required>
+                        <label for="studentid">Student/Employee ID</label>
+                        <input type="text" class="form-control" name="studentid" id="studentid" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label >Email</label>
-                    <input type="email" class="form-control" name="email" autocomplete="email" required>
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" autocomplete="email" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label>School Department</label>
-                        <select name="dept_id" class="form-control" required>
+                        <label for="dept_id">School Department</label>
+                        <select class="form-control" name="dept_id" id="dept_id" required>
                             <option value="" selected disabled>-- Select Department --</option>
                             <?php
                             $department = $conn->query("SELECT * FROM department order by id asc ");
@@ -68,8 +68,8 @@
                         </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>School Program</label>
-                        <select name="prog_id" class="form-control" required>
+                        <label for="prog_id">School Program</label>
+                        <select class="form-control"  name="prog_id" id="prog_id" required>
                             <option value="" selected disabled>-- Select Program --</option>
                             <?php
                             $program = $conn->query("SELECT * FROM program order by id asc ");
@@ -83,8 +83,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label>RFID</label>
-                    <input type="text" class="form-control" name="rfid" required>
+                    <label for="rfid">RFID</label>
+                    <input type="text" class="form-control" name="rfid" id="rfid" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>

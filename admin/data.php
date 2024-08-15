@@ -31,17 +31,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2021-30174</td>
-                                    <td>natnat gege</td>
-                                    <td>Computer studies</td>
-                                    <td>Informatioon Tech</td>
-                                    <td>natnat@example.com</td>
-                                    <td class="text-center">
-                                        <button class="btn btn-success"> View</button>
-                                    </td>
-                                </tr>
+                                <?php
+                                $i = 1;
+                                // Modify the SQL query with appropriate JOIN conditions
+                                $cats = $conn->query("SELECT m.*, d.*, p.* FROM member m JOIN department d ON m.dept_id = d.id JOIN program p ON m.prog_id = p.id ORDER BY m.id ASC");
+                                while ($row = $cats->fetch_assoc()):
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['studentid']; ?></td>
+                                        <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td><?php echo $row['dept_name']; ?></td>
+                                        <td><?php echo $row['prog_name']; ?></td>
+                                        <td><?php echo $row['email']; ?></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-success"> View</button>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -53,6 +61,6 @@
 
 <script>
     $('table').DataTable({
-        ordering:  false
+        ordering: false
     });
 </script>

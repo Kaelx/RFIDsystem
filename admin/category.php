@@ -34,7 +34,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" required>
+                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
@@ -113,7 +113,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" required>
+                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
@@ -191,7 +191,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" required>
+                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
