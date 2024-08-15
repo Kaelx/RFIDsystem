@@ -95,6 +95,32 @@ class Action
 	}
 
 
+	// function register(){
+	// 	extract($_POST);
+	// 	$data = " fname = '$fname' ";
+	// 	$data .= ", lname = '$lname' ";
+	// 	$data .= ", type_id = '$type_id' ";
+	// 	$data .= ", studentid = '$studentid' ";
+	// 	$data .= ", email = '$email' ";
+	// 	$data .= ", dept_id = '$dept_id' ";
+	// 	$data .= ", prog_id = '$prog_id' ";        
+	// 	$data .= ", rfid = '$rfid' ";
+		
+	// 	if(empty($id)){
+	// 		$save = $this->db->query("INSERT INTO member set ".$data);
+	// 		if($save){
+	// 			return 1;
+	// 		}else{
+	// 			return 3;
+	// 		}
+
+	// 	}else{
+	// 		$save = $this->db->query("UPDATE member set ".$data." where id=".$id);
+	// 		if($save)
+	// 		return 2;
+	// 	}
+	// }
+	
 	function register(){
 		extract($_POST);
 		$data = " fname = '$fname' ";
@@ -103,18 +129,16 @@ class Action
 		$data .= ", studentid = '$studentid' ";
 		$data .= ", email = '$email' ";
 		$data .= ", dept_id = '$dept_id' ";
-		$data .= ", prog_id = '$prog_id' ";        
+		$data .= ", prog_id = '$prog_id' ";
 		$data .= ", rfid = '$rfid' ";
-		
+
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO member set ".$data);
-			if($save)
-			return 1;
 		}else{
 			$save = $this->db->query("UPDATE member set ".$data." where id=".$id);
-			if($save)
-			return 2;
 		}
+		if($save)
+			return 1;
 	}
 
 

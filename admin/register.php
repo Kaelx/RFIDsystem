@@ -14,22 +14,25 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+
+        
             <form action="#" id="register">
+                <input type="hidden" name="id">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" id="fname" name="fname" required>
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name="fname" required>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" id="lname" name="lname" required>
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="lname" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="type_id">Type</label>
-                        <select name="type_id" id="type_id" class="form-control" required>
+                        <label>Type</label>
+                        <select name="type_id" class="form-control" required>
                             <option value="" selected disabled>-- Select Role --</option>
                             <?php
                             $type = $conn->query("SELECT * FROM category order by id asc ");
@@ -40,20 +43,20 @@
                         </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="studentid">Student ID</label>
-                        <input type="text" class="form-control" name="studentid" id="studentid" required>
+                        <label>Student ID</label>
+                        <input type="text" class="form-control" name="studentid" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
+                    <label >Email</label>
+                    <input type="email" class="form-control" name="email" autocomplete="email" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="dept_id">School Department</label>
-                        <select name="dept_id"  id="dept_id" class="form-control" required>
+                        <label>School Department</label>
+                        <select name="dept_id" class="form-control" required>
                             <option value="" selected disabled>-- Select Department --</option>
                             <?php
                             $department = $conn->query("SELECT * FROM department order by id asc ");
@@ -65,8 +68,8 @@
                         </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="prog_id">School Program</label>
-                        <select name="prog_id"  id="prog_id"  class="form-control" required>
+                        <label>School Program</label>
+                        <select name="prog_id" class="form-control" required>
                             <option value="" selected disabled>-- Select Program --</option>
                             <?php
                             $program = $conn->query("SELECT * FROM program order by id asc ");
@@ -80,8 +83,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="rfid">RFID</label>
-                    <input type="text" class="form-control" id="rfid" name="rfid" required>
+                    <label>RFID</label>
+                    <input type="text" class="form-control" name="rfid" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -97,31 +100,31 @@
     $('#register').submit(function(e) {
         e.preventDefault()
 
-        $.ajax({
-            url: 'ajax.php?action=save_register',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            type: 'POST',
-            success: function(resp) {
-                if (resp == 1) {
-                    alert_toast("Data successfully added", 'success')
-                    setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+		$.ajax({
+			url: 'ajax.php?action=register',
+			data: new FormData($(this)[0]),
+			cache: false,
+			contentType: false,
+			processData: false,
+			method: 'POST',
+			type: 'POST',
+			success: function(resp) {
+				if (resp == 1) {
+					alert_toast("Data successfully added", 'success')
+					setTimeout(function() {
+						location.reload()
+					}, 1500)
 
-                } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'info')
-                    setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+				} else if (resp == 2) {
+					alert_toast("Data successfully updated", 'success')
+					setTimeout(function() {
+						location.reload()
+					}, 1500)
 
-                }else{
+				}else{
                     alert_toast("An error occured", 'danger')
                 }
-            }
-        })
+			}
+		})
     })
 </script>
