@@ -58,6 +58,21 @@ class Action
 	}
 
 
+	function save_category3(){
+		extract($_POST);
+		$data = " prog_name = '$name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO program set ".$data);
+			if($save)
+			return 1;
+		}else{
+			$save = $this->db->query("UPDATE program set ".$data." where id=".$id);
+			if($save)
+			return 2;
+		}
+	}
+
+
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category where id = ".$id);
@@ -72,6 +87,12 @@ class Action
 			return 1;
 	}
 
+	function delete_category3(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM program where id = ".$id);
+		if($delete)
+			return 1;
+	}
 
 
 

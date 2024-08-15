@@ -12,6 +12,28 @@
 
 
 
+    // Check the state of the sidebar from localStorage
+    if (localStorage.getItem('sidebarState') === 'collapsed') {
+        // Trigger the template's pushmenu toggle if sidebar was collapsed
+        $('body').addClass('sidebar-collapse'); // Ensure the body has the correct class
+    }
+
+    // Handle sidebar toggle click
+    $('[data-widget="pushmenu"]').on('click', function() {
+        var isCollapsed = $('body').hasClass('sidebar-collapse'); // Check the current state
+
+        if (isCollapsed) {
+            // Sidebar is collapsed, so it's being expanded now
+            localStorage.setItem('sidebarState', 'expanded');
+        } else {
+            // Sidebar is expanded, so it's being collapsed now
+            localStorage.setItem('sidebarState', 'collapsed');
+        }
+    });
+
+
+
+
     window._conf = function($msg = '', $func = '', $params = []) {
         $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
         $('#confirm_modal .modal-body').html($msg)
