@@ -49,7 +49,6 @@ if($action == "delete_category3"){
 }
 
 
-
 if($action == "register"){
 	$save = $crud->register();
 	if($save)

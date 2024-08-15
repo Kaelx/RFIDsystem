@@ -135,7 +135,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
