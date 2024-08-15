@@ -26,7 +26,7 @@ if (!isset($_SESSION['login_id'])) {
 
 </head>
 
-<body>
+<body class="hold-transition">
   <div class="wrapper">
 
     <!-- Preloader -->
