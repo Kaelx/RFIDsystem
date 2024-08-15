@@ -44,7 +44,7 @@
                                         <td><?php echo $row['prog_name']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-success"> View</button>
+                                            <button class="btn btn-success btn-sm"> View</button>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
