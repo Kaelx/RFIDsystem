@@ -96,6 +96,12 @@ if (!isset($_SESSION['login_id'])) {
                 <p>Scan RFID</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="index.php?page=entrylogs" class="nav-link">
+              <i class="fa-solid fa-clipboard-user nav-icon"></i>
+                <p>Records</p>
+              </a>
+            </li>
 
             <li class="nav-header">Others</li>
 
@@ -135,7 +141,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view', 'entrylogs'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

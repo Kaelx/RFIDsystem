@@ -53,6 +53,37 @@
 </div>
 
 <script>
+    let idleTimer;
+    let idleState = false;
+    const idleWait = 5000;
+
+    function resetIdleTimer() {
+        clearTimeout(idleTimer);
+        if (idleState) {
+            idleState = false;
+        }
+        idleTimer = setTimeout(function() {
+            idleState = true;
+
+            $('#fname').val("");
+            $('#lname').val("");
+            $('#type').val("");
+            $('#department').val("");
+            $('#program').val("");
+            $('#profile-img').attr('src', 'assets/img/' + 'AdminLogo.png');
+            $('#rfid').val("");
+        }, idleWait);
+    }
+
+    $(document).on('mousemove click keypress scroll', resetIdleTimer);
+
+    $(document).ready(function() {
+        resetIdleTimer();
+    });
+
+
+
+
     function updateClock() {
         const now = new Date();
         let hours = now.getHours();
@@ -99,12 +130,8 @@
                         $('#department').val(data.dept_name);
                         $('#program').val(data.prog_name);
                         $('#profile-img').attr('src', 'assets/img/' + data.img_path);
-
                         $('#rfid').val("");
 
-                        setTimeout(function() {
-                            location.reload()
-                        }, 10000)
                     } else {
                         $('#fname').val("Unknown");
                         $('#lname').val("Unknown");
@@ -114,9 +141,6 @@
                         $('#profile-img').attr('src', 'assets/img/' + '23959955.jpg');
                         $('#rfid').val("");
 
-                        setTimeout(function() {
-                            location.reload()
-                        }, 10000)
                     }
                 }
             });

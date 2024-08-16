@@ -1,12 +1,12 @@
 /*--------------------------------------------------------------
 # CSS
 --------------------------------------------------------------*/
-/* #rfid-form {
+#rfid-form {
     position: absolute;
     left: -9999px;
     width: 0;
     opacity: 0;
-} */
+}
 
 .sidebar .nav-header{
     color: orange;

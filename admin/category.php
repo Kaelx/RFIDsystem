@@ -16,7 +16,7 @@
 
             <div class="card" id="card-type-of-people">
                 <div class="card-header text-bold">
-                    Type of People
+                    Role Type
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
