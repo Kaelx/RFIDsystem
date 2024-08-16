@@ -1,13 +1,4 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- RFID FORM -->
     <form action="" id="rfid-form">
@@ -17,22 +8,48 @@
     </form>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content py-5">
         <div class="container-fluid">
-            <div>
-                <div id="clock"></div>
-                <div id="date"></div>
+
+            <!-- Clock and Date Display -->
+            <center>
+                <div class="mb-4">
+                    <div id="clock" class="h3 text-primary font-weight-bold"></div>
+                    <div id="date" class="h5"></div>
+                </div>
+            </center>
+
+            <!-- User Information Display -->
+            <div class="card shadow m-5">
+                <div class="card-body">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-3 mr-5 text-center">
+                            <img id="profile-img" src="assets/img/AdminLogo.png" class="img-fluid mb-3" alt="Avatar" style="object-fit: cover; max-width: 130px"></img>
+                        </div>
+                        <div class="col-md-5">
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                <input type="text" id="fname" class="form-control" placeholder="First Name">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                <input type="text" id="lname" class="form-control" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <input type="text" id="type" class="form-control mb-2" placeholder="Role">
+                            <input type="text" id="department" class="form-control mb-2" placeholder="Department">
+                            <input type="text" id="program" class="form-control mb-2" placeholder="Program/Course">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <img id="profile-img" src="assets/img/AdminLogo.png" alt="Avatar">
-                <div id="fname"></div>
-                <div id="lname"></div>
-                <div id="type"></div>
-                <div id="department"></div>
-                <div id="program"></div>
-            </div>
+
         </div>
-    </section>
+
+
+</div>
+</section>
+
 </div>
 
 <script>
@@ -75,11 +92,11 @@
                 success: function(resp) {
                     let data = JSON.parse(resp);
                     if (data.success) {
-                        $('#fname').text(data.fname);
-                        $('#lname').text(data.lname);
-                        $('#type').text(data.cat_name);
-                        $('#department').text(data.dept_name);
-                        $('#program').text(data.prog_name);
+                        $('#fname').val(data.fname);
+                        $('#lname').val(data.lname);
+                        $('#type').val(data.cat_name);
+                        $('#department').val(data.dept_name);
+                        $('#program').val(data.prog_name);
                         $('#profile-img').attr('src', 'assets/img/' + data.img_path);
                     } else {
                         alert_toast('No data found for this RFID.', 'danger');
