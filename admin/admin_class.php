@@ -107,6 +107,17 @@ class Action
 		$data .= ", prog_id = '$prog_id' ";
 		$data .= ", rfid = '$rfid' ";
 
+		if ($_FILES['img']['tmp_name'] != '') {
+			$fname = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $fname);
+			if($move){
+				$data .= ", img_path = '$fname' ";
+			}
+		}else{
+			$default_image = 'avatar5.png';
+			$data .= ", img_path = '$default_image' ";
+		}
+
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO member set ".$data);
 		}else{
@@ -117,6 +128,33 @@ class Action
 	}
 
 
+
+	function fetch_data() {
+		extract($_POST);
+
+		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, c.cat_name FROM member m JOIN department d ON m.dept_id = d.id JOIN program p ON m.prog_id = p.id JOIN category c ON m.type_id = c.id  WHERE rfid = '$rfid'");
+
+	
+		if ($fetch->num_rows > 0) {
+			$data = $fetch->fetch_assoc();
+	
+			$response = [
+				'success' => true,
+				'fname' => $data['fname'],
+				'lname' => $data['lname'],
+				'cat_name' => $data['cat_name'],
+				'dept_name' => $data['dept_name'],
+				'prog_name' => $data['prog_name'],
+				'img_path' => $data['img_path']
+			];
+		} else {
+			$response = ['success' => false];
+		}
+	
+		echo json_encode($response);
+	}
+	
+	
 
 
 

@@ -9,26 +9,31 @@
         </div>
     </div>
 
+    <!-- RFID FORM -->
+    <form action="" id="rfid-form">
+        <div>
+            <input type="text" id="rfid" name="rfid" required autofocus>
+        </div>
+    </form>
 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <center>
-                <div class="card">
-                    <div id="clock"></div>
-                    <div id="date"></div>
-                </div>
-            </center>
-            <h1 class="text-center">Please scan your RFID!</h1>
-
-            <div id="rfid-form">
-                <input type="text" id="rfid" name="rfid" required autofocus>
+            <div>
+                <div id="clock"></div>
+                <div id="date"></div>
+            </div>
+            <div>
+                <img id="profile-img" src="assets/img/AdminLogo.png" alt="Avatar">
+                <div id="fname"></div>
+                <div id="lname"></div>
+                <div id="type"></div>
+                <div id="department"></div>
+                <div id="program"></div>
             </div>
         </div>
     </section>
-
 </div>
-
 
 <script>
     function updateClock() {
@@ -47,23 +52,40 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    setInterval(function() {
+        $('#rfid').focus();
+    }, 500);
 
-    $(document).ready(function() {
-        setInterval(function() {
-            $('#rfid').focus();
-        }, 500);
+    $('body').mousemove(function() {
+        $('#rfid').focus();
+    });
 
-        $('body').mousemove(function() {
-            $('#rfid').focus();
-        });
+    $('#rfid-form').keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
 
-        $('#rfid').keypress(function(e) {
-            if (e.which == 13) {
-                const currentTime = document.getElementById('clock').innerText;
-                const currentDate = document.getElementById('date').innerText;
-                alert(`RFID: ${$(this).val()}\nTime: ${currentTime}\nDate: ${currentDate}`);
-                location.reload();
-            }
-        });
+            $.ajax({
+                url: 'ajax.php?action=fetch_data',
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                success: function(resp) {
+                    let data = JSON.parse(resp);
+                    if (data.success) {
+                        $('#fname').text(data.fname);
+                        $('#lname').text(data.lname);
+                        $('#type').text(data.cat_name);
+                        $('#department').text(data.dept_name);
+                        $('#program').text(data.prog_name);
+                        $('#profile-img').attr('src', 'assets/img/' + data.img_path);
+                    } else {
+                        alert_toast('No data found for this RFID.', 'danger');
+                    }
+                }
+            });
+        }
     });
 </script>

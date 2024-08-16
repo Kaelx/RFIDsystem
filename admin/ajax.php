@@ -54,4 +54,11 @@ if($action == "register"){
 	if($save)
 		echo $save;
 }
+
+
+if($action == "fetch_data"){
+	$save = $crud->fetch_data();
+	if($save)
+		echo $save;
+}
 ?>
