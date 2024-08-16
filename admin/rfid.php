@@ -30,10 +30,10 @@
 
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                <input type="text" id="fname" class="form-control" placeholder="First Name">
+                                    <input type="text" id="fname" class="form-control" placeholder="First Name">
                                 </div>
                                 <div class="col-md-6 form-group">
-                                <input type="text" id="lname" class="form-control" placeholder="Last Name">
+                                    <input type="text" id="lname" class="form-control" placeholder="Last Name">
                                 </div>
                             </div>
                             <input type="text" id="type" class="form-control mb-2" placeholder="Role">
@@ -91,6 +91,7 @@
                 type: 'POST',
                 success: function(resp) {
                     let data = JSON.parse(resp);
+
                     if (data.success) {
                         $('#fname').val(data.fname);
                         $('#lname').val(data.lname);
@@ -98,8 +99,24 @@
                         $('#department').val(data.dept_name);
                         $('#program').val(data.prog_name);
                         $('#profile-img').attr('src', 'assets/img/' + data.img_path);
+
+                        $('#rfid').val("");
+
+                        setTimeout(function() {
+                            location.reload()
+                        }, 10000)
                     } else {
-                        alert_toast('No data found for this RFID.', 'danger');
+                        $('#fname').val("Unknown");
+                        $('#lname').val("Unknown");
+                        $('#type').val("Unknown");
+                        $('#department').val("Unknown");
+                        $('#program').val("Unknown");
+                        $('#profile-img').attr('src', 'assets/img/' + '23959955.jpg');
+                        $('#rfid').val("");
+
+                        setTimeout(function() {
+                            location.reload()
+                        }, 10000)
                     }
                 }
             });

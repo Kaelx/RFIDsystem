@@ -19,12 +19,12 @@
             <form action="#" id="register">
                 <input type="hidden" name="id">
                 <div class="form-group">
-                    <label for="img" class="control-label">Image</label>
-                    <input type="file" class="form-control" name="img" id="img" onchange="displayImg(this,$(this))">
+                    <label for="img">Image</label>
+                    <input type="file" class="form-control" name="img" id="img">
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="fname">First Name</label>
+                        <label for="fname" >First Name</label>
                         <input type="text" class="form-control" name="fname" id="fname" required>
                     </div>
                     <div class="col-md-6 form-group">
