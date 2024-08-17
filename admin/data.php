@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
+                        <table class="table table-hover compact">
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>

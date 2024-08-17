@@ -20,6 +20,8 @@ if (!isset($_SESSION['login_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ELEVATECH RFID</title>
 
+  <link rel="icon" type="image/png" href="assets/defaults/logo-img.png">
+
   <?php
   include 'header.php';
   ?>
@@ -63,7 +65,7 @@ if (!isset($_SESSION['login_id'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
-        <img src="assets/defaults/evsu-logo.png" alt="evsu Logo" class="brand-image img-circle elevation-3">
+        <img src="assets/defaults/logo-img2.png" alt="icon" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Elevatech RFID</span>
       </a>
 

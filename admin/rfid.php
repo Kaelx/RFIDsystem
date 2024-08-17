@@ -1,4 +1,13 @@
 <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- RFID FORM -->
     <form action="" id="rfid-form">
@@ -8,7 +17,7 @@
     </form>
 
     <!-- Main content -->
-    <section class="content py-5">
+    <section class="content">
         <div class="container-fluid">
 
             <!-- Clock and Date Display -->
@@ -20,7 +29,7 @@
             </center>
 
             <!-- User Information Display -->
-            <div class="card shadow m-5">
+            <div class="card shadow">
                 <div class="card-body">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-3 mr-5 text-center">
@@ -47,10 +56,10 @@
             <div class="card shadow-none">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
+                        <table class="table table-hover compact">
                             <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
+                                    <th class="text-center"> Employee/Student ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Time in</th>
                                     <th class="text-center">Time out</th>
@@ -61,8 +70,8 @@
                                 while ($row = $rec->fetch_assoc()):
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $row['id'] ?></td>
-                                        <td class="text-center"><?= $row['fname'] . ' ' . $row['lname'] ?></td>
+                                        <td></td>
+                                        <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
                                         <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
                                         <td class="text-center"><?= $row['timeout'] ? (date('F d, Y', strtotime($row['timeout'])) . ' -- ' . date('h:i A', strtotime($row['timeout']))) : 'N/A'; ?></td>
                                     </tr>
@@ -74,11 +83,9 @@
                 </div>
             </div>
 
+
         </div>
-
-
-</div>
-</section>
+    </section>
 
 </div>
 
@@ -94,9 +101,6 @@
         }
         idleTimer = setTimeout(function() {
             idleState = true;
-
-
-            // location.reload();
 
             $('#fname').val("");
             $('#lname').val("");
@@ -198,6 +202,6 @@
         ordering: false,
         searching: false,
         paging: false,
-        scrollY: 250,
+        scrollY: 250
     });
 </script>

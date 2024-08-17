@@ -18,5 +18,6 @@
 <link rel="stylesheet" href="plugins/DataTables/datatables.min.css">
 <script src="plugins/DataTables/datatables.min.js"></script>
 
+
 <!-- custom css -->
 <link rel="stylesheet" href="css/style.css">

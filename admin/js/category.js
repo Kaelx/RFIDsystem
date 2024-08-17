@@ -209,9 +209,9 @@ $('.btn-tool').on('click', function () {
     if (isCollapsed) {
         localStorage.setItem(cardId, 'false');
         $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
-        setTimeout(function () {
-            location.reload();
-        }, 450);
+        // setTimeout(function () {
+        //     location.reload();
+        // }, 450);
     } else {
         localStorage.setItem(cardId, 'true');
         $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
