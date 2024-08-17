@@ -155,47 +155,33 @@
     });
 
     $('#rfid-form').keypress(function(e) {
-        if (e.which == 13) {
+        if (e.which === 13) {
             e.preventDefault();
 
             $.ajax({
                 url: 'ajax.php?action=fetch_data',
-                data: new FormData($(this)[0]),
+                data: new FormData(this),
                 cache: false,
                 contentType: false,
                 processData: false,
                 method: 'POST',
-                type: 'POST',
                 success: function(resp) {
-                    let data = JSON.parse(resp);
+                    const data = JSON.parse(resp);
+                    const defaultVal = "Unknown";
+                    const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.jpg';
 
-                    console.log("Response: ", resp);
-
-                    if (data.success) {
-                        $('#fname').val(data.fname);
-                        $('#lname').val(data.lname);
-                        $('#type').val(data.cat_name);
-                        $('#department').val(data.dept_name);
-                        $('#program').val(data.prog_name);
-                        $('#profile-img').attr('src', 'assets/img/' + data.img_path);
-
-                        $('#rfid').val("");
-
-                    } else {
-                        $('#fname').val("Unknown");
-                        $('#lname').val("Unknown");
-                        $('#type').val("Unknown");
-                        $('#department').val("Unknown");
-                        $('#program').val("Unknown");
-                        $('#profile-img').attr('src', 'assets/img/' + 'unauth-img.jpg');
-
-                        $('#rfid').val("");
-
-                    }
+                    $('#fname').val(data.success ? data.fname : defaultVal);
+                    $('#lname').val(data.success ? data.lname : defaultVal);
+                    $('#type').val(data.success ? data.cat_name : defaultVal);
+                    $('#department').val(data.success ? data.dept_name : defaultVal);
+                    $('#program').val(data.success ? data.prog_name : defaultVal);
+                    $('#profile-img').attr('src', imgPath);
+                    $('#rfid').val("");
                 }
             });
         }
     });
+
 
 
     $('table').DataTable({
