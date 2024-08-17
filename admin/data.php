@@ -61,7 +61,7 @@
 
 <script>
     $('table').DataTable({
-        ordering: false
+        ordering: false,
     });
 
 </script>

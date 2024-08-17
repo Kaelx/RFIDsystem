@@ -14,7 +14,7 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card" id="card-type-of-people">
+            <div class="card shadow" id="card-type-of-people">
                 <div class="card-header text-bold">
                     Role Type
                     <div class="card-tools">
@@ -94,7 +94,7 @@
 
 
 
-            <div class="card" id="card-school-department">
+            <div class="card shadow" id="card-school-department">
                 <div class="card-header text-bold">
                     School Department
                     <div class="card-tools">
@@ -172,7 +172,7 @@
             <hr>
 
 
-            <div class="card" id="card-school-program">
+            <div class="card shadow" id="card-school-program">
                 <div class="card-header text-bold">
                     School Program
                     <div class="card-tools">

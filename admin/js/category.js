@@ -192,28 +192,29 @@ function delete_cat3($id) {
 }
 
 
-$('.card').each(function () {
-    var cardId = $(this).attr('id');
-    if (cardId && localStorage.getItem(cardId) === 'true') {
-        $(this).addClass('collapsed-card');
-        $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
-    }
-});
+// fold card
+// $('.card').each(function () {
+//     var cardId = $(this).attr('id');
+//     if (cardId && localStorage.getItem(cardId) === 'true') {
+//         $(this).addClass('collapsed-card');
+//         $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
+//     }
+// });
 
 
-$('.btn-tool').on('click', function () {
-    var card = $(this).closest('.card');
-    var cardId = card.attr('id');
-    var isCollapsed = card.hasClass('collapsed-card');
+// $('.btn-tool').on('click', function () {
+//     var card = $(this).closest('.card');
+//     var cardId = card.attr('id');
+//     var isCollapsed = card.hasClass('collapsed-card');
 
-    if (isCollapsed) {
-        localStorage.setItem(cardId, 'false');
-        $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
-        // setTimeout(function () {
-        //     location.reload();
-        // }, 450);
-    } else {
-        localStorage.setItem(cardId, 'true');
-        $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
-    }
-});
+//     if (isCollapsed) {
+//         localStorage.setItem(cardId, 'false');
+//         $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
+//         // setTimeout(function () {
+//         //     location.reload();
+//         // }, 450);
+//     } else {
+//         localStorage.setItem(cardId, 'true');
+//         $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
+//     }
+// });
