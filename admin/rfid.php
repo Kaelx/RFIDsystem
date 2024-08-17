@@ -1,36 +1,32 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-            </div>
-        </div>
     </div>
-
-    <!-- RFID FORM -->
-    <form action="" id="rfid-form">
-        <div>
-            <input type="text" id="rfid" name="rfid" required autofocus>
-        </div>
-    </form>
 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
 
-            <!-- Clock and Date Display -->
-            <center>
-                <div class="mb-4">
-                    <div id="clock" class="h3 font-weight-bold"></div>
-                    <div id="date" class="h5"></div>
+            <!-- RFID FORM -->
+            <form action="" id="rfid-form">
+                <div>
+                    <input type="text" id="rfid" name="rfid" required autofocus>
                 </div>
-            </center>
+            </form>
 
-            <!-- User Information Display -->
+
             <div class="card shadow">
                 <div class="card-body">
+
+                    <!-- Clock and Date Display -->
+                    <center>
+                        <div class="mb-4">
+                            <div id="clock" class="h3 font-weight-bold"></div>
+                            <div id="date" class="h5"></div>
+                        </div>
+                    </center>
+
+                    <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-3 mr-5 text-center">
                             <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-3" alt="Avatar" style="object-fit: cover; max-width: 130px"></img>
@@ -166,28 +162,41 @@
                 processData: false,
                 method: 'POST',
                 success: function(resp) {
-                    const data = JSON.parse(resp);
-                    const defaultVal = "Unknown";
-                    const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.jpg';
 
-                    $('#fname').val(data.success ? data.fname : defaultVal);
-                    $('#lname').val(data.success ? data.lname : defaultVal);
-                    $('#type').val(data.success ? data.cat_name : defaultVal);
-                    $('#department').val(data.success ? data.dept_name : defaultVal);
-                    $('#program').val(data.success ? data.prog_name : defaultVal);
-                    $('#profile-img').attr('src', imgPath);
-                    $('#rfid').val("");
+                    sessionStorage.setItem('responseData', resp);
+
+                    location.reload();
                 }
             });
         }
     });
 
 
+    $(document).ready(function() {
+        const responseData = sessionStorage.getItem('responseData');
+        if (responseData) {
+
+            sessionStorage.removeItem('responseData');
+
+            const data = JSON.parse(responseData);
+            const defaultVal = "Unknown";
+            const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.jpg';
+
+            $('#fname').val(data.success ? data.fname : defaultVal);
+            $('#lname').val(data.success ? data.lname : defaultVal);
+            $('#type').val(data.success ? data.cat_name : defaultVal);
+            $('#department').val(data.success ? data.dept_name : defaultVal);
+            $('#program').val(data.success ? data.prog_name : defaultVal);
+            $('#profile-img').attr('src', imgPath);
+            $('#rfid').val("");
+        }
+    });
+
+
+
 
     $('table').DataTable({
-        ordering: false,
         searching: false,
-        paging: false,
-        scrollY: 250
+        ordering: false,
     });
 </script>
