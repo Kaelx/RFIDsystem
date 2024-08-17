@@ -128,17 +128,20 @@ class Action
 
 
 
-	function fetch_data() {
+	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, c.cat_name FROM member m JOIN department d ON m.dept_id = d.id JOIN program p ON m.prog_id = p.id JOIN category c ON m.type_id = c.id  WHERE rfid = '$rfid'");
+		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, c.cat_name FROM member m 
+									JOIN department d ON m.dept_id = d.id 
+									JOIN program p ON m.prog_id = p.id 
+									JOIN category c ON m.type_id = c.id  
+									WHERE rfid = '$rfid'");
 
-	
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
 
 			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
-	
+
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
@@ -149,16 +152,30 @@ class Action
 				'img_path' => $img_path
 			];
 
-			if($response){
-				$insert =$this->db->query('INSERT INTO record (fname, lname) VALUES ("'.$data['fname'].'", "'.$data['lname'].'")');
+			if ($response) {
+				$check_existing = $this->db->query('SELECT * FROM record 
+													WHERE fname = "' . $data['fname'] . '" 
+													AND lname = "' . $data['lname'] . '" 
+													AND timeout IS NULL');
+
+				if ($check_existing->num_rows > 0) {
+					$update = $this->db->query('UPDATE record SET timeout = current_timestamp() 
+												WHERE fname = "' . $data['fname'] . '" 
+												AND lname = "' . $data['lname'] . '" 
+												AND timeout IS NULL');
+				} else {
+					$insert = $this->db->query('INSERT INTO record (fname, lname, timein) 
+												VALUES ("' . $data['fname'] . '", "' . $data['lname'] . '", current_timestamp())');
+				}
 			}
 		} else {
-			$response = ['success' => false];
-		}
-	
-		echo json_encode($response);
+		$response = ['success' => false];
 	}
 	
+	echo json_encode($response);
+	}
+	
+
 
 
 

@@ -60,15 +60,15 @@
                                 <?php $rec = $conn->query('SELECT * FROM record order by id desc');
                                 while ($row = $rec->fetch_assoc()):
                                 ?>
-                                <tr>
-                                    <td  class="text-center"><?= $row['id']?></td>
-                                    <td  class="text-center"><?= $row['fname'].' '.$row['lname']?></td>
-                                    <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
-                                    <td class="text-center"><?= (date('F d, Y', strtotime($row['timeout']))) . ' -- ' . (date('h:i A', strtotime($row['timeout']))) ?></td>
-                                </tr>
-                                <?php endwhile;?>
+                                    <tr>
+                                        <td class="text-center"><?= $row['id'] ?></td>
+                                        <td class="text-center"><?= $row['fname'] . ' ' . $row['lname'] ?></td>
+                                        <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
+                                        <td class="text-center"><?= $row['timeout'] ? (date('F d, Y', strtotime($row['timeout'])) . ' -- ' . date('h:i A', strtotime($row['timeout']))) : 'N/A'; ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
                             </tbody>
-                    
+
                         </table>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
         idleTimer = setTimeout(function() {
             idleState = true;
 
-            
+
             // location.reload();
 
             $('#fname').val("");
@@ -119,20 +119,24 @@
 
 
     function updateClock() {
-    const now = new Date();
-    let hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
 
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = now.toLocaleDateString(undefined, options);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const date = now.toLocaleDateString(undefined, options);
 
-    document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
-    document.getElementById('date').innerText = date;
-}
+        document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+        document.getElementById('date').innerText = date;
+    }
 
 
     setInterval(updateClock, 1000);
@@ -170,7 +174,7 @@
                         $('#department').val(data.dept_name);
                         $('#program').val(data.prog_name);
                         $('#profile-img').attr('src', 'assets/img/' + data.img_path);
-                        
+
                         $('#rfid').val("");
 
                     } else {
@@ -180,7 +184,7 @@
                         $('#department').val("Unknown");
                         $('#program').val("Unknown");
                         $('#profile-img').attr('src', 'assets/img/' + 'unauth-img.jpg');
-                        
+
                         $('#rfid').val("");
 
                     }
@@ -193,7 +197,7 @@
     $('table').DataTable({
         ordering: false,
         searching: false,
-        paging:false,
+        paging: false,
         scrollY: 250,
     });
 </script>
