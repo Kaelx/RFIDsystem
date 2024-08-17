@@ -113,18 +113,17 @@ class Action
 			if($move){
 				$data .= ", img_path = '$fname' ";
 			}
-		}else{
-			$default_image = 'avatar5.png';
-			$data .= ", img_path = '$default_image' ";
 		}
 
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO member set ".$data);
+			if($save)
+			return 1;
 		}else{
 			$save = $this->db->query("UPDATE member set ".$data." where id=".$id);
+			if($save)
+			return 2;
 		}
-		if($save)
-			return 1;
 	}
 
 
@@ -137,6 +136,8 @@ class Action
 	
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
+
+			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
 	
 			$response = [
 				'success' => true,
@@ -145,15 +146,18 @@ class Action
 				'cat_name' => $data['cat_name'],
 				'dept_name' => $data['dept_name'],
 				'prog_name' => $data['prog_name'],
-				'img_path' => $data['img_path']
+				'img_path' => $img_path
 			];
+
+			if($response){
+				$insert =$this->db->query('INSERT INTO record (fname, lname) VALUES ("'.$data['fname'].'", "'.$data['lname'].'")');
+			}
 		} else {
 			$response = ['success' => false];
 		}
 	
 		echo json_encode($response);
 	}
-	
 	
 
 

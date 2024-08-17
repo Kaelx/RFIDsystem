@@ -22,7 +22,7 @@
                         <table class="table table-hover table-bordered compact">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Student ID</th>
+                                    <th class="text-center">ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Department</th>
                                     <th class="text-center">Program</th>
@@ -64,8 +64,4 @@
         ordering: false
     });
 
-    function viewData(id) {
-        alert(id);
-        // location.href = 'index.php?page=view&id=' + id;
-    }
 </script>

@@ -14,7 +14,7 @@
             <!-- Clock and Date Display -->
             <center>
                 <div class="mb-4">
-                    <div id="clock" class="h3 text-primary font-weight-bold"></div>
+                    <div id="clock" class="h3 font-weight-bold"></div>
                     <div id="date" class="h5"></div>
                 </div>
             </center>
@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-3 mr-5 text-center">
-                            <img id="profile-img" src="assets/img/AdminLogo.png" class="img-fluid mb-3" alt="Avatar" style="object-fit: cover; max-width: 130px"></img>
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-3" alt="Avatar" style="object-fit: cover; max-width: 130px"></img>
                         </div>
                         <div class="col-md-5">
 
@@ -40,6 +40,36 @@
                             <input type="text" id="department" class="form-control mb-2" placeholder="Department">
                             <input type="text" id="program" class="form-control mb-2" placeholder="Program/Course">
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-none">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered compact">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Time in</th>
+                                    <th class="text-center">Time out</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $rec = $conn->query('SELECT * FROM record order by id desc');
+                                while ($row = $rec->fetch_assoc()):
+                                ?>
+                                <tr>
+                                    <td  class="text-center"><?= $row['id']?></td>
+                                    <td  class="text-center"><?= $row['fname'].' '.$row['lname']?></td>
+                                    <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
+                                    <td class="text-center"><?= (date('F d, Y', strtotime($row['timeout']))) . ' -- ' . (date('h:i A', strtotime($row['timeout']))) ?></td>
+                                </tr>
+                                <?php endwhile;?>
+                            </tbody>
+                    
+                        </table>
                     </div>
                 </div>
             </div>
@@ -65,13 +95,17 @@
         idleTimer = setTimeout(function() {
             idleState = true;
 
+            
+            // location.reload();
+
             $('#fname').val("");
             $('#lname').val("");
             $('#type').val("");
             $('#department').val("");
             $('#program').val("");
-            $('#profile-img').attr('src', 'assets/img/' + 'AdminLogo.png');
+            $('#profile-img').attr('src', 'assets/img/' + 'blank-img.png');
             $('#rfid').val("");
+
         }, idleWait);
     }
 
@@ -85,17 +119,21 @@
 
 
     function updateClock() {
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        const date = now.toLocaleDateString();
-        document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
-        document.getElementById('date').innerText = date;
-    }
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = now.toLocaleDateString(undefined, options);
+
+    document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds} ${ampm}`;
+    document.getElementById('date').innerText = date;
+}
+
 
     setInterval(updateClock, 1000);
     updateClock();
@@ -123,6 +161,8 @@
                 success: function(resp) {
                     let data = JSON.parse(resp);
 
+                    console.log("Response: ", resp);
+
                     if (data.success) {
                         $('#fname').val(data.fname);
                         $('#lname').val(data.lname);
@@ -130,6 +170,7 @@
                         $('#department').val(data.dept_name);
                         $('#program').val(data.prog_name);
                         $('#profile-img').attr('src', 'assets/img/' + data.img_path);
+                        
                         $('#rfid').val("");
 
                     } else {
@@ -138,12 +179,21 @@
                         $('#type').val("Unknown");
                         $('#department').val("Unknown");
                         $('#program').val("Unknown");
-                        $('#profile-img').attr('src', 'assets/img/' + '23959955.jpg');
+                        $('#profile-img').attr('src', 'assets/img/' + 'unauth-img.jpg');
+                        
                         $('#rfid').val("");
 
                     }
                 }
             });
         }
+    });
+
+
+    $('table').DataTable({
+        ordering: false,
+        searching: false,
+        paging:false,
+        scrollY: 250,
     });
 </script>

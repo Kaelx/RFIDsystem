@@ -18,7 +18,7 @@ if (!isset($_SESSION['login_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RFID SYSTEM</title>
+  <title>ELEVATECH RFID</title>
 
   <?php
   include 'header.php';
@@ -64,7 +64,7 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
         <img src="assets/defaults/evsu-logo.png" alt="evsu Logo" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">EVSU RFID</span>
+        <span class="brand-text font-weight-light">Elevatech RFID</span>
       </a>
 
       <!-- Sidebar -->
@@ -167,23 +167,6 @@ if (!isset($_SESSION['login_id'])) {
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="modal fade" id="uni_modal" role='dialog'>
-      <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-          </div>
-          <div class="modal-body">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>

@@ -3,13 +3,8 @@ if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
     $query = $conn->query("SELECT m.*, d.dept_name, p.prog_name, c.cat_name FROM member m JOIN department d ON m.dept_id = d.id JOIN program p ON m.prog_id = p.id JOIN category c ON m.type_id = c.id where m.id = $uid ORDER BY m.id ASC");
-
-    if ($query) {
-        $member = mysqli_fetch_assoc($query);
-    } else {
-        echo "Error fetching data: " . mysqli_error($conn);
-    }
-}else{
+    $member = mysqli_fetch_assoc($query);
+} else {
     header('location: index.php?page=data');
 }
 ?>
@@ -34,6 +29,10 @@ if (isset($_GET['uid'])) {
 
             <form action="#" id="register">
                 <input type="hidden" name="id" value="<?= isset($member['id']) ? $member['id'] : '' ?>">
+                <div class="form-group">
+                    <label for="img">Image</label>
+                    <input type="file" class="form-control" name="img" id="img">
+                </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="fname">First Name</label>
@@ -48,7 +47,15 @@ if (isset($_GET['uid'])) {
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="type_id">Type</label>
-                        <input type="text" class="form-control" name="type_id" id="type_id" value="<?= isset($member['cat_name']) ? $member['cat_name'] : '' ?>">
+                        <select class="form-control" name="type_id" id="type_id" required>
+                            <option value="<?= isset($member['type_id']) ? $member['type_id'] : '' ?>"> <?= isset($member['cat_name']) ? $member['cat_name'] : '' ?></option>
+                            <?php
+                            $type = $conn->query("SELECT * FROM category order by id asc ");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <option value="<?= $row['id'] ?>"><?= $row['cat_name'] ?></option>
+                            <?php endwhile; ?>
+                        </select>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="studentid">Student/Employee ID</label>
@@ -64,11 +71,30 @@ if (isset($_GET['uid'])) {
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="dept_id">School Department</label>
-                        <input type="text" class="form-control" name="dept_id" id="dept_id" value="<?= isset($member['dept_name']) ? $member['dept_name'] : '' ?>">
+
+                        <select class="form-control" name="dept_id" id="dept_id" required>
+                            <option value="<?= isset($member['dept_id']) ? $member['dept_id'] : '' ?>"><?= isset($member['dept_name']) ? $member['dept_name'] : '' ?></option>
+                            <?php
+                            $department = $conn->query("SELECT * FROM department order by id asc ");
+                            while ($row = $department->fetch_assoc()) :
+                            ?>
+                                <option value="<?php echo $row['id'] ?>"><?php echo $row['dept_name'] ?></option>
+
+                            <?php endwhile; ?>
+                        </select>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="prog_id">School Program</label>
-                        <input type="text" class="form-control" name="prog_id" id="prog_id" value="<?= isset($member['prog_name']) ? $member['prog_name'] : '' ?>">
+                        <select class="form-control" name="prog_id" id="prog_id" required>
+                        <option value="<?= isset($member['prog_id']) ? $member['prog_id'] : '' ?>"><?= isset($member['prog_name']) ? $member['prog_name'] : '' ?></option>
+                        <?php
+                        $program = $conn->query("SELECT * FROM program order by id asc ");
+                        while ($row = $program->fetch_assoc()) :
+                        ?>
+                            <option value="<?php echo $row['id'] ?>"><?php echo $row['prog_name'] ?></option>
+
+                        <?php endwhile; ?>
+                        </select>
                     </div>
                 </div>
 
@@ -76,6 +102,9 @@ if (isset($_GET['uid'])) {
                     <label for="rfid">RFID</label>
                     <input type="text" class="form-control" name="rfid" id="rfid" required value="<?= isset($member['rfid']) ? $member['rfid'] : '' ?>">
                 </div>
+
+                <button class="btn btn-primary">Save</button>
+                <a href="index.php?page=data" class="btn btn-secondary">Back</a>
             </form>
 
 
@@ -84,3 +113,37 @@ if (isset($_GET['uid'])) {
     </section>
 
 </div>
+
+<script>
+    $('#register').submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+            url: 'ajax.php?action=register',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                console.log("Response: ", resp);
+                if (resp == 1) {
+                    alert_toast("Data successfully added", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else if (resp == 2) {
+                    alert_toast("Data successfully updated", 'info')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else {
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    })
+</script>
