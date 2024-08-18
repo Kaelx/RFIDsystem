@@ -169,10 +169,10 @@ class Action
 				}
 			}
 		} else {
-		$response = ['success' => false];
-	}
-	
-	echo json_encode($response);
+			$response = ['success' => false];
+		}
+		
+		echo json_encode($response);
 	}
 	
 
