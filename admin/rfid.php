@@ -1,25 +1,15 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-    </div>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content mt-3">
         <div class="container-fluid">
 
-            <!-- RFID FORM -->
-            <form action="" id="rfid-form" class="mb-5">
-                <div class="text-center">
-                    <input type="text" id="rfid" name="rfid" class="form-control form-control-lg" required autofocus style="width: 50%; margin: auto;">
-                </div>
-            </form>
-
-            <div class="card shadow">
+            <div class="card">
                 <div class="card-body">
 
                     <!-- Clock and Date Display -->
                     <center>
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <div id="clock" class="display-4 font-weight-bold"></div>
                             <div id="date" class="h2"></div>
                         </div>
@@ -40,17 +30,24 @@
                                     <input type="text" id="lname" class="form-control form-control-lg" placeholder="Last Name">
                                 </div>
                             </div>
-                            <input type="text" id="type" class="form-control form-control-lg mb-3" placeholder="Role">
-                            <input type="text" id="department" class="form-control form-control-lg mb-3" placeholder="Department">
-                            <input type="text" id="program" class="form-control form-control-lg mb-3" placeholder="Program/Course">
+                            <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
+                            <input type="text" id="department" class="form-control form-control-lg mb-2" placeholder="Department">
+                            <input type="text" id="program" class="form-control form-control-lg mb-2" placeholder="Program/Course">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- RFID FORM -->
+            <form action="" id="rfid-form">
+                <div>
+                    <input type="text" id="rfid" name="rfid" required autofocus>
+                </div>
+            </form>
+
             <div class="card shadow-none">
                 <div class="card-body">
-                    <div class="table-responsive" style="max-height: 230px; overflow-y: auto;">
+                    <div class="table-responsive">
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
@@ -68,7 +65,7 @@
                                         <td class="text-center"><?= $row['employee_student_id'] ?? 'N/A' ?></td>
                                         <td><?= htmlspecialchars($row['fname'] . ' ' . $row['lname']) ?></td>
                                         <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
-                                        <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : 'N/A' ?></td>
+                                        <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
@@ -80,9 +77,9 @@
 
 
 
-
         </div>
     </section>
+
 </div>
 
 
