@@ -66,7 +66,7 @@
                                 $rec = $conn->query('SELECT * FROM record ORDER BY id DESC');
                                 while ($row = $rec->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?= $row['id'] ?></td>
+                                        <td>N/A</td>
                                         <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
                                         <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
                                         <td class="text-center"><?= $row['timeout'] ? (date('F d, Y', strtotime($row['timeout'])) . ' -- ' . date('h:i A', strtotime($row['timeout']))) : 'N/A'; ?></td>
@@ -188,7 +188,7 @@
 
             const data = JSON.parse(responseData);
             const defaultVal = "Unknown";
-            const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.jpg';
+            const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
             $('#fname').val(data.success ? data.fname : defaultVal);
             $('#lname').val(data.success ? data.lname : defaultVal);

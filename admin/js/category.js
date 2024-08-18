@@ -1,7 +1,5 @@
 $('table').DataTable({
     ordering: false,
-    paging: false,
-    scrollY: 225
 })
 
 
