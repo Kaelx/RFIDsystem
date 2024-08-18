@@ -131,14 +131,14 @@ if (isset($_GET['uid'])) {
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=data'
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=data'
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')

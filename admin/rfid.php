@@ -48,10 +48,9 @@
                 </div>
             </div>
 
-
             <div class="card shadow-none">
                 <div class="card-body">
-                    <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                    <div class="table-responsive" style="max-height: 230px; overflow-y: auto;">
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
@@ -63,13 +62,13 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $rec = $conn->query('SELECT * FROM record ORDER BY id DESC');
+                                $rec = $conn->query('SELECT * FROM record ORDER BY GREATEST(timein, IFNULL(timeout, timein)) DESC LIMIT 5;');
                                 while ($row = $rec->fetch_assoc()): ?>
                                     <tr>
-                                        <td>N/A</td>
-                                        <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
-                                        <td class="text-center"><?= (date('F d, Y', strtotime($row['timein']))) . ' -- ' . (date('h:i A', strtotime($row['timein']))) ?></td>
-                                        <td class="text-center"><?= $row['timeout'] ? (date('F d, Y', strtotime($row['timeout'])) . ' -- ' . date('h:i A', strtotime($row['timeout']))) : 'N/A'; ?></td>
+                                        <td class="text-center"><?= $row['employee_student_id'] ?? 'N/A' ?></td>
+                                        <td><?= htmlspecialchars($row['fname'] . ' ' . $row['lname']) ?></td>
+                                        <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
+                                        <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : 'N/A' ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
@@ -77,6 +76,7 @@
                     </div>
                 </div>
             </div>
+
 
 
 
