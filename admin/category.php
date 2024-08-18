@@ -1,3 +1,9 @@
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="assets/defaults/logo-img.png" alt="evsu" width="150">
+</div>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">

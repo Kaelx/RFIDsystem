@@ -1,6 +1,6 @@
 <?php
 session_start();
-// ob_start();
+ob_start();
 
 // error_reporting(E_ALL);
 
@@ -28,21 +28,17 @@ if (!isset($_SESSION['login_id'])) {
 
 </head>
 
-<script>
+<!-- <script>
   document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
       document.querySelector('.preloader').style.display = 'none';
     }, 220); // 500ms, adjust as needed
   });
-</script>
+</script> -->
 
 <body class="hold-transition layout-fixed">
   <div class="wrapper">
 
-    <!-- Preloader -->
-    <!-- <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="assets/defaults/logo-img.png" alt="evsu" width="150">
-    </div> -->
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top">
