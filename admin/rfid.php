@@ -1,7 +1,12 @@
 <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+        </div>
+    </div>
 
     <!-- Main content -->
-    <section class="content mt-3">
+    <section class="content">
         <div class="container-fluid">
 
             <div class="card">
@@ -87,7 +92,7 @@
 <script>
     let idleTimer;
     let idleState = false;
-    const idleWait = 5000;
+    const idleWait = 5500;
 
     function resetIdleTimer() {
         clearTimeout(idleTimer);

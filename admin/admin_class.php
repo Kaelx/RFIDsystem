@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-class Action
-{
+class Action{
+	
     private $db;
 
     public function __construct(){
@@ -173,6 +173,13 @@ class Action
 		}
 		
 		echo json_encode($response);
+	}
+
+	function adduser(){
+		extract($_POST);
+
+		return($_POST);
+		
 	}
 	
 

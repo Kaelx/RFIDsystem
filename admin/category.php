@@ -1,6 +1,10 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div>
+        </div>
     </div>
 
 
@@ -8,9 +12,9 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card shadow" id="card-type-of-people">
+            <div class="card mb-4" id="card-type-of-people">
                 <div class="card-header text-bold">
-                    Role Type
+                    Role
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
@@ -88,7 +92,7 @@
 
 
 
-            <div class="card shadow" id="card-school-department">
+            <div class="card  mb-4" id="card-school-department">
                 <div class="card-header text-bold">
                     School Department
                     <div class="card-tools">
@@ -166,7 +170,7 @@
             <hr>
 
 
-            <div class="card shadow" id="card-school-program">
+            <div class="card mb-4 " id="card-school-program">
                 <div class="card-header text-bold">
                     School Program
                     <div class="card-tools">

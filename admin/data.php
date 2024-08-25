@@ -33,7 +33,7 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                // Modify the SQL query with appropriate JOIN conditions
+                                
                                 $cats = $conn->query("SELECT m.*, d.dept_name, p.prog_name FROM member m JOIN department d ON m.dept_id = d.id JOIN program p ON m.prog_id = p.id ORDER BY m.id ASC");
                                 while ($row = $cats->fetch_assoc()):
                                 ?>

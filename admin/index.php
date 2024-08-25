@@ -43,7 +43,7 @@ if (!isset($_SESSION['login_id'])) {
         </li>
       </ul>
 
-      <!-- Navbar-->
+      <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
 
         <li class="nav-item dropdown">
@@ -127,6 +127,9 @@ if (!isset($_SESSION['login_id'])) {
         </nav>
       </div>
     </aside>
+<!-- end Sidebar -->
+
+
 
     <!-- Toast Alert -->
     <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
@@ -135,13 +138,13 @@ if (!isset($_SESSION['login_id'])) {
         </div>
       </div>
     </div>
-
+  <!-- end Toast Alert -->
 
 
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view', 'entrylogs'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view', 'entrylogs','adduser'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -151,6 +154,7 @@ if (!isset($_SESSION['login_id'])) {
       header('Location: index.php?page=home');
     }
     ?>
+    <!-- end content -->
 
 
 

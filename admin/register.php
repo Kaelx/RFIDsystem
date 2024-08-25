@@ -19,8 +19,8 @@
             <form action="#" id="register">
                 <input type="hidden" name="id">
                 <div class="form-group">
-                    <label for="img">Image</label>
-                    <input type="file" class="form-control" name="img" id="img">
+                    <label for="img">Profile Picture</label><br>
+                    <input type="file" name="img" id="img">
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
@@ -91,8 +91,10 @@
                     <input type="text" class="form-control" name="rfid" id="rfid" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="index.php?page=data" class="btn btn-secondary">Cancel</a>
+                <div class="text-right mr-5">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="index.php?page=data" class="btn btn-secondary">Cancel</a>
+                </div>
             </form>
 
 
