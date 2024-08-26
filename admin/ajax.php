@@ -67,4 +67,10 @@ if($action == "fetch_data"){
 	if($save)
 		echo $save;
 }
+
+if($action == "import"){
+	$save = $crud->import();
+	if($save)
+		echo $save;
+}
 ?>

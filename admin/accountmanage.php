@@ -23,8 +23,6 @@
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Email</th>
-                                    <th class="text-center">Username</th>
                                     <th class="text-center">Account Type</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -32,18 +30,16 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                // Modify the SQL query with appropriate JOIN conditions
+                                
                                 $cats = $conn->query("select * from users;");
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr>
                                         <td><?php echo $i++; ?></td>
                                         <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td><?php echo (!empty($row['email'])) ? $row['email'] : 'N/A'; ?></td>
-                                        <td><?php echo $row['username']; ?></td>
-                                        <td><?php echo ($row['type'] == 0) ? 'Admin' : (($row['type'] == 1) ? 'Staff' : 'Security Personnel'); ?></td>
+                                        <td><?php echo ($row['account_type'] == 0) ? 'Admin' : (($row['account_type'] == 1) ? 'Staff' : 'Security Personnel'); ?></td>
                                         <td class="text-center">
-                                            <a href="index.php?page=view&uid=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> view</a>
+                                            <a href="index.php?page=accountedit&uid=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> view</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -62,5 +58,6 @@
 <script>
     $('table').DataTable({
         ordering: false,
+        lengthChange: false
     });
 </script>

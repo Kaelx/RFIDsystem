@@ -50,13 +50,12 @@
                 </div>
             </form>
 
-            <div class="card shadow-none">
+            <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-sm">
+                        <table class="table table-hover table-sm compact">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Employee/Student ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Time in</th>
                                     <th class="text-center">Time out</th>
@@ -67,8 +66,7 @@
                                 $rec = $conn->query('SELECT * FROM record ORDER BY GREATEST(timein, IFNULL(timeout, timein)) DESC LIMIT 5;');
                                 while ($row = $rec->fetch_assoc()): ?>
                                     <tr>
-                                        <td class="text-center"><?= $row['employee_student_id'] ?? 'N/A' ?></td>
-                                        <td><?= htmlspecialchars($row['fname'] . ' ' . $row['lname']) ?></td>
+                                        <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
                                         <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
                                         <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
                                     </tr>
@@ -90,6 +88,16 @@
 
 
 <script>
+    // $('table').DataTable({
+    //     ordering: false,
+    //     searching: false,
+    //     lengthChange: false,
+    //     paging: false,
+    //     pageLength: 5,
+    //     info: false
+
+    // });
+
     let idleTimer;
     let idleState = false;
     const idleWait = 5500;
@@ -194,7 +202,7 @@
 
             $('#fname').val(data.success ? data.fname : defaultVal);
             $('#lname').val(data.success ? data.lname : defaultVal);
-            $('#type').val(data.success ? data.cat_name : defaultVal);
+            $('#type').val(data.success ? data.role_name : defaultVal);
             $('#department').val(data.success ? data.dept_name : defaultVal);
             $('#program').val(data.success ? data.prog_name : defaultVal);
             $('#profile-img').attr('src', imgPath);

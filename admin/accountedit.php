@@ -1,10 +1,22 @@
+<?php
+if (isset($_GET['uid'])) {
+    $uid = $_GET['uid'];
+
+    $query = $conn->query("SELECT * from users where id = $uid");
+
+    $member = mysqli_fetch_assoc($query);
+} else {
+    header('location: index.php?page=home');
+}
+?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Register</h1>
+                    <h1 class="m-0">User</h1>
                 </div>
             </div>
         </div>
@@ -25,11 +37,11 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" id="fname" required>
+                        <input type="text" class="form-control" name="fname" id="fname" value="<?= $member['fname'] ?>" required>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" id="lname" required>
+                        <input type="text" class="form-control" name="lname" id="lname" value="<?= $member['lname'] ?>" required>
                     </div>
                 </div>
 
@@ -37,10 +49,9 @@
                     <div class="col-md-6 form-group">
                         <label for="account_type">Type</label>
                         <select class="form-control" name="account_type" id="account_type" required>
-                            <option value="" selected disabled>-- Select Role --</option>
-                            <option value="0">Admin</option>
-                            <option value="1">Staff</option>
-                            <option value="2">Security Personnel</option>
+                            <option value="0" <?= $member['account_type'] == 0 ? 'selected' : '' ?>>Admin</option>
+                            <option value="1" <?= $member['account_type'] == 1 ? 'selected' : '' ?>>Staff</option>
+                            <option value="2" <?= $member['account_type'] == 2 ? 'selected' : '' ?>>Security Personnel</option>
                         </select>
                     </div>
                 </div>
@@ -50,12 +61,13 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
+                        <input type="email" class="form-control" name="email" id="email" value="<?= $member['email'] ?>" required>
                     </div>
                     <div class="col-md-6 form-group">
 
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
+                        <input type="password" class="form-control" name="password" id="password">
+                        <small class="m-2 text-danger font-italic">*Leave blank if you don't want to change password.</small>
                     </div>
                 </div>
 
@@ -70,6 +82,7 @@
     </section>
 
 </div>
+
 <script>
     $('#register').submit(function(e) {
         e.preventDefault()
@@ -83,7 +96,6 @@
             method: 'POST',
             type: 'POST',
             success: function(resp) {
-
                 console.log(resp);
 
                 if (resp == 1) {

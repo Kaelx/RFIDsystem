@@ -31,13 +31,13 @@ class Action{
 
 	function save_category(){
 		extract($_POST);
-		$data = " cat_name = '$name' ";
+		$data = " role_name = '$name' ";
 		if(empty($id)){
-			$save = $this->db->query("INSERT INTO category set ".$data);
+			$save = $this->db->query("INSERT INTO role set ".$data);
 			if($save)
 			return 1;
 		}else{
-			$save = $this->db->query("UPDATE category set ".$data." where id=".$id);
+			$save = $this->db->query("UPDATE role set ".$data." where id=".$id);
 			if($save)
 			return 2;
 		}
@@ -75,7 +75,7 @@ class Action{
 
 	function delete_category(){
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM category where id = ".$id);
+		$delete = $this->db->query("DELETE FROM role where id = ".$id);
 		if($delete)
 			return 1;
 	}
@@ -98,10 +98,14 @@ class Action{
 	
 	function register(){
 		extract($_POST);
+
+		$dept_id = isset($dept_id) ? $dept_id : '';
+		$prog_id = isset($prog_id) ? $prog_id : '';
+
 		$data = " fname = '$fname' ";
 		$data .= ", lname = '$lname' ";
-		$data .= ", type_id = '$type_id' ";
-		$data .= ", studentid = '$studentid' ";
+		$data .= ", role_id = '$role_id' ";
+		$data .= ", school_id = '$school_id' ";
 		$data .= ", email = '$email' ";
 		$data .= ", dept_id = '$dept_id' ";
 		$data .= ", prog_id = '$prog_id' ";
@@ -131,11 +135,13 @@ class Action{
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, c.cat_name FROM member m 
-									JOIN department d ON m.dept_id = d.id 
-									JOIN program p ON m.prog_id = p.id 
-									JOIN category c ON m.type_id = c.id  
-									WHERE rfid = '$rfid'");
+		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
+		FROM member m 
+		LEFT JOIN department d ON m.dept_id = d.id 
+		LEFT JOIN program p ON m.prog_id = p.id 
+		LEFT JOIN role r ON m.role_id = r.id  
+		WHERE m.rfid = '$rfid'");
+
 
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
@@ -146,7 +152,7 @@ class Action{
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
-				'cat_name' => $data['cat_name'],
+				'role_name' => $data['role_name'],
 				'dept_name' => $data['dept_name'],
 				'prog_name' => $data['prog_name'],
 				'img_path' => $img_path
@@ -179,10 +185,73 @@ class Action{
 		extract($_POST);
 
 		return($_POST);
+
+
+		
+		// if(empty($id)){
+		// 	$save = $this->db->query("INSERT INTO user set ".$data);
+		// 	if($save)
+		// 	return 1;
+		// }else{
+		// 	$save = $this->db->query("UPDATE user set ".$data." where id=".$id);
+		// 	if($save)
+		// 	return 2;
+		// }
 		
 	}
+
+
+	function import() {
+		if (isset($_FILES['csv']['tmp_name'])) {
+			$csvFile = $_FILES['csv']['tmp_name'];
+	
+			// Check if the file exists
+			if (($handle = fopen($csvFile, 'r')) !== FALSE) {
+				// Skip the first row if it contains column headers
+				fgetcsv($handle);
+	
+				while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+					// Check if the row has the expected number of columns
+					if (count($data) < 6) {
+						// Handle the error: Skip this row or log an error
+						continue; // Skip the row if it doesn't have enough columns
+					}
+	
+					// Assign each CSV column to a variable, using a default value if it's missing
+					$id = !empty($data[0]) ? $data[0] : NULL; // or some default value
+					$fname = !empty($data[1]) ? $data[1] : '';
+					$lname = !empty($data[2]) ? $data[2] : '';
+					$role_id = !empty($data[3]) ? $data[3] : NULL;
+					$school_id = !empty($data[4]) ? $data[4] : NULL;
+					$email = !empty($data[5]) ? $data[5] : '';
+	
+					// Adjust the SQL query to exclude rfid and img_path
+					$query = "INSERT INTO member (id, fname, lname, role_id, school_id, email) 
+							VALUES ('$id', '$fname', '$lname', '$role_id', '$school_id', '$email') 
+							ON DUPLICATE KEY UPDATE 
+							fname='$fname', lname='$lname', role_id='$role_id', school_id='$school_id', email='$email'";
+	
+					if ($this->db->query($query) === TRUE) {
+						continue; // Data successfully added or updated, continue to next row
+					} else {
+						return 0; // Error occurred
+					}
+				}
+	
+				fclose($handle);
+				return 1; // All data processed successfully
+			} else {
+				return 0; // Could not open the file
+			}
+		} else {
+			return 0; // File not set
+		}
+	}
+	
 	
 
+
+	
 
 
 

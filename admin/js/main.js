@@ -3,7 +3,7 @@ if (localStorage.getItem('sidebarState') === 'collapsed') {
     $('body').addClass('sidebar-collapse');
 }
 
-$('[data-widget="pushmenu"]').on('click', function() {
+$('[data-widget="pushmenu"]').on('click', function () {
     var isCollapsed = $('body').hasClass('sidebar-collapse');
 
     if (isCollapsed) {
@@ -16,7 +16,23 @@ $('[data-widget="pushmenu"]').on('click', function() {
 
 
 
-window._conf = function($msg = '', $func = '', $params = []) {
+
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    // Disable autocomplete for all forms
+    document.querySelectorAll('form').forEach((form) => {
+        form.setAttribute('autocomplete', 'off');
+    });
+
+    // Disable autocomplete for all input elements
+    document.querySelectorAll('input').forEach((input) => {
+        input.setAttribute('autocomplete', 'off');
+    });
+});
+
+
+
+window._conf = function ($msg = '', $func = '', $params = []) {
     $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
     $('#confirm_modal .modal-body').html($msg)
     $('#confirm_modal').modal('show')
@@ -24,7 +40,7 @@ window._conf = function($msg = '', $func = '', $params = []) {
 
 
 
-window.alert_toast = function($msg = 'TEST', $bg = 'success') {
+window.alert_toast = function ($msg = 'TEST', $bg = 'success') {
     $('#alert_toast').removeClass('bg-success')
     $('#alert_toast').removeClass('bg-danger')
     $('#alert_toast').removeClass('bg-info')

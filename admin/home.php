@@ -23,10 +23,9 @@
 
         // Modify the query to count members per category
         $cats = $conn->query("SELECT *, COUNT(m.id) AS count
-          FROM category c
-          LEFT JOIN member m ON m.type_id = c.id
-          GROUP BY c.id, c.cat_name
-          ORDER BY c.id ASC
+          FROM role r
+          LEFT JOIN member m ON m.role_id = r.id
+          GROUP BY r.id, r.role_name
         ");
 
         while ($row = $cats->fetch_assoc()):
@@ -41,7 +40,7 @@
                 <!-- Display the count of members -->
                 <h3><?php echo $row['count']; ?></h3>
 
-                <p><?php echo $row['cat_name'] ?></p>
+                <p><?php echo $row['role_name'] ?></p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>

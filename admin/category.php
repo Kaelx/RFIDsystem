@@ -32,7 +32,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
+                                                <input type="text" class="form-control" name="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
@@ -48,30 +48,30 @@
                             </div>
                             <!-- Table Panel -->
                             <div class="col-md-8">
-                                <div class="card">
+                                <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
-                                                        <th class="text-center w-50">People</th>
+                                                        <th class="text-center w-50">Role</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                     $i = 1;
-                                                    $cats = $conn->query("SELECT * FROM category order by id asc");
+                                                    $cats = $conn->query("select * from role order by id asc");
                                                     while ($row = $cats->fetch_assoc()):
                                                     ?>
                                                         <tr>
                                                             <td class="text-center"><?php echo $i++ ?></td>
                                                             <td class="">
-                                                                <?php echo $row['cat_name'] ?>
+                                                                <?php echo $row['role_name'] ?>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button class="btn btn-sm btn-secondary col-sm-3 edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['cat_name'] ?>">Edit</button>
+                                                                <button class="btn btn-sm btn-secondary col-sm-3 edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['role_name'] ?>">Edit</button>
                                                                 <button class="btn btn-sm btn-danger col-sm-3 delete_cat" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
                                                             </td>
                                                         </tr>
@@ -111,7 +111,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
+                                                <input type="text" class="form-control" name="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
@@ -127,7 +127,7 @@
                             </div>
                             <!-- Table Panel -->
                             <div class="col-md-8">
-                                <div class="card">
+                                <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-hover compact">
@@ -189,7 +189,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" autocomplete="name" required>
+                                                <input type="text" class="form-control" name="name" required>
                                             </div>
                                         </div>
                                         <div class="card-footer">
@@ -205,7 +205,7 @@
                             </div>
                             <!-- Table Panel -->
                             <div class="col-md-8">
-                                <div class="card">
+                                <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-hover compact">
@@ -252,4 +252,227 @@
 
 
 
-<script src="js/category.js"></script>
+<script>
+    $('table').DataTable({
+        ordering: false,
+        lengthChange: false,
+        info: false,
+        layout: {
+            bottom: 'paging',
+            bottomEnd: null
+        }
+    })
+
+
+    $('#set-category').submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+            url: 'ajax.php?action=save_category',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully added", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else if (resp == 2) {
+                    alert_toast("Data successfully updated", 'info')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else {
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    })
+
+    $('#set2-category').submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+            url: 'ajax.php?action=save_category2',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully added", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else if (resp == 2) {
+                    alert_toast("Data successfully updated", 'info')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else {
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    })
+
+    $('#set3-category').submit(function(e) {
+        e.preventDefault()
+
+        $.ajax({
+            url: 'ajax.php?action=save_category3',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully added", 'success')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else if (resp == 2) {
+                    alert_toast("Data successfully updated", 'info')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                } else {
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    })
+
+
+    $('.edit_cat').click(function() {
+        var cat = $('#set-category')
+        cat.get(0).reset()
+        cat.find("[name='id']").val($(this).attr('data-id'))
+        cat.find("[name='name']").val($(this).attr('data-name'))
+    })
+
+    $('.edit_cat2').click(function() {
+        var cat = $('#set2-category')
+        cat.get(0).reset()
+        cat.find("[name='id']").val($(this).attr('data-id'))
+        cat.find("[name='name']").val($(this).attr('data-name'))
+    })
+
+    $('.edit_cat3').click(function() {
+        var cat = $('#set3-category')
+        cat.get(0).reset()
+        cat.find("[name='id']").val($(this).attr('data-id'))
+        cat.find("[name='name']").val($(this).attr('data-name'))
+    })
+
+
+    $('.delete_cat').click(function() {
+        _conf("Are you sure to delete this category?", "delete_cat", [$(this).attr('data-id')])
+    })
+
+    $('.delete_cat2').click(function() {
+        _conf("Are you sure to delete this department?", "delete_cat2", [$(this).attr('data-id')])
+    })
+
+    $('.delete_cat3').click(function() {
+        _conf("Are you sure to delete this program?", "delete_cat3", [$(this).attr('data-id')])
+    })
+
+
+    function delete_cat($id) {
+        $.ajax({
+            url: 'ajax.php?action=delete_category',
+            method: 'POST',
+            data: {
+                id: $id
+            },
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully deleted", 'warning')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                }
+            }
+        })
+    }
+
+    function delete_cat2($id) {
+        $.ajax({
+            url: 'ajax.php?action=delete_category2',
+            method: 'POST',
+            data: {
+                id: $id
+            },
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully deleted", 'warning')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                }
+            }
+        })
+    }
+
+    function delete_cat3($id) {
+        $.ajax({
+            url: 'ajax.php?action=delete_category3',
+            method: 'POST',
+            data: {
+                id: $id
+            },
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully deleted", 'warning')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                }
+            }
+        })
+    }
+
+
+    // fold card
+    $('.card').each(function() {
+        var cardId = $(this).attr('id');
+        if (cardId && localStorage.getItem(cardId) === 'true') {
+            $(this).addClass('collapsed-card');
+            $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
+        }
+    });
+
+
+    $('.btn-tool').on('click', function() {
+        var card = $(this).closest('.card');
+        var cardId = card.attr('id');
+        var isCollapsed = card.hasClass('collapsed-card');
+
+        if (isCollapsed) {
+            localStorage.setItem(cardId, 'false');
+            $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
+
+        } else {
+            localStorage.setItem(cardId, 'true');
+            $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
+        }
+    });
+</script>
