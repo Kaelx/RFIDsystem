@@ -5,8 +5,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <!-- button -->
-                    <a href="index.php?page=register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a> 
-                    <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> 
+                    <a href="index.php?page=register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                    <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a>
                 </div>
             </div>
         </div>
@@ -21,6 +21,7 @@
                         <table class="table table-hover table-bordered compact">
                             <thead>
                                 <tr>
+                                    <th class="text-center">#</th>
                                     <th class="text-center">School ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Role</th>
@@ -42,6 +43,7 @@
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr>
+                                        <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
@@ -62,5 +64,6 @@
     $('table').DataTable({
         ordering: false,
         lengthChange: false,
+        stateSave: true
     });
 </script>

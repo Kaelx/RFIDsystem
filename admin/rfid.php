@@ -21,7 +21,7 @@
                     </center>
 
                     <!-- User Information Display -->
-                    <div class="row align-items-center justify-content-center">
+                    <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center">
                             <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; max-width: 350px; max-height: 350px;">
                         </div>
@@ -50,30 +50,29 @@
                 </div>
             </form>
 
+
             <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-sm compact">
-                            <thead>
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm compact">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Time in</th>
+                                <th class="text-center">Time out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $rec = $conn->query('SELECT * FROM record ORDER BY GREATEST(timein, IFNULL(timeout, timein)) DESC LIMIT 5;');
+                            while ($row = $rec->fetch_assoc()): ?>
                                 <tr>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Time in</th>
-                                    <th class="text-center">Time out</th>
+                                    <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
+                                    <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
+                                    <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $rec = $conn->query('SELECT * FROM record ORDER BY GREATEST(timein, IFNULL(timeout, timein)) DESC LIMIT 5;');
-                                while ($row = $rec->fetch_assoc()): ?>
-                                    <tr>
-                                        <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
-                                        <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
-                                        <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
-                                    </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

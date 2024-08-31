@@ -21,7 +21,7 @@
                         <table class="table table-hover table-bordered compact">
                             <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
+                                    <th class="text-center">#</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Account Type</th>
                                     <th class="text-center">Action</th>
@@ -35,7 +35,7 @@
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr>
-                                        <td><?php echo $i++; ?></td>
+                                        <td class="text-center"><?php echo $i++; ?></td>
                                         <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td><?php echo ($row['account_type'] == 0) ? 'Admin' : (($row['account_type'] == 1) ? 'Staff' : 'Security Personnel'); ?></td>
                                         <td class="text-center">
