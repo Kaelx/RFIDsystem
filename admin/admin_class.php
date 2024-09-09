@@ -101,6 +101,7 @@ class Action{
 
 		$dept_id = isset($dept_id) ? $dept_id : '';
 		$prog_id = isset($prog_id) ? $prog_id : '';
+		$school_id = isset($school_id) ? $school_id : '';
 
 		$data = " fname = '$fname' ";
 		$data .= ", lname = '$lname' ";
@@ -181,72 +182,73 @@ class Action{
 		echo json_encode($response);
 	}
 
-	function adduser(){
-		extract($_POST);
+	
+	// function adduser(){
+	// 	extract($_POST);
 
-		return($_POST);
+	// 	return($_POST);
 
 
 		
-		// if(empty($id)){
-		// 	$save = $this->db->query("INSERT INTO user set ".$data);
-		// 	if($save)
-		// 	return 1;
-		// }else{
-		// 	$save = $this->db->query("UPDATE user set ".$data." where id=".$id);
-		// 	if($save)
-		// 	return 2;
-		// }
+	// 	if(empty($id)){
+	// 		$save = $this->db->query("INSERT INTO user set ".$data);
+	// 		if($save)
+	// 		return 1;
+	// 	}else{
+	// 		$save = $this->db->query("UPDATE user set ".$data." where id=".$id);
+	// 		if($save)
+	// 		return 2;
+	// 	}
 		
-	}
+	// }
 
 
-	function import() {
-		if (isset($_FILES['csv']['tmp_name'])) {
-			$csvFile = $_FILES['csv']['tmp_name'];
+	// function import() {
+	// 	if (isset($_FILES['csv']['tmp_name'])) {
+	// 		$csvFile = $_FILES['csv']['tmp_name'];
 	
-			// Check if the file exists
-			if (($handle = fopen($csvFile, 'r')) !== FALSE) {
-				// Skip the first row if it contains column headers
-				fgetcsv($handle);
+	// 		// Check if the file exists
+	// 		if (($handle = fopen($csvFile, 'r')) !== FALSE) {
+	// 			// Skip the first row if it contains column headers
+	// 			fgetcsv($handle);
 	
-				while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-					// Check if the row has the expected number of columns
-					if (count($data) < 6) {
-						// Handle the error: Skip this row or log an error
-						continue; // Skip the row if it doesn't have enough columns
-					}
+	// 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+	// 				// Check if the row has the expected number of columns
+	// 				if (count($data) < 6) {
+	// 					// Handle the error: Skip this row or log an error
+	// 					continue; // Skip the row if it doesn't have enough columns
+	// 				}
 	
-					// Assign each CSV column to a variable, using a default value if it's missing
-					$id = !empty($data[0]) ? $data[0] : NULL; // or some default value
-					$fname = !empty($data[1]) ? $data[1] : '';
-					$lname = !empty($data[2]) ? $data[2] : '';
-					$role_id = !empty($data[3]) ? $data[3] : NULL;
-					$school_id = !empty($data[4]) ? $data[4] : NULL;
-					$email = !empty($data[5]) ? $data[5] : '';
+	// 				// Assign each CSV column to a variable, using a default value if it's missing
+	// 				$id = !empty($data[0]) ? $data[0] : NULL; // or some default value
+	// 				$fname = !empty($data[1]) ? $data[1] : '';
+	// 				$lname = !empty($data[2]) ? $data[2] : '';
+	// 				$role_id = !empty($data[3]) ? $data[3] : NULL;
+	// 				$school_id = !empty($data[4]) ? $data[4] : NULL;
+	// 				$email = !empty($data[5]) ? $data[5] : '';
 	
-					// Adjust the SQL query to exclude rfid and img_path
-					$query = "INSERT INTO member (id, fname, lname, role_id, school_id, email) 
-							VALUES ('$id', '$fname', '$lname', '$role_id', '$school_id', '$email') 
-							ON DUPLICATE KEY UPDATE 
-							fname='$fname', lname='$lname', role_id='$role_id', school_id='$school_id', email='$email'";
+	// 				// Adjust the SQL query to exclude rfid and img_path
+	// 				$query = "INSERT INTO member (id, fname, lname, role_id, school_id, email) 
+	// 						VALUES ('$id', '$fname', '$lname', '$role_id', '$school_id', '$email') 
+	// 						ON DUPLICATE KEY UPDATE 
+	// 						fname='$fname', lname='$lname', role_id='$role_id', school_id='$school_id', email='$email'";
 	
-					if ($this->db->query($query) === TRUE) {
-						continue; // Data successfully added or updated, continue to next row
-					} else {
-						return 0; // Error occurred
-					}
-				}
+	// 				if ($this->db->query($query) === TRUE) {
+	// 					continue; // Data successfully added or updated, continue to next row
+	// 				} else {
+	// 					return 0; // Error occurred
+	// 				}
+	// 			}
 	
-				fclose($handle);
-				return 1; // All data processed successfully
-			} else {
-				return 0; // Could not open the file
-			}
-		} else {
-			return 0; // File not set
-		}
-	}
+	// 			fclose($handle);
+	// 			return 1; // All data processed successfully
+	// 		} else {
+	// 			return 0; // Could not open the file
+	// 		}
+	// 	} else {
+	// 		return 0; // File not set
+	// 	}
+	// }
 	
 	
 

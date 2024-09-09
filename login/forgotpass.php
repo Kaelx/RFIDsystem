@@ -6,4 +6,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Recover</button>
     </form>
+
+    <hr>
     <a href="index.php?page=login">Login</a>

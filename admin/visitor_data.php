@@ -5,8 +5,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <!-- button -->
-                    <a href="index.php?page=register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                    <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a>
+                    <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                    <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
                 </div>
             </div>
         </div>
@@ -22,10 +22,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">School ID</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Role</th>
-                                    <th class="text-center">Action</th>
+                                    <th class="text-center w-100">Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,23 +31,21 @@
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
                                 $cats = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-                                                    FROM member m 
-                                                    LEFT JOIN department d ON m.dept_id = d.id 
-                                                    LEFT JOIN program p ON m.prog_id = p.id 
-                                                    LEFT JOIN role r ON m.role_id = r.id 
-                                                    ORDER BY m.id ASC");
+                                FROM member m 
+                                LEFT JOIN department d ON m.dept_id = d.id 
+                                LEFT JOIN program p ON m.prog_id = p.id 
+                                LEFT JOIN role r ON m.role_id = r.id 
+                                WHERE r.role_name = 'visitor' OR r.role_name IS NULL 
+                                ORDER BY m.id ASC");
+
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr>
+                                    <tr onclick="window.location.href='index.php?page=visitor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class="text-left"><?php echo $row['role_name']; ?></td>
-                                        <td class="text-center">
-                                            <a href="index.php?page=view&uid=<?= $row['id'] ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> view</a>
-                                        </td>
                                     </tr>
+
                                 <?php endwhile; ?>
                             </tbody>
                         </table>

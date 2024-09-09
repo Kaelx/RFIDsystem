@@ -32,70 +32,38 @@
                         <input type="text" class="form-control" name="lname" id="lname" required>
                     </div>
                 </div>
-
+                
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="role_id">Type</label>
                         <select class="form-control" name="role_id" id="role_id" required>
-                            <option value="" selected disabled>-- Select Role --</option>
                             <?php
-                            $type = $conn->query("SELECT * FROM role order by id asc ");
+                            $type = $conn->query("SELECT * FROM role where role_name = 'visitor' order by id asc ");
                             while ($row = $type->fetch_assoc()) :
                             ?>
                                 <option value="<?php echo $row['id'] ?>"><?php echo $row['role_name'] ?></option>
                             <?php endwhile; ?>
                         </select>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label for="school_id">School ID</label>
-                        <input type="text" class="form-control" name="school_id" id="school_id" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="dept_id">School Department</label>
-                        <select class="form-control" name="dept_id" id="dept_id">
-                            <option selected disabled>-- Select Department --</option>
-                            <?php
-                            $department = $conn->query("SELECT * FROM department order by id asc ");
-                            while ($row = $department->fetch_assoc()) :
-                            ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['dept_name'] ?></option>
-
-                            <?php endwhile; ?>
-                        </select>
-                        <small class="m-2 text-danger font-italic">*Leave blank if not applicable.</small>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="prog_id">School Program</label>
-                        <select class="form-control" name="prog_id" id="prog_id">
-                            <option selected disabled>-- Select Program --</option>
-                            <?php
-                            $program = $conn->query("SELECT * FROM program order by id asc ");
-                            while ($row = $program->fetch_assoc()) :
-                            ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['prog_name'] ?></option>
-
-                            <?php endwhile; ?>
-                        </select>
-                        <small class="m-2 text-danger font-italic">*Leave blank if not applicable.</small>
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" required>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="rfid">RFID</label>
-                    <input type="password" class="form-control" name="rfid" id="rfid" required>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="rfid">RFID</label>
+                        <input type="password" class="form-control" name="rfid" id="rfid" required>
+                    </div>
                 </div>
 
                 <div class="text-right mr-5">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="index.php?page=data" class="btn btn-secondary">Cancel</a>
+                    <a href="index.php?page=visitor_data" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
 

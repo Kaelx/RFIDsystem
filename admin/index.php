@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 
-// error_reporting(E_ALL);
+error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -84,11 +84,27 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <li class="nav-item">
-              <a href="index.php?page=data" class="nav-link">
+              <a href="index.php?page=student_data" class="nav-link">
                 <i class="fa-solid fa-id-card nav-icon"></i>
-                <p>Register</p>
+                <p>Students</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=employee_data" class="nav-link">
+                <i class="fa-solid fa-building-user nav-icon"></i>
+                <p>Employee</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="index.php?page=visitor_data" class="nav-link">
+                <i class="fa-solid fa-people-group nav-icon"></i>
+                <p>Visitor</p>
+              </a>
+            </li>
+
+            <li class="nav-header">Attendance</li>
 
             <li class="nav-item">
               <a href="index.php?page=rfid" class="nav-link">
@@ -116,7 +132,7 @@ if (!isset($_SESSION['login_id'])) {
 
             <li class="nav-item">
               <a href="index.php?page=accountmanage" class="nav-link">
-                <i class="fa-solid fa-users nav-icon"></i>
+                <i class="fa-solid fa-user-gear nav-icon"></i>
                 <p>
                   Manage Account
                 </p>
@@ -127,7 +143,7 @@ if (!isset($_SESSION['login_id'])) {
         </nav>
       </div>
     </aside>
-<!-- end Sidebar -->
+    <!-- end Sidebar -->
 
 
 
@@ -138,13 +154,13 @@ if (!isset($_SESSION['login_id'])) {
         </div>
       </div>
     </div>
-  <!-- end Toast Alert -->
+    <!-- end Toast Alert -->
 
 
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'register', 'data', 'accountmanage', 'view', 'entrylogs','adduser','accountedit','import'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'employee_data', 'employee_register', 'employee_view', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

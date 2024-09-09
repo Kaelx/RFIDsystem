@@ -16,8 +16,8 @@
         <div class="container-fluid">
             <form action="" id="import">
                 <div class="form-group">
-                    <label for="csv">CSV File</label>
-                    <input type="file" name="csv" id="csv" accept=".csv" class="form-control" required>
+                    <label for="csv">CSV File</label><br>
+                    <input type="file" name="csv" id="csv" accept=".csv" required>
                 </div>
                 <button class="btn btn-primary" type="submit">Upload</button>
             </form>
