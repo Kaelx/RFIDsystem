@@ -60,13 +60,29 @@ class Action{
 
 	function save_category3(){
 		extract($_POST);
-		$data = " prog_name = '$name' ";
+		$data = " dept_id = '$dept_id' ";
+		$data .= ", prog_name = '$name' ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO program set ".$data);
 			if($save)
 			return 1;
 		}else{
 			$save = $this->db->query("UPDATE program set ".$data." where id=".$id);
+			if($save)
+			return 2;
+		}
+	}
+
+
+	function save_category4(){
+		extract($_POST);
+		$data = "gender = '$name' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO gender set ".$data);
+			if($save)
+			return 1;
+		}else{
+			$save = $this->db->query("UPDATE gender set ".$data." where id=".$id);
 			if($save)
 			return 2;
 		}
@@ -94,41 +110,86 @@ class Action{
 			return 1;
 	}
 
+	function delete_category4(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM gender where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+
+	function get_department(){
+		extract($_POST);
+
+		$fetch = $this->db->query("SELECT * FROM program WHERE id = " . $prog_id);
+
+		if ($fetch->num_rows > 0) {
+			$data = $fetch->fetch_assoc();
+			$dept_id = $data['dept_id'];
+
+			$fetch = $this->db->query("SELECT * FROM department WHERE id = " . $dept_id);
+			$data = $fetch->fetch_assoc();
+
+			$response = [
+				'success' => true,
+				'dept_id' => $dept_id,
+				'dept_name' => $data['dept_name'],
+			];
+		} else {
+			$response = ['success' => false];
+		}
+
+		echo json_encode($response);
+	}
+	
+
 
 	
 	function register(){
 		extract($_POST);
 
-		$dept_id = isset($dept_id) ? $dept_id : '';
-		$prog_id = isset($prog_id) ? $prog_id : '';
-		$school_id = isset($school_id) ? $school_id : '';
-
 		$data = " fname = '$fname' ";
+		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
-		$data .= ", role_id = '$role_id' ";
-		$data .= ", school_id = '$school_id' ";
+		$data .= ", bdate = '$bdate' ";
+		$data .= ", gender = '$gender' ";
+		$data .= ", address = '$address' ";
+		$data .=", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-		$data .= ", dept_id = '$dept_id' ";
+		$data .=", parent_name = '$parent_name' ";
+		$data .= ", parent_num = '$parent_num' ";
+		$data .= ", parent_address = '$parent_address' ";
+		$data .= ", school_id = '$school_id' ";
+		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";
+		$data .= ", dept_id = '$dept_id' ";
 		$data .= ", rfid = '$rfid' ";
 
 		if ($_FILES['img']['tmp_name'] != '') {
-			$fname = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $fname);
+			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
 			if($move){
-				$data .= ", img_path = '$fname' ";
+				$data .= ", img_path = '$img' ";
 			}
 		}
 
 		if(empty($id)){
-			$save = $this->db->query("INSERT INTO member set ".$data);
+			$save = $this->db->query("INSERT INTO students set ".$data);
 			if($save)
 			return 1;
 		}else{
-			$save = $this->db->query("UPDATE member set ".$data." where id=".$id);
+			$save = $this->db->query("UPDATE students set ".$data." where id=".$id);
 			if($save)
 			return 2;
 		}
+	}
+
+
+	function delete_student(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM students where id = ".$id);
+		if($delete)
+			return 1;
 	}
 
 
@@ -136,12 +197,12 @@ class Action{
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-		FROM member m 
-		LEFT JOIN department d ON m.dept_id = d.id 
-		LEFT JOIN program p ON m.prog_id = p.id 
-		LEFT JOIN role r ON m.role_id = r.id  
-		WHERE m.rfid = '$rfid'");
+		$fetch = $this->db->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+		FROM students s 
+		LEFT JOIN department d ON s.dept_id = d.id 
+		LEFT JOIN program p ON s.prog_id = p.id 
+		LEFT JOIN role r ON s.role_id = r.id  
+		WHERE s.rfid = '$rfid'");
 
 
 		if ($fetch->num_rows > 0) {

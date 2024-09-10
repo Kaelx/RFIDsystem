@@ -2,7 +2,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="row">
         <div class="col-sm-6">
           <h1 class="m-0">Dashboard</h1>
         </div>
@@ -22,9 +22,9 @@
         $counter = 0;
 
         // Modify the query to count members per category
-        $cats = $conn->query("SELECT *, COUNT(m.id) AS count
+        $cats = $conn->query("SELECT *, COUNT(s.id) AS count
           FROM role r
-          LEFT JOIN member m ON m.role_id = r.id
+          LEFT JOIN students s ON s.role_id = r.id
           GROUP BY r.id, r.role_name
         ");
 

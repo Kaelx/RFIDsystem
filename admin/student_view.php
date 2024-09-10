@@ -2,15 +2,15 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-    FROM member m 
-    LEFT JOIN department d ON m.dept_id = d.id 
-    LEFT JOIN program p ON m.prog_id = p.id 
-    LEFT JOIN role r ON m.role_id = r.id 
-    WHERE m.id = $uid 
-    ORDER BY m.id ASC");
+    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+    FROM students s 
+    LEFT JOIN department d ON s.dept_id = d.id 
+    LEFT JOIN program p ON s.prog_id = p.id 
+    LEFT JOIN role r ON s.role_id = r.id 
+    WHERE s.id = $uid 
+    ORDER BY s.id ASC");
 
-    $member = mysqli_fetch_assoc($query);
+    $data = mysqli_fetch_assoc($query);
 } else {
     header('location: index.php?page=student_data');
 }
@@ -20,11 +20,6 @@ if (isset($_GET['uid'])) {
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Data</h1>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -32,133 +27,178 @@ if (isset($_GET['uid'])) {
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <div class="card">
+                <div class="card-header text-bold text-center">Student Information</div>
+                <div class="card-body">
+                    <form action="#" id="register">
+                        <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
+                        <div class="form-group text-right mr-4">
+                            <label for="img" class="mr-4">Profile Picture</label><br>
+                            <div style="position: relative; display: inline-block;">
+                                <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
+                                    <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <?php else: ?>
+                                    <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <?php endif; ?>
 
-            <form action="#" id="register">
-                <input type="hidden" name="id" value="<?= isset($member['id']) ? $member['id'] : '' ?>">
-                <div class="form-group">
-                    <label for="img">Profile Picture</label><br>
-                    <input type="file" name="img" id="img">
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
+                                <!-- Hidden File Input -->
+                                <input type="file" name="img" id="img" style="display: none;" onchange="previewImage(event)">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" name="fname" id="fname" value="<?= isset($data['fname']) ? $data['fname'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="mname">Middle Initial</label>
+                                <input type="text" class="form-control" name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" name="lname" id="lname" value="<?= isset($data['lname']) ? $data['lname'] : '' ?>" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="bdate">Birthdate</label>
+                                <input type="date" class="form-control" name="bdate" id="bdate" value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="gender">Gender</label>
+                                <select class="form-control" name="gender" id="gender" disabled>
+                                    <option value="" <?= !isset($data['gender']) || $data['gender'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM gender ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['gender']) && $data['gender'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['gender'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" name="address" id="address" value="<?= isset($data['address']) ? $data['address'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="cellnum">Contact No.</label>
+                                <input type="number" class="form-control" name="cellnum" id="cellnum" value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" readonly>
+                            </div>
+
+                            <div class="col-md-4 form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" value="<?= isset($data['email']) ? $data['email'] : '' ?>" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="parent_name">Complete Name of Parent/Guardian</label>
+                                <input type="text" class="form-control" name="parent_name" id="parent_name" value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="parent_num">Contact No. of Parent/Guardian</label>
+                                <input type="number" class="form-control" name="parent_num" id="parent_num" value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="parent_address">Address of Parent/Guardian</label>
+                                <input type="text" class="form-control" name="parent_address" id="parent_address" value="<?= isset($data['parent_address']) ? $data['parent_address'] : '' ?>" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control" name="school_id" id="school_id" value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>" readonly>
+                            </div>
+
+                            <div class="col-md-4 form-group">
+                                <?php
+                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'Student' ORDER BY id ASC");
+                                while ($row = $type->fetch_assoc()) :
+                                ?>
+                                    <label for="role_id">Type</label>
+                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                                    <input type="text" class="form-control" id="role_id" value="<?= $row['role_name'] ?>" readonly>
+                                <?php endwhile; ?>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="prog_id">School Program/Course</label>
+                                <select class="form-control" name="prog_id" id="prog_id" disabled>
+                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['prog_id']) && $data['prog_id'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['prog_name'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label for="dept_name">Department</label>
+                                <input type="hidden" class="form-control" name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>" readonly>
+                                <input type="text" class="form-control" id="dept_name" value="<?= isset($data['dept_name']) ? $data['dept_name'] : '' ?>" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="rfid">RFID</label>
+                                <input type="password" class="form-control" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
+                            <button class="btn btn-danger btn-custom delete_student" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
+                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>
+                        </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
-                    </div>
+
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="role_id">Role</label>
-                        <select class="form-control" name="role_id" id="role_id" required>
-                            <option value="" <?= !isset($member['role_id']) || $member['role_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
-                            <?php
-                            $type = $conn->query("SELECT * FROM role ORDER BY id ASC");
-                            while ($row = $type->fetch_assoc()) :
-                                $selected = isset($member['role_id']) && $member['role_id'] == $row['id'] ? 'selected' : '';
-                            ?>
-                                <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['role_name'] ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-6 form-group">
-                        <label for="school_id">School ID</label>
-                        <input type="text" class="form-control" name="school_id" id="school_id" required value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required value="<?= isset($member['email']) ? $member['email'] : '' ?>">
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="dept_id">School Department</label>
-
-                        <select class="form-control" name="dept_id" id="dept_id" required>
-                        <option value="" <?= !isset($member['dept_id']) || $member['dept_id'] == '' ? 'selected' : '' ?> disabled>-- Select Department --</option>
-                            <?php
-                            $department = $conn->query("SELECT * FROM department order by id asc ");
-                            while ($row = $department->fetch_assoc()) :
-                            ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['dept_name'] ?></option>
-
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="prog_id">School Program/Course</label>
-                        <select class="form-control" name="prog_id" id="prog_id" required>
-                        <option value="" <?= !isset($member['prog_id']) || $member['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select Program/Course --</option>
-                            <?php
-                            $program = $conn->query("SELECT * FROM program order by id asc ");
-                            while ($row = $program->fetch_assoc()) :
-                            ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['prog_name'] ?></option>
-
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="rfid">RFID</label>
-                    <input type="password" class="form-control" name="rfid" id="rfid" required value="<?= isset($member['rfid']) ? $member['rfid'] : '' ?>">
-                </div>
-
-                <div class="text-right mr-5">
-                    <button class="btn btn-primary">Save</button>
-                    <a href="index.php?page=student_data" class="btn btn-secondary">Back</a>
-                </div>
-            </form>
-
-
-
+            </div>
         </div>
     </section>
+
 
 </div>
 
 <script>
-    $('#register').submit(function(e) {
-        e.preventDefault()
+    $('.delete_student').click(function() {
 
+        _conf("Are you sure to delete this data?", "delete_student", [$(this).attr('data-id')])
+    });
+
+    function delete_student($id) {
         $.ajax({
-            url: 'ajax.php?action=register',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
+            url: 'ajax.php?action=delete_student',
             method: 'POST',
-            type: 'POST',
+            data: {
+                id: $id
+            },
             success: function(resp) {
-
-                console.log("Response: ", resp); //to see the error
-
-
                 if (resp == 1) {
-                    alert_toast("Data successfully added", 'success')
+                    alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=student_data'
-                    }, 1000)
+                    }, 1500)
 
-                } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'info')
-                    setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
-                    }, 1000)
-
-                } else {
-                    alert_toast("An error occured", 'danger')
                 }
             }
         })
-    })
+    }
 </script>

@@ -2,13 +2,13 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-    FROM member m 
-    LEFT JOIN department d ON m.dept_id = d.id 
-    LEFT JOIN program p ON m.prog_id = p.id 
-    LEFT JOIN role r ON m.role_id = r.id 
-    WHERE m.id = $uid 
-    ORDER BY m.id ASC");
+    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+    FROM students s 
+    LEFT JOIN department d ON s.dept_id = d.id 
+    LEFT JOIN program p ON s.prog_id = p.id 
+    LEFT JOIN role r ON s.role_id = r.id 
+    WHERE s.id = $uid 
+    ORDER BY s.id ASC");
 
     $member = mysqli_fetch_assoc($query);
 } else {
@@ -20,7 +20,7 @@ if (isset($_GET['uid'])) {
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-sm-6">
                     <h1 class="m-0">Data</h1>
                 </div>

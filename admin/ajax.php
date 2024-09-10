@@ -30,6 +30,12 @@ if($action == "save_category3"){
 		echo $save;
 }
 
+if($action == "save_category4"){
+	$save = $crud->save_category4();
+	if($save)
+		echo $save;
+}
+
 if($action == "delete_category"){
 	$save = $crud->delete_category();
 	if($save)
@@ -48,6 +54,19 @@ if($action == "delete_category3"){
 		echo $save;
 }
 
+if($action == "delete_category4"){
+	$save = $crud->delete_category4();
+	if($save)
+		echo $save;
+}
+
+
+if($action == "get_department"){
+	$save = $crud->get_department();
+	if($save)
+		echo $save;
+}
+
 
 if($action == "register"){
 	$save = $crud->register();
@@ -55,11 +74,11 @@ if($action == "register"){
 		echo $save;
 }
 
-if($action == "adduser"){
-	$save = $crud->adduser();
-	if($save)
-		echo $save;
-}
+// if($action == "adduser"){
+// 	$save = $crud->adduser();
+// 	if($save)
+// 		echo $save;
+// }
 
 
 if($action == "fetch_data"){
@@ -68,9 +87,20 @@ if($action == "fetch_data"){
 		echo $save;
 }
 
-if($action == "import"){
-	$save = $crud->import();
+// if($action == "import"){
+// 	$save = $crud->import();
+// 	if($save)
+// 		echo $save;
+// }
+
+
+if($action == "delete_student"){
+	$save = $crud->delete_student();
 	if($save)
 		echo $save;
 }
+
+
+
+
 ?>

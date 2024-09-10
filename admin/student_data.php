@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-sm-6">
                     <!-- button -->
                     <a href="index.php?page=student_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
@@ -22,8 +22,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-50">School ID</th>
+                                    <th class="text-center w-25">School ID</th>
                                     <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-25">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,13 +32,13 @@
                                 $i = 1;
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
-                                $cats = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-                                FROM member m 
-                                LEFT JOIN department d ON m.dept_id = d.id 
-                                LEFT JOIN program p ON m.prog_id = p.id 
-                                LEFT JOIN role r ON m.role_id = r.id 
+                                $cats = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+                                FROM students s 
+                                LEFT JOIN department d ON s.dept_id = d.id 
+                                LEFT JOIN program p ON s.prog_id = p.id 
+                                LEFT JOIN role r ON s.role_id = r.id 
                                 WHERE r.role_name = 'student' OR r.role_name IS NULL 
-                                ORDER BY m.id ASC");
+                                ORDER BY s.id ASC");
 
 
                                 while ($row = $cats->fetch_assoc()):
@@ -46,6 +47,7 @@
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['email']; ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>
