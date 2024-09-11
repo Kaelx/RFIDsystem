@@ -74,6 +74,13 @@ if($action == "register"){
 		echo $save;
 }
 
+
+if($action == "register2"){
+	$save = $crud->register2();
+	if($save)
+		echo $save;
+}
+
 // if($action == "adduser"){
 // 	$save = $crud->adduser();
 // 	if($save)

@@ -185,6 +185,53 @@ class Action{
 	}
 
 
+	function register2(){
+		extract($_POST);
+
+		$data = " fname = '$fname' ";
+		$data .= ", mname = '$mname' ";
+		$data .= ", lname = '$lname' ";
+		$data .= ", bdate = '$bdate' ";
+		$data .= ", gender_id = '$gender' ";
+		$data .= ", address = '$address' ";
+		$data .=", cellnum = '$cellnum' ";
+		$data .= ", email = '$email' ";
+
+		$data .= ", tin_num = '$tin_num' ";
+		$data .= ", gsis_num = '$gsis_num' ";
+		$data .= ", phil_num = '$phil_num' ";
+		$data .= ", pagibig_num = '$pagibig_num' ";
+		$data .= ", sss_num = '$sss_num' ";
+
+		$data .=", parent_name = '$parent_name' ";
+		$data .= ", parent_num = '$parent_num' ";
+		$data .= ", parent_address = '$parent_address' ";
+		$data .= ", school_id = '$school_id' ";
+		$data .= ", role_id = '$role_id' ";
+		$data .= ", rfid = '$rfid' ";
+
+		if ($_FILES['img']['tmp_name'] != '') {
+			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
+			if($move){
+				$data .= ", img_path = '$img' ";
+			}
+		}
+
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO employees set ".$data);
+			if($save)
+			return 1;
+		}else{
+			$save = $this->db->query("UPDATE employees set ".$data." where id=".$id);
+			if($save)
+			return 2;
+		}
+	}
+
+
+
+
 	function delete_student(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM students where id = ".$id);

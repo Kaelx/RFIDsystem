@@ -6,7 +6,7 @@ if (isset($_GET['uid'])) {
     FROM students s 
     LEFT JOIN department d ON s.dept_id = d.id 
     LEFT JOIN program p ON s.prog_id = p.id 
-    LEFT JOIN gender g ON s.gender = g.id
+    LEFT JOIN gender g ON s.gender_id = g.id
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
