@@ -32,7 +32,7 @@ if (isset($_GET['uid'])) {
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
-                        <div class="form-group mb-0 text-right mr-4">
+                        <div class="form-group text-right m-2">
                             <label for="img" class="mr-4">Profile Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
@@ -47,44 +47,61 @@ if (isset($_GET['uid'])) {
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Middle Initial</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Last Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Birthdate</p>
                                 <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">civil_stat</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">blood_type</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['blood_type']) ? $data['blood_type'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">height</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['height']) ? $data['height'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">weight</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['weight']) ? $data['weight'] : '' ?></p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Address</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Contact No.</p>
                                 <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Email</p>
                                 <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
                             </div>
@@ -92,33 +109,33 @@ if (isset($_GET['uid'])) {
 
 
                         <div class="row">
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">TIN no.</p>
                                 <p class="form-control form-control-sm"><?= isset($data['tin_num']) ? $data['tin_num'] : '' ?></p>
                             </div>
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <label>GSIS no.</label>
                                 <p class="form-control form-control-sm" id="gsis_num"><?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <label>Philhealth no.</label>
                                 <p class="form-control form-control-sm" id="phil_num"><?= isset($data['phil_num']) ? $data['phil_num'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <label>Pag-ibig no.</label>
                                 <p class="form-control form-control-sm" id="pagibig_num"><?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?></p>
                             </div>
-                        </div>
 
-
-                        <div class="row">
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <label for="sss_num">SSS no.</label>
                                 <p type="email" class="form-control form-control-sm" id="tin_num"><?= isset($data['sss_num']) ? $data['sss_num'] : '' ?></p>
                             </div>
                         </div>
+
+
+
 
 
 

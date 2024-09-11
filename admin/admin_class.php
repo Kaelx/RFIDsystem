@@ -193,6 +193,13 @@ class Action{
 		$data .= ", lname = '$lname' ";
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender_id = '$gender' ";
+
+		$data .= ", civil_stat = '$civil_stat' ";
+		$data .= ", blood_type = '$blood_type' ";
+		$data .= ", height = '$height' ";
+		$data .= ", weight = '$weight' ";
+
+
 		$data .= ", address = '$address' ";
 		$data .=", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";

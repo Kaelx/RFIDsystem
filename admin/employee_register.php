@@ -19,7 +19,7 @@
 
 
 
-                        <div class="form-group mb-0 text-right m-2">
+                        <div class="form-group text-right m-2">
                             <label for="img" class="mr-4">Profile Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -30,16 +30,17 @@
 
 
 
+                        <h5 class="text-red"><i>Employee Information</i></h5>
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control form-control-sm" name="fname" id="fname" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="mname">Middle Initial</label>
                                 <input type="text" class="form-control form-control-sm" name="mname" id="mname" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control form-control-sm" name="lname" id="lname" required>
                             </div>
@@ -47,11 +48,11 @@
 
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
                                 <input type="date" class="form-control form-control-sm" name="bdate" id="bdate" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
                                     <option value="" selected disabled>-- Select Gender --</option>
@@ -63,76 +64,119 @@
                                     <?php endwhile; ?>
                                 </select>
                             </div>
+
+
+                            <div class="col-md-2 form-group">
+                                <label for="civil_stat">Civil Status</label>
+                                <select class="form-control form-control-sm" name="civil_stat" id="civil_stat" required>
+                                    <option value="" selected disabled>-- Select Status --</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-2 form-group">
+                                <label for="blood_type">Blood Type</label>
+                                <select class="form-control form-control-sm" name="blood_type" id="blood_type" required>
+                                    <option value="" selected disabled>-- Select Status --</option>
+                                    <option value="A">A</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B">B</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB">AB</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O">O</option>
+                                    <option value="O+">O+</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="height">Height</label>
+                                <input type="number" class="form-control form-control-sm" name="height" id="height" required>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="weight">Weight</label>
+                                <input type="number" class="form-control form-control-sm" name="weight" id="weight" required>
+                            </div>
                         </div>
 
+
+
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control form-control-sm" name="address" id="address" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
                                 <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control form-control-sm" name="email" id="email" required>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="tin_num">TIN no.</label>
                                 <input type="text" class="form-control form-control-sm" name="tin_num" id="tin_num">
                             </div>
 
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="gsis_num">GSIS no.</label>
                                 <input type="text" class="form-control form-control-sm" name="gsis_num" id="gsis_num">
                             </div>
 
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="phil_num">PhilHealth no.</label>
                                 <input type="text" class="form-control form-control-sm" name="phil_num" id="phil_num">
                             </div>
 
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="pagibig_num">Pag-ibig no.</label>
                                 <input type="text" class="form-control form-control-sm" name="pagibig_num" id="pagibig_num">
                             </div>
 
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-2 form-group">
                                 <label for="sss_num">SSS no.</label>
                                 <input type="text" class="form-control form-control-sm" name="sss_num" id="sss_num">
                             </div>
+
                         </div>
 
-                        
+                        <hr>
+                        <h5 class="text-red"><i>Contact Person Incase of Emergency</i></h5>
+
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
                                 <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
                                 <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label for="parent_address">Address of Parent/Guardian</label>
                                 <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required>
                             </div>
                         </div>
 
+                        <hr>
+
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label for="school_id">School ID</label>
                                 <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-4 form-group">
                                 <label for="role_id">Type</label>
                                 <?php
                                 $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
