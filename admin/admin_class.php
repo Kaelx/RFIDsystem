@@ -152,7 +152,7 @@ class Action{
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
 		$data .= ", bdate = '$bdate' ";
-		$data .= ", gender = '$gender' ";
+		$data .= ", gender_id = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .=", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";

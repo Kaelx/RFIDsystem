@@ -74,11 +74,11 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-4 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender" id="gender" required>
-                                    <option value="" <?= !isset($data['gender']) || $data['gender'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
+                                    <option value="" <?= !isset($data['gender_id']) || $data['gender_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM gender ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['gender']) && $data['gender'] == $row['id'] ? 'selected' : '';
+                                        $selected = isset($data['gender_id']) && $data['gender_id'] == $row['id'] ? 'selected' : '';
                                     ?>
                                         <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['gender'] ?></option>
                                     <?php endwhile; ?>
