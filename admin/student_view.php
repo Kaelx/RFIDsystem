@@ -46,28 +46,28 @@ if (isset($_GET['uid'])) {
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">First Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Middle Initial</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Last Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Birthdate</p>
                                 <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
                             </div>
@@ -78,12 +78,12 @@ if (isset($_GET['uid'])) {
                                 <p class="mb-2 text-bold">Address</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Contact No.</p>
                                 <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
 
-                            <div class="col-md-4 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Email</p>
                                 <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
                             </div>
@@ -129,7 +129,7 @@ if (isset($_GET['uid'])) {
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                             </div>

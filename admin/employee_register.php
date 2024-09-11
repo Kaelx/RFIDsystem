@@ -196,7 +196,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required>
                             </div>

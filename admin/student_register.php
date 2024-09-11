@@ -29,7 +29,7 @@
                         </div>
 
 
-<h5 class="text-red"><i>Student Information</i></h5>
+                        <h5 class="text-red"><i>Student Information</i></h5>
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
@@ -88,11 +88,11 @@
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
                                 <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required>
                             </div>
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
                                 <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required>
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="parent_address">Address of Parent/Guardian</label>
                                 <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required>
                             </div>
@@ -147,7 +147,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required>
                             </div>
