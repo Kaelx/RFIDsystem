@@ -136,8 +136,11 @@ if (isset($_GET['uid'])) {
                         </div>
                     </form>
 
-                    <div class="row">
-                        <div class="col-md-12 text-right">
+                    <div class="row mt-2">
+                        <div class="col-md-6 ">
+                            <a href="index.php?page=records&rfid=<?= $data['rfid']?>" class="btn btn-info">View Attendance</a>
+                        </div>
+                        <div class="col-md-6 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
                             <button class="btn btn-danger btn-custom delete_student" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
                             <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>

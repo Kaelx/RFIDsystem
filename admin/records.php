@@ -1,5 +1,12 @@
 <?php
 
+if (!isset($_GET['rfid'])) {
+    header('Location: index.php?page=home');
+}
+
+$rfid = $_GET['rfid'];
+
+echo $rfid;
 
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : date('Y-m-d');
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : date('Y-m-d');
@@ -24,6 +31,7 @@ $query = "SELECT r.id, r.rfid_num, r.timein, r.timeout,
             AND r.timeout IS NOT NULL 
             AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
             AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'
+            AND r.rfid_num = '$rfid'
             ORDER BY r.id ASC;";
 
 $cats = $conn->query($query);
@@ -44,6 +52,7 @@ if (!$cats) {
         <div class="container-fluid">
 
             <form action="#" id="filter-report" class="form-inline">
+                <input type="hidden" name="rfid" value="<?= $rfid ?>">
                 <div class="form-group mb-2">
                     <label for="start_date">Start Date:</label>
                     <input type="date" name="start_date" id="start_date" class="form-control form-control-sm mr-2"
@@ -142,18 +151,16 @@ if (!$cats) {
     });
 
 
-
     $('#filter-report').submit(function(e) {
         e.preventDefault();
 
-        // Serialize only non-empty fields
         var serializedData = $(this).find(':input').filter(function() {
-            return $.trim(this.value).length > 0; // Filter out empty values
+            return $.trim(this.value).length > 0;
         }).serialize();
 
-        // Redirect with the filtered query string
-        location.href = 'index.php?page=entrylogs&' + serializedData;
+        location.href = 'index.php?page=records&' + serializedData;
     });
+
 
 
     function filterBy(period) {
@@ -187,7 +194,6 @@ if (!$cats) {
             return $.trim(this.value).length > 0;
         }).serialize();
 
-        // Redirect with the filtered query string
-        location.href = 'index.php?page=entrylogs&' + serializedData;
+        location.href = 'index.php?page=records&' + serializedData;
     }
 </script>

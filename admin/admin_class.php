@@ -311,22 +311,24 @@ class Action{
 				'img_path' => $img_path
 			];
 
-			// if ($response) {
-			// 	$check_existing = $this->db->query('SELECT * FROM record 
-			// 										WHERE fname = "' . $data['fname'] . '" 
-			// 										AND lname = "' . $data['lname'] . '" 
-			// 										AND timeout IS NULL');
+			if ($response) {
+				$check_existing = $this->db->query("SELECT * FROM records 
+				WHERE rfid_num = '" . $data['rfid'] . "' 
+				AND timeout IS NULL
+			");
 
-			// 	if ($check_existing->num_rows > 0) {
-			// 		$update = $this->db->query('UPDATE record SET timeout = current_timestamp() 
-			// 									WHERE fname = "' . $data['fname'] . '" 
-			// 									AND lname = "' . $data['lname'] . '" 
-			// 									AND timeout IS NULL');
-			// 	} else {
-			// 		$insert = $this->db->query('INSERT INTO record (fname, lname, timein) 
-			// 									VALUES ("' . $data['fname'] . '", "' . $data['lname'] . '", current_timestamp())');
-			// 	}
-			// }
+				if ($check_existing->num_rows > 0) {
+					$update = $this->db->query("UPDATE records 
+					SET timeout = CURRENT_TIMESTAMP() 
+					WHERE rfid_num = '" . $data['rfid'] . "' 
+					AND timeout IS NULL
+				");
+				} else {
+					$insert = $this->db->query("INSERT INTO records (rfid_num, timein) 
+					VALUES ('" . $data['rfid'] . "', CURRENT_TIMESTAMP())
+				");
+				}
+			}
 		} else {
 			$response = ['success' => false];
 		}

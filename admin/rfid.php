@@ -66,10 +66,20 @@
                         </thead>
                         <tbody>
                             <?php
-                            $rec = $conn->query('SELECT * FROM record ORDER BY GREATEST(timein, IFNULL(timeout, timein)) DESC LIMIT 5;');
+                            $rec = $conn->query('SELECT r.id, r.rfid_num, r.timein, r.timeout, 
+                                    COALESCE(s.fname, e.fname) as fname, 
+                                    COALESCE(s.mname, e.mname) as mname, 
+                                    COALESCE(s.lname, e.lname) as lname
+                            FROM records r
+                            LEFT JOIN students s ON r.rfid_num = s.rfid
+                            LEFT JOIN employees e ON r.rfid_num = e.rfid
+                            ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
+                            LIMIT 5;
+                        ');
+
                             while ($row = $rec->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?= $row['fname'] . ' ' . $row['lname'] ?></td>
+                                    <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
                                     <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
                                     <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
                                 </tr>
