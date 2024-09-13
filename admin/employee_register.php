@@ -30,7 +30,7 @@
 
 
 
-                        <h5 class="text-red"><i>Employee Information</i></h5>
+                        <p class="text-bold text-red"><i>Employee Information *</i></p>
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
@@ -152,7 +152,7 @@
                         </div>
 
                         <hr>
-                        <h5 class="text-red"><i>Contact Person Incase of Emergency</i></h5>
+                        <p class="text-bold text-red"><i>Contact Person Incase of Emergency *</i></p>
 
                         <div class="row">
                             <div class="col-md-4 form-group">

@@ -247,16 +247,34 @@ class Action{
 	}
 
 
+	function delete_employee(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM employees where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+
 
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
-		FROM students s 
-		LEFT JOIN department d ON s.dept_id = d.id 
-		LEFT JOIN program p ON s.prog_id = p.id 
-		LEFT JOIN role r ON s.role_id = r.id  
-		WHERE s.rfid = '$rfid'");
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.mname, s.lname, g.gender, s.school_id, r.role_name, s.rfid, s.img_path
+		FROM students s
+		LEFT JOIN gender g ON s.gender_id = g.id
+		LEFT JOIN role r ON s.role_id = r.id
+		WHERE s.rfid = '$rfid'
+	
+		UNION
+	
+		SELECT e.id, e.fname, e.mname, e.lname, g.gender, e.school_id, r.role_name, e.rfid, e.img_path
+		FROM employees e
+		LEFT JOIN gender g ON e.gender_id = g.id
+		LEFT JOIN role r ON e.role_id = r.id
+		WHERE e.rfid = '$rfid'");
+	
+	
+	
 
 
 		if ($fetch->num_rows > 0) {
@@ -267,29 +285,30 @@ class Action{
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
+				'mname' => $data['mname'],
 				'lname' => $data['lname'],
+				'gender' => $data['gender'],
 				'role_name' => $data['role_name'],
-				'dept_name' => $data['dept_name'],
-				'prog_name' => $data['prog_name'],
+				'school_id' => $data['school_id'],
 				'img_path' => $img_path
 			];
 
-			if ($response) {
-				$check_existing = $this->db->query('SELECT * FROM record 
-													WHERE fname = "' . $data['fname'] . '" 
-													AND lname = "' . $data['lname'] . '" 
-													AND timeout IS NULL');
+			// if ($response) {
+			// 	$check_existing = $this->db->query('SELECT * FROM record 
+			// 										WHERE fname = "' . $data['fname'] . '" 
+			// 										AND lname = "' . $data['lname'] . '" 
+			// 										AND timeout IS NULL');
 
-				if ($check_existing->num_rows > 0) {
-					$update = $this->db->query('UPDATE record SET timeout = current_timestamp() 
-												WHERE fname = "' . $data['fname'] . '" 
-												AND lname = "' . $data['lname'] . '" 
-												AND timeout IS NULL');
-				} else {
-					$insert = $this->db->query('INSERT INTO record (fname, lname, timein) 
-												VALUES ("' . $data['fname'] . '", "' . $data['lname'] . '", current_timestamp())');
-				}
-			}
+			// 	if ($check_existing->num_rows > 0) {
+			// 		$update = $this->db->query('UPDATE record SET timeout = current_timestamp() 
+			// 									WHERE fname = "' . $data['fname'] . '" 
+			// 									AND lname = "' . $data['lname'] . '" 
+			// 									AND timeout IS NULL');
+			// 	} else {
+			// 		$insert = $this->db->query('INSERT INTO record (fname, lname, timein) 
+			// 									VALUES ("' . $data['fname'] . '", "' . $data['lname'] . '", current_timestamp())');
+			// 	}
+			// }
 		} else {
 			$response = ['success' => false];
 		}

@@ -2,8 +2,6 @@
 session_start();
 ob_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include 'db_connect.php';
@@ -160,7 +158,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'student_print', 'employee_data', 'employee_register', 'employee_view', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view','employee_edit', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -218,7 +216,7 @@ if (!isset($_SESSION['login_id'])) {
 <?php
 include 'footer.php';
 
-// ob_end_flush();
+ob_end_flush();
 ?>
 
 

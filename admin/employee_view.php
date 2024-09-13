@@ -11,7 +11,7 @@ if (isset($_GET['uid'])) {
 
     $data = mysqli_fetch_assoc($query);
 } else {
-    header('location: index.php?page=student_data');
+    header('location: index.php?page=employee_data');
 }
 ?>
 
@@ -32,7 +32,7 @@ if (isset($_GET['uid'])) {
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
-                        <div class="form-group text-right m-2">
+                        <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
                                 <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
                                     <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -45,7 +45,7 @@ if (isset($_GET['uid'])) {
 
                         <div class="row">
                             <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Name</p>
+                                <p class="mb-2 text-bold">First Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                             </div>
 
@@ -71,19 +71,19 @@ if (isset($_GET['uid'])) {
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">civil_stat</p>
+                                <p class="mb-2 text-bold">Civil Status</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">blood_type</p>
+                                <p class="mb-2 text-bold">Blood Type</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['blood_type']) ? $data['blood_type'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">height</p>
+                                <p class="mb-2 text-bold">Height</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['height']) ? $data['height'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">weight</p>
+                                <p class="mb-2 text-bold">Weight</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['weight']) ? $data['weight'] : '' ?></p>
                             </div>
                         </div>
@@ -107,26 +107,26 @@ if (isset($_GET['uid'])) {
 
                         <div class="row">
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">TIN no.</p>
+                                <p class="mb-2 text-bold">TIN No.</p>
                                 <p class="form-control form-control-sm"><?= isset($data['tin_num']) ? $data['tin_num'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">GSIS no.</p>
+                                <p class="mb-2 text-bold">GSIS No.</p>
                                 <p class="form-control form-control-sm" id="gsis_num"><?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?></p>
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Philhealth no.</p>
+                                <p class="mb-2 text-bold">Philhealth No.</p>
                                 <p class="form-control form-control-sm" id="phil_num"><?= isset($data['phil_num']) ? $data['phil_num'] : '' ?></p>
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Pag-ibig no.</p>
+                                <p class="mb-2 text-bold">Pag-ibig No.</p>
                                 <p class="form-control form-control-sm" id="pagibig_num"><?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?></p>
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">SSS no.</p>
+                                <p class="mb-2 text-bold">SSS No.</p>
                                 <p type="email" class="form-control form-control-sm" id="tin_num"><?= isset($data['sss_num']) ? $data['sss_num'] : '' ?></p>
                             </div>
                         </div>
@@ -173,13 +173,9 @@ if (isset($_GET['uid'])) {
                     </form>
 
                     <div class="row">
-                        <div class="col-md-4 text-left">
-                            <a href="#" class="btn btn-primary btn-custom">Print</a>
-                        </div>
-
-                        <div class="col-md-8 text-right">
-                            <a href="#" class="btn btn-primary btn-custom">Update</a>
-                            <button class="btn btn-danger btn-custom delete_student" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
+                        <div class="col-md-12 text-right">
+                            <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
+                            <button class="btn btn-danger btn-custom delete_employee" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
                             <a href="index.php?page=employee_data" class="btn btn-secondary btn-custom">Back</a>
                         </div>
                     </div>
@@ -194,7 +190,7 @@ if (isset($_GET['uid'])) {
 </div>
 
 <script>
-    $('.delete_student').click(function() {
+    $('.delete_employee').click(function() {
 
         _conf("Are you sure to delete this data?", "delete_employee", [$(this).attr('data-id')])
     });

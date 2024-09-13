@@ -108,6 +108,13 @@ if($action == "delete_student"){
 }
 
 
+if($action == "delete_employee"){
+	$save = $crud->delete_employee();
+	if($save)
+		echo $save;
+}
+
+
 
 
 ?>

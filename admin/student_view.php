@@ -34,7 +34,7 @@ if (isset($_GET['uid'])) {
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
-                        <div class="form-group text-right m-2">
+                        <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
                                 <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
                                     <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -137,11 +137,7 @@ if (isset($_GET['uid'])) {
                     </form>
 
                     <div class="row">
-                        <div class="col-md-4 text-left">
-                            <a href="index.php?page=student_print&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Print</a>
-                        </div>
-
-                        <div class="col-md-8 text-right">
+                        <div class="col-md-12 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
                             <button class="btn btn-danger btn-custom delete_student" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
                             <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>

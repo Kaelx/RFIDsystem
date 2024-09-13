@@ -2,17 +2,16 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
-    FROM students s 
-    LEFT JOIN department d ON s.dept_id = d.id 
-    LEFT JOIN program p ON s.prog_id = p.id 
-    LEFT JOIN role r ON s.role_id = r.id 
-    WHERE s.id = $uid 
-    ORDER BY s.id ASC");
+    $query = $conn->query("SELECT e.*, r.role_name, g.gender
+    FROM employees e
+    LEFT JOIN gender g ON e.gender_id = g.id
+    LEFT JOIN role r ON e.role_id = r.id 
+    WHERE e.id = $uid 
+    ORDER BY e.id ASC");
 
     $data = mysqli_fetch_assoc($query);
 } else {
-    header('location: index.php?page=student_data');
+    header('location: index.php?page=employee_data');
 }
 ?>
 
@@ -28,7 +27,7 @@ if (isset($_GET['uid'])) {
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header text-bold text-center">Student Information</div>
+                <div class="card-header text-bold text-center">Employee Information</div>
                 <div class="card-body">
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
@@ -83,14 +82,34 @@ if (isset($_GET['uid'])) {
                                     <?php endwhile; ?>
                                 </select>
                             </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="civil_stat">Civil Status</label>
+                                <input type="text" class="form-control form-control-sm" name="civil_stat" id="civil_stat" required value="<?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="blood_type">Blood Type</label>
+                                <input type="text" class="form-control form-control-sm" name="blood_type" id="blood_type" required value="<?= isset($data['blood_type']) ? $data['blood_type'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="height">Height</label>
+                                <input type="text" class="form-control form-control-sm" name="height" id="height" required value="<?= isset($data['height']) ? $data['height'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="weight">Weight</label>
+                                <input type="text" class="form-control form-control-sm" name="weight" id="weight" required value="<?= isset($data['weight']) ? $data['weight'] : '' ?>">
+                            </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control form-control-sm" name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
                                 <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
                             </div>
@@ -100,6 +119,38 @@ if (isset($_GET['uid'])) {
                                 <input type="email" class="form-control form-control-sm" name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
                             </div>
                         </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <label for="tin_num">TIN No.</label>
+                                <input type="text" class="form-control form-control-sm" name="tin_num" id="tin_num" required value="<?= isset($data['tin_num']) ? $data['tin_num'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="gsis_num">GSIS No.</label>
+                                <input type="text" class="form-control form-control-sm" name="gsis_num" id="gsis_num" required value="<?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="phil_num">Philhealth No.</label>
+                                <input type="text" class="form-control form-control-sm" name="phil_num" id="phil_num" required value="<?= isset($data['phil_num']) ? $data['phil_num'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="pagibig_num">Pag-ibig No.</label>
+                                <input type="text" class="form-control form-control-sm" name="pagibig_num" id="pagibig_num" required value="<?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?>">
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="sss_num">SSS No.</label>
+                                <input type="text" class="form-control form-control-sm" name="sss_num" id="sss_num" requiresss_numd value="<?= isset($data['sss_num']) ? $data['sss_num'] : '' ?>">
+                            </div>
+
+                        </div>
+
+
+
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
@@ -128,7 +179,7 @@ if (isset($_GET['uid'])) {
 
                             <div class="col-md-4 form-group">
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'Student' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <label for="role_id">Type</label>
@@ -141,27 +192,7 @@ if (isset($_GET['uid'])) {
 
 
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="prog_id">School Program/Course</label>
-                                <select class="form-control form-control-sm" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['prog_id']) && $data['prog_id'] == $row['id'] ? 'selected' : '';
-                                    ?>
-                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['prog_name'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
 
-                            <div class="col-md-4 form-group">
-                                <label for="dept_name">Department</label>
-                                <input type="hidden" class="form-control form-control-sm" name="dept_id" id="dept_id" required value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
-                                <input type="text" class="form-control form-control-sm" id="dept_name" required value="<?= isset($data['dept_name']) ? $data['dept_name'] : '' ?>" readonly>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
@@ -171,7 +202,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=student_view&uid=<?= $data['id']?>" class="btn btn-secondary btn-custom">Cancel</a>
+                                <a href="index.php?page=employee_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
                             </div>
                         </div>
                     </form>
@@ -216,7 +247,7 @@ if (isset($_GET['uid'])) {
         e.preventDefault()
 
         $.ajax({
-            url: 'ajax.php?action=register',
+            url: 'ajax.php?action=register2',
             data: new FormData($(this)[0]),
             cache: false,
             contentType: false,
@@ -231,13 +262,13 @@ if (isset($_GET['uid'])) {
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
+                        location.href = 'index.php?page=employee_data'
                     }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_view&uid=' + <?= $data['id'] ?>
+                        location.href = 'index.php?page=employee_view&uid=' + <?= $data['id'] ?>
                     }, 1000)
 
                 } else {

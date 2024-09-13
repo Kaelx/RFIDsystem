@@ -19,7 +19,7 @@
 
 
 
-                        <div class="form-group text-right m-2">
+                        <div class="form-group text-right mb-0 mr-5">
                             <label for="img" class="mr-4">Profile Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -29,7 +29,7 @@
                         </div>
 
 
-                        <h5 class="text-red"><i>Student Information</i></h5>
+                        <p class="text-bold text-red"><i>Student Information *</i></p>
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
@@ -82,7 +82,7 @@
                         </div>
 
                         <hr>
-                        <h5 class="text-red"><i>Contact Person Incase of Emergency</i></h5>
+                        <p class="text-bold text-red"><i>Contact Person Incase of Emergency *</i></p>
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
