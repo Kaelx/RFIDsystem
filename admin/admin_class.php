@@ -141,12 +141,21 @@ class Action{
 
 		echo json_encode($response);
 	}
-	
 
 
-	
+
+
 	function register(){
 		extract($_POST);
+
+		// Check if RFID exists in students or employees table
+		$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+		$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+
+		if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
+			// RFID already exists in either students or employees, return 3
+			return 3;
+		}
 
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
@@ -154,9 +163,9 @@ class Action{
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender_id = '$gender' ";
 		$data .= ", address = '$address' ";
-		$data .=", cellnum = '$cellnum' ";
+		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-		$data .=", parent_name = '$parent_name' ";
+		$data .= ", parent_name = '$parent_name' ";
 		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", parent_address = '$parent_address' ";
 		$data .= ", school_id = '$school_id' ";
@@ -168,18 +177,18 @@ class Action{
 		if ($_FILES['img']['tmp_name'] != '') {
 			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if($move){
+			if ($move) {
 				$data .= ", img_path = '$img' ";
 			}
 		}
 
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO students set ".$data);
-			if($save)
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO students set " . $data);
+			if ($save)
 			return 1;
-		}else{
-			$save = $this->db->query("UPDATE students set ".$data." where id=".$id);
-			if($save)
+		} else {
+			$save = $this->db->query("UPDATE students set " . $data . " where id=" . $id);
+			if ($save)
 			return 2;
 		}
 	}
@@ -187,6 +196,15 @@ class Action{
 
 	function register2(){
 		extract($_POST);
+
+		// Check if RFID exists in students or employees table
+		$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+		$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+
+		if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
+			// RFID already exists in either students or employees, return 3
+			return 3;
+		}
 
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
@@ -201,7 +219,7 @@ class Action{
 
 
 		$data .= ", address = '$address' ";
-		$data .=", cellnum = '$cellnum' ";
+		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
 
 		$data .= ", tin_num = '$tin_num' ";
@@ -210,7 +228,7 @@ class Action{
 		$data .= ", pagibig_num = '$pagibig_num' ";
 		$data .= ", sss_num = '$sss_num' ";
 
-		$data .=", parent_name = '$parent_name' ";
+		$data .= ", parent_name = '$parent_name' ";
 		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", parent_address = '$parent_address' ";
 		$data .= ", school_id = '$school_id' ";
@@ -220,18 +238,18 @@ class Action{
 		if ($_FILES['img']['tmp_name'] != '') {
 			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if($move){
+			if ($move) {
 				$data .= ", img_path = '$img' ";
 			}
 		}
 
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO employees set ".$data);
-			if($save)
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO employees set " . $data);
+			if ($save)
 			return 1;
-		}else{
-			$save = $this->db->query("UPDATE employees set ".$data." where id=".$id);
-			if($save)
+		} else {
+			$save = $this->db->query("UPDATE employees set " . $data . " where id=" . $id);
+			if ($save)
 			return 2;
 		}
 	}

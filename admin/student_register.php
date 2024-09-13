@@ -216,7 +216,13 @@
                         location.reload()
                     }, 1500)
 
-                } else {
+                } else if (resp == 3) {
+                    alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
+
+                }else {
                     alert_toast("An error occured", 'danger')
                 }
             }
