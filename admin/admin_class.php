@@ -337,24 +337,60 @@ class Action{
 	}
 
 	
-	// function adduser(){
-	// 	extract($_POST);
+	function adduser(){
+		extract($_POST);
+	
+		if(!empty($password)) {
+			$password = password_hash($password, PASSWORD_BCRYPT);
+		}
+	
+		$data = "";
+		if(!empty($fname)) {
+			$data .= " fname = '$fname', ";
+		}
+		if(!empty($mname)) {
+			$data .= " mname = '$mname', ";
+		}
+		if(!empty($lname)) {
+			$data .= " lname = '$lname', ";
+		}
+		if(!empty($email)) {
+			$data .= " email = '$email', ";
+		}
+		if(!empty($username)) {
+			$data .= " username = '$username', ";
+		}
+		if(!empty($password)) {
+			$data .= " password = '$password', ";
+		}
+		if(!empty($account_type)) {
+			$data .= " account_type = '$account_type', ";
+		}
+	
+		// Remove trailing comma and space
+		$data = rtrim($data, ', ');
+	
+		// Check if the email already exists
+		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
+		if($chk > 0) {
+			return 3;
+			exit;
+		}
+	
 
-	// 	return($_POST);
-
-
-		
-	// 	if(empty($id)){
-	// 		$save = $this->db->query("INSERT INTO user set ".$data);
-	// 		if($save)
-	// 		return 1;
-	// 	}else{
-	// 		$save = $this->db->query("UPDATE user set ".$data." where id=".$id);
-	// 		if($save)
-	// 		return 2;
-	// 	}
-		
-	// }
+		if(empty($id)) {
+			$save = $this->db->query("INSERT INTO users SET ".$data);
+			if($save) {
+				return 1;  
+			}
+		} else {
+			$save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
+			if($save) {
+				return 2;  
+			}
+		}
+	}
+	
 
 
 	// function import() {

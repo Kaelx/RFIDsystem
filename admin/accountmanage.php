@@ -22,19 +22,23 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">Name</th>
+                                    <th  class="text-center">Email</th>
                                     <th class="text-center">Account Type</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $i = 1;
+
+                                $login = $_SESSION['login_id'];
                                 
-                                $cats = $conn->query("select * from users;");
+                                $cats = $conn->query("select * from users where id != $login;");
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=accountedit&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?php echo $i++; ?></td>
-                                        <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td><?php echo $row['fname'] .' '. $row['mname'] .' '. $row['lname']; ?></td>
+                                        <td><?php echo $row['email']; ?></td>
                                         <td><?php echo ($row['account_type'] == 0) ? 'Admin' : (($row['account_type'] == 1) ? 'Staff' : 'Security Personnel'); ?></td>
                                     </tr>
                                 <?php endwhile; ?>

@@ -1,5 +1,7 @@
 <?php
-if (isset($_GET['uid'])) {
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    header('Location: index.php?page=student_data');
+}
     $uid = $_GET['uid'];
 
     $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, g.gender
@@ -12,9 +14,7 @@ if (isset($_GET['uid'])) {
     ORDER BY s.id ASC");
 
     $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=student_data');
-}
+
 ?>
 
 <div class="content-wrapper">

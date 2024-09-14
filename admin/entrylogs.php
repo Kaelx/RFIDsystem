@@ -94,7 +94,7 @@ $cats = $conn->query($query);
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td class=" text-center"><?php echo $row['timein']; ?></td>
                                         <td class="text-center"><?php echo !empty($row['timeout']) ? $row['timeout'] : '------'; ?></td>
-                                        <td class="text-left">
+                                        <td class="text-center">
                                             <?php
                                             if (!empty($row['timein']) && !empty($row['timeout'])) {
                                                 $timein = strtotime($row['timein']);
@@ -107,7 +107,7 @@ $cats = $conn->query($query);
 
                                                 echo $hours . ' hours, ' . $minutes . ' minutes';
                                             } else {
-                                                echo 'In Progress';
+                                                echo ' ------ ';
                                             }
                                             ?>
                                         </td>

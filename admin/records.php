@@ -1,10 +1,11 @@
 <?php
 
-if (!isset($_GET['rfid'])) {
+if (!isset($_GET['rfid']) || empty($_GET['rfid'])) {
     header('Location: index');
 }
 
 $rfid = $_GET['rfid'];
+
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
@@ -23,57 +24,57 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             <div class="row">
                 <div class="col-md-6">
                     <?php
-                    $query = "SELECT r.rfid_num, r.timein, r.timeout, 
-                        COALESCE(s.fname, e.fname) AS fname, 
-                        COALESCE(s.mname, e.mname) AS mname, 
-                        COALESCE(s.lname, e.lname) AS lname,
-                        COALESCE(s.img_path, e.img_path) AS img_path,
-                        COALESCE(s.school_id, e.school_id) AS school_id,
-                        COALESCE(r_s.role_name, r_e.role_name) AS role_name,
-                        COALESCE(g_s.gender, g_e.gender) AS gender
-                        FROM records r
-                        LEFT JOIN students s ON r.rfid_num = s.rfid
-                        LEFT JOIN employees e ON r.rfid_num = e.rfid
-                        LEFT JOIN role r_s ON s.role_id = r_s.id
-                        LEFT JOIN role r_e ON e.role_id = r_e.id
-                        LEFT JOIN gender g_s ON s.gender_id = g_s.id
-                        LEFT JOIN gender g_e ON e.gender_id = g_e.id
-                        WHERE r.rfid_num = '$rfid'
-                        ";
+                    $query = "SELECT s.id, s.fname, s.mname, s.lname, g.gender, s.school_id, r.role_name, s.rfid, s.img_path
+                            FROM students s
+                            LEFT JOIN gender g ON s.gender_id = g.id
+                            LEFT JOIN role r ON s.role_id = r.id
+                            WHERE s.rfid = '$rfid'
+                        
+                            UNION
+                        
+                            SELECT e.id, e.fname, e.mname, e.lname, g.gender, e.school_id, r.role_name, e.rfid, e.img_path
+                            FROM employees e
+                            LEFT JOIN gender g ON e.gender_id = g.id
+                            LEFT JOIN role r ON e.role_id = r.id
+                            WHERE e.rfid = '$rfid'";
 
                     $result = $conn->query($query);
                     $member = $result->fetch_assoc();
 
                     ?>
 
-                    <!-- profile -->
-                    <div class="row">
-                        <div style="position: relative; display: inline-block;">
-                            <?php if (isset($member['img_path']) && !empty($member['img_path'])): ?>
-                                <img src="<?= 'assets/img/' . $member['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                            <?php else: ?>
-                                <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="form-control form-control-sm"><?= $member['fname'] . ' ' . $member['mname'] . ' ' . $member['lname'] ?></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <p class="form-control form-control-sm"><?= $member['gender'] ?></p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p class="form-control form-control-sm"><?= $member['role_name'] ?></p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="form-control form-control-sm"><?= $member['school_id'] ?></p>
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- profile -->
+                                <div class="row">
+                                    <div style="position: relative; display: inline-block;">
+                                        <?php if (isset($member['img_path']) && !empty($member['img_path'])): ?>
+                                            <img src="<?= 'assets/img/' . $member['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                        <?php else: ?>
+                                            <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="form-control form-control-sm"><?= $member['fname'] . ' ' . $member['mname'] . ' ' . $member['lname'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="form-control form-control-sm"><?= $member['gender'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="form-control form-control-sm"><?= $member['role_name'] ?></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="form-control form-control-sm"><?= $member['school_id'] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -162,25 +163,20 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class=" text-center"><?php echo $row['timein']; ?></td>
                                         <td class="text-center"><?php echo !empty($row['timeout']) ? $row['timeout'] : '------'; ?></td>
-                                        <td class="text-left">
+                                        <td class="text-center">
                                             <?php
                                             if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                // Convert timein and timeout to timestamps
                                                 $timein = strtotime($row['timein']);
                                                 $timeout = strtotime($row['timeout']);
 
-                                                // Calculate the difference in seconds
                                                 $duration_in_seconds = $timeout - $timein;
 
-                                                // Convert to hours and minutes
-                                                $hours = floor($duration_in_seconds / 3600);  // Total hours
-                                                $minutes = floor(($duration_in_seconds % 3600) / 60);  // Remaining minutes
+                                                $hours = floor($duration_in_seconds / 3600);  
+                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
 
-                                                // Display hours and minutes
                                                 echo $hours . ' hours, ' . $minutes . ' minutes';
                                             } else {
-                                                // If timeout or timein is empty, display "In Progress" or another message
-                                                echo 'In Progress';
+                                                echo ' ------ ';
                                             }
                                             ?>
                                         </td>
@@ -201,6 +197,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
     $('table').DataTable({
         ordering: false,
         searching: false,
+        lengthChange: false,
         stateSave: true
     });
 

@@ -29,7 +29,7 @@ if (isset($_GET['uid'])) {
 
 
             <form action="#" id="register">
-                <input type="hidden" name="id">
+                <input type="hidden" name="id" value="<?= $member['id'] ?>">
                 <div class="form-group">
                     <label for="img">Profile Picture</label><br>
                     <input type="file" name="img" id="img">
@@ -38,6 +38,10 @@ if (isset($_GET['uid'])) {
                     <div class="col-md-6 form-group">
                         <label for="fname">First Name</label>
                         <input type="text" class="form-control" name="fname" id="fname" value="<?= $member['fname'] ?>" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="mname">Middle Name</label>
+                        <input type="text" class="form-control" name="mname" id="mname" value="<?= $member['mname'] ?>" required>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="lname">Last Name</label>
@@ -63,8 +67,13 @@ if (isset($_GET['uid'])) {
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" value="<?= $member['email'] ?>" required>
                     </div>
-                    <div class="col-md-6 form-group">
 
+                    <div class="col-md-6 form-group">
+                        <label for="username">username</label>
+                        <input type="username" class="form-control" name="username" id="username" value="<?= $member['username'] ?>" required>
+                    </div>
+
+                    <div class="col-md-6 form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password">
                         <small class="m-2 text-danger font-italic">*Leave blank if you don't want to change password.</small>
@@ -107,8 +116,11 @@ if (isset($_GET['uid'])) {
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=accountmanage'
+                    }, 1200)
+
+                }else if (resp == 3) {
+                    alert_toast("Email already exist", 'info')
 
                 } else {
                     alert_toast("An error occured", 'danger')

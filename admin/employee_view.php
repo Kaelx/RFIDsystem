@@ -1,18 +1,20 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT e.*, r.role_name, g.gender
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    header('Location: index.php?page=employee_data');
+}
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT e.*, r.role_name, g.gender
     FROM employees e
     LEFT JOIN gender g ON e.gender_id = g.id
     LEFT JOIN role r ON e.role_id = r.id 
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=employee_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 <div class="content-wrapper">

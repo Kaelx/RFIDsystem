@@ -81,11 +81,11 @@ if($action == "register2"){
 		echo $save;
 }
 
-// if($action == "adduser"){
-// 	$save = $crud->adduser();
-// 	if($save)
-// 		echo $save;
-// }
+if($action == "adduser"){
+	$save = $crud->adduser();
+	if($save)
+		echo $save;
+}
 
 
 if($action == "fetch_data"){
