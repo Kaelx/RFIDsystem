@@ -1,70 +1,66 @@
 <?php
 
+$start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
+$end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
-$start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : date('Y-m-d');
-$end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : date('Y-m-d');
-
-
-if (strtotime($end_date) < strtotime($start_date)) {
-    $end_date = $start_date;
-}
 
 $query = "SELECT r.id, r.rfid_num, r.timein, r.timeout, 
-            COALESCE(s.fname, e.fname) AS fname, 
-            COALESCE(s.mname, e.mname) AS mname, 
-            COALESCE(s.lname, e.lname) AS lname,
-            COALESCE(s.school_id, e.school_id) AS school_id,
-            COALESCE(r_s.role_name, r_e.role_name) AS role_name
-            FROM records r
-            LEFT JOIN students s ON r.rfid_num = s.rfid
-            LEFT JOIN employees e ON r.rfid_num = e.rfid
-            LEFT JOIN role r_s ON s.role_id = r_s.id
-            LEFT JOIN role r_e ON e.role_id = r_e.id
-            WHERE r.timein IS NOT NULL 
-            AND r.timeout IS NOT NULL 
-            AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
-            AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'
-            ORDER BY r.id ASC;";
+        COALESCE(s.fname, e.fname) as fname, 
+        COALESCE(s.mname, e.mname) as mname, 
+        COALESCE(s.lname, e.lname) as lname,
+        COALESCE(s.school_id, e.school_id) as school_id,
+        COALESCE(r_s.role_name, r_e.role_name) as role_name
+        FROM records r
+        LEFT JOIN students s ON r.rfid_num = s.rfid
+        LEFT JOIN employees e ON r.rfid_num = e.rfid
+        LEFT JOIN role r_s ON s.role_id = r_s.id 
+        LEFT JOIN role r_e ON e.role_id = r_e.id";
+
+// Add date filter if both dates are set
+if (!empty($start_date) && !empty($end_date)) {
+    $query .= " WHERE DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
+                AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
+}
 
 $cats = $conn->query($query);
 
-if (!$cats) {
-    echo "Error: " . $conn->error;
-}
 ?>
-
-
-
-
-
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
 
-            <form action="#" id="filter-report" class="form-inline">
-                <div class="form-group mb-2">
-                    <label for="start_date">Start Date:</label>
-                    <input type="date" name="start_date" id="start_date" class="form-control form-control-sm mr-2"
-                        value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : date('Y-m-d') ?>">
                 </div>
-                <div class="form-group mb-2">
-                    <label for="end_date">End Date:</label>
-                    <input type="date" name="end_date" id="end_date" class="form-control form-control-sm mr-2"
-                        value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : date('Y-m-d') ?>">
+                <div class="col-md-6">
+                    <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
+                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                            <label for="start_date" class="mr-2">Start Date:</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control"
+                                value="<?= isset($_GET['start_date']) ? ($_GET['start_date']) : '' ?>">
+                        </div>
+                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                            <label for="end_date" class="mr-2">End Date:</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control"
+                                value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
+
+                        <div class="dropdown mb-2">
+                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
+                                <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
+                                <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
+                            </ul>
+                        </div>
+
+
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Filter</button>
-            </form>
-
-            <button id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Action</button>
-            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
-                <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
-            </ul>
-
-
+            </div>
         </div>
     </div>
 
@@ -88,7 +84,6 @@ if (!$cats) {
                             </thead>
                             <tbody>
                                 <?php
-
                                 $i = 1;
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
@@ -96,35 +91,27 @@ if (!$cats) {
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class="text-left""><?php echo $row['role_name']; ?></td>
+                                        <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td class=" text-center"><?php echo $row['timein']; ?></td>
                                         <td class="text-center"><?php echo !empty($row['timeout']) ? $row['timeout'] : '------'; ?></td>
                                         <td class="text-left">
                                             <?php
                                             if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                // Convert timein and timeout to timestamps
                                                 $timein = strtotime($row['timein']);
                                                 $timeout = strtotime($row['timeout']);
 
-                                                // Calculate the difference in seconds
                                                 $duration_in_seconds = $timeout - $timein;
 
-                                                // Convert to hours and minutes
-                                                $hours = floor($duration_in_seconds / 3600);  // Total hours
-                                                $minutes = floor(($duration_in_seconds % 3600) / 60);  // Remaining minutes
+                                                $hours = floor($duration_in_seconds / 3600);
+                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
 
-                                                // Display hours and minutes
                                                 echo $hours . ' hours, ' . $minutes . ' minutes';
                                             } else {
-                                                // If timeout or timein is empty, display "In Progress" or another message
                                                 echo 'In Progress';
                                             }
                                             ?>
                                         </td>
-
-
                                     </tr>
-
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
@@ -134,60 +121,55 @@ if (!$cats) {
         </div>
     </section>
 </div>
+
 <script>
     $('table').DataTable({
         ordering: false,
-        searching: false,
         stateSave: true
     });
 
-
-
     $('#filter-report').submit(function(e) {
         e.preventDefault();
-
-        // Serialize only non-empty fields
-        var serializedData = $(this).find(':input').filter(function() {
-            return $.trim(this.value).length > 0; // Filter out empty values
-        }).serialize();
-
-        // Redirect with the filtered query string
-        location.href = 'index.php?page=entrylogs&' + serializedData;
+        location.href = 'index.php?page=entrylogs&' + $(this).serialize();
     });
 
 
+
+
     function filterBy(period) {
-        var today = new Date();
-        var startDate, endDate;
+        const formatDate = date => date.toISOString().split('T')[0];
+        const gmtPlus8Offset = 8 * 60 * 60 * 1000;
+
+        const timezone = date => new Date(date.getTime() + gmtPlus8Offset);
+
+        let today = new Date();
+        let startDate, endDate;
 
         switch (period) {
             case 'day':
-                startDate = endDate = today.toISOString().split('T')[0];
+                startDate = endDate = formatDate(timezone(today));
                 break;
             case 'week':
-                // Get the start of the week (Sunday)
-                var firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-                startDate = firstDayOfWeek.toISOString().split('T')[0];
-                endDate = new Date().toISOString().split('T')[0];
+                let startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay());
+                startDate = formatDate(timezone(startOfWeek));
+
+                let endOfWeek = new Date(today);
+                endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
+                endDate = formatDate(timezone(endOfWeek));
                 break;
             case 'month':
-                // Get the first day of the current month
-                var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-                startDate = firstDayOfMonth.toISOString().split('T')[0];
-                endDate = new Date().toISOString().split('T')[0];
+                let startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                startDate = formatDate(timezone(startOfMonth));
+
+                let endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                endDate = formatDate(timezone(endOfMonth));
                 break;
         }
 
-        // Set the date fields and submit the form
         document.getElementById('start_date').value = startDate;
         document.getElementById('end_date').value = endDate;
 
-        // Serialize only non-empty fields
-        var serializedData = $('#filter-report').find(':input').filter(function() {
-            return $.trim(this.value).length > 0;
-        }).serialize();
-
-        // Redirect with the filtered query string
-        location.href = 'index.php?page=entrylogs&' + serializedData;
+        location.href = `index.php?page=entrylogs&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 </script>
