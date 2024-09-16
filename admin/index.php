@@ -146,7 +146,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
+    <div class="position-fixed" style="top:30px; right: 0; padding: 1rem; z-index: 1050;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
@@ -158,7 +158,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view','employee_edit', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view','employee_edit', 'visitor_data', 'visitor_register','visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

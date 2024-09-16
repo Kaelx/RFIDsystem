@@ -2,9 +2,8 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT e.*, r.role_name, g.gender
+    $query = $conn->query("SELECT e.*, r.role_name
     FROM employees e
-    LEFT JOIN gender g ON e.gender_id = g.id
     LEFT JOIN role r ON e.role_id = r.id 
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
@@ -54,7 +53,7 @@ if (isset($_GET['uid'])) {
                                 <input type="text" class="form-control form-control-sm" name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label>
+                                <label for="mname">Middle Name</label>
                                 <input type="text" class="form-control form-control-sm" name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
@@ -72,14 +71,9 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" <?= !isset($data['gender_id']) || $data['gender_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM gender ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['gender_id']) && $data['gender_id'] == $row['id'] ? 'selected' : '';
-                                    ?>
-                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['gender'] ?></option>
-                                    <?php endwhile; ?>
+                                    <option value="" disabled>-- Select Role --</option>
+                                    <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
+                                    <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
                                 </select>
                             </div>
 
@@ -270,6 +264,12 @@ if (isset($_GET['uid'])) {
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_view&uid=' + <?= $data['id'] ?>
                     }, 1000)
+
+                } else if (resp == 3) {
+                    alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')

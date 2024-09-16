@@ -37,7 +37,7 @@
                                 LEFT JOIN department d ON s.dept_id = d.id 
                                 LEFT JOIN program p ON s.prog_id = p.id 
                                 LEFT JOIN role r ON s.role_id = r.id 
-                                WHERE r.role_name = 'student' OR r.role_name IS NULL 
+                                WHERE r.role_name = 'student' or 'students' OR r.role_name IS NULL 
                                 ORDER BY s.id ASC");
 
 

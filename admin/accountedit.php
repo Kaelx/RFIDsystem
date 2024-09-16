@@ -14,11 +14,6 @@ if (isset($_GET['uid'])) {
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1 class="m-0">User</h1>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -28,54 +23,61 @@ if (isset($_GET['uid'])) {
         <div class="container-fluid">
 
 
-            <form action="#" id="register">
-                <input type="hidden" name="id">
-                <div class="form-group">
-                    <label for="img">Profile Picture</label><br>
-                    <input type="file" name="img" id="img">
+            <div class="card">
+                <div class="card-header text-bold text-center"><?= $member['fname'].' '.$member['lname'].'\'s Account'?></div>
+                <div class="card-body">
+                    <form action="#" id="register">
+                        <input type="hidden" name="id" value="<?= $member['id'] ?>">
+                        <div class="form-group">
+                            <label for="img">Profile Picture</label><br>
+                            <input type="file" name="img" id="img">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control" name="fname" id="fname" value="<?= $member['fname'] ?>" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="mname">Middle Name</label>
+                                <input type="text" class="form-control" name="mname" id="mname" value="<?= $member['mname'] ?>" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control" name="lname" id="lname" value="<?= $member['lname'] ?>" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="account_type">Type</label>
+                                <select class="form-control" name="account_type" id="account_type" required>
+                                    <option value="1" <?= $member['account_type'] == 1 ? 'selected' : '' ?>>Admin</option>
+                                    <option value="2" <?= $member['account_type'] == 2 ? 'selected' : '' ?>>Staff</option>
+                                    <option value="3" <?= $member['account_type'] == 3 ? 'selected' : '' ?>>Security Personnel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" value="<?= $member['email'] ?>" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="username">username</label>
+                                <input type="username" class="form-control" name="username" id="username" value="<?= $member['username'] ?>" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password" id="password">
+                                <small class="m-2 text-danger font-italic">*Leave blank if you don't want to change password.</small>
+                            </div>
+                        </div>
+                        <div class="text-right mr-5">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a href="index.php?page=accountmanage" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" id="fname" value="<?= $member['fname'] ?>" required>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" id="lname" value="<?= $member['lname'] ?>" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="account_type">Type</label>
-                        <select class="form-control" name="account_type" id="account_type" required>
-                            <option value="0" <?= $member['account_type'] == 0 ? 'selected' : '' ?>>Admin</option>
-                            <option value="1" <?= $member['account_type'] == 1 ? 'selected' : '' ?>>Staff</option>
-                            <option value="2" <?= $member['account_type'] == 2 ? 'selected' : '' ?>>Security Personnel</option>
-                        </select>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="<?= $member['email'] ?>" required>
-                    </div>
-                    <div class="col-md-6 form-group">
-
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
-                        <small class="m-2 text-danger font-italic">*Leave blank if you don't want to change password.</small>
-                    </div>
-                </div>
-
-                <div class="text-right mr-5">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="index.php?page=accountmanage" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
+            </div>
 
 
         </div>
@@ -105,10 +107,13 @@ if (isset($_GET['uid'])) {
                     }, 1500)
 
                 } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'success')
+                    alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=accountmanage'
+                    }, 1200)
+
+                }else if (resp == 3) {
+                    alert_toast("Email already exist", 'info')
 
                 } else {
                     alert_toast("An error occured", 'danger')

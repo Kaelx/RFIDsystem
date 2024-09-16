@@ -1,18 +1,19 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT e.*, r.role_name, g.gender
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    header('Location: index.php?page=employee_data');
+}
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT e.*, r.role_name
     FROM employees e
-    LEFT JOIN gender g ON e.gender_id = g.id
     LEFT JOIN role r ON e.role_id = r.id 
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=employee_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 <div class="content-wrapper">
@@ -50,7 +51,7 @@ if (isset($_GET['uid'])) {
                             </div>
 
                             <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Middle Initial</p>
+                                <p class="mb-2 text-bold">Middle Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                             </div>
 
@@ -67,7 +68,7 @@ if (isset($_GET['uid'])) {
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
@@ -173,7 +174,10 @@ if (isset($_GET['uid'])) {
                     </form>
 
                     <div class="row">
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-6 ">
+                            <a href="index.php?page=records&rfid=<?= $data['rfid'] ?>" class="btn btn-info">View Attendance</a>
+                        </div>
+                        <div class="col-md-6 text-right">
                             <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
                             <button class="btn btn-danger btn-custom delete_employee" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
                             <a href="index.php?page=employee_data" class="btn btn-secondary btn-custom">Back</a>
@@ -207,7 +211,7 @@ if (isset($_GET['uid'])) {
                     alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_data'
-                    }, 1500)
+                    }, 1000)
 
                 }
             }

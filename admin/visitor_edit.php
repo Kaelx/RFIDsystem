@@ -2,17 +2,15 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
-    FROM students s 
-    LEFT JOIN department d ON s.dept_id = d.id 
-    LEFT JOIN program p ON s.prog_id = p.id 
+    $query = $conn->query("SELECT s.*, r.role_name 
+    FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
 
     $data = mysqli_fetch_assoc($query);
 } else {
-    header('location: index.php?page=student_data');
+    header('location: index.php?page=visitor_data');
 }
 ?>
 
@@ -28,7 +26,7 @@ if (isset($_GET['uid'])) {
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header text-bold text-center">Student Information</div>
+                <div class="card-header text-bold text-center">Visitor Information</div>
                 <div class="card-body">
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
@@ -112,18 +110,8 @@ if (isset($_GET['uid'])) {
 
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
-                            </div>
-
-
-
-
-
-
-                            <div class="col-md-4 form-group">
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'Student' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'visitor' or 'visitors' ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <label for="role_id">Type</label>
@@ -134,29 +122,9 @@ if (isset($_GET['uid'])) {
                                 <?php endwhile; ?>
                             </div>
 
-
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="prog_id">School Program/Course</label>
-                                <select class="form-control form-control-sm" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['prog_id']) && $data['prog_id'] == $row['id'] ? 'selected' : '';
-                                    ?>
-                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['prog_name'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
 
-                            <div class="col-md-4 form-group">
-                                <label for="dept_name">Department</label>
-                                <input type="hidden" class="form-control form-control-sm" name="dept_id" id="dept_id" required value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
-                                <input type="text" class="form-control form-control-sm" id="dept_name" required value="<?= isset($data['dept_name']) ? $data['dept_name'] : '' ?>" readonly>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
@@ -166,7 +134,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=student_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
+                                <a href="index.php?page=visitor_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
                             </div>
                         </div>
                     </form>
@@ -211,7 +179,7 @@ if (isset($_GET['uid'])) {
         e.preventDefault()
 
         $.ajax({
-            url: 'ajax.php?action=register',
+            url: 'ajax.php?action=register3',
             data: new FormData($(this)[0]),
             cache: false,
             contentType: false,
@@ -226,13 +194,13 @@ if (isset($_GET['uid'])) {
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
+                        location.href = 'index.php?page=visitor_data'
                     }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_view&uid=' + <?= $data['id'] ?>
+                        location.href = 'index.php?page=visitor_view&uid=' + <?= $data['id'] ?>
                     }, 1000)
 
                 } else if (resp == 3) {

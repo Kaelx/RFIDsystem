@@ -23,14 +23,18 @@
 
         // Modify the query to count members per category
         $cats = $conn->query("SELECT r.id, r.role_name, 
-                COUNT(s.id) AS student_count,
-                COUNT(e.id) AS employee_count,
-                (COUNT(s.id) + COUNT(e.id)) AS total_count
+              COUNT( s.id) AS student_count,
+              COUNT( e.id) AS employee_count,
+              COUNT( v.id) AS visitor_count,
+              (COUNT( s.id) + COUNT( e.id) + COUNT( v.id) + COUNT( cv.id)) AS total_count
         FROM role r
         LEFT JOIN students s ON s.role_id = r.id
         LEFT JOIN employees e ON e.role_id = r.id
+        LEFT JOIN visitors v ON v.role_id = r.id
+        LEFT JOIN vendors cv ON cv.role_id = r.id
         GROUP BY r.id, r.role_name
     ");
+    
 
 
 

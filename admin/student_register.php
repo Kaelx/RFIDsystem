@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control form-control-sm" name="fname" id="fname" required>
                             </div>
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label>
+                                <label for="mname">Middle Name</label>
                                 <input type="text" class="form-control form-control-sm" name="mname" id="mname" required>
                             </div>
                             <div class="col-md-3 form-group">
@@ -55,12 +55,8 @@
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
                                     <option value="" selected disabled>-- Select Gender --</option>
-                                    <?php
-                                    $program = $conn->query("SELECT * FROM gender order by id asc ");
-                                    while ($row = $program->fetch_assoc()) :
-                                    ?>
-                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['gender'] ?></option>
-                                    <?php endwhile; ?>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
                                 </select>
                             </div>
                         </div>
@@ -207,7 +203,7 @@
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.reload()
+                        location.href = 'index.php?page=student_data';
                     }, 1500)
 
                 } else if (resp == 2) {
@@ -215,6 +211,9 @@
                     setTimeout(function() {
                         location.reload()
                     }, 1500)
+
+                } else if (resp == 3) {
+                    alert_toast("RFID already rigestered to someone", 'danger')
 
                 } else {
                     alert_toast("An error occured", 'danger')
