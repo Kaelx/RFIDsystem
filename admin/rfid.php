@@ -28,16 +28,19 @@
                         <div class="col-md-5">
 
                             <div class="row">
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <input type="text" id="fname" class="form-control form-control-lg" placeholder="First Name">
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-2 form-group">
+                                    <input type="text" id="mname" class="form-control form-control-lg" placeholder="M.I.">
+                                </div>
+                                <div class="col-md-4 form-group">
                                     <input type="text" id="lname" class="form-control form-control-lg" placeholder="Last Name">
                                 </div>
                             </div>
+                            <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="gender">
                             <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
-                            <input type="text" id="department" class="form-control form-control-lg mb-2" placeholder="Department">
-                            <input type="text" id="program" class="form-control form-control-lg mb-2" placeholder="Program/Course">
+                            <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
                         </div>
                     </div>
                 </div>
@@ -112,8 +115,9 @@
             $('#fname').val("");
             $('#lname').val("");
             $('#type').val("");
-            $('#department').val("");
-            $('#program').val("");
+            $('#school_id').val("");
+            $('#gender').val("");
+            $('#mname').val("");
             $('#profile-img').attr('src', 'assets/img/' + 'blank-img.png');
             $('#rfid').val("");
 
@@ -200,10 +204,11 @@
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
             $('#fname').val(data.success ? data.fname : defaultVal);
+            $('#mname').val(data.success ? data.mname : defaultVal);
             $('#lname').val(data.success ? data.lname : defaultVal);
+            $('#gender').val(data.success ? data.gender : defaultVal);
             $('#type').val(data.success ? data.role_name : defaultVal);
-            $('#department').val(data.success ? data.dept_name : defaultVal);
-            $('#program').val(data.success ? data.prog_name : defaultVal);
+            $('#school_id').val(data.success ? data.school_id : defaultVal);
             $('#profile-img').attr('src', imgPath);
             $('#rfid').val("");
 

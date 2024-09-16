@@ -2,15 +2,14 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-    FROM member m 
-    LEFT JOIN department d ON m.dept_id = d.id 
-    LEFT JOIN program p ON m.prog_id = p.id 
-    LEFT JOIN role r ON m.role_id = r.id 
-    WHERE m.id = $uid 
-    ORDER BY m.id ASC");
+    $query = $conn->query("SELECT e.*, r.role_name, g.gender
+    FROM employees e
+    LEFT JOIN gender g ON e.gender_id = g.id
+    LEFT JOIN role r ON e.role_id = r.id 
+    WHERE e.id = $uid 
+    ORDER BY e.id ASC");
 
-    $member = mysqli_fetch_assoc($query);
+    $data = mysqli_fetch_assoc($query);
 } else {
     header('location: index.php?page=employee_data');
 }
@@ -20,11 +19,6 @@ if (isset($_GET['uid'])) {
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Data</h1>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -32,103 +26,191 @@ if (isset($_GET['uid'])) {
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <div class="card">
+                <div class="card-header text-bold text-center">Employee Information</div>
+                <div class="card-body">
+                    <form action="#" id="register">
+                        <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
+
+                        <div class="form-group text-right mb-0 mr-5">
+                            <div style="position: relative; display: inline-block;">
+                                <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
+                                    <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <?php else: ?>
+                                    <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <?php endif; ?>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">First Name</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Middle Initial</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Last Name</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Birthdate</p>
+                                <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Gender</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Civil Status</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Blood Type</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['blood_type']) ? $data['blood_type'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Height</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['height']) ? $data['height'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Weight</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['weight']) ? $data['weight'] : '' ?></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Address</p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
+                            </div>
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Contact No.</p>
+                                <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Email</p>
+                                <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
+                            </div>
+                        </div>
 
 
-            <form action="#" id="register">
-                <input type="hidden" name="id" value="<?= isset($member['id']) ? $member['id'] : '' ?>">
-                <div class="form-group">
-                    <label for="img">Profile Picture</label><br>
-                    <input type="file" name="img" id="img">
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
+                        <div class="row">
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">TIN No.</p>
+                                <p class="form-control form-control-sm"><?= isset($data['tin_num']) ? $data['tin_num'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">GSIS No.</p>
+                                <p class="form-control form-control-sm" id="gsis_num"><?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Philhealth No.</p>
+                                <p class="form-control form-control-sm" id="phil_num"><?= isset($data['phil_num']) ? $data['phil_num'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Pag-ibig No.</p>
+                                <p class="form-control form-control-sm" id="pagibig_num"><?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">SSS No.</p>
+                                <p type="email" class="form-control form-control-sm" id="tin_num"><?= isset($data['sss_num']) ? $data['sss_num'] : '' ?></p>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-4 form-group mb-0">
+                                <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
+                                <p class="form-control form-control-sm"><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
+                            </div>
+                            <div class="col-md-4 form-group mb-0">
+                                <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
+                                <p class="form-control form-control-sm"><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
+                            </div>
+                            <div class="col-md-4 form-group mb-0">
+                                <p class="mb-2 text-bold">Address of Parent/Guardian</p>
+                                <p class="form-control form-control-sm"><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group mb-0">
+                                <p class="mb-2 text-bold">School ID</p>
+                                <p class="form-control form-control-sm"><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
+                            </div>
+
+                            <div class="col-md-4 form-group mb-0">
+                                <p class="mb-2 text-bold">Type</p>
+                                <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="rfid">RFID</label>
+                                <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
+                            <button class="btn btn-danger btn-custom delete_employee" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
+                            <a href="index.php?page=employee_data" class="btn btn-secondary btn-custom">Back</a>
+                        </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
-                    </div>
+
+
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="role_id">Role</label>
-                        <select class="form-control" name="role_id" id="role_id" required>
-                            <option value="" <?= !isset($member['role_id']) || $member['role_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
-                            <?php
-                            $type = $conn->query("SELECT * FROM role ORDER BY id ASC");
-                            while ($row = $type->fetch_assoc()) :
-                                $selected = isset($member['role_id']) && $member['role_id'] == $row['id'] ? 'selected' : '';
-                            ?>
-                                <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['role_name'] ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-6 form-group">
-                        <label for="school_id">School ID</label>
-                        <input type="text" class="form-control" name="school_id" id="school_id" required value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required value="<?= isset($member['email']) ? $member['email'] : '' ?>">
-                </div>
-
-                <div class="form-group">
-                    <label for="rfid">RFID</label>
-                    <input type="password" class="form-control" name="rfid" id="rfid" required value="<?= isset($member['rfid']) ? $member['rfid'] : '' ?>">
-                </div>
-
-                <div class="text-right mr-5">
-                    <button class="btn btn-primary">Save</button>
-                    <a href="index.php?page=employee_data" class="btn btn-secondary">Back</a>
-                </div>
-            </form>
-
-
-
+            </div>
         </div>
     </section>
+
 
 </div>
 
 <script>
-    $('#register').submit(function(e) {
-        e.preventDefault()
+    $('.delete_employee').click(function() {
 
+        _conf("Are you sure to delete this data?", "delete_employee", [$(this).attr('data-id')])
+    });
+
+    function delete_employee($id) {
         $.ajax({
-            url: 'ajax.php?action=register',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
+            url: 'ajax.php?action=delete_employee',
             method: 'POST',
-            type: 'POST',
+            data: {
+                id: $id
+            },
             success: function(resp) {
-
-                console.log("Response: ", resp); //to see the error
-
-
                 if (resp == 1) {
-                    alert_toast("Data successfully added", 'success')
+                    alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_data'
-                    }, 1000)
+                    }, 1500)
 
-                } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'info')
-                    setTimeout(function() {
-                        location.href = 'index.php?page=employee_data'
-                    }, 1000)
-
-                } else {
-                    alert_toast("An error occured", 'danger')
                 }
             }
         })
-    })
+    }
 </script>

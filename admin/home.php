@@ -2,7 +2,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="row">
         <div class="col-sm-6">
           <h1 class="m-0">Dashboard</h1>
         </div>
@@ -22,11 +22,17 @@
         $counter = 0;
 
         // Modify the query to count members per category
-        $cats = $conn->query("SELECT *, COUNT(m.id) AS count
-          FROM role r
-          LEFT JOIN member m ON m.role_id = r.id
-          GROUP BY r.id, r.role_name
-        ");
+        $cats = $conn->query("SELECT r.id, r.role_name, 
+                COUNT(s.id) AS student_count,
+                COUNT(e.id) AS employee_count,
+                (COUNT(s.id) + COUNT(e.id)) AS total_count
+        FROM role r
+        LEFT JOIN students s ON s.role_id = r.id
+        LEFT JOIN employees e ON e.role_id = r.id
+        GROUP BY r.id, r.role_name
+    ");
+
+
 
         while ($row = $cats->fetch_assoc()):
           $bg_color = $bg_colors[$counter % count($bg_colors)];
@@ -38,7 +44,7 @@
             <div class="small-box <?php echo $bg_color; ?>">
               <div class="inner">
                 <!-- Display the count of members -->
-                <h3><?php echo $row['count']; ?></h3>
+                <h3><?php echo $row['total_count']; ?></h3>
 
                 <p><?php echo $row['role_name'] ?></p>
               </div>

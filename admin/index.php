@@ -32,8 +32,6 @@ if (!isset($_SESSION['login_id'])) {
 <body class="hold-transition layout-fixed">
   <div class="wrapper">
 
-
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top">
       <!-- Left navbar links -->
@@ -160,7 +158,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'employee_data', 'employee_register', 'employee_view', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view','employee_edit', 'visitor_data', 'visitor_register', 'visitor_view', 'entrylogs', 'accountmanage', 'adduser', 'accountedit', 'import'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -185,8 +183,8 @@ if (!isset($_SESSION['login_id'])) {
             <div id="delete_content"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btn-custom" id='confirm' onclick="">Continue</button>
+            <button type="button" class="btn btn-secondary btn-custom" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>
@@ -196,9 +194,6 @@ if (!isset($_SESSION['login_id'])) {
 
 
   </div>
-
-
-
 
 
 
@@ -221,7 +216,7 @@ if (!isset($_SESSION['login_id'])) {
 <?php
 include 'footer.php';
 
-// ob_end_flush();
+ob_end_flush();
 ?>
 
 

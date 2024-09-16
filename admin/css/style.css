@@ -16,3 +16,15 @@
 body, .content-wrapper {
     padding-top: 25px;
 }
+
+.content-wrapper {
+    margin-top: 15px;
+    padding: 10px;
+    overflow: hidden; 
+    box-sizing: border-box; 
+}
+
+
+.btn-custom {
+    width: 100px;
+}
