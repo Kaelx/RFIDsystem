@@ -74,21 +74,6 @@ class Action{
 	}
 
 
-	function save_category4(){
-		extract($_POST);
-		$data = "gender = '$name' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO gender set ".$data);
-			if($save)
-			return 1;
-		}else{
-			$save = $this->db->query("UPDATE gender set ".$data." where id=".$id);
-			if($save)
-			return 2;
-		}
-	}
-
-
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM role where id = ".$id);
@@ -110,12 +95,6 @@ class Action{
 			return 1;
 	}
 
-	function delete_category4(){
-		extract($_POST);
-		$delete = $this->db->query("DELETE FROM gender where id = ".$id);
-		if($delete)
-			return 1;
-	}
 
 
 	function get_department(){
@@ -144,17 +123,17 @@ class Action{
 
 
 
-
+//register student
 	function register(){
 		extract($_POST);
 
-		// Check if RFID exists in students or employees table
+		// Check if RFID exists
 		if (!empty($id)) {
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
 
-			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
-				// RFID already exists in either students or employees, return 3
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
 				return 3;
 			}
 		}
@@ -163,7 +142,7 @@ class Action{
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
 		$data .= ", bdate = '$bdate' ";
-		$data .= ", gender_id = '$gender' ";
+		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
@@ -205,15 +184,18 @@ class Action{
 	}
 
 
+	//register employee
 	function register2(){
 		extract($_POST);
 		
+		// Check if RFID exists
 		if (!empty($id)) {
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
 
-			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
-				// RFID already exists in either students or employees, return 3
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
+
 				return 3;
 			}
 		}
@@ -222,7 +204,7 @@ class Action{
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
 		$data .= ", bdate = '$bdate' ";
-		$data .= ", gender_id = '$gender' ";
+		$data .= ", gender = '$gender' ";
 
 		$data .= ", civil_stat = '$civil_stat' ";
 		$data .= ", blood_type = '$blood_type' ";
@@ -279,6 +261,67 @@ class Action{
 
 
 
+		//register visitor
+	function register3(){
+		extract($_POST);
+
+		// Check if RFID exists 
+		if (!empty($id)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
+
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
+
+				return 3;
+			}
+		}
+
+		$data = " fname = '$fname' ";
+		$data .= ", mname = '$mname' ";
+		$data .= ", lname = '$lname' ";
+		$data .= ", bdate = '$bdate' ";
+		$data .= ", gender = '$gender' ";
+		$data .= ", address = '$address' ";
+		$data .= ", cellnum = '$cellnum' ";
+		$data .= ", email = '$email' ";
+		$data .= ", parent_name = '$parent_name' ";
+		$data .= ", parent_num = '$parent_num' ";
+		$data .= ", parent_address = '$parent_address' ";
+		$data .= ", role_id = '$role_id' ";
+		$data .= ", rfid = '$rfid' ";
+
+		if ($_FILES['img']['tmp_name'] != '') {
+			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
+			if ($move) {
+				$data .= ", img_path = '$img' ";
+			}
+		}
+
+
+		try {
+			if (empty($id)) {
+				$save = $this->db->query("INSERT INTO visitors set " . $data);
+				if ($save)
+				return 1;
+			} else {
+				$save = $this->db->query("UPDATE visitors set " . $data . " where id=" . $id);
+				if ($save)
+				return 2;
+			}
+		} catch (mysqli_sql_exception $e) {
+			if ($e->getCode() == 1062) {
+				return 3;
+			} else {
+				return $e->getMessage();  // For debugging
+			}
+		}
+	}
+
+
+
+
 	function delete_student(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM students where id = ".$id);
@@ -296,22 +339,29 @@ class Action{
 
 
 
-	function fetch_data(){
+	function fetch_data() {
 		extract($_POST);
-
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.mname, s.lname, g.gender, s.school_id, r.role_name, s.rfid, s.img_path
-		FROM students s
-		LEFT JOIN gender g ON s.gender_id = g.id
-		LEFT JOIN role r ON s.role_id = r.id
-		WHERE s.rfid = '$rfid'
 	
-		UNION
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path
+									FROM students s
+									LEFT JOIN role r ON s.role_id = r.id
+									WHERE s.rfid = '$rfid'
+								
+									UNION
+								
+									SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, e.rfid, e.img_path
+									FROM employees e
+									LEFT JOIN role r ON e.role_id = r.id
+									WHERE e.rfid = '$rfid'
+									
+									UNION
+									
+									SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, v.rfid, v.img_path
+									FROM visitors v
+									LEFT JOIN role r ON v.role_id = r.id
+									WHERE v.rfid = '$rfid'
+								");
 	
-		SELECT e.id, e.fname, e.mname, e.lname, g.gender, e.school_id, r.role_name, e.rfid, e.img_path
-		FROM employees e
-		LEFT JOIN gender g ON e.gender_id = g.id
-		LEFT JOIN role r ON e.role_id = r.id
-		WHERE e.rfid = '$rfid'");
 	
 	
 	
@@ -325,11 +375,10 @@ class Action{
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
-				'mname' => $data['mname'],
 				'lname' => $data['lname'],
-				'gender' => $data['gender'],
+				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
-				'school_id' => $data['school_id'],
+				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor ID',
 				'img_path' => $img_path
 			];
 
@@ -359,6 +408,10 @@ class Action{
 	}
 
 	
+
+
+
+
 	function adduser(){
 		extract($_POST);
 	

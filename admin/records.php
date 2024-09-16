@@ -24,19 +24,26 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             <div class="row">
                 <div class="col-md-6">
                     <?php
-                    $query = "SELECT s.id, s.fname, s.mname, s.lname, g.gender, s.school_id, r.role_name, s.rfid, s.img_path
+                    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
                             FROM students s
-                            LEFT JOIN gender g ON s.gender_id = g.id
                             LEFT JOIN role r ON s.role_id = r.id
                             WHERE s.rfid = '$rfid'
                         
                             UNION
                         
-                            SELECT e.id, e.fname, e.mname, e.lname, g.gender, e.school_id, r.role_name, e.rfid, e.img_path
+                            SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                             FROM employees e
-                            LEFT JOIN gender g ON e.gender_id = g.id
                             LEFT JOIN role r ON e.role_id = r.id
-                            WHERE e.rfid = '$rfid'";
+                            WHERE e.rfid = '$rfid'
+                            
+                            UNION
+
+                            SELECT v.id, v.fname, v.mname, v.lname, null as school_id, r.role_name, v.rfid, v.img_path, v.gender
+                            FROM visitors v
+                            LEFT JOIN role r ON v.role_id = r.id
+                            WHERE v.rfid = '$rfid'
+                            
+                            ";
 
                     $result = $conn->query($query);
                     $member = $result->fetch_assoc();
@@ -63,16 +70,19 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p class="form-control form-control-sm"><?= $member['gender'] ?></p>
+                                                <p class="form-control form-control-sm"><?= ucfirst($member['gender']) ?></p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <p class="form-control form-control-sm"><?= $member['role_name'] ?></p>
                                             </div>
-                                            <div class="col-md-6">
-                                                <p class="form-control form-control-sm"><?= $member['school_id'] ?></p>
-                                            </div>
+                                            <?php if (trim(strtolower($member['role_name'])) != 'visitor') { ?>
+                                                <div class="col-md-6">
+                                                    <p class="form-control form-control-sm"><?= $member['school_id'] ?></p>
+                                                </div>
+                                            <?php } ?>
+
                                         </div>
                                     </div>
                                 </div>
@@ -137,15 +147,12 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         COALESCE(s.mname, e.mname) AS mname, 
                                         COALESCE(s.lname, e.lname) AS lname,
                                         COALESCE(s.school_id, e.school_id) AS school_id,
-                                        COALESCE(r_s.role_name, r_e.role_name) AS role_name,
-                                        COALESCE(g_s.gender, g_e.gender) AS gender
+                                        COALESCE(r_s.role_name, r_e.role_name) AS role_name
                                         FROM records r
                                         LEFT JOIN students s ON r.rfid_num = s.rfid
                                         LEFT JOIN employees e ON r.rfid_num = e.rfid
                                         LEFT JOIN role r_s ON s.role_id = r_s.id
                                         LEFT JOIN role r_e ON e.role_id = r_e.id
-                                        LEFT JOIN gender g_s ON s.gender_id = g_s.id
-                                        LEFT JOIN gender g_e ON e.gender_id = g_e.id
                                         WHERE r.rfid_num = '$rfid'";
 
                                 if (!empty($start_date) && !empty($end_date)) {
@@ -171,7 +178,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $duration_in_seconds = $timeout - $timein;
 
-                                                $hours = floor($duration_in_seconds / 3600);  
+                                                $hours = floor($duration_in_seconds / 3600);
                                                 $minutes = floor(($duration_in_seconds % 3600) / 60);
 
                                                 echo $hours . ' hours, ' . $minutes . ' minutes';

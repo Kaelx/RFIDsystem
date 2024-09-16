@@ -6,9 +6,8 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, g.gender
+$query = $conn->query("SELECT e.*, r.role_name
     FROM employees e
-    LEFT JOIN gender g ON e.gender_id = g.id
     LEFT JOIN role r ON e.role_id = r.id 
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
@@ -52,7 +51,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
 
                             <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Middle Initial</p>
+                                <p class="mb-2 text-bold">Middle Name</p>
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                             </div>
 
@@ -69,7 +68,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
+                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                             </div>
 
                             <div class="col-md-2 form-group mb-0">
@@ -212,7 +211,7 @@ $data = mysqli_fetch_assoc($query);
                     alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_data'
-                    }, 1500)
+                    }, 1000)
 
                 }
             }

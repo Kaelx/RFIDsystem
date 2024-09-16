@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <!-- button -->
-                    <a href="index.php?page=adduser" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Add user</a>
+                    <a href="index.php?page=accountadduser" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Add user</a>
                 </div>
             </div>
         </div>

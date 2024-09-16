@@ -4,11 +4,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, g.gender
+    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name
     FROM students s 
     LEFT JOIN department d ON s.dept_id = d.id 
     LEFT JOIN program p ON s.prog_id = p.id
-    LEFT JOIN gender g ON s.gender_id = g.id
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
@@ -49,7 +48,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Middle Initial</p>
+                            <p class="mb-2 text-bold">Middle Name</p>
                             <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                         </div>
 
@@ -66,7 +65,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? $data['gender'] : '' ?></p>
+                            <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                         </div>
                     </div>
 

@@ -31,14 +31,11 @@
                                 <div class="col-md-4 form-group">
                                     <input type="text" id="fname" class="form-control form-control-lg" placeholder="First Name">
                                 </div>
-                                <div class="col-md-2 form-group">
-                                    <input type="text" id="mname" class="form-control form-control-lg" placeholder="M.I.">
-                                </div>
                                 <div class="col-md-4 form-group">
                                     <input type="text" id="lname" class="form-control form-control-lg" placeholder="Last Name">
                                 </div>
                             </div>
-                            <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="gender">
+                            <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
                             <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
                             <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
                         </div>
@@ -67,12 +64,13 @@
                         <tbody>
                             <?php
                             $rec = $conn->query('SELECT r.id, r.rfid_num, r.timein, r.timeout, 
-                                    COALESCE(s.fname, e.fname) as fname, 
-                                    COALESCE(s.mname, e.mname) as mname, 
-                                    COALESCE(s.lname, e.lname) as lname
+                                    COALESCE(s.fname, e.fname, v.fname) as fname, 
+                                    COALESCE(s.mname, e.mname,v.mname) as mname, 
+                                    COALESCE(s.lname, e.lname,v.lname) as lname
                             FROM records r
                             LEFT JOIN students s ON r.rfid_num = s.rfid
                             LEFT JOIN employees e ON r.rfid_num = e.rfid
+                            LEFT JOIN visitors v ON r.rfid_num = v.rfid
                             ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
                             LIMIT 5;
                         ');
@@ -127,7 +125,6 @@
             $('#type').val("");
             $('#school_id').val("");
             $('#gender').val("");
-            $('#mname').val("");
             $('#profile-img').attr('src', 'assets/img/' + 'blank-img.png');
             $('#rfid').val("");
 
@@ -214,7 +211,6 @@
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
             $('#fname').val(data.success ? data.fname : defaultVal);
-            $('#mname').val(data.success ? data.mname : defaultVal);
             $('#lname').val(data.success ? data.lname : defaultVal);
             $('#gender').val(data.success ? data.gender : defaultVal);
             $('#type').val(data.success ? data.role_name : defaultVal);

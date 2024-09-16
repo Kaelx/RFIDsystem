@@ -22,7 +22,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-100">Name</th>
+                                    <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-25">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,20 +31,19 @@
                                 $i = 1;
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
-                                $cats = $conn->query("SELECT m.*, d.dept_name, p.prog_name, r.role_name 
-                                FROM member m 
-                                LEFT JOIN department d ON m.dept_id = d.id 
-                                LEFT JOIN program p ON m.prog_id = p.id 
-                                LEFT JOIN role r ON m.role_id = r.id 
-                                WHERE r.role_name = 'visitor' OR r.role_name IS NULL 
-                                ORDER BY m.id ASC");
+                                $cats = $conn->query("SELECT s.*, r.role_name 
+                                FROM visitors s 
+                                LEFT JOIN role r ON s.role_id = r.id 
+                                WHERE r.role_name = 'visitor' or 'visitors' OR r.role_name IS NULL 
+                                ORDER BY s.id ASC");
 
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=visitor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left w-50"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left w-50"><?php echo $row['email']; ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>
