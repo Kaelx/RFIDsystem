@@ -39,7 +39,7 @@
                                         <td class="text-center"><?php echo $i++; ?></td>
                                         <td><?php echo $row['fname'] .' '. $row['mname'] .' '. $row['lname']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
-                                        <td><?php echo ($row['account_type'] == 0) ? 'Admin' : (($row['account_type'] == 1) ? 'Staff' : 'Security Personnel'); ?></td>
+                                        <td><?php echo ($row['account_type'] == 1) ? 'Admin' : (($row['account_type'] == 2) ? 'Staff' : 'Security Personnel'); ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>

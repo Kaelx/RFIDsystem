@@ -30,11 +30,8 @@ $cats = $conn->query($query);
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-
-                </div>
-                <div class="col-md-6">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="row">
                     <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
                             <label for="start_date" class="mr-2">Start Date:</label>
@@ -47,8 +44,7 @@ $cats = $conn->query($query);
                                 value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
                         </div>
                         <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
-
-                        <div class="dropdown mb-2">
+                        <div class="dropdown mb-2 ml-5">
                             <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
@@ -56,8 +52,6 @@ $cats = $conn->query($query);
                                 <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
                             </ul>
                         </div>
-
-
                     </form>
                 </div>
             </div>

@@ -1,4 +1,4 @@
 <?php 
 
-$conn= new mysqli('localhost','root','','rfid_db')or die("Could not connect to mysql".mysqli_error($conn));
+$conn= new mysqli('localhost','root','','rfidsystem_db')or die("Could not connect to mysql".mysqli_error($conn));
 ?>

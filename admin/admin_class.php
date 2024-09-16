@@ -149,12 +149,14 @@ class Action{
 		extract($_POST);
 
 		// Check if RFID exists in students or employees table
-		$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
-		$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+		if (!empty($id)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
 
-		if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
-			// RFID already exists in either students or employees, return 3
-			return 3;
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
+				// RFID already exists in either students or employees, return 3
+				return 3;
+			}
 		}
 
 		$data = " fname = '$fname' ";
@@ -182,28 +184,38 @@ class Action{
 			}
 		}
 
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO students set " . $data);
-			if ($save)
-			return 1;
-		} else {
-			$save = $this->db->query("UPDATE students set " . $data . " where id=" . $id);
-			if ($save)
-			return 2;
+
+		try {
+			if (empty($id)) {
+				$save = $this->db->query("INSERT INTO students set " . $data);
+				if ($save)
+				return 1;
+			} else {
+				$save = $this->db->query("UPDATE students set " . $data . " where id=" . $id);
+				if ($save)
+				return 2;
+			}
+		} catch (mysqli_sql_exception $e) {
+			if ($e->getCode() == 1062) {
+				return 3;
+			} else {
+				return $e->getMessage();  // For debugging
+			}
 		}
 	}
 
 
 	function register2(){
 		extract($_POST);
+		
+		if (!empty($id)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
 
-		// Check if RFID exists in students or employees table
-		$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
-		$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
-
-		if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
-			// RFID already exists in either students or employees, return 3
-			return 3;
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0) {
+				// RFID already exists in either students or employees, return 3
+				return 3;
+			}
 		}
 
 		$data = " fname = '$fname' ";
@@ -243,6 +255,8 @@ class Action{
 			}
 		}
 
+
+		try{
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO employees set " . $data);
 			if ($save)
@@ -252,6 +266,14 @@ class Action{
 			if ($save)
 			return 2;
 		}
+
+	} catch (mysqli_sql_exception $e) {
+		if ($e->getCode() == 1062) {
+			return 3;
+		} else {
+			return $e->getMessage();  // For debugging
+		}
+	}
 	}
 
 

@@ -170,7 +170,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                     alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=student_data'
-                    }, 1500)
+                    }, 1000)
 
                 }
             }

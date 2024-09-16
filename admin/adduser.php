@@ -42,9 +42,9 @@
                         <label for="account_type">Type</label>
                         <select class="form-control" name="account_type" id="account_type" required>
                             <option value="" selected disabled>-- Select Role --</option>
-                            <option value="0">Admin</option>
-                            <option value="1">Staff</option>
-                            <option value="2">Security Personnel</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Staff</option>
+                            <option value="3">Security Personnel</option>
                         </select>
                     </div>
                 </div>
@@ -56,21 +56,21 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" required>
                     </div>
-                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label for="username">username</label>
-                            <input type="username" class="form-control" name="username" id="username" required>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" required>
-                        </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="username">username</label>
+                        <input type="username" class="form-control" name="username" id="username" required>
                     </div>
+                    <div class="col-md-4 form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                </div>
 
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="index.php?page=accountmanage" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="index.php?page=accountmanage" class="btn btn-secondary">Cancel</a>
             </form>
 
 
@@ -97,16 +97,16 @@
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=accountmanage'
+                    }, 1200)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
-                        location.reload()
-                    }, 1500)
+                        location.href = 'index.php?page=accountmanage'
+                    }, 1200)
 
-                }else if (resp == 3) {
+                } else if (resp == 3) {
                     alert_toast("Email already exist", 'info')
 
                 } else {
