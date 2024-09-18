@@ -20,7 +20,7 @@
 
 
                         <div class="form-group text-right m-2">
-                            <label for="img" class="mr-4">Profile Picture</label><br>
+                            <label for="img" class="mr-4">Upload Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <!-- Hidden File Input -->

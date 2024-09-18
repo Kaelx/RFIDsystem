@@ -23,7 +23,7 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center w-50">Name</th>
-                                    <th class="text-center w-25">Email</th>
+                                    <th class="text-center w-50">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
