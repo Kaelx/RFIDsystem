@@ -81,6 +81,9 @@ if (!isset($_SESSION['login_id'])) {
               </a>
             </li>
 
+            <?php
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {            
+              ?>
             <li class="nav-item">
               <a href="index.php?page=student_data" class="nav-link">
                 <i class="fa-solid fa-id-card nav-icon"></i>
@@ -94,6 +97,14 @@ if (!isset($_SESSION['login_id'])) {
                 <p>Employee</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-store nav-icon"></i>
+                <p>Canteen Vendors</p>
+              </a>
+            </li>
+            <?php };?>
 
             <li class="nav-item">
               <a href="index.php?page=visitor_data" class="nav-link">
@@ -117,59 +128,69 @@ if (!isset($_SESSION['login_id'])) {
               </a>
             </li>
 
-            <li class="nav-header">Others</li>
+            <?php
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {            
+              ?>
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fa-solid fa-box-archive nav-icon"></i>
-                <p>
-                  Archived Data
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Students Archived</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Employee Archived</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Visitors Archived</p>
-                  </a>
-                </li>
+              <li class="nav-header">Others</li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fa-solid fa-box-archive nav-icon"></i>
+                  <p>
+                    Archived Data
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Students Archived</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Employee Archived</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Visitors Archived</p>
+                    </a>
+                  </li>
 
 
+                </ul>
+              </li>
+            <?php }; ?>
 
+            <?php
+            if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
+            ?>
 
-              </ul>
-            </li>
+              <li class="nav-item">
+                <a href="index.php?page=category" class="nav-link">
+                  <i class="fa-solid fa-bars-progress nav-icon"></i>
+                  <p>
+                    Manage Category
+                  </p>
+                </a>
+              </li>
 
-            <li class="nav-item">
-              <a href="index.php?page=category" class="nav-link">
-                <i class="fa-solid fa-bars-progress nav-icon"></i>
-                <p>
-                  Manage Category
-                </p>
-              </a>
-            </li>
+              <li class="nav-item">
+                <a href="index.php?page=accountmanage" class="nav-link">
+                  <i class="fa-solid fa-user-gear nav-icon"></i>
+                  <p>
+                    Manage Account
+                  </p>
+                </a>
+              </li>
 
-            <li class="nav-item">
-              <a href="index.php?page=accountmanage" class="nav-link">
-                <i class="fa-solid fa-user-gear nav-icon"></i>
-                <p>
-                  Manage Account
-                </p>
-              </a>
-            </li>
+            <?php }; ?>
 
           </ul>
         </nav>

@@ -1,17 +1,24 @@
-<div class="content-wrapper">
+<div class="content-wrapper d-flex flex-column">
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
         </div>
     </div>
+    <!-- RFID FORM -->
+    <form action="" id="rfid-form">
+        <div>
+            <input type="text" id="rfid" name="rfid" required autofocus>
+        </div>
+    </form>
 
     <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+    <section class="content flex-grow-1 d-flex flex-column">
+        <div class="container-fluid h-100 d-flex flex-column">
 
-            <div class="card">
-                <div class="card-body">
-
+            <!-- Card with clock and user info -->
+            <div class="card flex-grow-1 d-flex flex-column">
+                <div class="card-body flex-grow-1 d-flex flex-column justify-content-between">
                     <!-- Clock and Date Display -->
                     <center>
                         <div class="mb-4">
@@ -23,77 +30,76 @@
                     <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; max-width: 350px; max-height: 350px;">
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 450px; height: 450px;">
                         </div>
                         <div class="col-md-5">
-
                             <div class="row">
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-4 mb-2">
                                     <input type="text" id="fname" class="form-control form-control-lg" placeholder="First Name">
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-4 mb-2">
                                     <input type="text" id="lname" class="form-control form-control-lg" placeholder="Last Name">
                                 </div>
                             </div>
-                            <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
-                            <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
-                            <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
+                                </div>
+                                <div class="col-md-8 ">
+                                    <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- RFID FORM -->
-            <form action="" id="rfid-form">
-                <div>
-                    <input type="text" id="rfid" name="rfid" required autofocus>
-                </div>
-            </form>
-
-
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table table-hover table-sm compact">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Time in</th>
-                                <th class="text-center">Time out</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $rec = $conn->query("SELECT r.id, r.timein, r.timeout,
-                                            COALESCE(s.fname, e.fname, v.fname) as fname,
-                                            COALESCE(s.mname, e.mname, v.mname) as mname,
-                                            COALESCE(s.lname, e.lname, v.lname) as lname
-                                        FROM records r
-                                        LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-                                        LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-                                        LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
-                                        ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
-                                        LIMIT 5;
-");
-
-                            while ($row = $rec->fetch_assoc()): ?>
-                                <tr>
-                                    <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
-                                    <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
-                                    <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-
+            <!-- Add any other content here -->
 
         </div>
     </section>
 
+    <!-- The lower card that should always be at the bottom -->
+    <div class="card mt-auto">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm compact">
+                <thead>
+                    <tr>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Time in</th>
+                        <th class="text-center">Time out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $rec = $conn->query("SELECT r.id, r.timein, r.timeout,
+                                        COALESCE(s.fname, e.fname, v.fname) as fname,
+                                        COALESCE(s.mname, e.mname, v.mname) as mname,
+                                        COALESCE(s.lname, e.lname, v.lname) as lname
+                                    FROM records r
+                                    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
+                                    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
+                                    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+                                    ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
+                                    LIMIT 5;
+                                ");
+                    while ($row = $rec->fetch_assoc()): ?>
+                        <tr>
+                            <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
+                            <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
+                            <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
 
 
 
