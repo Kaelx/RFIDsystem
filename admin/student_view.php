@@ -137,7 +137,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
-                            <button class="btn btn-danger btn-custom delete_student" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
+                            <button class="btn btn-danger btn-custom archive_student" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
                             <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>
                         </div>
                     </div>
@@ -152,21 +152,21 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 </div>
 
 <script>
-    $('.delete_student').click(function() {
+    $('.archive_student').click(function() {
 
-        _conf("Are you sure to delete this data?", "delete_student", [$(this).attr('data-id')])
+        _conf("Are you sure to archive this data?", "archive_student", [$(this).attr('data-id')])
     });
 
-    function delete_student($id) {
+    function archive_student($id) {
         $.ajax({
-            url: 'ajax.php?action=delete_student',
+            url: 'ajax.php?action=archive_student',
             method: 'POST',
             data: {
                 id: $id
             },
             success: function(resp) {
                 if (resp == 1) {
-                    alert_toast("Data successfully deleted", 'warning')
+                    alert_toast("Data successfully archive", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=student_data'
                     }, 1000)

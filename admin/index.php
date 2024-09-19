@@ -120,6 +120,40 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">Others</li>
 
             <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-box-archive nav-icon"></i>
+                <p>
+                  Archived Data
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Students Archived</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Employee Archived</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Visitors Archived</p>
+                  </a>
+                </li>
+
+
+
+
+              </ul>
+            </li>
+
+            <li class="nav-item">
               <a href="index.php?page=category" class="nav-link">
                 <i class="fa-solid fa-bars-progress nav-icon"></i>
                 <p>
@@ -158,7 +192,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view','employee_edit', 'visitor_data', 'visitor_register','visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 

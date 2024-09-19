@@ -322,18 +322,25 @@ class Action{
 
 
 
-	function delete_student(){
+	function archive_student(){
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM students where id = ".$id);
-		if($delete)
+		$archive = $this->db->query("UPDATE students set status = 1 where id = ".$id);
+		if($archive)
 			return 1;
 	}
 
 
-	function delete_employee(){
+	function archive_employee(){
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM employees where id = ".$id);
-		if($delete)
+		$archive = $this->db->query("UPDATE employees set status = 1 where id = ".$id);
+		if($archive)
+			return 1;
+	}
+
+	function archive_visitor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE visitors set status = 1 where id = ".$id);
+		if($archive)
 			return 1;
 	}
 
@@ -345,21 +352,21 @@ class Action{
 		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path, 'students' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
-			WHERE s.rfid = '$rfid'
+			WHERE s.rfid = '$rfid' AND s.status = 0
 			
 			UNION
 			
 			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, e.rfid, e.img_path, 'employees' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
-			WHERE e.rfid = '$rfid'
+			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
 			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, v.rfid, v.img_path, 'visitors' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
-			WHERE v.rfid = '$rfid'
+			WHERE v.rfid = '$rfid' AND v.status = 0
 		");
 	
 		if ($fetch->num_rows > 0) {

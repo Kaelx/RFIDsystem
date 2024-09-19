@@ -17,6 +17,7 @@ $query = "SELECT r.id, r.timein, r.timeout,
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
+    where COALESCE(s.status, e.status, v.status) = 0
 ";
 
 

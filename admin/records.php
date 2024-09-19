@@ -79,7 +79,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p class="form-control form-control-sm"><?= ucfirst($member['gender']) ?></p>
+                                                <p class="form-control form-control-sm"><?= isset($member['gender']) ? ucfirst($member['gender']): 'Gender not set' ?></p>
                                             </div>
                                         </div>
                                         <div class="row">

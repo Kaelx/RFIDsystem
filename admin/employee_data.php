@@ -34,7 +34,8 @@
                                 $cats = $conn->query("SELECT e.*, r.role_name 
                                                     FROM employees e
                                                     LEFT JOIN role r ON e.role_id = r.id 
-                                                    WHERE r.role_name = 'employee' or 'employees'OR r.role_name IS NULL 
+                                                    WHERE (r.role_name = 'employee' or 'employees'OR r.role_name IS NULL)
+                                                    and e.status = 0
                                                     ORDER BY e.id ASC");
 
                                 while ($row = $cats->fetch_assoc()):

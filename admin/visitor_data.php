@@ -31,11 +31,12 @@
                                 $i = 1;
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
-                                $cats = $conn->query("SELECT s.*, r.role_name 
-                                FROM visitors s 
-                                LEFT JOIN role r ON s.role_id = r.id 
-                                WHERE r.role_name = 'visitor' or 'visitors' OR r.role_name IS NULL 
-                                ORDER BY s.id ASC");
+                                $cats = $conn->query("SELECT v.*, r.role_name 
+                                FROM visitors v 
+                                LEFT JOIN role r ON v.role_id = r.id 
+                                WHERE (r.role_name = 'visitor' or 'visitors' OR r.role_name IS NULL)
+                                and v.status = 0
+                                ORDER BY v.id ASC");
 
 
                                 while ($row = $cats->fetch_assoc()):

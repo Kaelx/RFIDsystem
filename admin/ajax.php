@@ -97,15 +97,21 @@ if($action == "fetch_data"){
 // }
 
 
-if($action == "delete_student"){
-	$save = $crud->delete_student();
+if($action == "archive_student"){
+	$save = $crud->archive_student();
 	if($save)
 		echo $save;
 }
 
 
-if($action == "delete_employee"){
-	$save = $crud->delete_employee();
+if($action == "archive_employee"){
+	$save = $crud->archive_employee();
+	if($save)
+		echo $save;
+}
+
+if($action == "archive_visitor"){
+	$save = $crud->archive_visitor();
 	if($save)
 		echo $save;
 }

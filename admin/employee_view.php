@@ -179,7 +179,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
-                            <button class="btn btn-danger btn-custom delete_employee" type="button" data-id="<?php echo $data['id'] ?>">Delete</button>
+                            <button class="btn btn-danger btn-custom archive_employee" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
                             <a href="index.php?page=employee_data" class="btn btn-secondary btn-custom">Back</a>
                         </div>
                     </div>
@@ -194,21 +194,21 @@ $data = mysqli_fetch_assoc($query);
 </div>
 
 <script>
-    $('.delete_employee').click(function() {
+    $('.archive_employee').click(function() {
 
-        _conf("Are you sure to delete this data?", "delete_employee", [$(this).attr('data-id')])
+        _conf("Are you sure to archive this data?", "archive_employee", [$(this).attr('data-id')])
     });
 
-    function delete_employee($id) {
+    function archive_employee($id) {
         $.ajax({
-            url: 'ajax.php?action=delete_employee',
+            url: 'ajax.php?action=archive_employee',
             method: 'POST',
             data: {
                 id: $id
             },
             success: function(resp) {
                 if (resp == 1) {
-                    alert_toast("Data successfully deleted", 'warning')
+                    alert_toast("Data successfully archive", 'warning')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_data'
                     }, 1000)
