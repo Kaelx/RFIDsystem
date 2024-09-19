@@ -4,19 +4,21 @@ $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
-$query = "SELECT r.id, r.rfid_num, r.timein, r.timeout, 
-       COALESCE(s.fname, e.fname, v.fname) AS fname, 
-       COALESCE(s.mname, e.mname, v.mname) AS mname, 
-       COALESCE(s.lname, e.lname, v.lname) AS lname,
-       COALESCE(s.school_id, e.school_id, null) AS school_id,
-       COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
-FROM records r
-LEFT JOIN students s ON r.rfid_num = s.rfid
-LEFT JOIN employees e ON r.rfid_num = e.rfid
-LEFT JOIN visitors v ON r.rfid_num = v.rfid
-LEFT JOIN role r_s ON s.role_id = r_s.id 
-LEFT JOIN role r_e ON e.role_id = r_e.id
-LEFT JOIN role r_v ON v.role_id = r_v.id;";
+$query = "SELECT r.id, r.timein, r.timeout, 
+           COALESCE(s.fname, e.fname, v.fname) AS fname, 
+           COALESCE(s.mname, e.mname, v.mname) AS mname, 
+           COALESCE(s.lname, e.lname, v.lname) AS lname,
+           COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+           COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+    FROM records r
+    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
+    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
+    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+    LEFT JOIN role r_s ON s.role_id = r_s.id
+    LEFT JOIN role r_e ON e.role_id = r_e.id
+    LEFT JOIN role r_v ON v.role_id = r_v.id
+";
+
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
@@ -36,12 +38,12 @@ $cats = $conn->query($query);
                 <div class="row">
                     <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="start_date" class="mr-2">Start Date:</label>
+                            <label for="start_date" class="mr-2">Date:</label>
                             <input type="date" name="start_date" id="start_date" class="form-control"
                                 value="<?= isset($_GET['start_date']) ? ($_GET['start_date']) : '' ?>">
                         </div>
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="end_date" class="mr-2">End Date:</label>
+                            <label for="end_date" class="mr-2">To </label>
                             <input type="date" name="end_date" id="end_date" class="form-control"
                                 value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
                         </div>

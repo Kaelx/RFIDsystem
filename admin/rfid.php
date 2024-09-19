@@ -63,17 +63,17 @@
                         </thead>
                         <tbody>
                             <?php
-                            $rec = $conn->query('SELECT r.id, r.rfid_num, r.timein, r.timeout, 
-                                    COALESCE(s.fname, e.fname, v.fname) as fname, 
-                                    COALESCE(s.mname, e.mname,v.mname) as mname, 
-                                    COALESCE(s.lname, e.lname,v.lname) as lname
-                            FROM records r
-                            LEFT JOIN students s ON r.rfid_num = s.rfid
-                            LEFT JOIN employees e ON r.rfid_num = e.rfid
-                            LEFT JOIN visitors v ON r.rfid_num = v.rfid
-                            ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
-                            LIMIT 5;
-                        ');
+                            $rec = $conn->query("SELECT r.id, r.timein, r.timeout,
+                                            COALESCE(s.fname, e.fname, v.fname) as fname,
+                                            COALESCE(s.mname, e.mname, v.mname) as mname,
+                                            COALESCE(s.lname, e.lname, v.lname) as lname
+                                        FROM records r
+                                        LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
+                                        LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
+                                        LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+                                        ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
+                                        LIMIT 5;
+");
 
                             while ($row = $rec->fetch_assoc()): ?>
                                 <tr>

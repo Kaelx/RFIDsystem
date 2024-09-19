@@ -341,37 +341,32 @@ class Action{
 
 	function fetch_data() {
 		extract($_POST);
+		
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path, 'students' as source_table
+			FROM students s
+			LEFT JOIN role r ON s.role_id = r.id
+			WHERE s.rfid = '$rfid'
+			
+			UNION
+			
+			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, e.rfid, e.img_path, 'employees' as source_table
+			FROM employees e
+			LEFT JOIN role r ON e.role_id = r.id
+			WHERE e.rfid = '$rfid'
+			
+			UNION
+			
+			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, v.rfid, v.img_path, 'visitors' as source_table
+			FROM visitors v
+			LEFT JOIN role r ON v.role_id = r.id
+			WHERE v.rfid = '$rfid'
+		");
 	
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path
-									FROM students s
-									LEFT JOIN role r ON s.role_id = r.id
-									WHERE s.rfid = '$rfid'
-								
-									UNION
-								
-									SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, e.rfid, e.img_path
-									FROM employees e
-									LEFT JOIN role r ON e.role_id = r.id
-									WHERE e.rfid = '$rfid'
-									
-									UNION
-									
-									SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, v.rfid, v.img_path
-									FROM visitors v
-									LEFT JOIN role r ON v.role_id = r.id
-									WHERE v.rfid = '$rfid'
-								");
-	
-	
-	
-	
-
-
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
-
+	
 			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
-
+	
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
@@ -381,31 +376,34 @@ class Action{
 				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor',
 				'img_path' => $img_path
 			];
-
+	
 			if ($response) {
 				$check_existing = $this->db->query("SELECT * FROM records 
-				WHERE rfid_num = '" . $data['rfid'] . "' 
-				AND timeout IS NULL
-			");
-
-				if ($check_existing->num_rows > 0) {
-					$update = $this->db->query("UPDATE records 
-					SET timeout = CURRENT_TIMESTAMP() 
-					WHERE rfid_num = '" . $data['rfid'] . "' 
+					WHERE recordable_id = '" . $data['id'] . "' 
+					AND recordable_table = '" . $data['source_table'] . "'
 					AND timeout IS NULL
 				");
+	
+				if ($check_existing->num_rows > 0) {
+					$update = $this->db->query("UPDATE records 
+						SET timeout = CURRENT_TIMESTAMP() 
+						WHERE recordable_id = '" . $data['id'] . "' 
+						AND recordable_table = '" . $data['source_table'] . "'
+						AND timeout IS NULL
+					");
 				} else {
-					$insert = $this->db->query("INSERT INTO records (rfid_num, timein) 
-					VALUES ('" . $data['rfid'] . "', CURRENT_TIMESTAMP())
-				");
+					$insert = $this->db->query("INSERT INTO records (recordable_id, recordable_table, timein) 
+						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "', CURRENT_TIMESTAMP())
+					");
 				}
 			}
 		} else {
 			$response = ['success' => false];
 		}
-		
+	
 		echo json_encode($response);
 	}
+	
 
 	
 

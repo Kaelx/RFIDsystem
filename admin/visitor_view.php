@@ -4,7 +4,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, r.role_name
+    $query = $conn->query("SELECT s.*, r.role_name, 'visitors' as type
     FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
@@ -115,7 +115,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
                     <div class="row mt-2">
                         <div class="col-md-6 ">
-                            <a href="index.php?page=records&rfid=<?= $data['rfid'] ?>" class="btn btn-info">Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type']?>" class="btn btn-info">Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=visitor_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>

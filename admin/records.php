@@ -1,10 +1,11 @@
 <?php
 
-if (!isset($_GET['rfid']) || empty($_GET['rfid'])) {
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
     header('Location: index');
 }
 
-$rfid = $_GET['rfid'];
+$uid = $_GET['uid'];
+$type = $_GET['type'];
 
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
@@ -24,26 +25,34 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             <div class="row">
                 <div class="col-md-6">
                     <?php
-                    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
-                            FROM students s
-                            LEFT JOIN role r ON s.role_id = r.id
-                            WHERE s.rfid = '$rfid'
-                        
-                            UNION
-                        
-                            SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
-                            FROM employees e
-                            LEFT JOIN role r ON e.role_id = r.id
-                            WHERE e.rfid = '$rfid'
-                            
-                            UNION
+                    switch ($type) {
+                        case 'students':
+                            $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
+            FROM students s
+            LEFT JOIN role r ON s.role_id = r.id
+            WHERE s.id = '$uid'
+        ";
+                            break;
 
-                            SELECT v.id, v.fname, v.mname, v.lname, null as school_id, r.role_name, v.rfid, v.img_path, v.gender
-                            FROM visitors v
-                            LEFT JOIN role r ON v.role_id = r.id
-                            WHERE v.rfid = '$rfid'
-                            
-                            ";
+                        case 'employees':
+                            $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
+            FROM employees e
+            LEFT JOIN role r ON e.role_id = r.id
+            WHERE e.id = '$uid'
+        ";
+                            break;
+
+                        case 'visitors':
+                            $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
+            FROM visitors v
+            LEFT JOIN role r ON v.role_id = r.id
+            WHERE v.id = '$uid'
+        ";
+                            break;
+
+                        default:
+                            die('Invalid type');
+                    }
 
                     $result = $conn->query($query);
                     $member = $result->fetch_assoc();
@@ -95,12 +104,12 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                         <input type="hidden" name="rfid" value="<?= $rfid ?>">
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="start_date" class="mr-2">Start Date:</label>
+                            <label for="start_date" class="mr-2">Date:</label>
                             <input type="date" name="start_date" id="start_date" class="form-control"
                                 value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                         </div>
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="end_date" class="mr-2">End Date:</label>
+                            <label for="end_date" class="mr-2">To </label>
                             <input type="date" name="end_date" id="end_date" class="form-control"
                                 value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                         </div>
@@ -142,21 +151,23 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                             <tbody>
                                 <?php
 
-                                $query = "SELECT r.rfid_num, r.timein, r.timeout, 
-                                        COALESCE(s.fname, e.fname, v.fname ) AS fname, 
-                                        COALESCE(s.mname, e.mname, v.mname ) AS mname, 
-                                        COALESCE(s.lname, e.lname, v.lname ) AS lname,
-                                        COALESCE(s.school_id, e.school_id, null) AS school_id,
-                                        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name ) AS role_name
-                                        FROM records r
-                                        LEFT JOIN students s ON r.rfid_num = s.rfid
-                                        LEFT JOIN employees e ON r.rfid_num = e.rfid
-                                        LEFT JOIN visitors v on r.rfid_num = v.rfid
-                                        LEFT JOIN role r_s ON s.role_id = r_s.id
-                                        LEFT JOIN role r_e ON e.role_id = r_e.id
-                                        LEFT JOIN role r_v ON v.role_id = r_v.id
+                                $query = "SELECT r.timein, r.timeout,
+                                        COALESCE(s.fname, e.fname, v.fname) AS fname, 
+                                        COALESCE(s.mname, e.mname, v.mname) AS mname, 
+                                        COALESCE(s.lname, e.lname, v.lname) AS lname,
+                                        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+                                        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+                                    FROM records r
+                                    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
+                                    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
+                                    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+                                    LEFT JOIN role r_s ON s.role_id = r_s.id
+                                    LEFT JOIN role r_e ON e.role_id = r_e.id
+                                    LEFT JOIN role r_v ON v.role_id = r_v.id
+                                    WHERE r.recordable_id = '$uid' and r.recordable_table = '$type'
+                                ";
 
-                                        WHERE r.rfid_num = '$rfid'";
+
 
                                 if (!empty($start_date) && !empty($end_date)) {
                                     $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
@@ -222,7 +233,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
     function filterBy(period) {
 
-        var rfid = "<?php echo $rfid; ?>";
+        var uid = "<?php echo $uid; ?>";
+        var type = "<?php echo $type; ?>";
         const formatDate = date => date.toISOString().split('T')[0];
         const gmtPlus8Offset = 8 * 60 * 60 * 1000;
 
@@ -256,6 +268,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
         document.getElementById('start_date').value = startDate;
         document.getElementById('end_date').value = endDate;
 
-        location.href = `index.php?page=records&rfid=${encodeURIComponent(rfid)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        location.href = `index.php?page=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 </script>
