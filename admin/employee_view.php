@@ -175,7 +175,7 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-6 ">
-                            <a href="index.php?page=records&rfid=<?= $data['rfid'] ?>" class="btn btn-info">View Attendance</a>
+                            <a href="index.php?page=records&rfid=<?= $data['rfid'] ?>" class="btn btn-info">Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>

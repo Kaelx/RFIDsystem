@@ -378,7 +378,7 @@ class Action{
 				'lname' => $data['lname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
-				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor ID',
+				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor',
 				'img_path' => $img_path
 			];
 

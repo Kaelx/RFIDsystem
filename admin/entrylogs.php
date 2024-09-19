@@ -5,16 +5,18 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
 $query = "SELECT r.id, r.rfid_num, r.timein, r.timeout, 
-        COALESCE(s.fname, e.fname) as fname, 
-        COALESCE(s.mname, e.mname) as mname, 
-        COALESCE(s.lname, e.lname) as lname,
-        COALESCE(s.school_id, e.school_id) as school_id,
-        COALESCE(r_s.role_name, r_e.role_name) as role_name
-        FROM records r
-        LEFT JOIN students s ON r.rfid_num = s.rfid
-        LEFT JOIN employees e ON r.rfid_num = e.rfid
-        LEFT JOIN role r_s ON s.role_id = r_s.id 
-        LEFT JOIN role r_e ON e.role_id = r_e.id";
+       COALESCE(s.fname, e.fname, v.fname) AS fname, 
+       COALESCE(s.mname, e.mname, v.mname) AS mname, 
+       COALESCE(s.lname, e.lname, v.lname) AS lname,
+       COALESCE(s.school_id, e.school_id, null) AS school_id,
+       COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+FROM records r
+LEFT JOIN students s ON r.rfid_num = s.rfid
+LEFT JOIN employees e ON r.rfid_num = e.rfid
+LEFT JOIN visitors v ON r.rfid_num = v.rfid
+LEFT JOIN role r_s ON s.role_id = r_s.id 
+LEFT JOIN role r_e ON e.role_id = r_e.id
+LEFT JOIN role r_v ON v.role_id = r_v.id;";
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
@@ -83,7 +85,7 @@ $cats = $conn->query($query);
                                 ?>
                                     <tr>
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['school_id']; ?></td>
+                                        <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td class=" text-center"><?php echo $row['timein']; ?></td>
