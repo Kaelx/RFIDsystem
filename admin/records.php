@@ -143,16 +143,19 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 <?php
 
                                 $query = "SELECT r.rfid_num, r.timein, r.timeout, 
-                                        COALESCE(s.fname, e.fname) AS fname, 
-                                        COALESCE(s.mname, e.mname) AS mname, 
-                                        COALESCE(s.lname, e.lname) AS lname,
-                                        COALESCE(s.school_id, e.school_id) AS school_id,
-                                        COALESCE(r_s.role_name, r_e.role_name) AS role_name
+                                        COALESCE(s.fname, e.fname, v.fname ) AS fname, 
+                                        COALESCE(s.mname, e.mname, v.mname ) AS mname, 
+                                        COALESCE(s.lname, e.lname, v.lname ) AS lname,
+                                        COALESCE(s.school_id, e.school_id, null) AS school_id,
+                                        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name ) AS role_name
                                         FROM records r
                                         LEFT JOIN students s ON r.rfid_num = s.rfid
                                         LEFT JOIN employees e ON r.rfid_num = e.rfid
+                                        LEFT JOIN visitors v on r.rfid_num = v.rfid
                                         LEFT JOIN role r_s ON s.role_id = r_s.id
                                         LEFT JOIN role r_e ON e.role_id = r_e.id
+                                        LEFT JOIN role r_v ON v.role_id = r_v.id
+
                                         WHERE r.rfid_num = '$rfid'";
 
                                 if (!empty($start_date) && !empty($end_date)) {
