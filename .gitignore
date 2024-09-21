@@ -1,6 +1,2 @@
-*.jpg
-*.jpeg
-*.png
-
 /node_modules
 /vendor

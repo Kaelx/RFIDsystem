@@ -73,7 +73,7 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" disabled>-- Select Gender --</option>
+                                    <option value="" disabled <?= empty($data['gender']) ? 'selected' : '' ?>>-- Select Gender --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
                                 </select>

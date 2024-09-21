@@ -33,15 +33,15 @@ if (isset($_GET['uid'])) {
                             <input type="file" name="img" id="img">
                         </div>
                         <div class="row">
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control" name="fname" id="fname" value="<?= $member['fname'] ?>" required>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="mname">Middle Name</label>
                                 <input type="text" class="form-control" name="mname" id="mname" value="<?= $member['mname'] ?>" required>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control" name="lname" id="lname" value="<?= $member['lname'] ?>" required>
                             </div>

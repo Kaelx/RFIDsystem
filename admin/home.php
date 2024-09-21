@@ -21,19 +21,20 @@
         $bg_colors = ['bg-info', 'bg-success', 'bg-danger', 'bg-primary'];
         $counter = 0;
 
-        // Modify the query to count members per category
+        
         $cats = $conn->query("SELECT r.id, r.role_name, 
-              COUNT( s.id) AS student_count,
-              COUNT( e.id) AS employee_count,
-              COUNT( v.id) AS visitor_count,
-              (COUNT( s.id) + COUNT( e.id) + COUNT( v.id) + COUNT( cv.id)) AS total_count
-        FROM role r
-        LEFT JOIN students s ON s.role_id = r.id
-        LEFT JOIN employees e ON e.role_id = r.id
-        LEFT JOIN visitors v ON v.role_id = r.id
-        LEFT JOIN vendors cv ON cv.role_id = r.id
-        GROUP BY r.id, r.role_name
-    ");
+                      COUNT(s.id) AS student_count,
+                      COUNT(e.id) AS employee_count,
+                      COUNT(v.id) AS visitor_count,
+                      COUNT(cv.id) AS vendor_count,
+                      (COUNT(s.id) + COUNT(e.id) + COUNT(v.id) + COUNT(cv.id)) AS total_count
+                FROM role r
+                LEFT JOIN students s ON s.role_id = r.id AND s.status = 0
+                LEFT JOIN employees e ON e.role_id = r.id AND e.status = 0
+                LEFT JOIN visitors v ON v.role_id = r.id AND v.status = 0
+                LEFT JOIN vendors cv ON cv.role_id = r.id AND cv.status = 0
+                GROUP BY r.id, r.role_name
+            ");
     
 
 

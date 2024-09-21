@@ -23,7 +23,6 @@
                             <label for="img" class="mr-4">Upload Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                <!-- Hidden File Input -->
                                 <input type="file" name="img" id="img" style="display: none;" onchange="previewImage(event)">
                             </div>
                         </div>

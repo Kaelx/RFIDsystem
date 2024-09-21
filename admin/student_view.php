@@ -61,7 +61,16 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                     <div class="row">
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Birthdate</p>
-                            <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
+                            <p class="form-control form-control-sm">
+                                <?php 
+                                    if (isset($data['bdate'])) {
+                                        $date = new DateTime($data['bdate']);
+                                        echo $date->format('F j, Y');
+                                    } else {
+                                        echo '';
+                                    }
+                                ?>
+                            </p>
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>

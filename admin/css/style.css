@@ -28,3 +28,9 @@ body, .content-wrapper {
 .btn-custom {
     width: 100px;
 }
+
+
+.main-header {
+    background-color: #a91414;
+    color: #fff;
+}
