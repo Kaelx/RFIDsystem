@@ -73,7 +73,7 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" disabled>-- Select Gender --</option>
+                                    <option value="" disabled <?= empty($data['gender']) ? 'selected' : '' ?>>-- Select Gender --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
                                 </select>
@@ -166,7 +166,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=student_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
+                                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -209,6 +209,11 @@ if (isset($_GET['uid'])) {
 
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register',

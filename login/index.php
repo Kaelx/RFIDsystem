@@ -16,6 +16,8 @@ if (isset($_SESSION['login_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 
+    <link rel="icon" type="image/png" href="../assets/defaults/evsu.png">
+
     <?php
     include 'header.php';
     include 'db_connect.php';
@@ -106,7 +108,7 @@ include 'footer.php';
 
         $(form).find('input').each(function() {
             if (invalidPattern.test($(this).val())) {
-                alert_toast('Invalid. Please do not try to hack us!', 'danger');
+                alert_toast('Invalid. Do not input special character!', 'danger');
                 isValid = false;
                 return false;
             }

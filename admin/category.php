@@ -12,7 +12,7 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card mb-4" id="card-type-of-people">
+            <!-- <div class="card mb-4" id="card-type-of-people">
                 <div class="card-header text-bold">
                     Role
                     <div class="card-tools">
@@ -25,7 +25,8 @@
                 <div class="card-body">
                     <div class="col-lg-12">
                         <div class="row">
-                            <!-- FORM Panel -->
+
+
                             <div class="col-md-4">
                                 <form action="" id="set-category">
                                     <div class="card">
@@ -46,7 +47,8 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- Table Panel -->
+                            
+
                             <div class="col-md-8">
                                 <div class="card shadow-none">
                                     <div class="card-body">
@@ -87,8 +89,7 @@
                 </div>
             </div>
 
-
-            <hr>
+            <hr> -->
 
 
             <div class="card  mb-4" id="card-school-department">

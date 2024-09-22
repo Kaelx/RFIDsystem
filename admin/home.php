@@ -17,49 +17,91 @@
 
       <!-- Small boxes (Stat box) -->
       <div class="row">
-        <?php
-        $bg_colors = ['bg-info', 'bg-success', 'bg-danger', 'bg-primary'];
-        $counter = 0;
 
-        // Modify the query to count members per category
-        $cats = $conn->query("SELECT r.id, r.role_name, 
-              COUNT( s.id) AS student_count,
-              COUNT( e.id) AS employee_count,
-              COUNT( v.id) AS visitor_count,
-              (COUNT( s.id) + COUNT( e.id) + COUNT( v.id) + COUNT( cv.id)) AS total_count
-        FROM role r
-        LEFT JOIN students s ON s.role_id = r.id
-        LEFT JOIN employees e ON e.role_id = r.id
-        LEFT JOIN visitors v ON v.role_id = r.id
-        LEFT JOIN vendors cv ON cv.role_id = r.id
-        GROUP BY r.id, r.role_name
-    ");
-    
-
-
-
-        while ($row = $cats->fetch_assoc()):
-          $bg_color = $bg_colors[$counter % count($bg_colors)];
-          $counter++;
-        ?>
-
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box <?php echo $bg_color; ?>">
-              <div class="inner">
-                <!-- Display the count of members -->
-                <h3><?php echo $row['total_count']; ?></h3>
-
-                <p><?php echo $row['role_name'] ?></p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM students where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Students</p>
+              </a>
             </div>
+            <div class="icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <a href="index.php?page=student_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
 
-        <?php endwhile; ?>
+        </div>
+
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <a href="index.php?page=employee_data" style="text-decoration: none; color: inherit;">
+
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM employees where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Employee</p>
+              </a>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <a href="index.php?page=employee_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <!-- <div class="col-lg-3 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <a href="#" style="text-decoration: none; color: inherit;">
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM vendors where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Canteen Vendors</p>
+              </a>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-store"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div> -->
+
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <a href="index.php?page=visitor_data" style="text-decoration: none; color: inherit;">
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM visitors where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Visitors</p>
+              </a>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-person-walking"></i>
+            </div>
+            <a href="index.php?page=visitor_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
 
       </div>
 

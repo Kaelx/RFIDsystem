@@ -86,13 +86,19 @@
                                     ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
                                     LIMIT 5;
                                 ");
-                    while ($row = $rec->fetch_assoc()): ?>
+                    if ($rec->num_rows > 0) {
+                        while ($row = $rec->fetch_assoc()): ?>
+                            <tr>
+                                <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
+                                <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
+                                <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
+                            </tr>
+                        <?php endwhile;
+                    } else { ?>
                         <tr>
-                            <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
-                            <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
-                            <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
+                            <td class="text-center text-bold text-center" colspan="3">No data available</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

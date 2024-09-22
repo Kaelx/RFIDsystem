@@ -1,10 +1,24 @@
 <style>
     body {
-        background-image: url('../assets/defaults/bg-elevatech.jpg');
-        /* Replace with background image path */
+        position: relative;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+    }
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('../assets/defaults/EVSU-v2.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(3px);
+        z-index: -1;
     }
 
     .login-container {
@@ -29,15 +43,14 @@
         text-align: center;
         margin-top: 1rem;
     }
-
 </style>
 
 <div class="login-container">
-    <div class="card login-card" style="max-width: 900px;">
+    <div class="card login-card shadow" style="max-width: 900px;">
         <div class="row g-0">
             <!-- Left Image -->
             <div class="col-md-6">
-                <img src="../assets/defaults/logo-img.png" alt="Login Image"> <!-- Replace with path to your image -->
+                <img class="m-4" src="../assets/defaults/evsu.png" alt="Login Image"> <!-- Replace with path to your image -->
             </div>
             <!-- Right Form -->
             <div class="col-md-6 p-5">

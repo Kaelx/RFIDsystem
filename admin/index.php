@@ -20,7 +20,7 @@ if (!isset($_SESSION['login_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ELEVATECH RFID</title>
 
-  <link rel="icon" type="image/png" href="assets/defaults/logo-img.png">
+  <link rel="icon" type="image/png" href="assets/defaults/evsu.png">
 
   <?php
   include 'header.php';
@@ -37,7 +37,7 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
       </ul>
 
@@ -45,7 +45,7 @@ if (!isset($_SESSION['login_id'])) {
       <ul class="navbar-nav ml-auto">
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -61,8 +61,8 @@ if (!isset($_SESSION['login_id'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
-        <img src="assets/defaults/logo-img2.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">Elevatech RFID</span>
+        <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">RFID</span>
       </a>
 
       <!-- Sidebar -->
@@ -82,29 +82,23 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {            
-              ?>
-            <li class="nav-item">
-              <a href="index.php?page=student_data" class="nav-link">
-                <i class="fa-solid fa-id-card nav-icon"></i>
-                <p>Students</p>
-              </a>
-            </li>
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {
+            ?>
+              <li class="nav-item">
+                <a href="index.php?page=student_data" class="nav-link">
+                  <i class="fa-solid fa-id-card nav-icon"></i>
+                  <p>Students</p>
+                </a>
+              </li>
 
-            <li class="nav-item">
-              <a href="index.php?page=employee_data" class="nav-link">
-                <i class="fa-solid fa-building-user nav-icon"></i>
-                <p>Employee</p>
-              </a>
-            </li>
+              <li class="nav-item">
+                <a href="index.php?page=employee_data" class="nav-link">
+                  <i class="fa-solid fa-building-user nav-icon"></i>
+                  <p>Employee</p>
+                </a>
+              </li>
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="fa-solid fa-store nav-icon"></i>
-                <p>Canteen Vendors</p>
-              </a>
-            </li>
-            <?php };?>
+            <?php }; ?>
 
             <li class="nav-item">
               <a href="index.php?page=visitor_data" class="nav-link">
@@ -129,36 +123,37 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {            
-              ?>
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {
+            ?>
 
               <li class="nav-header">Others</li>
 
-              <li class="nav-item">
+              <li class="nav-item" id="archived-menu">
                 <a href="#" class="nav-link">
                   <i class="fa-solid fa-box-archive nav-icon"></i>
                   <p>
-                    Archived Data
+                    Archived
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                    <a href="index.php?page=archived_students" class="nav-link">
+                      <i class="far fa-folder-open nav-icon"></i>
                       <p>Students Archived</p>
                     </a>
                   </li>
 
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                    <a href="index.php?page=archived_employees" class="nav-link">
+                      <i class="far fa-folder-open nav-icon"></i>
                       <p>Employee Archived</p>
                     </a>
                   </li>
+
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                    <a href="index.php?page=archived_visitors" class="nav-link">
+                      <i class="far fa-folder-open nav-icon"></i>
                       <p>Visitors Archived</p>
                     </a>
                   </li>
@@ -166,6 +161,10 @@ if (!isset($_SESSION['login_id'])) {
 
                 </ul>
               </li>
+
+
+
+
             <?php }; ?>
 
             <?php
@@ -213,7 +212,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archived_students','archived_student','archived_employees', 'archived_employee','archived_visitors', 'archived_visitor'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
@@ -256,16 +255,32 @@ if (!isset($_SESSION['login_id'])) {
 </body>
 
 <script>
-  var page = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home' ?>';
-  if (page) {
+  var currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
+  var lastActivePage = sessionStorage.getItem('lastActivePage') || currentPage;
+  var found = false;
+
+  $('ul.nav-sidebar a').each(function() {
+    var href = $(this).attr('href');
+
+    if (href && href.indexOf('page=' + currentPage) !== -1) {
+      $(this).addClass('active');
+      found = true;
+
+      sessionStorage.setItem('lastActivePage', currentPage);
+    }
+  });
+
+  if (!found) {
     $('ul.nav-sidebar a').each(function() {
       var href = $(this).attr('href');
-      if (href && href.indexOf('page=' + page) !== -1) {
+
+      if (href && href.indexOf('page=' + lastActivePage) !== -1) {
         $(this).addClass('active');
       }
     });
   }
 </script>
+
 
 
 <?php

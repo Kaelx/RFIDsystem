@@ -103,6 +103,12 @@ if($action == "archive_student"){
 		echo $save;
 }
 
+if($action == "unarchive_student"){
+	$save = $crud->unarchive_student();
+	if($save)
+		echo $save;
+}
+
 
 if($action == "archive_employee"){
 	$save = $crud->archive_employee();
@@ -110,8 +116,20 @@ if($action == "archive_employee"){
 		echo $save;
 }
 
+if($action == "unarchive_employee"){
+	$save = $crud->unarchive_employee();
+	if($save)
+		echo $save;
+}
+
 if($action == "archive_visitor"){
 	$save = $crud->archive_visitor();
+	if($save)
+		echo $save;
+}
+
+if($action == "unarchive_visitor"){
+	$save = $crud->unarchive_visitor();
 	if($save)
 		echo $save;
 }

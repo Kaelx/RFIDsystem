@@ -79,7 +79,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <p class="form-control form-control-sm"><?= isset($member['gender']) ? ucfirst($member['gender']): 'Gender not set' ?></p>
+                                                <p class="form-control form-control-sm"><?= isset($member['gender']) ? ucfirst($member['gender']) : 'Gender not set' ?></p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -102,16 +102,13 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                 </div>
                 <div class="col-md-6">
                     <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
-                        <input type="hidden" name="rfid" value="<?= $rfid ?>">
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
                             <label for="start_date" class="mr-2">Date:</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control"
-                                value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
+                            <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                         </div>
                         <div class="form-group mb-2 mr-2 d-flex align-items-center">
                             <label for="end_date" class="mr-2">To </label>
-                            <input type="date" name="end_date" id="end_date" class="form-control"
-                                value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
+                            <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                         </div>
                         <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
 
@@ -211,6 +208,10 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     </div>
                 </div>
             </div>
+
+            <div class="mr-5 m-2 text-right">
+                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+            </div>
         </div>
     </section>
 </div>
@@ -227,7 +228,12 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
     $('#filter-report').submit(function(e) {
         e.preventDefault();
 
-        location.href = 'index.php?page=records&' + $(this).serialize();
+        var uid = "<?php echo $uid; ?>";
+        var type = "<?php echo $type; ?>";
+        let startDate, endDate;
+
+
+        location.href = `index.php?page=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&` + $(this).serialize();
     });
 
 

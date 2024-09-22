@@ -118,7 +118,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                             <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type']?>" class="btn btn-info">Records</a>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="index.php?page=visitor_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Update</a>
+                            <a href="index.php?page=visitor_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>
                             <button class="btn btn-danger btn-custom archive_visitor" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
                             <a href="index.php?page=visitor_data" class="btn btn-secondary btn-custom">Back</a>
                         </div>

@@ -23,7 +23,6 @@
                             <label for="img" class="mr-4">Upload Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                <!-- Hidden File Input -->
                                 <input type="file" name="img" id="img" style="display: none;" onchange="previewImage(event)">
                             </div>
                         </div>
@@ -150,7 +149,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Cancel</a>
+                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -188,6 +187,11 @@
 
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register',

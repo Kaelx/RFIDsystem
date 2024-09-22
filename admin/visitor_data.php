@@ -2,13 +2,6 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <!-- button -->
-                    <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                    <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
-                </div>
-            </div>
         </div>
     </div>
 
@@ -17,6 +10,12 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+                <div class="row">
+                <div class="col-sm-6">
+                    <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                    <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
+                </div>
+            </div>
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered compact">
                             <thead>
