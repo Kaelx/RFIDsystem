@@ -96,7 +96,7 @@
                         <?php endwhile;
                     } else { ?>
                         <tr>
-                            <td class="text-center text-bold text-center" colspan="3">No data available</td>
+                            <td class="text-center text-bold" colspan="3">No data available in table</td>
                         </tr>
                     <?php } ?>
                 </tbody>

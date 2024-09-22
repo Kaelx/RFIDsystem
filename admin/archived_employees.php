@@ -21,7 +21,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header text-center text-bold">Student's Archived Data</div>
+                <div class="card-header text-center text-bold">Employee's Archived Data</div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered compact">
