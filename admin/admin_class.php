@@ -123,15 +123,18 @@ class Action{
 
 
 
-//register student
+	//register student
 	function register(){
 		extract($_POST);
 
-		// Check if RFID exists
 		if (!empty($id)) {
-			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
-			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
-			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
+			$current_rfid = $this->db->query("SELECT rfid FROM students WHERE id = '$id'")->fetch_assoc()['rfid'];
+		}
+
+		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
 
 			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
 				return 3;
@@ -175,11 +178,8 @@ class Action{
 				return 2;
 			}
 		} catch (mysqli_sql_exception $e) {
-			if ($e->getCode() == 1062) {
-				return 3;
-			} else {
-				return $e->getMessage();  // For debugging
-			}
+
+			return $e->getMessage();  // For debugging
 		}
 	}
 
@@ -188,14 +188,16 @@ class Action{
 	function register2(){
 		extract($_POST);
 		
-		// Check if RFID exists
 		if (!empty($id)) {
-			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
-			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
-			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
+			$current_rfid = $this->db->query("SELECT rfid FROM employees WHERE id = '$id'")->fetch_assoc()['rfid'];
+		}
+
+		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
 
 			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
-
 				return 3;
 			}
 		}
@@ -250,11 +252,8 @@ class Action{
 		}
 
 	} catch (mysqli_sql_exception $e) {
-		if ($e->getCode() == 1062) {
-			return 3;
-		} else {
 			return $e->getMessage();  // For debugging
-		}
+
 	}
 	}
 
@@ -265,14 +264,16 @@ class Action{
 	function register3(){
 		extract($_POST);
 
-		// Check if RFID exists 
 		if (!empty($id)) {
-			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid' AND id != '$id'");
-			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid' AND id != '$id'");
-			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' AND id != '$id'");
+			$current_rfid = $this->db->query("SELECT rfid FROM visitors WHERE id = '$id'")->fetch_assoc()['rfid'];
+		}
+
+		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
+			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
 
 			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
-
 				return 3;
 			}
 		}
@@ -311,11 +312,8 @@ class Action{
 				return 2;
 			}
 		} catch (mysqli_sql_exception $e) {
-			if ($e->getCode() == 1062) {
-				return 3;
-			} else {
 				return $e->getMessage();  // For debugging
-			}
+
 		}
 	}
 
@@ -329,6 +327,15 @@ class Action{
 			return 1;
 	}
 
+	function unarchive_student(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE students set status = 0 where id = ".$id);
+		if($archive)
+			return 1;
+	}
+
+
+
 
 	function archive_employee(){
 		extract($_POST);
@@ -337,9 +344,25 @@ class Action{
 			return 1;
 	}
 
+	function unarchive_employee(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE employees set status = 0 where id = ".$id);
+		if($archive)
+			return 1;
+	}
+
+
+
 	function archive_visitor(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE visitors set status = 1 where id = ".$id);
+		if($archive)
+			return 1;
+	}
+
+	function unarchive_visitor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE visitors set status = 0 where id = ".$id);
 		if($archive)
 			return 1;
 	}
@@ -420,56 +443,45 @@ class Action{
 	function adduser(){
 		extract($_POST);
 	
-		if(!empty($password)) {
-			$password = password_hash($password, PASSWORD_BCRYPT);
-		}
-	
 		$data = "";
-		if(!empty($fname)) {
-			$data .= " fname = '$fname', ";
-		}
-		if(!empty($mname)) {
-			$data .= " mname = '$mname', ";
-		}
-		if(!empty($lname)) {
-			$data .= " lname = '$lname', ";
-		}
-		if(!empty($email)) {
-			$data .= " email = '$email', ";
-		}
-		if(!empty($username)) {
-			$data .= " username = '$username', ";
-		}
-		if(!empty($password)) {
-			$data .= " password = '$password', ";
-		}
-		if(!empty($account_type)) {
-			$data .= " account_type = '$account_type', ";
+	
+		$data .= " fname = '$fname', ";
+		$data .= " mname = '$mname', ";
+		$data .= " lname = '$lname', ";
+		$data .= " email = '$email', ";
+		$data .= " username = '$username', ";
+		$data .= " account_type = '$account_type', ";
+	
+		if (!empty($password)) {
+			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
+			$data .= " password = '$hashed_password', ";
 		}
 	
-		// Remove trailing comma and space
-		$data = rtrim($data, ', ');
-	
-		// Check if the email already exists
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
-		if($chk > 0) {
-			return 3;
-			exit;
+		if ($chk > 0) {
+			return 3;  // Return 3 if email already exists
+			
 		}
 	
+		$data = rtrim($data, ", ");
+	
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO users SET " . $data);
+			if ($save) {
+				return 1;  // Return 1 for success
 
-		if(empty($id)) {
-			$save = $this->db->query("INSERT INTO users SET ".$data);
-			if($save) {
-				return 1;  
 			}
+
 		} else {
-			$save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
-			if($save) {
-				return 2;  
+			$save = $this->db->query("UPDATE users SET " . $data . " WHERE id = " . $id);
+			if ($save) {
+				return 2;  // Return 2 for successful update
+
 			}
+
 		}
 	}
+	
 	
 
 

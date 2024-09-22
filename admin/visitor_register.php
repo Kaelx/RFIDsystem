@@ -134,9 +134,13 @@
 
 </div>
 <script>
-
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register3',

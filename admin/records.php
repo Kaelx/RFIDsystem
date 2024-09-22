@@ -208,6 +208,10 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     </div>
                 </div>
             </div>
+
+            <div class="mr-5 m-2 text-right">
+                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+            </div>
         </div>
     </section>
 </div>

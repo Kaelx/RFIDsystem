@@ -66,9 +66,10 @@
                                 <label for="civil_stat">Civil Status</label>
                                 <select class="form-control form-control-sm" name="civil_stat" id="civil_stat" required>
                                     <option value="" selected disabled>-- Select Status --</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Widowed">Widowed</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="widowed">Widowed</option>
+                                    <option value="separated">Separated</option>
                                 </select>
                             </div>
 
@@ -213,6 +214,11 @@
 <script>
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register2',

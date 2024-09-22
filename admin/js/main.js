@@ -17,18 +17,35 @@ $('[data-widget="pushmenu"]').on('click', function () {
 
 
 
-
-window.addEventListener('DOMContentLoaded', (event) => {
     // Disable autocomplete for all forms
+    // Disable autocomplete for all input elements
+window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('form').forEach((form) => {
         form.setAttribute('autocomplete', 'off');
+
     });
 
-    // Disable autocomplete for all input elements
     document.querySelectorAll('input').forEach((input) => {
         input.setAttribute('autocomplete', 'off');
+
     });
 });
+
+// Validate for all form
+function validateForm(form) {
+    const invalidPattern = /(--|'|<|>|=)/;
+    let isValid = true;
+
+    $(form).find('input').each(function() {
+        if (invalidPattern.test($(this).val())) {
+            alert_toast('Invalid. Do not input special character!', 'danger');
+            isValid = false;
+            return false;
+        }
+    });
+
+    return isValid;
+}
 
 
 

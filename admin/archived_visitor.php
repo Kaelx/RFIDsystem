@@ -4,10 +4,8 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, 'students' as type
-    FROM students s 
-    LEFT JOIN department d ON s.dept_id = d.id 
-    LEFT JOIN program p ON s.prog_id = p.id
+$query = $conn->query("SELECT s.*, r.role_name, 'students' as type
+    FROM visitors s
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
@@ -110,26 +108,10 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">School ID</p>
-                            <p class="form-control form-control-sm"><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
-                        </div>
 
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Type</p>
                             <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Program/Course</p>
-                            <p class="form-control form-control-sm"><?= isset($data['prog_name']) ? $data['prog_name'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Department</p>
-                            <p class="form-control form-control-sm" readonly><?= isset($data['dept_name']) ? $data['dept_name'] : '' ?></p>
                         </div>
                     </div>
 
@@ -145,9 +127,8 @@ $data = mysqli_fetch_assoc($query);
                             <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info">Records</a>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>
-                            <button class="btn btn-danger btn-custom archive_student" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
-                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>
+                            <button class="btn btn-danger btn-custom unarchive_visitor" type="button" data-id="<?php echo $data['id'] ?>">Unarchive</button>
+                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>
 
@@ -161,23 +142,24 @@ $data = mysqli_fetch_assoc($query);
 </div>
 
 <script>
-    $('.archive_student').click(function() {
+    $('.unarchive_visitor').click(function() {
 
-        _conf("Are you sure to archive this data?", "archive_student", [$(this).attr('data-id')])
+        _conf("Are you sure to unarchive this data?", "unarchive_visitor", [$(this).attr('data-id')])
     });
 
-    function archive_student($id) {
+    function unarchive_visitor($id) {
         $.ajax({
-            url: 'ajax.php?action=archive_student',
+            url: 'ajax.php?action=unarchive_visitor',
             method: 'POST',
             data: {
                 id: $id
             },
             success: function(resp) {
                 if (resp == 1) {
-                    alert_toast("Data successfully archive", 'warning')
+                    alert_toast("Data successfully unarchive", 'warning')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
+                        window.history.back(); 
+                        return false;
                     }, 1000)
 
                 }

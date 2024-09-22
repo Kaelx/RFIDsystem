@@ -145,9 +145,8 @@ $data = mysqli_fetch_assoc($query);
                             <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info">Records</a>
                         </div>
                         <div class="col-md-6 text-right">
-                            <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>
-                            <button class="btn btn-danger btn-custom archive_student" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
-                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>
+                            <button class="btn btn-danger btn-custom unarchive_student" type="button" data-id="<?php echo $data['id'] ?>">Unarchive</button>
+                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>
 
@@ -161,23 +160,24 @@ $data = mysqli_fetch_assoc($query);
 </div>
 
 <script>
-    $('.archive_student').click(function() {
+    $('.unarchive_student').click(function() {
 
-        _conf("Are you sure to archive this data?", "archive_student", [$(this).attr('data-id')])
+        _conf("Are you sure to unarchive this data?", "unarchive_student", [$(this).attr('data-id')])
     });
 
-    function archive_student($id) {
+    function unarchive_student($id) {
         $.ajax({
-            url: 'ajax.php?action=archive_student',
+            url: 'ajax.php?action=unarchive_student',
             method: 'POST',
             data: {
                 id: $id
             },
             success: function(resp) {
                 if (resp == 1) {
-                    alert_toast("Data successfully archive", 'warning')
+                    alert_toast("Data successfully unarchive", 'warning')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
+                        window.history.back(); 
+                        return false;
                     }, 1000)
 
                 }

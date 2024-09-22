@@ -61,7 +61,7 @@
     </style>
 
     <div class="login-container">
-        <div class="card login-card" style="max-width: 900px;">
+        <div class="card shadow login-card" style="max-width: 900px;">
             <div class="row g-0">
                 <!-- Left Image -->
                 <div class="col-md-6">

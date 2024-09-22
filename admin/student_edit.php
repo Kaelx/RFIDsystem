@@ -166,7 +166,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=student_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
+                                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -209,6 +209,11 @@ if (isset($_GET['uid'])) {
 
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register',

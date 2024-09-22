@@ -240,6 +240,11 @@ if (isset($_GET['uid'])) {
     $('#register').submit(function(e) {
         e.preventDefault()
 
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
+
         $.ajax({
             url: 'ajax.php?action=register2',
             data: new FormData($(this)[0]),

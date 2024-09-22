@@ -8,20 +8,21 @@
     opacity: 0;
 }
 
-.sidebar .nav-header{
+.sidebar .nav-header {
     color: orange;
 }
 
 
-body, .content-wrapper {
+body,
+.content-wrapper {
     padding-top: 25px;
 }
 
 .content-wrapper {
     margin-top: 15px;
     padding: 10px;
-    overflow: hidden; 
-    box-sizing: border-box; 
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 
@@ -33,4 +34,8 @@ body, .content-wrapper {
 .main-header {
     background-color: #a91414;
     color: #fff;
+}
+
+.nav-treeview .nav-item {
+    padding-left: 20px;
 }

@@ -149,7 +149,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Cancel</a>
+                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -187,6 +187,11 @@
 
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register',
