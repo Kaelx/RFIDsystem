@@ -16,7 +16,7 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card">
+            <div class="card shadow-none">
                 <div class="card-body">
                     <!-- Clock and Date Display -->
                     <center>

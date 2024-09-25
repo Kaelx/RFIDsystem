@@ -34,6 +34,11 @@ $cats = $conn->query($query);
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</a>
+                </div>
+            </div>
         </div>
     </div>
 

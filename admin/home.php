@@ -18,7 +18,9 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
 
-
+      <?php
+        if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+      ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
@@ -62,25 +64,8 @@
 
         </div>
 
-        <!-- <div class="col-lg-3 col-6">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <a href="#" style="text-decoration: none; color: inherit;">
-                <?php
-                $sql = $conn->query("SELECT COUNT(*) as total FROM vendors where status=0");
-                $result = $sql->fetch_assoc();
-                $count = $result['total'];
-                ?>
-                <h3><?php echo $count; ?></h3>
-                <p>Canteen Vendors</p>
-              </a>
-            </div>
-            <div class="icon">
-              <i class="fa-solid fa-store"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div> -->
+        <?php endif;?>
+
 
 
         <div class="col-lg-3 col-6">

@@ -82,15 +82,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {
-            ?>
-              <li class="nav-item">
-                <a href="index.php?page=student_data" class="nav-link">
-                  <i class="fa-solid fa-id-card nav-icon"></i>
-                  <p>Students</p>
-                </a>
-              </li>
-
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
                   <i class="fa-solid fa-building-user nav-icon"></i>
@@ -98,7 +90,14 @@ if (!isset($_SESSION['login_id'])) {
                 </a>
               </li>
 
-            <?php }; ?>
+              <li class="nav-item">
+                <a href="index.php?page=student_data" class="nav-link">
+                  <i class="fa-solid fa-id-card nav-icon"></i>
+                  <p>Students</p>
+                </a>
+              </li>
+
+            <?php endif; ?>
 
             <li class="nav-item">
               <a href="index.php?page=visitor_data" class="nav-link">
@@ -109,12 +108,14 @@ if (!isset($_SESSION['login_id'])) {
 
             <li class="nav-header">Attendance</li>
 
+            <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
             <li class="nav-item">
-              <a href="index.php?page=rfid" class="nav-link">
-                <i class="fa-solid fa-qrcode nav-icon"></i>
-                <p>Scan RFID</p>
-              </a>
+                <a href="index.php?page=rfid" class="nav-link">
+                    <i class="fa-solid fa-qrcode nav-icon"></i>
+                    <p>Scan RFID</p>
+                </a>
             </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="index.php?page=entrylogs" class="nav-link">
                 <i class="fa-solid fa-clipboard-user nav-icon"></i>
@@ -123,7 +124,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)) {
+            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
             ?>
 
               <li class="nav-header">Others</li>
@@ -140,7 +141,7 @@ if (!isset($_SESSION['login_id'])) {
               </li>
 
 
-            <?php }; ?>
+            <?php endif; ?>
 
             <?php
             if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
@@ -187,7 +188,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data','archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
