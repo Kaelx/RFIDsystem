@@ -19,11 +19,13 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+
     <div class="content-header">
         <div class="container-fluid">
+
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
+
                     <?php
                     switch ($type) {
                         case 'students':
@@ -59,96 +61,85 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                     ?>
 
-                    <div class="col-md-7">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- profile -->
-                                <div class="row">
-                                    <div style="position: relative; display: inline-block;">
-                                        <?php if (isset($member['img_path']) && !empty($member['img_path'])): ?>
-                                            <img src="<?= 'assets/img/' . $member['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                        <?php else: ?>
-                                            <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <p class="form-control form-control-sm"><?= $member['fname'] . ' ' . $member['mname'] . ' ' . $member['lname'] ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <p class="form-control form-control-sm"><?= isset($member['gender']) ? ucfirst($member['gender']) : 'Gender not set' ?></p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p class="form-control form-control-sm"><?= $member['role_name'] ?></p>
-                                            </div>
-                                            <?php if (trim(strtolower($member['role_name'])) != 'visitor') { ?>
-                                                <div class="col-md-6">
-                                                    <p class="form-control form-control-sm"><?= $member['school_id'] ?></p>
-                                                </div>
-                                            <?php } ?>
 
+                    <div class="card card-danger card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <?php if (isset($member['img_path']) && !empty($member['img_path'])): ?>
+                                    <img class="profile-user-img img-fluid img-circle" src="<?= 'assets/img/' . $member['img_path'] ?>" alt="User profile picture" id="profileImage">
+                                <?php else: ?>
+                                    <img class="profile-user-img img-fluid img-circle" src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage">
+                                <?php endif; ?>
+                            </div>
+
+                            <h3 class="profile-username text-center"><?= $member['fname'] . ' ' . $member['mname'] . ' ' . $member['lname'] ?></h3>
+
+                            <p class="text-muted text-center"><?= $member['role_name'] ?></p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Gender</b> <a class="float-right"><?= isset($member['gender']) ? ucfirst($member['gender']) : 'Gender not set' ?></a>
+                                </li>
+                                <?php if (trim(strtolower($member['role_name'])) != 'visitor') { ?>
+                                    <li class="list-group-item">
+                                        <b>School ID</b> <a class="float-right"><?= $member['school_id'] ?></a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+
+                        <div class="card-header p-2">
+                            <div class="row">
+                                <div class="ml-2">
+                                    <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
+                                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                            <label for="start_date" class="mr-2">Date:</label>
+                                            <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                                         </div>
+                                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                            <label for="end_date" class="mr-2">To </label>
+                                            <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
+                                    </form>
+                                </div>
+
+                                <div class="ml-auto mr-2">
+                                    <div class="dropdown mb-2">
+                                        <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                            <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
+                                            <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
+                                            <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="col-md-6">
-                    <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
-                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="start_date" class="mr-2">Date:</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
-                        </div>
-                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="end_date" class="mr-2">To </label>
-                            <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered compact">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Name</th>
+                                                <th class="text-center">Time in</th>
+                                                <th class="text-center">Time out</th>
+                                                <th class="text-center">Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
 
-                        <div class="dropdown mb-2">
-                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
-                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
-                            </ul>
-                        </div>
-
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Time in</th>
-                                    <th class="text-center">Time out</th>
-                                    <th class="text-center">Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-
-                                $query = "SELECT r.timein, r.timeout,
+                                            $query = "SELECT r.timein, r.timeout,
                                         COALESCE(s.fname, e.fname, v.fname) AS fname, 
                                         COALESCE(s.mname, e.mname, v.mname) AS mname, 
                                         COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -166,54 +157,73 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
 
-                                if (!empty($start_date) && !empty($end_date)) {
-                                    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
+                                            if (!empty($start_date) && !empty($end_date)) {
+                                                $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
                                                         AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
-                                }
-
-                                $result = $conn->query($query);
-
-                                $i = 1;
-                                while ($row = $result->fetch_assoc()):
-                                ?>
-                                    <tr>
-                                        <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class=" text-center"><?php echo $row['timein']; ?></td>
-                                        <td class="text-center"><?php echo !empty($row['timeout']) ? $row['timeout'] : '------'; ?></td>
-                                        <td class="text-center">
-                                            <?php
-                                            if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                $timein = strtotime($row['timein']);
-                                                $timeout = strtotime($row['timeout']);
-
-                                                $duration_in_seconds = $timeout - $timein;
-
-                                                $hours = floor($duration_in_seconds / 3600);
-                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
-
-                                                echo $hours . ' hours, ' . $minutes . ' minutes';
-                                            } else {
-                                                echo ' ------ ';
                                             }
+
+                                            $result = $conn->query($query);
+
+                                            $i = 1;
+                                            while ($row = $result->fetch_assoc()):
                                             ?>
-                                        </td>
+                                                <tr>
+                                                    <td class="text-center"><?= $i++; ?></td>
+                                                    <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                        $timein = new DateTime($row['timein']);
+                                                        echo $timein->format('F j, Y -- h:i A');
+                                                        ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                        if (!empty($row['timeout'])) {
+                                                            $timeout = new DateTime($row['timeout']);
+                                                            echo $timeout->format('F j, Y -- h:i A');
+                                                        } else {
+                                                            echo '------';
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                        if (!empty($row['timein']) && !empty($row['timeout'])) {
+                                                            $timein = strtotime($row['timein']);
+                                                            $timeout = strtotime($row['timeout']);
+
+                                                            $duration_in_seconds = $timeout - $timein;
+
+                                                            $hours = floor($duration_in_seconds / 3600);
+                                                            $minutes = floor(($duration_in_seconds % 3600) / 60);
+
+                                                            echo $hours . ' hours, ' . $minutes . ' minutes';
+                                                        } else {
+                                                            echo ' ------ ';
+                                                        }
+                                                        ?>
+                                                    </td>
 
 
-                                    </tr>
+                                                </tr>
 
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mr-5 m-2 text-right">
+                        <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                     </div>
                 </div>
             </div>
-
-            <div class="mr-5 m-2 text-right">
-                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
-            </div>
         </div>
-    </section>
+    </div>
+
 </div>
 <script>
     $('table').DataTable({

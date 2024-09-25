@@ -34,31 +34,6 @@ $cats = $conn->query($query);
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="row">
-                    <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
-                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="start_date" class="mr-2">Date:</label>
-                            <input type="date" name="start_date" id="start_date" class="form-control"
-                                value="<?= isset($_GET['start_date']) ? ($_GET['start_date']) : '' ?>">
-                        </div>
-                        <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                            <label for="end_date" class="mr-2">To </label>
-                            <input type="date" name="end_date" id="end_date" class="form-control"
-                                value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
-                        </div>
-                        <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
-                        <div class="dropdown mb-2 ml-5">
-                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
-                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
-                                <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
-                            </ul>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -66,6 +41,39 @@ $cats = $conn->query($query);
     <section class="content">
         <div class="container-fluid">
             <div class="card">
+                <div class="card-header text-right">
+
+                    <div class="row">
+                        <div class="ml-2">
+                            <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                    <label for="start_date" class="mr-2">Date:</label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control"
+                                        value="<?= isset($_GET['start_date']) ? ($_GET['start_date']) : '' ?>">
+                                </div>
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                    <label for="end_date" class="mr-2">To </label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control"
+                                        value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                            </form>
+                        </div>
+
+                        <div class="ml-auto mr-2">
+                            <div class="dropdown">
+                                <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered compact">
@@ -90,8 +98,22 @@ $cats = $conn->query($query);
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
-                                        <td class=" text-center"><?php echo $row['timein']; ?></td>
-                                        <td class="text-center"><?php echo !empty($row['timeout']) ? $row['timeout'] : '------'; ?></td>
+                                        <td class="text-center">
+                                            <?php
+                                            $timein = new DateTime($row['timein']);
+                                            echo $timein->format('F j, Y -- h:i A');
+                                            ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php
+                                            if (!empty($row['timeout'])) {
+                                                $timeout = new DateTime($row['timeout']);
+                                                echo $timeout->format('F j, Y -- h:i A');
+                                            } else {
+                                                echo '------';
+                                            }
+                                            ?>
+                                        </td>
                                         <td class="text-center">
                                             <?php
                                             if (!empty($row['timein']) && !empty($row['timeout'])) {

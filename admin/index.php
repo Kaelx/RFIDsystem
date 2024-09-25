@@ -49,7 +49,7 @@ if (!isset($_SESSION['login_id'])) {
             <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item " href="index.php?page=setting">Settings</a></li>
+            <li><a class="dropdown-item " href="index.php?page=setting">Profile settings</a></li>
             <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
           </ul>
         </li>
