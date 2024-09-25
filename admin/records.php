@@ -229,7 +229,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
     $('table').DataTable({
         ordering: false,
         searching: false,
-        lengthChange: false,
         stateSave: true
     });
 
