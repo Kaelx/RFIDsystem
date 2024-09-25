@@ -16,37 +16,37 @@
     <section class="content">
         <div class="container-fluid">
 
-            <!-- Card with clock and user info -->
             <div class="card">
                 <div class="card-body">
                     <!-- Clock and Date Display -->
                     <center>
                         <div class="mb-4">
-                            <div id="clock" class="display-4 font-weight-bold"></div>
+                            <div id="clock" class="display-2 font-weight-bold"></div>
                             <div id="date" class="h2"></div>
                         </div>
                     </center>
-
                     <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center mt-5">
-                        <div class="col-md-5 text-center">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 600px; height: 600px;">
+                        <div class="col-md-5 text-center mr-5">
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
                         </div>
-                        <div class="col-md-5">
-                            <div class="col-md-8">
-                                <input type="text" id="name" class="form-control form-control-lg mb-2" placeholder="Name">
+
+                        <div class="col-md-5 ml-5">
+                            <div class="col-md-9">
+                                <input type="text" id="name" class="form-control form-control-lg mb-5" placeholder="Name" style="font-size: 48px;">
                             </div>
-                            <div class="col-md-8">
-                                <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
+                            <div class="col-md-9">
+                                <input type="text" id="gender" class="form-control form-control-lg mb-5" placeholder="Gender" style="font-size: 48px;">
                             </div>
-                            <div class="col-md-8 ">
-                                <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
+                            <div class="col-md-9">
+                                <input type="text" id="type" class="form-control form-control-lg mb-5" placeholder="Role" style="font-size: 48px;">
                             </div>
-                            <div class="col-md-8">
-                                <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
+                            <div class="col-md-9">
+                                <input type="text" id="school_id" class="form-control form-control-lg mb-5" placeholder="School ID" style="font-size: 48px;">
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
