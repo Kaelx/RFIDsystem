@@ -1,4 +1,4 @@
-<div class="content-wrapper d-flex flex-column">
+<div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -13,12 +13,12 @@
     </form>
 
     <!-- Main content -->
-    <section class="content flex-grow-1 d-flex flex-column">
-        <div class="container-fluid h-100 d-flex flex-column">
+    <section class="content">
+        <div class="container-fluid">
 
             <!-- Card with clock and user info -->
-            <div class="card flex-grow-1 d-flex flex-column">
-                <div class="card-body flex-grow-1 d-flex flex-column justify-content-between">
+            <div class="card">
+                <div class="card-body">
                     <!-- Clock and Date Display -->
                     <center>
                         <div class="mb-4">
@@ -30,27 +30,20 @@
                     <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 450px; height: 450px;">
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 600px; height: 600px;">
                         </div>
                         <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-4 mb-2">
-                                    <input type="text" id="fname" class="form-control form-control-lg" placeholder="First Name">
-                                </div>
-                                <div class="col-md-4 mb-2">
-                                    <input type="text" id="lname" class="form-control form-control-lg" placeholder="Last Name">
-                                </div>
+                            <div class="col-md-8">
+                                <input type="text" id="name" class="form-control form-control-lg mb-2" placeholder="Name">
                             </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
-                                </div>
-                                <div class="col-md-8 ">
-                                    <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
-                                </div>
+                            <div class="col-md-8">
+                                <input type="text" id="gender" class="form-control form-control-lg mb-2" placeholder="Gender">
+                            </div>
+                            <div class="col-md-8 ">
+                                <input type="text" id="type" class="form-control form-control-lg mb-2" placeholder="Role">
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="school_id" class="form-control form-control-lg mb-2" placeholder="School ID">
                             </div>
                         </div>
                     </div>
@@ -61,48 +54,6 @@
 
         </div>
     </section>
-
-    <!-- The lower card that should always be at the bottom -->
-    <div class="card mt-auto">
-        <div class="table-responsive">
-            <table class="table table-hover table-sm compact">
-                <thead>
-                    <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Time in</th>
-                        <th class="text-center">Time out</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $rec = $conn->query("SELECT r.id, r.timein, r.timeout,
-                                        COALESCE(s.fname, e.fname, v.fname) as fname,
-                                        COALESCE(s.mname, e.mname, v.mname) as mname,
-                                        COALESCE(s.lname, e.lname, v.lname) as lname
-                                    FROM records r
-                                    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-                                    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-                                    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
-                                    ORDER BY GREATEST(r.timein, IFNULL(r.timeout, r.timein)) DESC
-                                    LIMIT 5;
-                                ");
-                    if ($rec->num_rows > 0) {
-                        while ($row = $rec->fetch_assoc()): ?>
-                            <tr>
-                                <td class="text-center"><?= $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']  ?></td>
-                                <td class="text-center"><?= date('F d, Y -- h:i A', strtotime($row['timein'])) ?></td>
-                                <td class="text-center"><?= $row['timeout'] ? date('F d, Y -- h:i A', strtotime($row['timeout'])) : '------' ?></td>
-                            </tr>
-                        <?php endwhile;
-                    } else { ?>
-                        <tr>
-                            <td class="text-center text-bold" colspan="3">No data available in table</td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
 
 
@@ -132,8 +83,7 @@
         idleTimer = setTimeout(function() {
             idleState = true;
 
-            $('#fname').val("");
-            $('#lname').val("");
+            $('#name').val("");
             $('#type').val("");
             $('#school_id').val("");
             $('#gender').val("");
@@ -222,8 +172,8 @@
             const defaultVal = "Unknown";
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
-            $('#fname').val(data.success ? data.fname : defaultVal);
-            $('#lname').val(data.success ? data.lname : defaultVal);
+            var fullName = data.success ? data.fname + ' ' + data.lname : defaultVal;
+            $('#name').val(fullName);
             $('#gender').val(data.success ? data.gender : defaultVal);
             $('#type').val(data.success ? data.role_name : defaultVal);
             $('#school_id').val(data.success ? data.school_id : defaultVal);

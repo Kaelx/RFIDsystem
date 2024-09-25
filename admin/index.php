@@ -128,41 +128,16 @@ if (!isset($_SESSION['login_id'])) {
 
               <li class="nav-header">Others</li>
 
-              <li class="nav-item" id="archived-menu">
-                <a href="#" class="nav-link">
+
+              <li class="nav-item">
+                <a href="index.php?page=archive_data" class="nav-link">
                   <i class="fa-solid fa-box-archive nav-icon"></i>
                   <p>
-                    Archived
-                    <i class="fas fa-angle-left right"></i>
+                    Archived Data
+                    <i class="fa" id="archived-icon"></i>
                   </p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="index.php?page=archived_students" class="nav-link">
-                      <i class="far fa-folder-open nav-icon"></i>
-                      <p>Students Archived</p>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="index.php?page=archived_employees" class="nav-link">
-                      <i class="far fa-folder-open nav-icon"></i>
-                      <p>Employee Archived</p>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="index.php?page=archived_visitors" class="nav-link">
-                      <i class="far fa-folder-open nav-icon"></i>
-                      <p>Visitors Archived</p>
-                    </a>
-                  </li>
-
-
-                </ul>
               </li>
-
-
 
 
             <?php }; ?>
@@ -212,7 +187,7 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archived_students','archived_student','archived_employees', 'archived_employee','archived_visitors', 'archived_visitor'];
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data','archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor'];
 
     $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
