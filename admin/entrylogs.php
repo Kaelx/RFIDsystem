@@ -36,7 +36,7 @@ $cats = $conn->query($query);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</a>
+                    <a href="index.php?page=generate_report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</a>
                 </div>
             </div>
         </div>
@@ -90,7 +90,6 @@ $cats = $conn->query($query);
                                     <th class="text-center">Role</th>
                                     <th class="text-center">Time in</th>
                                     <th class="text-center">Time out</th>
-                                    <th class="text-center">Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,23 +115,6 @@ $cats = $conn->query($query);
                                                 echo $timeout->format('F j, Y -- h:i A');
                                             } else {
                                                 echo '------';
-                                            }
-                                            ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php
-                                            if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                $timein = strtotime($row['timein']);
-                                                $timeout = strtotime($row['timeout']);
-
-                                                $duration_in_seconds = $timeout - $timein;
-
-                                                $hours = floor($duration_in_seconds / 3600);
-                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
-
-                                                echo $hours . ' hours, ' . $minutes . ' minutes';
-                                            } else {
-                                                echo ' ------ ';
                                             }
                                             ?>
                                         </td>

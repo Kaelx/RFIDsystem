@@ -448,13 +448,26 @@ class Action{
 		$data .= " fname = '$fname', ";
 		$data .= " mname = '$mname', ";
 		$data .= " lname = '$lname', ";
+		$data .= " bdate = '$bdate', ";
+		$data .= " gender = '$gender', ";
+		$data .= " address = '$address', ";
+		$data .= " cellnum = '$cellnum', ";
 		$data .= " email = '$email', ";
+		$data .= " school_id = '$school_id', ";
 		$data .= " username = '$username', ";
 		$data .= " account_type = '$account_type', ";
 	
 		if (!empty($password)) {
 			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
 			$data .= " password = '$hashed_password', ";
+		}
+
+		if ($_FILES['img']['tmp_name'] != '') {
+			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
+			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
+			if ($move) {
+				$data .= " img_path = '$img', ";
+			}
 		}
 	
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
