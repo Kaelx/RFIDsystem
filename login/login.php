@@ -17,7 +17,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        filter: blur(3px);
+        filter: blur(5px);
         z-index: -1;
     }
 
@@ -99,9 +99,9 @@
                     if (resp == 1) {
                         location.href = 'index.php?page=home';
                     } else if (resp == 2) {
-                        alert_toast('Wrong password', 'warning');
+                        alert_toast('Wrong password', 'danger');
                     } else if (resp == 3) {
-                        alert_toast('No account found', 'warning');
+                        alert_toast('No account found', 'danger');
                     } else {
                         alert_toast('An error occured', 'danger')
                     }

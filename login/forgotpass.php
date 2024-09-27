@@ -32,7 +32,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(3px);
+            filter: blur(6px);
             z-index: -1;
         }
 

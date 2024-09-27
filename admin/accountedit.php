@@ -71,11 +71,12 @@ if (isset($_GET['uid'])) {
                                     <div class="col-md-2 form-group">
                                         <label for="gender">Gender</label>
                                         <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                            <option value="" disabled>-- Select Role --</option>
-                                            <option value="male" <?= ($member['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
-                                            <option value="female" <?= ($member['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
+                                            <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select Gender --</option>
+                                            <option value="male" <?= isset($member['gender']) && $member['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
+                                            <option value="female" <?= isset($member['gender']) && $member['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
                                         </select>
                                     </div>
+
                                 </div>
 
                                 <div class="row">

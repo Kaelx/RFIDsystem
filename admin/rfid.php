@@ -28,7 +28,7 @@
                     <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center mr-5">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px;">
                         </div>
 
                         <div class="col-md-5 ml-5">

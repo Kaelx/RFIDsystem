@@ -20,6 +20,14 @@ class Action{
 
 
     function logout(){
+		$result = $this->db->query("SELECT * FROM users where id = ".$_SESSION['login_id'])->fetch_array();
+		$log = [
+			'user_id' => $result['id'],
+			'action' => 'Logged out'
+		];
+		$this->save_log($log);
+
+		
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);
@@ -548,7 +556,16 @@ class Action{
 	
 
 
-	
+	function save_log($log){
+		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
+								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
+
+		if (!$qry) {
+			error_log("Error saving log: " . $this->db->error);
+		}
+
+		return $qry ? true : false;
+	}
 
 
 

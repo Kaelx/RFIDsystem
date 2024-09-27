@@ -31,26 +31,26 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         switch ($type) {
                             case 'students':
                                 $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
-            FROM students s
-            LEFT JOIN role r ON s.role_id = r.id
-            WHERE s.id = '$uid'
-        ";
+                        FROM students s
+                        LEFT JOIN role r ON s.role_id = r.id
+                        WHERE s.id = '$uid'
+                        ";
                                 break;
 
                             case 'employees':
                                 $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
-            FROM employees e
-            LEFT JOIN role r ON e.role_id = r.id
-            WHERE e.id = '$uid'
-        ";
+                        FROM employees e
+                        LEFT JOIN role r ON e.role_id = r.id
+                        WHERE e.id = '$uid'
+                        ";
                                 break;
 
                             case 'visitors':
                                 $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
-            FROM visitors v
-            LEFT JOIN role r ON v.role_id = r.id
-            WHERE v.id = '$uid'
-        ";
+                        FROM visitors v
+                        LEFT JOIN role r ON v.role_id = r.id
+                        WHERE v.id = '$uid'
+                        ";
                                 break;
 
                             default:
@@ -130,20 +130,20 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 <?php
 
                                                 $query = "SELECT r.timein, r.timeout,
-                                        COALESCE(s.fname, e.fname, v.fname) AS fname, 
-                                        COALESCE(s.mname, e.mname, v.mname) AS mname, 
-                                        COALESCE(s.lname, e.lname, v.lname) AS lname,
-                                        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
-                                        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
-                                    FROM records r
-                                    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-                                    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-                                    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
-                                    LEFT JOIN role r_s ON s.role_id = r_s.id
-                                    LEFT JOIN role r_e ON e.role_id = r_e.id
-                                    LEFT JOIN role r_v ON v.role_id = r_v.id
-                                    WHERE r.recordable_id = '$uid' and r.recordable_table = '$type'
-                                ";
+                                                                COALESCE(s.fname, e.fname, v.fname) AS fname, 
+                                                                COALESCE(s.mname, e.mname, v.mname) AS mname, 
+                                                                COALESCE(s.lname, e.lname, v.lname) AS lname,
+                                                                COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+                                                                COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+                                                            FROM records r
+                                                            LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
+                                                            LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
+                                                            LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+                                                            LEFT JOIN role r_s ON s.role_id = r_s.id
+                                                            LEFT JOIN role r_e ON e.role_id = r_e.id
+                                                            LEFT JOIN role r_v ON v.role_id = r_v.id
+                                                            WHERE r.recordable_id = '$uid' and r.recordable_table = '$type'
+                                                        ";
 
 
 
@@ -163,14 +163,14 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                         <td class="text-center">
                                                             <?php
                                                             $timein = new DateTime($row['timein']);
-                                                            echo $timein->format('F j, Y -- h:i A');
+                                                            echo $timein->format('F j, Y -- g:i A');
                                                             ?>
                                                         </td>
                                                         <td class="text-center">
                                                             <?php
                                                             if (!empty($row['timeout'])) {
                                                                 $timeout = new DateTime($row['timeout']);
-                                                                echo $timeout->format('F j, Y -- h:i A');
+                                                                echo $timeout->format('F j, Y -- g:i A');
                                                             } else {
                                                                 echo '------';
                                                             }
@@ -207,7 +207,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         </div>
 
                         <div class="m-3 text-right">
-                            <a href="" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</a>
+                            <button id="generate-reportv2" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
                             <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>
@@ -276,4 +276,14 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
             location.href = `index.php?page=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         }
+
+
+        $('#generate-reportv2').click(function() {
+            var uid = "<?php echo $uid; ?>";
+            var type = "<?php echo $type; ?>";
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+
+            window.location.href = `index.php?page=generate_reportv2&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        });
     </script>

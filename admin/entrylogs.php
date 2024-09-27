@@ -36,7 +36,7 @@ $cats = $conn->query($query);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="index.php?page=generate_report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</a>
+                    <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
                 </div>
             </div>
         </div>
@@ -179,4 +179,12 @@ $cats = $conn->query($query);
 
         location.href = `index.php?page=entrylogs&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
+
+
+    $('#generate-report').click(function() {
+        const startDate = $('#start_date').val();
+        const endDate = $('#end_date').val();
+
+        window.location.href = `index.php?page=generate_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+    });
 </script>

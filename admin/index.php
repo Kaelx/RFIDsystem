@@ -109,12 +109,12 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">Attendance</li>
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
-            <li class="nav-item">
+              <li class="nav-item">
                 <a href="index.php?page=rfid" class="nav-link">
-                    <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan RFID</p>
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>Scan RFID</p>
                 </a>
-            </li>
+              </li>
             <?php endif; ?>
             <li class="nav-item">
               <a href="index.php?page=entrylogs" class="nav-link">
@@ -165,6 +165,15 @@ if (!isset($_SESSION['login_id'])) {
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a href="index.php?page=system_log" class="nav-link">
+                <i class="fa-solid fa-box nav-icon"></i>
+                  <p>
+                    Audit Logs
+                  </p>
+                </a>
+              </li>
+
             <?php }; ?>
 
           </ul>
@@ -185,23 +194,6 @@ if (!isset($_SESSION['login_id'])) {
     <!-- end Toast Alert -->
 
 
-
-    <!-- content -->
-    <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor','generate_report'];
-
-    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-
-    if (in_array($page, $allowed_pages)) {
-      include $page . '.php';
-    } else {
-      header('Location: index.php?page=home');
-    }
-    ?>
-    <!-- end content -->
-
-
-
     <!-- modal -->
     <div class="modal fade" id="confirm_modal" role='dialog'>
       <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -220,6 +212,24 @@ if (!isset($_SESSION['login_id'])) {
       </div>
     </div>
     <!-- end modal -->
+
+
+
+    <!-- content -->
+    <?php
+    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor', 'generate_report','generate_reportv2','system_log'];
+
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+
+    if (in_array($page, $allowed_pages)) {
+      include $page . '.php';
+    } else {
+      header('Location: index.php?page=home');
+    }
+    ?>
+    <!-- end content -->
+
+
 
 
 
