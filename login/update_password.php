@@ -62,7 +62,7 @@ if(!isset($_SESSION['otp']) && !isset($_SESSION['mail'])){
                 <form accept="#" id="updatepass">
                     <div class="mb-3">
                         <label for="otpcode" class="form-label">OTP Code</label>
-                        <input type="number" class="form-control" name="otpcode" id="otpcode" placeholder="Enter your OTP Code" required>
+                        <input type="number" class="form-control" name="otpcode" id="otpcode" placeholder="Enter your OTP Code" required autofocus>
                     </div>
                     <div class="mb-3">
                         <label for="newpass" class="form-label">New Password</label>

@@ -27,7 +27,7 @@ class Action
 		$result = $this->db->query("SELECT * FROM users where id = " . $_SESSION['login_id'])->fetch_array();
 		$log = [
 			'user_id' => $result['id'],
-			'action' => 'Logged out'
+			'action' => ' has logged out'
 		];
 		$this->save_log($log);
 

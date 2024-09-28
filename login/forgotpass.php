@@ -59,7 +59,7 @@
                     <form accept="#" id="forgot-pass">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required autofocus>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Recover</button>

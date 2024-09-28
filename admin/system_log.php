@@ -21,19 +21,27 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">User</th>
+                                    <th class="text-center">Type</th>
                                     <th class="text-center w-50">Description</th>
                                     <th class="text-center w-25">Time</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM logs ORDER BY id DESC";
+                                $sql = "SELECT l.*, u.fname, u.lname, u.account_type FROM logs l 
+                                LEFT JOIN users u ON u.id = l.user_id
+                                ORDER BY id DESC";
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                 ?>
                                         <tr>
-                                            <td class="text-center"><?php echo $row['user_id']; ?></td>
+                                            <td class="text-center"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                            <td class="text-center">
+                                                <?php
+                                                echo $row['account_type'] == 1 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown'));
+                                                ?>
+                                            </td>
                                             <td><?php echo $row['action']; ?></td>
                                             <td class="text-center">
                                                 <?php

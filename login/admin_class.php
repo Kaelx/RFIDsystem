@@ -39,7 +39,7 @@ class Action{
 				// Create the log entry
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => 'Logged in'
+					'action' => ' has logged in'
 				];
 				$this->save_log($log);
 
@@ -60,7 +60,7 @@ class Action{
 
 			$qry = $this->db->prepare("SELECT * FROM users WHERE email = ". $data);
 
-			if (!$qry) {
+			if ($qry->num_rows == 0) {
 				return 3;
 			} else {
 				$otp = rand(100000, 999999);

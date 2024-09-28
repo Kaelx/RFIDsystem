@@ -1,3 +1,37 @@
+<style>
+    body {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('./assets/defaults/evsu.png');
+        /* Ensure the path is correct */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(5px);
+        z-index: 1;
+        opacity: 0.04;
+        /* Optional: makes sure background is slightly visible */
+    }
+
+    .content-wrapper, .card {
+        background-color: rgba(237, 208, 93, 0.5);
+        opacity: 1;
+    }
+
+</style>
+
+
 <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
@@ -28,7 +62,7 @@
                     <!-- User Information Display -->
                     <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center mr-5">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px;">
+                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 650px; height: 650px; border: 4px solid #a91414;">
                         </div>
 
                         <div class="col-md-5 ml-5">
@@ -49,8 +83,6 @@
 
                 </div>
             </div>
-
-            <!-- Add any other content here -->
 
         </div>
     </section>
