@@ -2,7 +2,7 @@
 
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
-
+$filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
 
 $query = "SELECT r.id, r.timein, r.timeout, 
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
@@ -22,12 +22,21 @@ $query = "SELECT r.id, r.timein, r.timeout,
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
-  $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
-                AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
+  $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'";
+}
+
+// Add filter for type if set
+if (!empty($filter_type)) {
+  if ($filter_type === 'student') {
+    $query .= " AND s.id IS NOT NULL";
+  } elseif ($filter_type === 'employee') {
+    $query .= " AND e.id IS NOT NULL";
+  } elseif ($filter_type === 'visitor') {
+    $query .= " AND v.id IS NOT NULL";
+  }
 }
 
 $cats = $conn->query($query);
-
 ?>
 
 
@@ -51,13 +60,13 @@ $cats = $conn->query($query);
         <div class="row">
           <div class="col-12">
             <h2 class="page-header" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; display: flex; justify-content: center;">
-                <img src="assets/defaults/evsu.png" alt="evsu-logo" style="height: 100px; width: auto; margin-right: 10px;">
-                <div style="text-align: center; margin-right: 80px;">
-                  <p style="margin: 0;">Republic of the Philippines</p>
-                  <p style="color: #a91414; margin: 0;">EASTERN VISAYAS STATE UNIVERSITY</p>
-                  <p style="color: #a91414; margin: 0;">ORMOC CAMPUS</p>
-                  <p style="margin: 0;">Ormoc City 06541</p>
-                </div>
+              <img src="assets/defaults/evsu.png" alt="evsu-logo" style="height: 100px; width: auto; margin-right: 10px;">
+              <div style="text-align: center; margin-right: 80px;">
+                <p style="margin: 0;">Republic of the Philippines</p>
+                <p style="color: #a91414; margin: 0;">EASTERN VISAYAS STATE UNIVERSITY</p>
+                <p style="color: #a91414; margin: 0;">ORMOC CAMPUS</p>
+                <p style="margin: 0;">Ormoc City 06541</p>
+              </div>
             </h2>
           </div>
         </div>

@@ -1,8 +1,7 @@
 <?php
 session_start();
-ob_start();
 
-error_reporting(E_ALL);
+error_reporting(0);
 
 include 'db_connect.php';
 
@@ -167,7 +166,7 @@ if (!isset($_SESSION['login_id'])) {
 
               <li class="nav-item">
                 <a href="index.php?page=system_log" class="nav-link">
-                <i class="fa-solid fa-box nav-icon"></i>
+                  <i class="fa-solid fa-box nav-icon"></i>
                   <p>
                     Audit Logs
                   </p>
@@ -217,15 +216,8 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $allowed_pages = ['home', 'rfid', 'category', 'setting', 'student_data', 'student_register', 'student_view', 'student_edit', 'employee_data', 'employee_register', 'employee_view', 'employee_edit', 'visitor_data', 'visitor_register', 'visitor_edit', 'visitor_view', 'entrylogs', 'accountmanage', 'accountadduser', 'accountedit', 'import', 'records', 'department_data', 'archive_data', 'archived_students', 'archived_student', 'archived_employees', 'archived_employee', 'archived_visitors', 'archived_visitor', 'generate_report','generate_reportv2','system_log'];
-
-    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-
-    if (in_array($page, $allowed_pages)) {
-      include $page . '.php';
-    } else {
-      header('Location: index.php?page=home');
-    }
+    $page = isset($_GET['page']) ? $_GET['page'] : "home";
+    include $page . '.php';
     ?>
     <!-- end content -->
 
@@ -272,7 +264,6 @@ if (!isset($_SESSION['login_id'])) {
 <?php
 include 'footer.php';
 
-ob_end_flush();
 ?>
 
 

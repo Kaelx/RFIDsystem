@@ -2,7 +2,7 @@
 
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
-
+$filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
 
 $query = "SELECT r.id, r.timein, r.timeout, 
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
@@ -22,12 +22,21 @@ $query = "SELECT r.id, r.timein, r.timeout,
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
-    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
-                AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
+    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'";
+}
+
+// Add filter for type if set
+if (!empty($filter_type)) {
+    if ($filter_type === 'student') {
+        $query .= " AND s.id IS NOT NULL";
+    } elseif ($filter_type === 'employee') {
+        $query .= " AND e.id IS NOT NULL";
+    } elseif ($filter_type === 'visitor') {
+        $query .= " AND v.id IS NOT NULL";
+    }
 }
 
 $cats = $conn->query($query);
-
 ?>
 
 <div class="content-wrapper">
@@ -47,36 +56,36 @@ $cats = $conn->query($query);
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header text-right">
-
                     <div class="row">
                         <div class="ml-2">
                             <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                                 <div class="form-group mb-2 mr-2 d-flex align-items-center">
                                     <label for="start_date" class="mr-2">Date:</label>
                                     <input type="date" name="start_date" id="start_date" class="form-control"
-                                        value="<?= isset($_GET['start_date']) ? ($_GET['start_date']) : '' ?>">
+                                        value="<?= $start_date; ?>">
                                 </div>
                                 <div class="form-group mb-2 mr-2 d-flex align-items-center">
                                     <label for="end_date" class="mr-2">To </label>
                                     <input type="date" name="end_date" id="end_date" class="form-control"
-                                        value="<?= isset($_GET['end_date']) ? ($_GET['end_date']) : '' ?>">
+                                        value="<?= $end_date; ?>">
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-2">Search</button>
                             </form>
                         </div>
 
                         <div class="ml-auto mr-2">
-                            <div class="dropdown">
-                                <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
-                                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                    <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
-                                    <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
-                                    <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
-                                </ul>
+                            <div class="row">
+                                <div class="dropdown">
+                                    <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
+                                    </ul>
+                                </div>
+                                <button type="button" class="btn btn-default ml-3" id="clear-filters">Reset</button>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="card-body">
@@ -100,8 +109,8 @@ $cats = $conn->query($query);
                                     <tr>
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class="text-left"><?php echo $row['role_name']; ?></td>
+                                        <td class="text-left"><?php echo htmlspecialchars($row['fname'] . ' ' . $row['lname']); ?></td>
+                                        <td class="text-left"><?php echo htmlspecialchars($row['role_name']); ?></td>
                                         <td class="text-center">
                                             <?php
                                             $timein = new DateTime($row['timein']);
@@ -137,54 +146,38 @@ $cats = $conn->query($query);
 
     $('#filter-report').submit(function(e) {
         e.preventDefault();
-        location.href = 'index.php?page=entrylogs&' + $(this).serialize();
+
+        // Get the current filter type
+        let filterType = new URLSearchParams(window.location.search).get('filter_type') || '';
+
+        // Redirect with the serialized form data and filter type
+        location.href = 'index.php?page=entrylogs&' + $(this).serialize() + '&filter_type=' + filterType;
     });
 
 
+    function filterBy(type) {
+        let startDate = document.getElementById('start_date').value;
+        let endDate = document.getElementById('end_date').value;
 
-
-    function filterBy(period) {
-        const formatDate = date => date.toISOString().split('T')[0];
-        const gmtPlus8Offset = 8 * 60 * 60 * 1000;
-
-        const timezone = date => new Date(date.getTime() + gmtPlus8Offset);
-
-        let today = new Date();
-        let startDate, endDate;
-
-        switch (period) {
-            case 'day':
-                startDate = endDate = formatDate(timezone(today));
-                break;
-            case 'week':
-                let startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay());
-                startDate = formatDate(timezone(startOfWeek));
-
-                let endOfWeek = new Date(today);
-                endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
-                endDate = formatDate(timezone(endOfWeek));
-                break;
-            case 'month':
-                let startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-                startDate = formatDate(timezone(startOfMonth));
-
-                let endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-                endDate = formatDate(timezone(endOfMonth));
-                break;
-        }
-
-        document.getElementById('start_date').value = startDate;
-        document.getElementById('end_date').value = endDate;
-
-        location.href = `index.php?page=entrylogs&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        // Redirect with selected filter type
+        location.href = `index.php?page=entrylogs&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}&filter_type=${type}`;
     }
-
 
     $('#generate-report').click(function() {
         const startDate = $('#start_date').val();
         const endDate = $('#end_date').val();
 
-        window.location.href = `index.php?page=generate_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        let filterType = new URLSearchParams(window.location.search).get('filter_type') || '';
+
+        window.location.href = `index.php?page=generate_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}` + '&filter_type=' + filterType;
+    });
+
+
+    $('#clear-filters').click(function() {
+        $('#start_date').val('');
+        $('#end_date').val('');
+
+        const baseUrl = 'index.php?page=entrylogs';
+        location.href = baseUrl;
     });
 </script>
