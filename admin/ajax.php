@@ -11,12 +11,6 @@ if($action == 'logout'){
 		echo $logout;
 }
 
-if($action == "save_category"){
-	$save = $crud->save_category();
-	if($save)
-		echo $save;
-}
-
 
 if($action == "save_category2"){
 	$save = $crud->save_category2();

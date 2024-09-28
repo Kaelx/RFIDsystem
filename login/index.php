@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+error_reporting(0);
+
 include 'db_connect.php';
 
 if (isset($_SESSION['login_id'])) {
@@ -28,22 +30,22 @@ if (isset($_SESSION['login_id'])) {
 
 <body>
     <div class="container">
+
+
+        <!-- content -->
         <?php
         $page = isset($_GET['page']) ? $_GET['page'] : "login";
-
-        $allowed_pages = ['login', 'forgotpass'];
-        if (in_array($page, $allowed_pages)) {
-            include $page . '.php';
-        } else {
-            header('Location: index.php?page=login');
-        }
+        include $page . '.php';
         ?>
+        <!-- end content -->
+
+
     </div>
 
 
     <!-- Toast Alert -->
     <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
-        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true" style="border: 1px solid #000;">
             <div class="toast-body text-white" style="font-size:18px;">
             </div>
         </div>

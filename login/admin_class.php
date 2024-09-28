@@ -1,8 +1,13 @@
 <?php
 session_start();
 
-class Action
-{
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '.././vendor/autoload.php';
+
+class Action{
 	private $db;
 
 	public function __construct(){
@@ -45,6 +50,76 @@ class Action
 		return 3;
 	}
 
+	
+
+	function forgot_pass(){
+		require '../credentials.php';
+		extract($_POST);
+
+			$data = " email = '$email' ";
+
+			$qry = $this->db->prepare("SELECT * FROM users WHERE email = ". $data);
+
+			if (!$qry) {
+				return 3;
+			} else {
+				$otp = rand(100000, 999999);
+				$_SESSION['otp'] = $otp;
+				$_SESSION['mail'] = $email;
+
+				function sendOTP($email, $otp, $mailUsername, $mailPassword){
+					$mail = new PHPMailer;
+			
+					$mail->isSMTP();
+					$mail->Host = 'smtp.gmail.com';
+					$mail->Port = 587;
+					$mail->SMTPAuth = true;
+					$mail->SMTPSecure = 'tls';
+			
+					$mail->Username = $mailUsername; 
+					$mail->Password = $mailPassword;
+			
+					$mail->setFrom('evsuoc-rfid@gmail.com', 'OTP Verification');
+					$mail->addAddress($email);
+			
+					$mail->isHTML(true);
+					$mail->Subject = "Verification code";
+					$mail->Body = "<p>Dear user, </p> <h3>Your forgot password OTP code is $otp <br></h3>";
+			
+					return $mail->send();
+				}
+
+				if (!sendOTP($email, $otp, $mailUsername, $mailPassword)) {
+					return 4;
+				} else {
+					return 1;
+				}
+			}
+	}
+
+	function updatepass(){
+		extract($_POST);
+
+		if ($otpcode == $_SESSION['otp']) {
+			if($newpass == $confirmpass){
+				$newpass = password_hash($newpass, PASSWORD_DEFAULT);
+				$qry = $this->db->query("UPDATE users set password = '" . $newpass . "' where email = '" . $_SESSION['mail'] . "' ");
+				if ($qry) {
+					unset($_SESSION['otp']);
+					unset($_SESSION['mail']);
+					return 1;
+				}
+				return 2;
+
+			}
+			return 3;
+
+		}
+		return 4;
+	}
+
+
+
 
 	function save_log($log){
 		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
@@ -56,6 +131,4 @@ class Action
 
 		return $qry ? true : false;
 	}
-	
-
 }
