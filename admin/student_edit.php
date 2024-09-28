@@ -16,6 +16,38 @@ if (isset($_GET['uid'])) {
 }
 ?>
 
+
+<style>
+    #profileImage {
+        cursor: pointer;
+        border-radius: 50%;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .form-group div::after {
+        content: 'Upload';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+    }
+
+    .form-group div:hover::after {
+        opacity: 1;
+    }
+
+    .form-group div:hover #profileImage {
+        opacity: 0.7;
+    }
+</style>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -34,18 +66,91 @@ if (isset($_GET['uid'])) {
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
 
+                        <!-- HTML Section -->
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
-                                <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
-                                    <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                <?php else: ?>
-                                    <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                <?php endif; ?>
-
-                                <!-- Hidden File Input -->
-                                <input type="file" name="img" id="img" style="display: none;" onchange="previewImage(event)">
+                                <img src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <input type="hidden" id="croppedImageData" name="croppedImageData">
                             </div>
                         </div>
+
+                        <!-- modal -->
+                        <div class="modal fade" id="modal-default" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Choose Image</h5>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <input type="file" name="img" id="img" accept="image/*" class="form-control mb-3" onchange="previewImage(event)">
+                                        <div class="img-fluid">
+                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid rounded" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            let cropper;
+
+                            $('#profileImage').on('click', function() {
+                                $('#modal-default').modal('show');
+                            });
+
+                            function previewImage(event) {
+                                var reader = new FileReader();
+                                reader.onload = function() {
+                                    var output = document.getElementById('modalImg');
+                                    output.src = reader.result;
+                                    initializeCropper();
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+
+                            function initializeCropper() {
+                                const image = document.getElementById('modalImg');
+                                cropper = new Cropper(image, {
+                                    aspectRatio: 1,
+                                    viewMode: 3,
+                                });
+                            }
+
+                            document.getElementById('btnCrop').addEventListener('click', function() {
+                                if (cropper) {
+                                    var cropImgData = cropper.getCroppedCanvas({
+                                        width: 400,
+                                        height: 400
+                                    });
+
+                                    cropImgData.toBlob(function(blob) {
+                                        var reader = new FileReader();
+                                        reader.readAsDataURL(blob);
+
+                                        reader.onloadend = function() {
+                                            var base64data = reader.result;
+                                            document.getElementById('profileImage').src = base64data;
+                                            document.getElementById('croppedImageData').value = base64data;
+                                        };
+                                    });
+
+                                    $('#modal-default').modal('hide');
+                                }
+                            });
+
+                            $('#modal-default').on('hidden.bs.modal', function() {
+                                if (cropper) {
+                                    cropper.destroy();
+                                    cropper = null;
+                                }
+                            });
+                        </script>
+
+
 
 
 
@@ -211,9 +316,9 @@ if (isset($_GET['uid'])) {
         e.preventDefault()
 
         //regex validation
-        if (!validateForm(this)) {
-            return;
-        }
+        // if (!validateForm(this)) {
+        //     return;
+        // }
 
         $.ajax({
             url: 'ajax.php?action=register',
@@ -249,22 +354,4 @@ if (isset($_GET['uid'])) {
             }
         })
     })
-
-
-
-
-    // When the image is clicked, trigger the file input click event
-    document.getElementById('profileImage').onclick = function() {
-        document.getElementById('img').click();
-    };
-
-    // Preview the selected image before uploading
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('profileImage');
-            output.src = reader.result; // Display the selected image as preview
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
 </script>

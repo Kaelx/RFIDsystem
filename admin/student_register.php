@@ -1,3 +1,35 @@
+<style>
+    #profileImage {
+        cursor: pointer;
+        border-radius: 50%;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .form-group div::after {
+        content: 'Upload';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        pointer-events: none;
+    }
+
+    .form-group div:hover::after {
+        opacity: 1;
+    }
+
+    .form-group div:hover #profileImage {
+        opacity: 0.7;
+    }
+</style>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -20,12 +52,88 @@
 
 
                         <div class="form-group text-right mb-0 mr-5">
-                            <label for="img" class="mr-4">Upload Picture</label><br>
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
-                                <input type="file" name="img" id="img" style="display: none;" onchange="previewImage(event)">
+                                <input type="hidden" id="croppedImageData" name="croppedImageData">
                             </div>
                         </div>
+
+                        <!-- modal -->
+                        <div class="modal fade" id="modal-default" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Choose Image</h5>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <input type="file" name="img" id="img" accept="image/*" class="form-control mb-3" onchange="previewImage(event)">
+                                        <div class="img-fluid">
+                                            <img id="modalImg" src="assets/img/blank-img.png" alt="Image Preview" class="img-fluid rounded" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            let cropper;
+
+                            $('#profileImage').on('click', function() {
+                                $('#modal-default').modal('show');
+                            });
+
+                            function previewImage(event) {
+                                var reader = new FileReader();
+                                reader.onload = function() {
+                                    var output = document.getElementById('modalImg');
+                                    output.src = reader.result;
+                                    initializeCropper();
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+
+                            function initializeCropper() {
+                                const image = document.getElementById('modalImg');
+                                cropper = new Cropper(image, {
+                                    aspectRatio: 1,
+                                    viewMode: 3,
+                                });
+                            }
+
+                            document.getElementById('btnCrop').addEventListener('click', function() {
+                                if (cropper) {
+                                    var cropImgData = cropper.getCroppedCanvas({
+                                        width: 400,
+                                        height: 400
+                                    });
+
+                                    cropImgData.toBlob(function(blob) {
+                                        var reader = new FileReader();
+                                        reader.readAsDataURL(blob);
+
+                                        reader.onloadend = function() {
+                                            var base64data = reader.result;
+                                            document.getElementById('profileImage').src = base64data;
+                                            document.getElementById('croppedImageData').value = base64data;
+                                        };
+                                    });
+
+                                    $('#modal-default').modal('hide');
+                                }
+                            });
+
+                            $('#modal-default').on('hidden.bs.modal', function() {
+                                if (cropper) {
+                                    cropper.destroy();
+                                    cropper = null;
+                                }
+                            });
+                        </script>
+
 
 
                         <p class="text-bold text-red"><i>Student Information *</i></p>
@@ -106,10 +214,7 @@
                                 $type = $conn->query("SELECT * FROM role WHERE role_name = 'student' or 'students' ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
-                                    <!-- Hidden input to store the role_id -->
                                     <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
                                     <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
                                 <?php endwhile; ?>
                             </div>
@@ -133,9 +238,7 @@
 
                             <div class="col-md-4 form-group mb-0">
                                 <label for="dept_name">Department</label>
-                                <!-- Hidden input to store the dept_id -->
                                 <input type="hidden" name="dept_id" id="dept_id">
-                                <!-- Read-only input to display the dept_name -->
                                 <input class="form-control form-control-sm" type="text" name="dept_name_display" id="dept_name" readonly>
                             </div>
                         </div>
@@ -175,9 +278,7 @@
 
                 console.log(response);
 
-                // Set the hidden dept_id
                 $('#dept_id').val(result.dept_id);
-                // Set the visible dept_name
                 $('#dept_name').val(result.dept_name);
 
             }
@@ -225,20 +326,4 @@
             }
         })
     })
-
-
-    // When the image is clicked, trigger the file input click event
-    document.getElementById('profileImage').onclick = function() {
-        document.getElementById('img').click();
-    };
-
-    // Preview the selected image before uploading
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('profileImage');
-            output.src = reader.result; // Display the selected image as preview
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
 </script>
