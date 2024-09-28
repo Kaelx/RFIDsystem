@@ -21,6 +21,9 @@
 <link rel="stylesheet" href=".././node_modules/cropperjs/dist/cropper.min.css">
 <script src=".././node_modules/cropperjs/dist/cropper.min.js"></script>
 
+<link rel="stylesheet" href="./plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+<script src="./plugins//bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+
 
 <!-- custom css -->
 <link rel="stylesheet" href="css/style.css">

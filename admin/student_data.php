@@ -63,111 +63,30 @@
 
             <div class="row">
                 <?php
-                $sql = $conn->query("SELECT d.id as dept_id, d.dept_name, COUNT(s.id) as student_count 
-                    FROM department d 
-                    LEFT JOIN students s ON s.dept_id = d.id AND s.status = 0 
-                    WHERE d.dept_name = 'computer studies department'");
-                $result = $sql->fetch_assoc();
+                $sql = $conn->query("SELECT d.*, COUNT(s.dept_id) AS student_count 
+                                        FROM department d
+                                        LEFT JOIN students s ON d.id = s.dept_id
+                                        GROUP BY d.id
+                                    ");
+
+                while ($result = $sql->fetch_assoc()) {
                 ?>
-                <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=department_data&department=<?= $result['dept_id']; ?>" style="text-decoration: none; color: inherit;">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-info"><i class="fa-solid fa-building"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><?= $result['dept_name']; ?></span>
-                                <span class="info-box-number"><?= $result['student_count']; ?></span>
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <a href="index.php?page=department_data&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
+                            <div class="info-box">
+                                <span class="info-box-icon text-white" style="background-color: <?= $result['color']; ?>"><i class="fa-solid fa-building"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text"><?= $result['dept_name']; ?></span>
+                                    <span class="info-box-number"><?= !empty($result['student_count']) ? $result['student_count'] : '0'; ?></span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-
+                        </a>
+                    </div>
                 <?php
-                $sql = $conn->query("SELECT d.id as dept_id, d.dept_name, COUNT(s.id) as student_count 
-                    FROM department d 
-                    LEFT JOIN students s ON s.dept_id = d.id AND s.status = 0 
-                    WHERE d.dept_name = 'engineering department'");
-                $result = $sql->fetch_assoc();
+                }
                 ?>
-                <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=department_data&department=<?= $result['dept_id']; ?>" style="text-decoration: none; color: inherit;">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-success"><i class="fa-solid fa-building"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><?= $result['dept_name']; ?></span>
-                                <span class="info-box-number"><?= $result['student_count']; ?></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <?php
-                $sql = $conn->query("SELECT d.id as dept_id, d.dept_name, COUNT(s.id) as student_count 
-                    FROM department d 
-                    LEFT JOIN students s ON s.dept_id = d.id AND s.status = 0 
-                    WHERE d.dept_name = 'education department'");
-                $result = $sql->fetch_assoc();
-                ?>
-                <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=department_data&department=<?= $result['dept_id']; ?>" style="text-decoration: none; color: inherit;">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-primary"><i class="fa-solid fa-building"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><?= $result['dept_name']; ?></span>
-                                <span class="info-box-number"><?= $result['student_count']; ?></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-
-                <?php
-                $sql = $conn->query("SELECT d.id as dept_id, d.dept_name, COUNT(s.id) as student_count 
-                    FROM department d 
-                    LEFT JOIN students s ON s.dept_id = d.id AND s.status = 0 
-                    WHERE d.dept_name = 'technology department'");
-                $result = $sql->fetch_assoc();
-                ?>
-                <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=department_data&department=<?= $result['dept_id']; ?>" style="text-decoration: none; color: inherit;">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-danger"><i class="fa-solid fa-building"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><?= $result['dept_name']; ?></span>
-                                <span class="info-box-number"><?= $result['student_count']; ?></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-
-
-                <?php
-                $sql = $conn->query("SELECT d.id as dept_id, d.dept_name, COUNT(s.id) as student_count 
-                    FROM department d 
-                    LEFT JOIN students s ON s.dept_id = d.id AND s.status = 0 
-                    WHERE d.dept_name = 'business and management department'");
-                $result = $sql->fetch_assoc();
-                ?>
-                <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=department_data&department=<?= $result['dept_id']; ?>" style="text-decoration: none; color: inherit;">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-warning"><i class="text-white fa-solid fa-building"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text"><?= $result['dept_name']; ?></span>
-                                <span class="info-box-number"><?= $result['student_count']; ?></span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
             </div>
+
 
         </div>
     </section>

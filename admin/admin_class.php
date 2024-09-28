@@ -41,25 +41,12 @@ class Action
 	}
 
 
-	function save_category()
-	{
-		extract($_POST);
-		$data = " role_name = '$name' ";
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO role set " . $data);
-			if ($save)
-				return 1;
-		} else {
-			$save = $this->db->query("UPDATE role set " . $data . " where id=" . $id);
-			if ($save)
-				return 2;
-		}
-	}
 
 	function save_category2()
 	{
 		extract($_POST);
 		$data = " dept_name = '$name' ";
+		$data .= ", color = '$colorpick' ";
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO department set " . $data);
 			if ($save)
