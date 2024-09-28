@@ -85,9 +85,14 @@ if (isset($_GET['uid'])) {
                                             <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid rounded" />
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                        <div>
+                                            <button type="button" class="btn btn-danger" id="cropReset">Reset</button>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,6 +101,10 @@ if (isset($_GET['uid'])) {
                         <script>
                             $('#profileImage').on('click', function() {
                                 $('#modal-default').modal('show');
+                            });
+
+                            $('#cropReset').on('click', function() {
+                                    cropper.reset();
                             });
 
                             function previewImage(event) {
@@ -117,7 +126,6 @@ if (isset($_GET['uid'])) {
                             }
 
                             document.getElementById('btnCrop').addEventListener('click', function() {
-                                if (cropper) {
                                     var cropImgData = cropper.getCroppedCanvas({
                                         width: 400,
                                         height: 400
@@ -135,14 +143,11 @@ if (isset($_GET['uid'])) {
                                     });
 
                                     $('#modal-default').modal('hide');
-                                }
                             });
 
                             $('#modal-default').on('hidden.bs.modal', function() {
-                                if (cropper) {
                                     cropper.destroy();
                                     cropper = null;
-                                }
                             });
                         </script>
 
