@@ -259,12 +259,16 @@ class Action
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= ", img_path = '$img' ";
-			}
+		$base64_data = $_POST['croppedImageData'];
+
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+
+		$img_name = strtotime(date('y-m-d H:i')) . '.png';
+		$img_path = 'assets/img/' . $img_name;
+
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
 		}
 
 
@@ -320,12 +324,16 @@ class Action
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= ", img_path = '$img' ";
-			}
+		$base64_data = $_POST['croppedImageData'];
+
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+
+		$img_name = strtotime(date('y-m-d H:i')) . '.png';
+		$img_path = 'assets/img/' . $img_name;
+
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
 		}
 
 
@@ -479,54 +487,52 @@ class Action
 	{
 		extract($_POST);
 
-		$data = "";
-
-		$data .= " fname = '$fname', ";
-		$data .= " mname = '$mname', ";
-		$data .= " lname = '$lname', ";
-		$data .= " bdate = '$bdate', ";
-		$data .= " gender = '$gender', ";
-		$data .= " address = '$address', ";
-		$data .= " cellnum = '$cellnum', ";
-		$data .= " email = '$email', ";
-		$data .= " school_id = '$school_id', ";
-		$data .= " username = '$username', ";
-		$data .= " account_type = '$account_type', ";
+		$data = " fname = '$fname'";
+		$data .= ", mname = '$mname'";
+		$data .= ",lname = '$lname'";
+		$data .= ", bdate = '$bdate'";
+		$data .= ", gender = '$gender'";
+		$data .= ", address = '$address'";
+		$data .= ", cellnum = '$cellnum'";
+		$data .= ", email = '$email'";
+		$data .= ", school_id = '$school_id'";
+		$data .= ", username = '$username'";
+		$data .= ", account_type = '$account_type'";
 
 		if (!empty($password)) {
 			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
-			$data .= " password = '$hashed_password', ";
+			$data .= ", password = '$hashed_password'";
 		}
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= " img_path = '$img', ";
-			}
+		$base64_data = $_POST['croppedImageData'];
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+		$img_name = strtotime(date('y-m-d H:i')) . '.png';
+		$img_path = 'assets/img/' . $img_name;
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
 		}
 
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
 		if ($chk > 0) {
-			return 3;  // Return 3 if email already exists
+			return 3; 
 
 		}
-
-		$data = rtrim($data, ", ");
 
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO users SET " . $data);
 			if ($save) {
-				return 1;  // Return 1 for success
+				return 1; 
 
 			}
 		} else {
 			$save = $this->db->query("UPDATE users SET " . $data . " WHERE id = " . $id);
 			if ($save) {
-				return 2;  // Return 2 for successful update
-
+				return 2;
 			}
 		}
+
+
 	}
 
 
