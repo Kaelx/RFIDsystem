@@ -51,9 +51,10 @@
 
 
 
+                        <!-- HTML Section -->
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
-                                <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <img src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <input type="hidden" id="croppedImageData" name="croppedImageData">
                             </div>
                         </div>
@@ -68,7 +69,7 @@
                                     <div class="modal-body text-center">
                                         <input type="file" name="img" id="img" accept="image/*" class="form-control mb-3" onchange="previewImage(event)">
                                         <div class="img-fluid">
-                                            <img id="modalImg" src="assets/img/blank-img.png" alt="Image Preview" class="img-fluid rounded" />
+                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid rounded" />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -80,8 +81,6 @@
                         </div>
 
                         <script>
-                            let cropper;
-
                             $('#profileImage').on('click', function() {
                                 $('#modal-default').modal('show');
                             });

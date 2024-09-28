@@ -17,8 +17,8 @@ $('[data-widget="pushmenu"]').on('click', function () {
 
 
 
-    // Disable autocomplete for all forms
-    // Disable autocomplete for all input elements
+// Disable autocomplete for all forms
+// Disable autocomplete for all input elements
 window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('form').forEach((form) => {
         form.setAttribute('autocomplete', 'off');
@@ -36,7 +36,13 @@ function validateForm(form) {
     const invalidPattern = /(--|'|<|>|=)/;
     let isValid = true;
 
-    $(form).find('input').each(function() {
+    $(form).find('input').each(function () {
+        // Skip validation for hidden fields like croppedImageData
+        if ($(this).attr('type') === 'hidden' || $(this).attr('id') === 'croppedImageData') {
+            return; // Skip this field from validation
+        }
+
+        // Apply validation for other fields
         if (invalidPattern.test($(this).val())) {
             alert_toast('Invalid. Do not input special character!', 'danger');
             isValid = false;
@@ -46,6 +52,7 @@ function validateForm(form) {
 
     return isValid;
 }
+
 
 
 

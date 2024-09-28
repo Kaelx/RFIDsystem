@@ -66,7 +66,6 @@ if (isset($_GET['uid'])) {
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
 
-                        <!-- HTML Section -->
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -74,7 +73,6 @@ if (isset($_GET['uid'])) {
                             </div>
                         </div>
 
-                        <!-- modal -->
                         <div class="modal fade" id="modal-default" data-backdrop="static">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -96,8 +94,6 @@ if (isset($_GET['uid'])) {
                         </div>
 
                         <script>
-                            let cropper;
-
                             $('#profileImage').on('click', function() {
                                 $('#modal-default').modal('show');
                             });
@@ -316,9 +312,9 @@ if (isset($_GET['uid'])) {
         e.preventDefault()
 
         //regex validation
-        // if (!validateForm(this)) {
-        //     return;
-        // }
+        if (!validateForm(this)) {
+            return;
+        }
 
         $.ajax({
             url: 'ajax.php?action=register',
