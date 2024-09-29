@@ -11,12 +11,6 @@ if($action == 'logout'){
 		echo $logout;
 }
 
-if($action == "save_category"){
-	$save = $crud->save_category();
-	if($save)
-		echo $save;
-}
-
 
 if($action == "save_category2"){
 	$save = $crud->save_category2();
@@ -134,6 +128,17 @@ if($action == "unarchive_visitor"){
 		echo $save;
 }
 
+if($action == "archive_user"){
+	$save = $crud->archive_user();
+	if($save)
+		echo $save;
+}
+
+if($action == "unarchive_user"){
+	$save = $crud->unarchive_user();
+	if($save)
+		echo $save;
+}
 
 
 

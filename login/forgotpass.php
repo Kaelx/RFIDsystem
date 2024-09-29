@@ -1,18 +1,3 @@
-    <!-- <h1>Forgot Password</h1>
-    <form action="#" method="post">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" autofocus required>
-        </div>
-        <button type="submit" class="btn btn-primary">Recover</button>
-    </form>
-
-    <hr>
-    <a href="index.php?page=login">Login</a> -->
-
-
-
-
     <style>
         body {
             position: relative;
@@ -32,7 +17,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(3px);
+            filter: blur(6px);
             z-index: -1;
         }
 
@@ -67,13 +52,14 @@
                 <div class="col-md-6">
                     <img class="m-4" src="../assets/defaults/evsu.png" alt="Login Image"> <!-- Replace with path to your image -->
                 </div>
+                
                 <!-- Right Form -->
                 <div class="col-md-6 p-5">
-                    <h1 class="mb-4">LOGIN</h1>
-                    <form accept="#" id="">
+                    <h1 class="mb-4">Password Recovery</h1>
+                    <form accept="#" id="forgot-pass">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required autofocus>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Recover</button>
@@ -89,5 +75,38 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            $('#forgot-pass').submit(function(e) {
+                e.preventDefault()
 
+                //regex validation
+                if (!validateForm(this)) {
+                    return;
+                }
+
+                start_load()
+                $.ajax({
+                    url: 'ajax.php?action=forgot_pass',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(resp) {
+                        end_load()
+
+                        console.log(resp);
+                        if (resp == 1) {
+                            alert_toast('OTP CODE has been sent to your email', 'success');
+                            setTimeout(function() {
+                                location.replace('index.php?page=update_password')
+                            }, 2000)
+                        } else if (resp == 2) {
+                            alert_toast('Wrong password', 'danger');
+                        } else if (resp == 3) {
+                            alert_toast('No account found', 'danger');
+                        } else {
+                            alert_toast('An error occured. Please try again later', 'danger')
+                        }
+                    }
+                })
+            })
+        });
     </script>

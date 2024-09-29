@@ -9,7 +9,7 @@ $dept_id = $_GET['department'];
 
 $i = 1;
 
-$cats = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+$cats = $conn->query("SELECT s.*, d.dept_name, d.color , p.prog_name, r.role_name 
 FROM students s 
 LEFT JOIN department d ON s.dept_id = d.id 
 LEFT JOIN program p ON s.prog_id = p.id 
@@ -19,6 +19,14 @@ and s.status = 0 and s.dept_id = $dept_id
 ORDER BY s.id ASC");
 
 ?>
+
+<style>
+.small-card-header {
+    font-size: 16px;
+    padding: 5px;
+}
+</style>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,7 +44,7 @@ ORDER BY s.id ASC");
                 $sql = $conn->query("select * from department where id = $dept_id");
                 $dept = $sql->fetch_assoc();
                 ?>
-                <div class="card-header text-center text-bold"><?php echo $dept['dept_name'] ?></div>
+                <div class="card-header small-card-header text-center text-bold text-white" style="background-color: <?php echo $dept['color']?>"><?php echo $dept['dept_name'] ?></div>
 
                 <div class="card-body">
                     <div class="table-responsive">

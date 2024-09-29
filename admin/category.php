@@ -12,86 +12,6 @@
     <section class="content">
         <div class="container-fluid">
 
-            <!-- <div class="card mb-4" id="card-type-of-people">
-                <div class="card-header text-bold">
-                    Role
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="col-lg-12">
-                        <div class="row">
-
-
-                            <div class="col-md-4">
-                                <form action="" id="set-category">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <input type="hidden" name="id">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" required>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
-                                                    <button class="btn btn-sm btn-default col-sm-3" type="button" onclick="$('#set-category').get(0).reset()"> Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            
-
-                            <div class="col-md-8">
-                                <div class="card shadow-none">
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover compact">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">#</th>
-                                                        <th class="text-center w-50">Role</th>
-                                                        <th class="text-center">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $i = 1;
-                                                    $cats = $conn->query("select * from role order by id asc");
-                                                    while ($row = $cats->fetch_assoc()):
-                                                    ?>
-                                                        <tr>
-                                                            <td class="text-center"><?php echo $i++ ?></td>
-                                                            <td class="">
-                                                                <?php echo $row['role_name'] ?>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <button class="btn btn-sm btn-secondary col-sm-3 edit_cat " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['role_name'] ?>">Edit</button>
-                                                                <button class="btn btn-sm btn-danger col-sm-3 delete_cat" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endwhile; ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <hr> -->
-
-
             <div class="card  mb-4" id="card-school-department">
                 <div class="card-header text-bold">
                     School Department
@@ -113,6 +33,11 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="name" required>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="myColor" class="form-label">Choose color</label>
+                                                <input type="color" class="form-control form-control-color" id="myColor" name="colorpick" value="#000000" title="Choose a color" required>
+                                            </div>
+
                                         </div>
                                         <div class="card-footer">
                                             <div class="row">
@@ -150,7 +75,7 @@
                                                                 <?php echo $row['dept_name'] ?>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button class="btn btn-sm btn-secondary col-sm-3 edit_cat2 " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>">Edit</button>
+                                                                <button class="btn btn-sm btn-secondary col-sm-3 edit_cat2 " type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['dept_name'] ?>" data-color="<?php echo $row['color'] ?>">Edit</button>
                                                                 <button class="btn btn-sm btn-danger col-sm-3 delete_cat2" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
                                                             </td>
                                                         </tr>
@@ -281,36 +206,6 @@
     })
 
 
-    $('#set-category').submit(function(e) {
-        e.preventDefault()
-
-        $.ajax({
-            url: 'ajax.php?action=save_category',
-            data: new FormData($(this)[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            type: 'POST',
-            success: function(resp) {
-                if (resp == 1) {
-                    alert_toast("Data successfully added", 'success')
-                    setTimeout(function() {
-                        location.reload()
-                    }, 1500)
-
-                } else if (resp == 2) {
-                    alert_toast("Data successfully updated", 'info')
-                    setTimeout(function() {
-                        location.reload()
-                    }, 1500)
-
-                } else {
-                    alert_toast("An error occured", 'danger')
-                }
-            }
-        })
-    })
 
     $('#set2-category').submit(function(e) {
         e.preventDefault()
@@ -324,6 +219,8 @@
             method: 'POST',
             type: 'POST',
             success: function(resp) {
+                console.log(resp);
+
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
@@ -376,18 +273,13 @@
 
 
 
-    $('.edit_cat').click(function() {
-        var cat = $('#set-category')
-        cat.get(0).reset()
-        cat.find("[name='id']").val($(this).attr('data-id'))
-        cat.find("[name='name']").val($(this).attr('data-name'))
-    })
 
     $('.edit_cat2').click(function() {
         var cat = $('#set2-category')
         cat.get(0).reset()
         cat.find("[name='id']").val($(this).attr('data-id'))
         cat.find("[name='name']").val($(this).attr('data-name'))
+        cat.find("[name='colorpick']").val($(this).attr('data-color'))
     })
 
     $('.edit_cat3').click(function() {
@@ -400,10 +292,6 @@
 
 
 
-    $('.delete_cat').click(function() {
-        _conf("Are you sure to delete this category?", "delete_cat", [$(this).attr('data-id')])
-    })
-
     $('.delete_cat2').click(function() {
         _conf("Are you sure to delete this department?", "delete_cat2", [$(this).attr('data-id')])
     })
@@ -414,24 +302,6 @@
 
 
 
-    function delete_cat($id) {
-        $.ajax({
-            url: 'ajax.php?action=delete_category',
-            method: 'POST',
-            data: {
-                id: $id
-            },
-            success: function(resp) {
-                if (resp == 1) {
-                    alert_toast("Data successfully deleted", 'warning')
-                    setTimeout(function() {
-                        location.reload()
-                    }, 1500)
-
-                }
-            }
-        })
-    }
 
     function delete_cat2($id) {
         $.ajax({

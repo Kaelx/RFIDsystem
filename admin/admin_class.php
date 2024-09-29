@@ -1,103 +1,109 @@
 <?php
 session_start();
 
-class Action{
-	
-    private $db;
+class Action
+{
 
-    public function __construct(){
-        ob_start();
-        include 'db_connect.php';
+	private $db;
 
-        $this->db = $conn;
-    }
-    
-    function __destruct(){
-        $this->db->close();
-        ob_end_flush();
-    }
+	public function __construct()
+	{
+		ob_start();
+		include 'db_connect.php';
+
+		$this->db = $conn;
+	}
+
+	function __destruct()
+	{
+		$this->db->close();
+		ob_end_flush();
+	}
 
 
 
-    function logout(){
+	function logout()
+	{
+		$result = $this->db->query("SELECT * FROM users where id = " . $_SESSION['login_id'])->fetch_array();
+		$log = [
+			'user_id' => $result['id'],
+			'action' => ' has logged out'
+		];
+		$this->save_log($log);
+
+
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);
 		}
-        header('location: index');
-        exit();
+		header('location: index');
+		exit();
 	}
 
 
-	function save_category(){
-		extract($_POST);
-		$data = " role_name = '$name' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO role set ".$data);
-			if($save)
-			return 1;
-		}else{
-			$save = $this->db->query("UPDATE role set ".$data." where id=".$id);
-			if($save)
-			return 2;
-		}
-	}
 
-	function save_category2(){
+	function save_category2()
+	{
 		extract($_POST);
 		$data = " dept_name = '$name' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO department set ".$data);
-			if($save)
-			return 1;
-		}else{
-			$save = $this->db->query("UPDATE department set ".$data." where id=".$id);
-			if($save)
-			return 2;
+		$data .= ", color = '$colorpick' ";
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO department set " . $data);
+			if ($save)
+				return 1;
+		} else {
+			$save = $this->db->query("UPDATE department set " . $data . " where id=" . $id);
+			if ($save)
+				return 2;
 		}
 	}
 
 
-	function save_category3(){
+	function save_category3()
+	{
 		extract($_POST);
 		$data = " dept_id = '$dept_id' ";
 		$data .= ", prog_name = '$name' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO program set ".$data);
-			if($save)
-			return 1;
-		}else{
-			$save = $this->db->query("UPDATE program set ".$data." where id=".$id);
-			if($save)
-			return 2;
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO program set " . $data);
+			if ($save)
+				return 1;
+		} else {
+			$save = $this->db->query("UPDATE program set " . $data . " where id=" . $id);
+			if ($save)
+				return 2;
 		}
 	}
 
 
-	function delete_category(){
+	function delete_category()
+	{
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM role where id = ".$id);
-		if($delete)
+		$delete = $this->db->query("DELETE FROM role where id = " . $id);
+		if ($delete)
 			return 1;
 	}
 
-	function delete_category2(){
+	function delete_category2()
+	{
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM department where id = ".$id);
-		if($delete)
+		$delete = $this->db->query("DELETE FROM department where id = " . $id);
+		if ($delete)
 			return 1;
 	}
 
-	function delete_category3(){
+	function delete_category3()
+	{
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM program where id = ".$id);
-		if($delete)
+		$delete = $this->db->query("DELETE FROM program where id = " . $id);
+		if ($delete)
 			return 1;
 	}
 
 
 
-	function get_department(){
+	function get_department()
+	{
 		extract($_POST);
 
 		$fetch = $this->db->query("SELECT * FROM program WHERE id = " . $prog_id);
@@ -124,7 +130,8 @@ class Action{
 
 
 	//register student
-	function register(){
+	function register()
+	{
 		extract($_POST);
 
 		if (!empty($id)) {
@@ -158,24 +165,31 @@ class Action{
 		$data .= ", dept_id = '$dept_id' ";
 		$data .= ", rfid = '$rfid' ";
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= ", img_path = '$img' ";
-			}
+
+		$base64_data = $_POST['croppedImageData'];
+
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+
+		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_path = 'assets/img/' . $img_name;
+
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
 		}
+
+
 
 
 		try {
 			if (empty($id)) {
 				$save = $this->db->query("INSERT INTO students set " . $data);
 				if ($save)
-				return 1;
+					return 1;
 			} else {
 				$save = $this->db->query("UPDATE students set " . $data . " where id=" . $id);
 				if ($save)
-				return 2;
+					return 2;
 			}
 		} catch (mysqli_sql_exception $e) {
 
@@ -185,9 +199,10 @@ class Action{
 
 
 	//register employee
-	function register2(){
+	function register2()
+	{
 		extract($_POST);
-		
+
 		if (!empty($id)) {
 			$current_rfid = $this->db->query("SELECT rfid FROM employees WHERE id = '$id'")->fetch_assoc()['rfid'];
 		}
@@ -231,37 +246,41 @@ class Action{
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= ", img_path = '$img' ";
+		$base64_data = $_POST['croppedImageData'];
+
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+
+		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_path = 'assets/img/' . $img_name;
+
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
+		}
+
+
+		try {
+			if (empty($id)) {
+				$save = $this->db->query("INSERT INTO employees set " . $data);
+				if ($save)
+					return 1;
+			} else {
+				$save = $this->db->query("UPDATE employees set " . $data . " where id=" . $id);
+				if ($save)
+					return 2;
 			}
-		}
-
-
-		try{
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO employees set " . $data);
-			if ($save)
-			return 1;
-		} else {
-			$save = $this->db->query("UPDATE employees set " . $data . " where id=" . $id);
-			if ($save)
-			return 2;
-		}
-
-	} catch (mysqli_sql_exception $e) {
+		} catch (mysqli_sql_exception $e) {
 			return $e->getMessage();  // For debugging
 
+		}
 	}
-	}
 
 
 
 
-		//register visitor
-	function register3(){
+	//register visitor
+	function register3()
+	{
 		extract($_POST);
 
 		if (!empty($id)) {
@@ -292,12 +311,16 @@ class Action{
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
-		if ($_FILES['img']['tmp_name'] != '') {
-			$img = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], 'assets/img/' . $img);
-			if ($move) {
-				$data .= ", img_path = '$img' ";
-			}
+		$base64_data = $_POST['croppedImageData'];
+
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+
+		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_path = 'assets/img/' . $img_name;
+
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
 		}
 
 
@@ -305,14 +328,14 @@ class Action{
 			if (empty($id)) {
 				$save = $this->db->query("INSERT INTO visitors set " . $data);
 				if ($save)
-				return 1;
+					return 1;
 			} else {
 				$save = $this->db->query("UPDATE visitors set " . $data . " where id=" . $id);
 				if ($save)
-				return 2;
+					return 2;
 			}
 		} catch (mysqli_sql_exception $e) {
-				return $e->getMessage();  // For debugging
+			return $e->getMessage();  // For debugging
 
 		}
 	}
@@ -320,58 +343,65 @@ class Action{
 
 
 
-	function archive_student(){
+	function archive_student()
+	{
 		extract($_POST);
-		$archive = $this->db->query("UPDATE students set status = 1 where id = ".$id);
-		if($archive)
+		$archive = $this->db->query("UPDATE students set status = 1 where id = " . $id);
+		if ($archive)
 			return 1;
 	}
 
-	function unarchive_student(){
+	function unarchive_student()
+	{
 		extract($_POST);
-		$archive = $this->db->query("UPDATE students set status = 0 where id = ".$id);
-		if($archive)
-			return 1;
-	}
-
-
-
-
-	function archive_employee(){
-		extract($_POST);
-		$archive = $this->db->query("UPDATE employees set status = 1 where id = ".$id);
-		if($archive)
-			return 1;
-	}
-
-	function unarchive_employee(){
-		extract($_POST);
-		$archive = $this->db->query("UPDATE employees set status = 0 where id = ".$id);
-		if($archive)
+		$archive = $this->db->query("UPDATE students set status = 0 where id = " . $id);
+		if ($archive)
 			return 1;
 	}
 
 
 
-	function archive_visitor(){
+
+	function archive_employee()
+	{
 		extract($_POST);
-		$archive = $this->db->query("UPDATE visitors set status = 1 where id = ".$id);
-		if($archive)
+		$archive = $this->db->query("UPDATE employees set status = 1 where id = " . $id);
+		if ($archive)
 			return 1;
 	}
 
-	function unarchive_visitor(){
+	function unarchive_employee()
+	{
 		extract($_POST);
-		$archive = $this->db->query("UPDATE visitors set status = 0 where id = ".$id);
-		if($archive)
+		$archive = $this->db->query("UPDATE employees set status = 0 where id = " . $id);
+		if ($archive)
 			return 1;
 	}
 
 
 
-	function fetch_data() {
+	function archive_visitor()
+	{
 		extract($_POST);
-		
+		$archive = $this->db->query("UPDATE visitors set status = 1 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
+
+	function unarchive_visitor()
+	{
+		extract($_POST);
+		$archive = $this->db->query("UPDATE visitors set status = 0 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
+
+
+
+	function fetch_data()
+	{
+		extract($_POST);
+
 		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path, 'students' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
@@ -391,12 +421,12 @@ class Action{
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
 		");
-	
+
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
-	
+
 			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
-	
+
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
@@ -406,14 +436,14 @@ class Action{
 				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor',
 				'img_path' => $img_path
 			];
-	
+
 			if ($response) {
 				$check_existing = $this->db->query("SELECT * FROM records 
 					WHERE recordable_id = '" . $data['id'] . "' 
 					AND recordable_table = '" . $data['source_table'] . "'
 					AND timeout IS NULL
 				");
-	
+
 				if ($check_existing->num_rows > 0) {
 					$update = $this->db->query("UPDATE records 
 						SET timeout = CURRENT_TIMESTAMP() 
@@ -430,77 +460,103 @@ class Action{
 		} else {
 			$response = ['success' => false];
 		}
-	
+
 		echo json_encode($response);
 	}
-	
 
-	
+
+
 
 
 
 
 	function adduser(){
 		extract($_POST);
-	
-		$data = "";
-	
-		$data .= " fname = '$fname', ";
-		$data .= " mname = '$mname', ";
-		$data .= " lname = '$lname', ";
-		$data .= " email = '$email', ";
-		$data .= " username = '$username', ";
-		$data .= " account_type = '$account_type', ";
-	
+
+		$data = " fname = '$fname'";
+		$data .= ", mname = '$mname'";
+		$data .= ",lname = '$lname'";
+		$data .= ", bdate = '$bdate'";
+		$data .= ", gender = '$gender'";
+		$data .= ", address = '$address'";
+		$data .= ", cellnum = '$cellnum'";
+		$data .= ", email = '$email'";
+		$data .= ", school_id = '$school_id'";
+		$data .= ", username = '$username'";
+		
+		if (!empty($account_type)) {
+			$data .= ", account_type = '$account_type'";
+		}
+
 		if (!empty($password)) {
 			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
-			$data .= " password = '$hashed_password', ";
+			$data .= ", password = '$hashed_password'";
 		}
-	
+
+		$base64_data = $_POST['croppedImageData'];
+		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+		$decoded_image = base64_decode($base64_data);
+		$img_name = strtotime(date('y-m-d H:i')) .$fname.'.png';
+		$img_path = 'assets/img/' . $img_name;
+		if (file_put_contents($img_path, $decoded_image)) {
+			$data .= ", img_path = '$img_name' ";
+		}
+
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
 		if ($chk > 0) {
-			return 3;  // Return 3 if email already exists
-			
+			return 3; 
+
 		}
-	
-		$data = rtrim($data, ", ");
-	
+
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO users SET " . $data);
 			if ($save) {
-				return 1;  // Return 1 for success
+				return 1; 
 
 			}
-
 		} else {
 			$save = $this->db->query("UPDATE users SET " . $data . " WHERE id = " . $id);
 			if ($save) {
-				return 2;  // Return 2 for successful update
-
+				return 2;
 			}
-
 		}
+
+
 	}
-	
-	
+
+
+
+	function archive_user(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE users set status = 1 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
+
+	function unarchive_user(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE users set status = 0 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
 
 
 	// function import() {
 	// 	if (isset($_FILES['csv']['tmp_name'])) {
 	// 		$csvFile = $_FILES['csv']['tmp_name'];
-	
+
 	// 		// Check if the file exists
 	// 		if (($handle = fopen($csvFile, 'r')) !== FALSE) {
 	// 			// Skip the first row if it contains column headers
 	// 			fgetcsv($handle);
-	
+
 	// 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 	// 				// Check if the row has the expected number of columns
 	// 				if (count($data) < 6) {
 	// 					// Handle the error: Skip this row or log an error
 	// 					continue; // Skip the row if it doesn't have enough columns
 	// 				}
-	
+
 	// 				// Assign each CSV column to a variable, using a default value if it's missing
 	// 				$id = !empty($data[0]) ? $data[0] : NULL; // or some default value
 	// 				$fname = !empty($data[1]) ? $data[1] : '';
@@ -508,20 +564,20 @@ class Action{
 	// 				$role_id = !empty($data[3]) ? $data[3] : NULL;
 	// 				$school_id = !empty($data[4]) ? $data[4] : NULL;
 	// 				$email = !empty($data[5]) ? $data[5] : '';
-	
+
 	// 				// Adjust the SQL query to exclude rfid and img_path
 	// 				$query = "INSERT INTO member (id, fname, lname, role_id, school_id, email) 
 	// 						VALUES ('$id', '$fname', '$lname', '$role_id', '$school_id', '$email') 
 	// 						ON DUPLICATE KEY UPDATE 
 	// 						fname='$fname', lname='$lname', role_id='$role_id', school_id='$school_id', email='$email'";
-	
+
 	// 				if ($this->db->query($query) === TRUE) {
 	// 					continue; // Data successfully added or updated, continue to next row
 	// 				} else {
 	// 					return 0; // Error occurred
 	// 				}
 	// 			}
-	
+
 	// 			fclose($handle);
 	// 			return 1; // All data processed successfully
 	// 		} else {
@@ -531,12 +587,49 @@ class Action{
 	// 		return 0; // File not set
 	// 	}
 	// }
+
+
+
+
+	// function save_log($log){
+	// 	$qry = $this->db->query("INSERT INTO logs (user_id, action) 
+	// 							VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
+
+	// 	if (!$qry) {
+	// 		error_log("Error saving log: " . $this->db->error);
+	// 	}
+
+	// 	return $qry ? true : false;
+	// }
+
+
+	function save_log($log) {
+
+		// Get user IP address
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+
+		$location = 'Unknown';  // Default location if API fails
+		$geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
+		if ($geo_data) {
+			$geo_data = json_decode($geo_data, true);
+			if ($geo_data['status'] === 'success') {
+				$location = $geo_data['city'] . ', ' . $geo_data['country'];
+			}
+		}
+
+		$info = $location;
+
 	
+		$qry = $this->db->query("INSERT INTO logs (user_id, action, ip_address, device_info) 
+								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "', '" . $ip_address . "', '" . $info . "')");
 	
-
+		// Check for errors
+		if (!$qry) {
+			error_log("Error saving log: " . $this->db->error);
+		}
+	
+		return $qry ? true : false;
+	}
 
 	
-
-
-
 }

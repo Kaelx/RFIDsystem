@@ -20,7 +20,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card card-success card-outline">
                 <div class="card-header text-center text-bold">Student's Archived Data</div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -47,6 +47,10 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="text-right m-5">
+                    <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                 </div>
             </div>
         </div>

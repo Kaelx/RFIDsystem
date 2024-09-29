@@ -1,3 +1,12 @@
+<?php 
+
+if(!isset($_SESSION['otp']) && !isset($_SESSION['mail'])){
+    header('location:index.php?page=login');
+}
+
+?>
+
+
 <style>
     body {
         position: relative;
@@ -17,7 +26,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        filter: blur(5px);
+        filter: blur(6px);
         z-index: -1;
     }
 
@@ -27,8 +36,8 @@
         justify-content: center;
         height: 100vh;
 
-    }
 
+    }
 
     .login-card img {
         width: 100%;
@@ -46,30 +55,29 @@
 </style>
 
 <div class="login-container">
-    <div class="card login-card shadow" style="max-width: 900px;">
-        <div class="row g-0">
-            <!-- Left Image -->
-            <div class="col-md-6">
-                <img class="m-4" src="../assets/defaults/evsu.png" alt="Login Image"> <!-- Replace with path to your image -->
-            </div>
-            <!-- Right Form -->
-            <div class="col-md-6 p-5">
-                <h1 class="mb-4">LOGIN</h1>
-                <form accept="#" id="login-form">
+    <div class="card shadow login-card" style="width: 600px;">
+        <div>
+            <div class="p-5">
+                <h1 class="mb-4 text-center">Update your password</h1>
+                <form accept="#" id="updatepass">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required autofocus>
+                        <label for="otpcode" class="form-label">OTP Code</label>
+                        <input type="number" class="form-control" name="otpcode" id="otpcode" placeholder="Enter your OTP Code" required autofocus>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                        <label for="newpass" class="form-label">New Password</label>
+                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" required>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="mb-3">
+                        <label for="confirmpass" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                     <hr>
                     <div class="login-footer mt-3">
-                        <a href="index.php?page=forgotpass">Forgot Password?</a>
+                        <a href="index.php?page=login">Go back to Login</a>
                     </div>
                 </form>
             </div>
@@ -79,7 +87,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#login-form').submit(function(e) {
+        $('#updatepass').submit(function(e) {
             e.preventDefault()
 
             //regex validation
@@ -89,7 +97,7 @@
 
             start_load()
             $.ajax({
-                url: 'ajax.php?action=login',
+                url: 'ajax.php?action=updatepass',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(resp) {
@@ -97,11 +105,16 @@
 
                     console.log(resp);
                     if (resp == 1) {
-                        location.href = 'index';
+                        alert_toast('Password successfully updated', 'success')
+                        setTimeout(function() {
+                            location.replace('index.php?page=login')
+                        }, 2000)
                     } else if (resp == 2) {
-                        alert_toast('Wrong password', 'danger');
+                        alert_toast('Something went wrong', 'danger')
                     } else if (resp == 3) {
-                        alert_toast('No account found', 'danger');
+                        alert_toast('Password did not match', 'danger')
+                    } else if (resp == 4) {
+                        alert_toast('OTP Code did not match', 'danger')
                     } else {
                         alert_toast('An error occured', 'danger')
                     }

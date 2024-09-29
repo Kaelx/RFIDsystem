@@ -18,28 +18,9 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
 
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
-            <div class="inner">
-              <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
-                <?php
-                $sql = $conn->query("SELECT COUNT(*) as total FROM students where status=0");
-                $result = $sql->fetch_assoc();
-                $count = $result['total'];
-                ?>
-                <h3><?php echo $count; ?></h3>
-                <p>Students</p>
-              </a>
-            </div>
-            <div class="icon">
-              <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-            <a href="index.php?page=student_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-
-        </div>
-
-
+      <?php
+        if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+      ?>
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
@@ -61,25 +42,30 @@
           </div>
         </div>
 
-        <!-- <div class="col-lg-3 col-6">
-          <div class="small-box bg-primary">
+
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
             <div class="inner">
-              <a href="#" style="text-decoration: none; color: inherit;">
+              <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
                 <?php
-                $sql = $conn->query("SELECT COUNT(*) as total FROM vendors where status=0");
+                $sql = $conn->query("SELECT COUNT(*) as total FROM students where status=0");
                 $result = $sql->fetch_assoc();
                 $count = $result['total'];
                 ?>
                 <h3><?php echo $count; ?></h3>
-                <p>Canteen Vendors</p>
+                <p>Students</p>
               </a>
             </div>
             <div class="icon">
-              <i class="fa-solid fa-store"></i>
+              <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="index.php?page=student_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
-        </div> -->
+
+        </div>
+
+        <?php endif;?>
+
 
 
         <div class="col-lg-3 col-6">
