@@ -66,11 +66,11 @@ if(!isset($_SESSION['otp']) && !isset($_SESSION['mail'])){
                     </div>
                     <div class="mb-3">
                         <label for="newpass" class="form-label">New Password</label>
-                        <input type="text" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" required>
+                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" required>
                     </div>
                     <div class="mb-3">
                         <label for="confirmpass" class="form-label">Confirm Password</label>
-                        <input type="text" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password" required>
+                        <input type="password" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Update</button>

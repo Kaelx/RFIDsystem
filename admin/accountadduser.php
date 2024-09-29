@@ -98,6 +98,7 @@
 
                         <script>
                             let cropper;
+                            let currentStream;
 
                             document.getElementById('useCamera').addEventListener('click', function() {
                                 document.getElementById('fileInputDiv').style.display = 'none';
@@ -111,12 +112,23 @@
                                         video: true
                                     })
                                     .then(function(stream) {
+                                        currentStream = stream; // Store the current stream
                                         document.getElementById('cameraStream').srcObject = stream;
                                     })
                                     .catch(function(err) {
                                         console.error("Error accessing camera: ", err);
                                         alert("Unable to access camera. Please check permissions.");
                                     });
+                            }
+
+                            // Stop the camera stream
+                            function stopCamera() {
+                                if (currentStream) {
+                                    let tracks = currentStream.getTracks();
+                                    tracks.forEach(track => track.stop());
+                                    currentStream = null; // Clear the stream
+                                }
+                                document.getElementById('cameraDiv').style.display = 'none'; // Hide the camera view
                             }
 
                             // Capture image from camera
@@ -132,15 +144,10 @@
                                 document.getElementById('modalImg').src = dataUrl;
 
                                 // Stop the video stream
-                                let stream = video.srcObject;
-                                if (stream) {
-                                    let tracks = stream.getTracks();
-                                    tracks.forEach(track => track.stop());
-                                }
+                                stopCamera(); // Use the stop function
 
-                                // Hide the camera stream after capturing the image
-                                document.getElementById('cameraDiv').style.display = 'none';
-                                initializeCropper(); // Initialize cropper after setting the image
+                                // Initialize cropper after setting the image
+                                initializeCropper();
                             });
 
                             function previewImage(event) {
@@ -151,6 +158,7 @@
                                     initializeCropper();
                                 };
                                 reader.readAsDataURL(event.target.files[0]);
+                                stopCamera(); // Ensure the camera is stopped if switching to file input
                             }
 
                             function initializeCropper() {
@@ -193,6 +201,7 @@
                             });
 
                             $('#uploadImg').on('click', function() {
+                                stopCamera(); // Stop the camera when switching to upload
                                 $('#img').click();
                             });
 
@@ -203,8 +212,11 @@
                             });
 
                             $('#modal-default').on('hidden.bs.modal', function() {
-                                cropper.destroy();
-                                cropper = null;
+                                stopCamera(); // Stop the camera when modal is closed
+                                if (cropper) {
+                                    cropper.destroy();
+                                    cropper = null;
+                                }
                             });
                         </script>
 
@@ -340,5 +352,4 @@
             }
         })
     })
-
 </script>

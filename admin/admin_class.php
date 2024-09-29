@@ -470,8 +470,7 @@ class Action
 
 
 
-	function adduser()
-	{
+	function adduser(){
 		extract($_POST);
 
 		$data = " fname = '$fname'";
@@ -484,7 +483,10 @@ class Action
 		$data .= ", email = '$email'";
 		$data .= ", school_id = '$school_id'";
 		$data .= ", username = '$username'";
-		$data .= ", account_type = '$account_type'";
+		
+		if (!empty($account_type)) {
+			$data .= ", account_type = '$account_type'";
+		}
 
 		if (!empty($password)) {
 			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -523,6 +525,20 @@ class Action
 	}
 
 
+
+	function archive_user(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE users set status = 1 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
+
+	function unarchive_user(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE users set status = 0 where id = " . $id);
+		if ($archive)
+			return 1;
+	}
 
 
 	// function import() {
@@ -575,15 +591,45 @@ class Action
 
 
 
-	function save_log($log)
-	{
-		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
-								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
+	// function save_log($log){
+	// 	$qry = $this->db->query("INSERT INTO logs (user_id, action) 
+	// 							VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
 
+	// 	if (!$qry) {
+	// 		error_log("Error saving log: " . $this->db->error);
+	// 	}
+
+	// 	return $qry ? true : false;
+	// }
+
+
+	function save_log($log) {
+
+		// Get user IP address
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+
+		$location = 'Unknown';  // Default location if API fails
+		$geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
+		if ($geo_data) {
+			$geo_data = json_decode($geo_data, true);
+			if ($geo_data['status'] === 'success') {
+				$location = $geo_data['city'] . ', ' . $geo_data['country'];
+			}
+		}
+
+		$info = $location;
+
+	
+		$qry = $this->db->query("INSERT INTO logs (user_id, action, ip_address, device_info) 
+								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "', '" . $ip_address . "', '" . $info . "')");
+	
+		// Check for errors
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
-
+	
 		return $qry ? true : false;
 	}
+
+	
 }

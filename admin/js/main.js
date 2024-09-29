@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 // Validate for all form
 function validateForm(form) {
-    const invalidPattern = /(--|'|<|>|=)/;
+    const invalidPattern = /(--|'|`|<|>|=)/;
     let isValid = true;
 
     $(form).find('input').each(function () {

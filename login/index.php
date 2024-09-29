@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-error_reporting(0);
+error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -105,7 +105,7 @@ include 'footer.php';
 
 
     function validateForm(form) {
-        const invalidPattern = /(--|'|<|>|=)/;
+        const invalidPattern = /(--|'|`|<|>|=)/;
         let isValid = true;
 
         $(form).find('input').each(function() {

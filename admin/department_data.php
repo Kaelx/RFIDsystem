@@ -20,6 +20,14 @@ ORDER BY s.id ASC");
 
 ?>
 
+<style>
+.small-card-header {
+    font-size: 16px;
+    padding: 5px;
+}
+</style>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -36,7 +44,7 @@ ORDER BY s.id ASC");
                 $sql = $conn->query("select * from department where id = $dept_id");
                 $dept = $sql->fetch_assoc();
                 ?>
-                <div class="card-header text-center text-bold text-white" style="background-color: <?php echo $dept['color']?>"><?php echo $dept['dept_name'] ?></div>
+                <div class="card-header small-card-header text-center text-bold text-white" style="background-color: <?php echo $dept['color']?>"><?php echo $dept['dept_name'] ?></div>
 
                 <div class="card-body">
                     <div class="table-responsive">

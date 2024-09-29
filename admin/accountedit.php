@@ -114,6 +114,7 @@ if (isset($_GET['uid'])) {
 
                                 <script>
                                     let cropper;
+                                    let currentStream;
 
                                     document.getElementById('useCamera').addEventListener('click', function() {
                                         document.getElementById('fileInputDiv').style.display = 'none';
@@ -127,12 +128,23 @@ if (isset($_GET['uid'])) {
                                                 video: true
                                             })
                                             .then(function(stream) {
+                                                currentStream = stream; // Store the current stream
                                                 document.getElementById('cameraStream').srcObject = stream;
                                             })
                                             .catch(function(err) {
                                                 console.error("Error accessing camera: ", err);
                                                 alert("Unable to access camera. Please check permissions.");
                                             });
+                                    }
+
+                                    // Stop the camera stream
+                                    function stopCamera() {
+                                        if (currentStream) {
+                                            let tracks = currentStream.getTracks();
+                                            tracks.forEach(track => track.stop());
+                                            currentStream = null; // Clear the stream
+                                        }
+                                        document.getElementById('cameraDiv').style.display = 'none'; // Hide the camera view
                                     }
 
                                     // Capture image from camera
@@ -148,15 +160,10 @@ if (isset($_GET['uid'])) {
                                         document.getElementById('modalImg').src = dataUrl;
 
                                         // Stop the video stream
-                                        let stream = video.srcObject;
-                                        if (stream) {
-                                            let tracks = stream.getTracks();
-                                            tracks.forEach(track => track.stop());
-                                        }
+                                        stopCamera(); // Use the stop function
 
-                                        // Hide the camera stream after capturing the image
-                                        document.getElementById('cameraDiv').style.display = 'none';
-                                        initializeCropper(); // Initialize cropper after setting the image
+                                        // Initialize cropper after setting the image
+                                        initializeCropper();
                                     });
 
                                     function previewImage(event) {
@@ -167,6 +174,7 @@ if (isset($_GET['uid'])) {
                                             initializeCropper();
                                         };
                                         reader.readAsDataURL(event.target.files[0]);
+                                        stopCamera(); // Ensure the camera is stopped if switching to file input
                                     }
 
                                     function initializeCropper() {
@@ -209,6 +217,7 @@ if (isset($_GET['uid'])) {
                                     });
 
                                     $('#uploadImg').on('click', function() {
+                                        stopCamera(); // Stop the camera when switching to upload
                                         $('#img').click();
                                     });
 
@@ -219,8 +228,11 @@ if (isset($_GET['uid'])) {
                                     });
 
                                     $('#modal-default').on('hidden.bs.modal', function() {
-                                        cropper.destroy();
-                                        cropper = null;
+                                        stopCamera(); // Stop the camera when modal is closed
+                                        if (cropper) {
+                                            cropper.destroy();
+                                            cropper = null;
+                                        }
                                     });
                                 </script>
 
@@ -312,9 +324,14 @@ if (isset($_GET['uid'])) {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                        <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Cancel</button>
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary btn-custom">Save</button>
+                                            <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Back</button>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-danger btn-custom archive_user" type="button" data-id="<?php echo $member['id'] ?>">Archive</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -367,4 +384,35 @@ if (isset($_GET['uid'])) {
             }
         })
     })
+
+
+
+    $('.archive_user').click(function() {
+
+        _conf("Are you sure to archive this data?", "archive_user", [$(this).attr('data-id')])
+    });
+
+
+    function archive_user($id) {
+
+        $.ajax({
+            url: 'ajax.php?action=archive_user',
+            method: 'POST',
+            data: {
+                id: $id
+            },
+            success: function(resp) {
+                console.log(resp);
+
+                if (resp == 1) {
+                    alert_toast("Data successfully archived", 'success')
+                    setTimeout(function() {
+                        location.href = 'index.php?page=accountmanage'
+                    }, 1500)
+                } else {
+                    alert_toast("An error occured", 'danger')
+                }
+            }
+        })
+    }
 </script>

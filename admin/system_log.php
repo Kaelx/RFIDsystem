@@ -22,8 +22,10 @@
                                 <tr>
                                     <th class="text-center">User</th>
                                     <th class="text-center">Type</th>
-                                    <th class="text-center w-50">Description</th>
-                                    <th class="text-center w-25">Time</th>
+                                    <th class="text-center">Description</th>
+                                    <th>Location</th>
+                                    <th>Ip Address</th>
+                                    <th class="text-center">Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +45,8 @@
                                                 ?>
                                             </td>
                                             <td><?php echo $row['action']; ?></td>
+                                            <td><?php echo $row['device_info']; ?></td>
+                                            <td><?php echo $row['ip_address']; ?></td>
                                             <td class="text-center">
                                                 <?php
                                                 $date = new DateTime($row['timestamp']);

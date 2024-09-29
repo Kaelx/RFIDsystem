@@ -94,7 +94,7 @@
 
                         console.log(resp);
                         if (resp == 1) {
-                            alert_toast('Password recovery link sent to your email', 'success');
+                            alert_toast('OTP CODE has been sent to your email', 'success');
                             setTimeout(function() {
                                 location.replace('index.php?page=update_password')
                             }, 2000)

@@ -128,6 +128,17 @@ if($action == "unarchive_visitor"){
 		echo $save;
 }
 
+if($action == "archive_user"){
+	$save = $crud->archive_user();
+	if($save)
+		echo $save;
+}
+
+if($action == "unarchive_user"){
+	$save = $crud->unarchive_user();
+	if($save)
+		echo $save;
+}
 
 
 

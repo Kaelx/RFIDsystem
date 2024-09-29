@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-error_reporting(0);
+error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -17,7 +17,7 @@ if (!isset($_SESSION['login_id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELEVATECH RFID</title>
+  <title>EVSU RFID</title>
 
   <link rel="icon" type="image/png" href="assets/defaults/evsu.png">
 
@@ -61,7 +61,7 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
         <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">RFID</span>
+        <span class="brand-text font-weight-light">EVSU RFID</span>
       </a>
 
       <!-- Sidebar -->
@@ -168,7 +168,7 @@ if (!isset($_SESSION['login_id'])) {
                 <a href="index.php?page=system_log" class="nav-link">
                   <i class="fa-solid fa-box nav-icon"></i>
                   <p>
-                    Audit Logs
+                    Audit Log
                   </p>
                 </a>
               </li>
