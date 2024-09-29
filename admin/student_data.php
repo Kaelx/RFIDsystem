@@ -63,11 +63,11 @@
 
             <div class="row">
                 <?php
-                $sql = $conn->query("SELECT d.*, COUNT(s.dept_id) AS student_count 
-                                        FROM department d
-                                        LEFT JOIN students s ON d.id = s.dept_id
-                                        GROUP BY d.id
-                                    ");
+                $sql = $conn->query("SELECT d.*, COUNT(CASE WHEN s.status = 0 THEN 1 END) AS student_count 
+                        FROM department d
+                        LEFT JOIN students s ON d.id = s.dept_id
+                        GROUP BY d.id
+                    ");
 
                 while ($result = $sql->fetch_assoc()) {
                 ?>
@@ -85,6 +85,7 @@
                 <?php
                 }
                 ?>
+
             </div>
 
 

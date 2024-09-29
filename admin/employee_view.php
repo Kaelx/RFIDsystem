@@ -71,22 +71,6 @@ $data = mysqli_fetch_assoc($query);
                                 <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                             </div>
 
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Civil Status</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?></p>
-                            </div>
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Blood Type</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['blood_type']) ? $data['blood_type'] : '' ?></p>
-                            </div>
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Height</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['height']) ? $data['height'] : '' ?></p>
-                            </div>
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Weight</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['weight']) ? $data['weight'] : '' ?></p>
-                            </div>
                         </div>
 
                         <div class="row">
@@ -104,37 +88,6 @@ $data = mysqli_fetch_assoc($query);
                                 <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
                             </div>
                         </div>
-
-
-                        <div class="row">
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">TIN No.</p>
-                                <p class="form-control form-control-sm"><?= isset($data['tin_num']) ? $data['tin_num'] : '' ?></p>
-                            </div>
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">GSIS No.</p>
-                                <p class="form-control form-control-sm" id="gsis_num"><?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Philhealth No.</p>
-                                <p class="form-control form-control-sm" id="phil_num"><?= isset($data['phil_num']) ? $data['phil_num'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Pag-ibig No.</p>
-                                <p class="form-control form-control-sm" id="pagibig_num"><?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">SSS No.</p>
-                                <p type="email" class="form-control form-control-sm" id="tin_num"><?= isset($data['sss_num']) ? $data['sss_num'] : '' ?></p>
-                            </div>
-                        </div>
-
-
-
-
 
 
                         <div class="row">
