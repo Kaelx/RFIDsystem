@@ -21,61 +21,77 @@
         z-index: -1;
     }
 
-    .login-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-
-    }
-
-
-    .login-card img {
-        width: 100%;
-        object-fit: cover;
-    }
-
-    .form-control {
-        margin-bottom: 1rem;
-    }
-
-    .login-footer {
-        text-align: center;
-        margin-top: 1rem;
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+        z-index: -1;
     }
 </style>
 
-<div class="login-container">
-    <div class="card login-card shadow" style="max-width: 900px;">
-        <div class="row g-0">
-            <!-- Left Image -->
-            <div class="col-md-6">
-                <img class="m-4" src="../assets/defaults/evsu.png" alt="Login Image"> <!-- Replace with path to your image -->
+
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow w-100">
+        <div class="row">
+            <!-- Left Form -->
+            <div class="col-md-6 col-12 p-3">
+                <div class="container">
+                    <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="../assets/defaults/evsu.png" class="d-block w-100" alt="First slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../assets/defaults/evsu.png" class="d-block w-100" alt="Second slide">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../assets/defaults/evsu.png" class="d-block w-100" alt="Third slide">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
             </div>
+
             <!-- Right Form -->
-            <div class="col-md-6 p-5">
-                <h1 class="mb-4">LOGIN</h1>
-                <form accept="#" id="login-form">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required autofocus>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                    <hr>
-                    <div class="login-footer mt-3">
-                        <a href="index.php?page=forgotpass">Forgot Password?</a>
-                    </div>
-                </form>
+            <div class="col-md-6 col-12 p-3">
+                <div class="container p-5">
+                    <h1 class="mb-4 text-center">LOGIN</h1>
+                    <form accept="#" id="login-form">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                        <hr>
+                        <div class="login-footer mt-3 text-center">
+                            <a href="index.php?page=forgotpass">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     $(document).ready(function() {

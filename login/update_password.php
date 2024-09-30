@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-if(!isset($_SESSION['otp']) && !isset($_SESSION['mail'])){
-    header('location:index.php?page=login');
-}
+// if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
+//     header('location:index.php?page=login');
+// }
 
 ?>
 
@@ -26,7 +26,18 @@ if(!isset($_SESSION['otp']) && !isset($_SESSION['mail'])){
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        filter: blur(6px);
+        filter: blur(5px);
+        z-index: -1;
+    }
+
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
         z-index: -1;
     }
 

@@ -2,15 +2,15 @@
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
     header('Location: index.php?page=visitor_data');
 }
-    $uid = $_GET['uid'];
+$uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, r.role_name, 'visitors' as type
+$query = $conn->query("SELECT s.*, r.role_name, 'visitors' as type
     FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
+$data = mysqli_fetch_assoc($query);
 
 ?>
 
@@ -59,7 +59,16 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
                     <div class="row">
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Birthdate</p>
-                            <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
+                            <p type="date" class="form-control form-control-sm">
+                                <?php
+                                if (isset($data['bdate'])) {
+                                    $date = new DateTime($data['bdate']);
+                                    echo $date->format('F j, Y');
+                                } else {
+                                    echo '';
+                                }
+                                ?>
+                            </p>
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>
@@ -115,7 +124,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
                     <div class="row mt-2">
                         <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type']?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=visitor_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>

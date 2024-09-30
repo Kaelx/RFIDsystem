@@ -23,7 +23,6 @@
         opacity: 0.02;
         /* Optional: makes sure background is slightly visible */
     }
-
 </style>
 
 
@@ -32,6 +31,13 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
+            <!-- Clock and Date Display -->
+            <center>
+                <div class="mb-2">
+                    <div id="clock" class="display-2 font-weight-bold"></div>
+                    <div id="date" class="h2"></div>
+                </div>
+            </center>
         </div>
     </div>
     <!-- RFID FORM -->
@@ -45,34 +51,40 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card shadow-none">
+            <div id="student-card" class="card" style="display: none;">
                 <div class="card-body">
-                    <!-- Clock and Date Display -->
-                    <center>
-                        <div class="mb-4">
-                            <div id="clock" class="display-2 font-weight-bold"></div>
-                            <div id="date" class="h2"></div>
-                        </div>
-                    </center>
-                    <!-- User Information Display -->
+                    <!-- STUDENT Information Display -->
+                    <div class="card-header">Student</div>
                     <div class="row align-items-center justify-content-center mt-5">
                         <div class="col-md-5 text-center mr-5">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 5px solid #a91414;">
+                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 5px solid #a91414;">
                         </div>
+                    </div>
 
-                        <div class="col-md-5 ml-5">
-                            <div class="col-md-9">
-                                <input type="text" id="name" class="form-control form-control-lg mb-5" placeholder="Name" style="font-size: 48px;">
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" id="gender" class="form-control form-control-lg mb-5" placeholder="Gender" style="font-size: 48px;">
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" id="type" class="form-control form-control-lg mb-5" placeholder="Role" style="font-size: 48px;">
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" id="school_id" class="form-control form-control-lg mb-5" placeholder="School ID" style="font-size: 48px;">
-                            </div>
+                </div>
+            </div>
+
+
+            <div id="visitor-card" class="card" style="display: none;">
+                <div class="card-body">
+                    <!-- Visitor Information Display -->
+                    <div class="card-header">Visitor</div>
+                    <div class="row align-items-center justify-content-center mt-5">
+                        <div class="col-md-5 text-center mr-5">
+                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 5px solid #a91414;">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="error-card" class="card" style="display: none;">
+                <div class="card-body">
+                    <!-- error Information Display -->
+                    <div class="card-header">error</div>
+                    <div class="row align-items-center justify-content-center mt-5">
+                        <div class="col-md-5 text-center mr-5">
+                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 5px solid #a91414;">
                         </div>
                     </div>
 
@@ -88,16 +100,6 @@
 
 
 <script>
-    // $('table').DataTable({
-    //     ordering: false,
-    //     searching: false,
-    //     lengthChange: false,
-    //     paging: false,
-    //     pageLength: 5,
-    //     info: false
-
-    // });
-
     let idleTimer;
     let idleState = false;
     const idleWait = 5500;
@@ -110,12 +112,9 @@
         idleTimer = setTimeout(function() {
             idleState = true;
 
-            $('#name').val("");
-            $('#type').val("");
-            $('#school_id').val("");
-            $('#gender').val("");
-            $('#profile-img').attr('src', 'assets/img/' + 'blank-img.png');
-            $('#rfid').val("");
+            $('#visitor-card').hide();
+            $('#student-card').hide();
+            $('#error-card').hide();
 
         }, idleWait);
     }
@@ -191,7 +190,6 @@
     $(document).ready(function() {
         const responseData = sessionStorage.getItem('responseData');
         if (responseData) {
-            console.log(responseData);
 
             sessionStorage.removeItem('responseData');
 
@@ -199,13 +197,30 @@
             const defaultVal = "Unknown";
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
-            var fullName = data.success ? data.fname + ' ' + data.lname : defaultVal;
-            $('#name').val(fullName);
-            $('#gender').val(data.success ? data.gender : defaultVal);
-            $('#type').val(data.success ? data.role_name : defaultVal);
-            $('#school_id').val(data.success ? data.school_id : defaultVal);
-            $('#profile-img').attr('src', imgPath);
-            $('#rfid').val("");
+            var role = data.success ? data.role_name : defaultVal;
+
+            if (role == "Student") {
+                $('#student-img').attr('src', imgPath);
+                $('#rfid').val("");
+
+
+                $('#student-card').show();
+
+            } else if (role == "Visitor") {
+                $('#visitor-img').attr('src', imgPath);
+                $('#rfid').val("");
+
+
+                $('#visitor-card').show(); 
+
+            }else{
+                $('#error-img').attr('src', imgPath);
+                $('#rfid').val("");
+
+                $('#error-card').show(); 
+            }
+
+            console.log(responseData);
 
             if (!data.success) {
                 const audio = new Audio('assets/defaults/alert_beep.mp3');

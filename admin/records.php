@@ -121,6 +121,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 <tr>
                                                     <th class="text-center">#</th>
                                                     <th class="text-center">Name</th>
+                                                    <th class="text-center">Date</th>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
                                                     <th class="text-center">Duration</th>
@@ -129,20 +130,20 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                             <tbody>
                                                 <?php
 
-                                                $query = "SELECT r.timein, r.timeout,
+                                                $query = "SELECT r.record_date,r.timein, r.timeout,
                                                                 COALESCE(s.fname, e.fname, v.fname) AS fname, 
                                                                 COALESCE(s.mname, e.mname, v.mname) AS mname, 
                                                                 COALESCE(s.lname, e.lname, v.lname) AS lname,
                                                                 COALESCE(s.school_id, e.school_id, NULL) AS school_id,
                                                                 COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
                                                             FROM records r
-                                                            LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-                                                            LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-                                                            LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
+                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
+                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
                                                             LEFT JOIN role r_s ON s.role_id = r_s.id
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id
-                                                            WHERE r.recordable_id = '$uid' and r.recordable_table = '$type'
+                                                            WHERE r.record_id = '$uid' and r.record_table = '$type'
                                                         ";
 
 
@@ -162,15 +163,21 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                         <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
                                                         <td class="text-center">
                                                             <?php
+                                                            $date = new DateTime($row['record_date']);
+                                                            echo $date->format('F j, Y');
+                                                            ?>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <?php
                                                             $timein = new DateTime($row['timein']);
-                                                            echo $timein->format('F j, Y -- g:i A');
+                                                            echo $timein->format('g:i A');
                                                             ?>
                                                         </td>
                                                         <td class="text-center">
                                                             <?php
                                                             if (!empty($row['timeout'])) {
                                                                 $timeout = new DateTime($row['timeout']);
-                                                                echo $timeout->format('F j, Y -- g:i A');
+                                                                echo $timeout->format('g:i A');
                                                             } else {
                                                                 echo '------';
                                                             }
@@ -220,7 +227,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
         $('table').DataTable({
             ordering: false,
             searching: false,
-            stateSave: true
+            stateSave: true,
+            layout: {
+                topStart: null,
+                topEnd: 'pageLength',
+            }
         });
 
 

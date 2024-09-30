@@ -6,24 +6,21 @@ class Action
 
 	private $db;
 
-	public function __construct()
-	{
+	public function __construct(){
 		ob_start();
 		include 'db_connect.php';
 
 		$this->db = $conn;
 	}
 
-	function __destruct()
-	{
+	function __destruct(){
 		$this->db->close();
 		ob_end_flush();
 	}
 
 
 
-	function logout()
-	{
+	function logout(){
 		$result = $this->db->query("SELECT * FROM users where id = " . $_SESSION['login_id'])->fetch_array();
 		$log = [
 			'user_id' => $result['id'],
@@ -42,8 +39,7 @@ class Action
 
 
 
-	function save_category2()
-	{
+	function save_category2(){
 		extract($_POST);
 		$data = " dept_name = '$name' ";
 		$data .= ", color = '$colorpick' ";
@@ -59,8 +55,7 @@ class Action
 	}
 
 
-	function save_category3()
-	{
+	function save_category3(){
 		extract($_POST);
 		$data = " dept_id = '$dept_id' ";
 		$data .= ", prog_name = '$name' ";
@@ -76,24 +71,21 @@ class Action
 	}
 
 
-	function delete_category()
-	{
+	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM role where id = " . $id);
 		if ($delete)
 			return 1;
 	}
 
-	function delete_category2()
-	{
+	function delete_category2(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = " . $id);
 		if ($delete)
 			return 1;
 	}
 
-	function delete_category3()
-	{
+	function delete_category3(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM program where id = " . $id);
 		if ($delete)
@@ -102,8 +94,7 @@ class Action
 
 
 
-	function get_department()
-	{
+	function get_department(){
 		extract($_POST);
 
 		$fetch = $this->db->query("SELECT * FROM program WHERE id = " . $prog_id);
@@ -130,8 +121,7 @@ class Action
 
 
 	//register student
-	function register()
-	{
+	function register(){
 		extract($_POST);
 
 		if (!empty($id)) {
@@ -199,8 +189,7 @@ class Action
 
 
 	//register employee
-	function register2()
-	{
+	function register2(){
 		extract($_POST);
 
 		if (!empty($id)) {
@@ -267,8 +256,7 @@ class Action
 
 
 	//register visitor
-	function register3()
-	{
+	function register3(){
 		extract($_POST);
 
 		if (!empty($id)) {
@@ -331,16 +319,14 @@ class Action
 
 
 
-	function archive_student()
-	{
+	function archive_student(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE students set status = 1 where id = " . $id);
 		if ($archive)
 			return 1;
 	}
 
-	function unarchive_student()
-	{
+	function unarchive_student(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE students set status = 0 where id = " . $id);
 		if ($archive)
@@ -350,16 +336,14 @@ class Action
 
 
 
-	function archive_employee()
-	{
+	function archive_employee(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE employees set status = 1 where id = " . $id);
 		if ($archive)
 			return 1;
 	}
 
-	function unarchive_employee()
-	{
+	function unarchive_employee(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE employees set status = 0 where id = " . $id);
 		if ($archive)
@@ -368,16 +352,14 @@ class Action
 
 
 
-	function archive_visitor()
-	{
+	function archive_visitor(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE visitors set status = 1 where id = " . $id);
 		if ($archive)
 			return 1;
 	}
 
-	function unarchive_visitor()
-	{
+	function unarchive_visitor(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE visitors set status = 0 where id = " . $id);
 		if ($archive)
@@ -386,8 +368,7 @@ class Action
 
 
 
-	function fetch_data()
-	{
+	function fetch_data(){
 		extract($_POST);
 
 		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path, 'students' as source_table
@@ -426,22 +407,23 @@ class Action
 			];
 
 			if ($response) {
-				$check_existing = $this->db->query("SELECT * FROM records 
-					WHERE recordable_id = '" . $data['id'] . "' 
-					AND recordable_table = '" . $data['source_table'] . "'
-					AND timeout IS NULL
-				");
+				$chk = $this->db->query("SELECT * FROM records 
+											WHERE record_id = '" . $data['id'] . "' 
+											AND record_table = '" . $data['source_table'] . "' 
+											AND record_date IS NOT NULL 
+											AND timein IS NOT NULL
+											AND timeout IS NULL");
 
-				if ($check_existing->num_rows > 0) {
+				if ($chk->num_rows > 0) {
 					$update = $this->db->query("UPDATE records 
 						SET timeout = CURRENT_TIMESTAMP() 
-						WHERE recordable_id = '" . $data['id'] . "' 
-						AND recordable_table = '" . $data['source_table'] . "'
+						WHERE record_id = '" . $data['id'] . "' 
+						AND record_table = '" . $data['source_table'] . "'
 						AND timeout IS NULL
 					");
 				} else {
-					$insert = $this->db->query("INSERT INTO records (recordable_id, recordable_table, timein) 
-						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "', CURRENT_TIMESTAMP())
+					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
+						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
 					");
 				}
 			}
@@ -611,12 +593,6 @@ class Action
 		$qry = $this->db->query("INSERT INTO logs (user_id, action, ip_address, device_info) 
 								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "', '" . $ip_address . "', '" . $info . "')");
 	
-		// Check for errors
-		if (!$qry) {
-			error_log("Error saving log: " . $this->db->error);
-		}
-	
-		return $qry ? true : false;
 	}
 
 	
