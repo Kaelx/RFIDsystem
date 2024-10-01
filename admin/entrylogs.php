@@ -18,6 +18,7 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
     WHERE COALESCE(s.status, e.status, v.status) = 0
+
 ";
 
 // Add date filter if both dates are set
@@ -36,18 +37,19 @@ if (!empty($filter_type)) {
     }
 }
 
+$query .= " ORDER BY r.id DESC";
+
 $cats = $conn->query($query);
 ?>
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-6">
                     <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

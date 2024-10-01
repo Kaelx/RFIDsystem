@@ -264,7 +264,7 @@ if (isset($_GET['uid'])) {
                                     <div class="col-md-2 form-group">
                                         <label for="gender">Gender</label>
                                         <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                            <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select Gender --</option>
+                                            <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="male" <?= isset($member['gender']) && $member['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
                                             <option value="female" <?= isset($member['gender']) && $member['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
                                         </select>
@@ -302,7 +302,7 @@ if (isset($_GET['uid'])) {
                                     <div class="col-md-4 form-group">
                                         <label for="account_type">Type</label>
                                         <select class="form-control form-control-sm" name="account_type" id="account_type" required>
-                                            <option value="" disabled <?= !isset($member['account_type']) ? 'selected' : '' ?>>-- Select Role --</option>
+                                            <option value="" disabled <?= !isset($member['account_type']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="1" <?= isset($member['account_type']) && $member['account_type'] == '1' ? 'selected' : '' ?>>Admin</option>
                                             <option value="2" <?= isset($member['account_type']) && $member['account_type'] == '2' ? 'selected' : '' ?>>Staff</option>
                                             <option value="3" <?= isset($member['account_type']) && $member['account_type'] == '3' ? 'selected' : '' ?>>Security Personnel</option>

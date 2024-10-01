@@ -215,10 +215,12 @@ class Action
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
+		
 
-		$data .= ", parent_name = '$parent_name' ";
-		$data .= ", parent_num = '$parent_num' ";
-		$data .= ", parent_address = '$parent_address' ";
+		$data .= ", employee_type_id = '$type_id' ";
+		$data .= ", employee_lvl_id = '$lvl_id' ";
+		$data .= ", employee_dept_id = '$dept_id' ";
+
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
@@ -371,21 +373,25 @@ class Action
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, s.rfid, s.img_path, 'students' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'students' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
+			LEFT JOIN program p ON s.prog_id = p.id
+			LEFT JOIN department d ON p.dept_id = d.id
 			WHERE s.rfid = '$rfid' AND s.status = 0
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, e.rfid, e.img_path, 'employees' as source_table
+			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employees' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
+			LEFT JOIN employee_type et ON e.employee_type_id = et.id
+			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, v.rfid, v.img_path, 'visitors' as source_table
+			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitors' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -402,7 +408,10 @@ class Action
 				'lname' => $data['lname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
-				'school_id' => $data['school_id'] !== null ? $data['school_id'] : 'Visitor',
+				'prog_name' => $data['prog_name'],
+				'dept_name' => $data['dept_name'],
+				'employee_type' => $data['employee_type'],
+				'school_id' => $data['school_id'],
 				'img_path' => $img_path
 			];
 
