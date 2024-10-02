@@ -153,6 +153,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                         AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
+                                                $query .= " ORDER BY r.id DESC";
+
                                                 $result = $conn->query($query);
 
                                                 $i = 1;
