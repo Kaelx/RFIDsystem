@@ -223,21 +223,9 @@ class Action
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 
-		$data .= ", civil_stat = '$civil_stat' ";
-		$data .= ", blood_type = '$blood_type' ";
-		$data .= ", height = '$height' ";
-		$data .= ", weight = '$weight' ";
-
-
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-
-		$data .= ", tin_num = '$tin_num' ";
-		$data .= ", gsis_num = '$gsis_num' ";
-		$data .= ", phil_num = '$phil_num' ";
-		$data .= ", pagibig_num = '$pagibig_num' ";
-		$data .= ", sss_num = '$sss_num' ";
 
 		$data .= ", parent_name = '$parent_name' ";
 		$data .= ", parent_num = '$parent_num' ";

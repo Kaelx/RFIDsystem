@@ -269,25 +269,6 @@ if (isset($_GET['uid'])) {
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
-                                <label for="civil_stat">Civil Status</label>
-                                <input type="text" class="form-control form-control-sm" name="civil_stat" id="civil_stat" required value="<?= isset($data['civil_stat']) ? $data['civil_stat'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="blood_type">Blood Type</label>
-                                <input type="text" class="form-control form-control-sm" name="blood_type" id="blood_type" required value="<?= isset($data['blood_type']) ? $data['blood_type'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="height">Height</label>
-                                <input type="text" class="form-control form-control-sm" name="height" id="height" required value="<?= isset($data['height']) ? $data['height'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="weight">Weight</label>
-                                <input type="text" class="form-control form-control-sm" name="weight" id="weight" required value="<?= isset($data['weight']) ? $data['weight'] : '' ?>">
-                            </div>
                         </div>
 
                         <div class="row">
@@ -304,35 +285,6 @@ if (isset($_GET['uid'])) {
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control form-control-sm" name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
                             </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-2 form-group">
-                                <label for="tin_num">TIN No.</label>
-                                <input type="text" class="form-control form-control-sm" name="tin_num" id="tin_num" required value="<?= isset($data['tin_num']) ? $data['tin_num'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="gsis_num">GSIS No.</label>
-                                <input type="text" class="form-control form-control-sm" name="gsis_num" id="gsis_num" required value="<?= isset($data['gsis_num']) ? $data['gsis_num'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="phil_num">Philhealth No.</label>
-                                <input type="text" class="form-control form-control-sm" name="phil_num" id="phil_num" required value="<?= isset($data['phil_num']) ? $data['phil_num'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="pagibig_num">Pag-ibig No.</label>
-                                <input type="text" class="form-control form-control-sm" name="pagibig_num" id="pagibig_num" required value="<?= isset($data['pagibig_num']) ? $data['pagibig_num'] : '' ?>">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="sss_num">SSS No.</label>
-                                <input type="text" class="form-control form-control-sm" name="sss_num" id="sss_num" requiresss_numd value="<?= isset($data['sss_num']) ? $data['sss_num'] : '' ?>">
-                            </div>
-
                         </div>
 
 

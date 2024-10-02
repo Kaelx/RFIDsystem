@@ -253,45 +253,6 @@
                                 </select>
                             </div>
 
-
-                            <div class="col-md-2 form-group">
-                                <label for="civil_stat">Civil Status</label>
-                                <select class="form-control form-control-sm" name="civil_stat" id="civil_stat" required>
-                                    <option value="" selected disabled>-- Select Status --</option>
-                                    <option value="single">Single</option>
-                                    <option value="married">Married</option>
-                                    <option value="widowed">Widowed</option>
-                                    <option value="separated">Separated</option>
-                                </select>
-                            </div>
-
-
-                            <div class="col-md-2 form-group">
-                                <label for="blood_type">Blood Type</label>
-                                <select class="form-control form-control-sm" name="blood_type" id="blood_type" required>
-                                    <option value="" selected disabled>-- Select Status --</option>
-                                    <option value="A">A</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B">B</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB">AB</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O">O</option>
-                                    <option value="O+">O+</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="height">Height</label>
-                                <input type="number" class="form-control form-control-sm" name="height" id="height" required>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="weight">Weight</label>
-                                <input type="number" class="form-control form-control-sm" name="weight" id="weight" required>
-                            </div>
                         </div>
 
 
@@ -310,34 +271,6 @@
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control form-control-sm" name="email" id="email" required>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2 form-group">
-                                <label for="tin_num">TIN no.</label>
-                                <input type="text" class="form-control form-control-sm" name="tin_num" id="tin_num">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="gsis_num">GSIS no.</label>
-                                <input type="text" class="form-control form-control-sm" name="gsis_num" id="gsis_num">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="phil_num">PhilHealth no.</label>
-                                <input type="text" class="form-control form-control-sm" name="phil_num" id="phil_num">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="pagibig_num">Pag-ibig no.</label>
-                                <input type="text" class="form-control form-control-sm" name="pagibig_num" id="pagibig_num">
-                            </div>
-
-                            <div class="col-md-2 form-group">
-                                <label for="sss_num">SSS no.</label>
-                                <input type="text" class="form-control form-control-sm" name="sss_num" id="sss_num">
-                            </div>
-
                         </div>
 
                         <hr>
