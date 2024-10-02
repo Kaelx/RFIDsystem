@@ -149,8 +149,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
                                                 if (!empty($start_date) && !empty($end_date)) {
-                                                    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
-                                                        AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
+                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
+                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
                                                 $query .= " ORDER BY r.id DESC";

@@ -23,7 +23,7 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
-    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'";
+    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
 }
 
 // Add filter for type if set
@@ -111,7 +111,7 @@ $cats = $conn->query($query);
                                 ?>
                                     <tr>
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
+                                        <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td>

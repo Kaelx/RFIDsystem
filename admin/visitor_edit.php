@@ -278,7 +278,7 @@ if (isset($_GET['uid'])) {
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
+                                <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
 
                             <div class="col-md-3 form-group">
@@ -293,7 +293,7 @@ if (isset($_GET['uid'])) {
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>">
+                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="parent_address">Address of Parent/Guardian</label>
