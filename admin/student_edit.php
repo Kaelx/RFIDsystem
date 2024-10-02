@@ -269,7 +269,7 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" disabled <?= empty($data['gender']) ? 'selected' : '' ?>>-- Select Gender --</option>
+                                    <option value="" disabled <?= empty($data['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
                                 </select>
@@ -336,7 +336,7 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">School Program/Course</label>
                                 <select class="form-control form-control-sm" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select Role --</option>
+                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :

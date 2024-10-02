@@ -38,7 +38,7 @@
                                     while ($row = $result->fetch_assoc()) {
                                 ?>
                                         <tr>
-                                            <td class="text-center"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                            <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                             <td class="text-center">
                                                 <?php
                                                 echo $row['account_type'] == 1 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown'));

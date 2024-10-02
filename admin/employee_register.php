@@ -220,9 +220,6 @@
                         </script>
 
 
-
-
-                        <p class="text-bold text-red"><i>Employee Information *</i></p>
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
@@ -247,7 +244,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" selected disabled>-- Select Gender --</option>
+                                    <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -273,33 +270,12 @@
                             </div>
                         </div>
 
-                        <hr>
-                        <p class="text-bold text-red"><i>Contact Person Incase of Emergency *</i></p>
-
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required>
-                            </div>
-                        </div>
 
                         <hr>
-
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="role_id">Type</label>
+
+                            <div class="col-md-6 form-group">
+                                <label for="role_id">Role</label>
                                 <?php
                                 $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
@@ -311,14 +287,63 @@
                                     <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
                                 <?php endwhile; ?>
                             </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <label for="type_id">Employee Type</label>
+                                <select class="form-control form-control-sm" name="type_id" id="type_id" required>
+                                    <option value="" selected disabled>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM employee_type  ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                    ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['employee_type'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="lvl_id">Position</label>
+                                <select class="form-control form-control-sm" name="lvl_id" id="lvl_id" required>
+                                    <option value="" selected disabled>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM employee_lvl  ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                    ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['employee_lvl'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="dept_id">Department</label>
+                                <select class="form-control form-control-sm" name="dept_id" id="dept_id">
+                                    <option value="" selected>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM department  ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                    ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['dept_name'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <small class="text-danger font-italic">*leave blank if not applicable.</small>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required>
+                            </div>
                         </div>
 
 
 
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required>
                             </div>

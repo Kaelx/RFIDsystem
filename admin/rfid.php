@@ -24,14 +24,40 @@
         /* Optional: makes sure background is slightly visible */
     }
 
+    .content-wrapper {
+        background-color: #edd05d;
+        z-index: 2;
+    }
 </style>
 
+<script>
+    window.onload = function() {
+        const preloader = document.querySelector('.preloader');
+        preloader.style.transition = 'opacity 0.3s ease'; // Set a short fade-out
+        preloader.style.opacity = '0'; // Start fading out
+
+        setTimeout(function() {
+            preloader.style.display = 'none'; // Remove from view after fade-out
+        }, 300); // Match the transition duration (300ms)
+    };
+</script>
+
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+</div>
 
 <div class="content-wrapper">
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
+            <!-- Clock and Date Display -->
+            <center>
+                <div>
+                    <div id="clock" class="display-2 font-weight-bold"></div>
+                    <div id="date" class="h2"></div>
+                </div>
+            </center>
         </div>
     </div>
     <!-- RFID FORM -->
@@ -45,34 +71,83 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card shadow-none">
+            <div id="student-card" style="display: none;">
                 <div class="card-body">
-                    <!-- Clock and Date Display -->
-                    <center>
-                        <div class="mb-4">
-                            <div id="clock" class="display-2 font-weight-bold"></div>
-                            <div id="date" class="h2"></div>
+                    <!-- STUDENT Information Display -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
                         </div>
-                    </center>
-                    <!-- User Information Display -->
-                    <div class="row align-items-center justify-content-center mt-5">
-                        <div class="col-md-5 text-center mr-5">
-                            <img id="profile-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 5px solid #a91414;">
+                        <div class="col-md-5" style="margin-top:100px;">
+                            <div class="text-center mb-5 " style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                                <h1>INFORMATION</h1>
+                            </div>
+
+                            <h1 id="sschool_id" class="text-bold" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sname" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sgender" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="srole" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="stype" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="sprog_name" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="sdept_name" class="text-bold" style="font-size: 36px;"></h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div id="employee-card" style="display: none;">
+                <div class="card-body">
+                    <!-- employee Information Display -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <img id="employee-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
                         </div>
 
-                        <div class="col-md-5 ml-5">
-                            <div class="col-md-9">
-                                <input type="text" id="name" class="form-control form-control-lg mb-5" placeholder="Name" style="font-size: 48px;">
+                        <div class="col-md-5" style="margin-top:100px;">
+
+                            <div class="text-center mb-5 " style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                                <h1>INFORMATION</h1>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" id="gender" class="form-control form-control-lg mb-5" placeholder="Gender" style="font-size: 48px;">
+                            <h1 id="eschool_id" class="text-bold" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="ename" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="egender" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="erole" class="text-bold" style="font-size: 36px;"></h1>
+                            <h1 id="etype" class="text-bold" style="font-size: 36px;"></h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div id="visitor-card" style="display: none;">
+                <div class="card-body">
+                    <!-- Visitor Information Display -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
+                        </div>
+
+                        <div class="col-md-5" style="margin-top:100px;">
+                            <div class="text-center mb-5" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                                <h1>INFORMATION</h1>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" id="type" class="form-control form-control-lg mb-5" placeholder="Role" style="font-size: 48px;">
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" id="school_id" class="form-control form-control-lg mb-5" placeholder="School ID" style="font-size: 48px;">
-                            </div>
+                            <h1 id="vname" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vrole" class="text-bold" style="font-size: 36px;"></h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="error-card" style="display: none;">
+                <div class="card-body">
+                    <!-- error Information Display -->
+                    <div class="row align-items-center justify-content-center">
+                        <div class="text-center">
+                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
                         </div>
                     </div>
 
@@ -88,16 +163,6 @@
 
 
 <script>
-    // $('table').DataTable({
-    //     ordering: false,
-    //     searching: false,
-    //     lengthChange: false,
-    //     paging: false,
-    //     pageLength: 5,
-    //     info: false
-
-    // });
-
     let idleTimer;
     let idleState = false;
     const idleWait = 5500;
@@ -110,12 +175,10 @@
         idleTimer = setTimeout(function() {
             idleState = true;
 
-            $('#name').val("");
-            $('#type').val("");
-            $('#school_id').val("");
-            $('#gender').val("");
-            $('#profile-img').attr('src', 'assets/img/' + 'blank-img.png');
-            $('#rfid').val("");
+            $('#visitor-card').hide();
+            $('#student-card').hide();
+            $('#employee-card').hide();
+            $('#error-card').hide();
 
         }, idleWait);
     }
@@ -191,21 +254,70 @@
     $(document).ready(function() {
         const responseData = sessionStorage.getItem('responseData');
         if (responseData) {
-            console.log(responseData);
 
             sessionStorage.removeItem('responseData');
 
             const data = JSON.parse(responseData);
-            const defaultVal = "Unknown";
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
-            var fullName = data.success ? data.fname + ' ' + data.lname : defaultVal;
-            $('#name').val(fullName);
-            $('#gender').val(data.success ? data.gender : defaultVal);
-            $('#type').val(data.success ? data.role_name : defaultVal);
-            $('#school_id').val(data.success ? data.school_id : defaultVal);
-            $('#profile-img').attr('src', imgPath);
-            $('#rfid').val("");
+            var role = data.role_name;
+            var fullName = data.fname + ' ' + data.lname;
+
+            if (role == "Student") {
+                $('#student-img').attr('src', imgPath);
+                $('#sname').text(fullName.toUpperCase());
+                $('#sgender').text(data.gender);
+                $('#srole').text(data.role_name);
+                $('#stype').text(data.employee_type);
+                $('#sprog_name').text(data.prog_name);
+                $('#sdept_name').text(data.dept_name);
+                $('#sschool_id').text(data.school_id);
+
+
+                $('#rfid').val("");
+                $('#student-card').show();
+
+
+
+            } else if (role == "Employee") {
+                $('#employee-img').attr('src', imgPath);
+                $('#ename').text(fullName.toUpperCase());
+                $('#egender').text(data.gender);
+                $('#erole').text(data.role_name);
+                $('#etype').text(data.employee_type);
+                $('#eprog_name').text(data.prog_name);
+                $('#edept_name').text(data.dept_name);
+                $('#eschool_id').text(data.school_id);
+
+                $('#rfid').val("");
+                $('#employee-card').show();
+
+
+            } else if (role == "Visitor") {
+                $('#visitor-img').attr('src', imgPath);
+                $('#vname').text(fullName.toUpperCase());
+                $('#vgender').text(data.gender);
+                $('#vrole').text(data.role_name);
+                $('#vtype').text(data.employee_type);
+                $('#vprog_name').text(data.prog_name);
+                $('#vdept_name').text(data.dept_name);
+                $('#vschool_id').text(data.school_id);
+
+
+                $('#rfid').val("");
+                $('#visitor-card').show();
+
+
+
+            } else {
+                $('#error-img').attr('src', imgPath);
+
+
+                $('#rfid').val("");
+                $('#error-card').show();
+            }
+
+            console.log(responseData);
 
             if (!data.success) {
                 const audio = new Audio('assets/defaults/alert_beep.mp3');

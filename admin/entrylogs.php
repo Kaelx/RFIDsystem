@@ -4,20 +4,21 @@ $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
 
-$query = "SELECT r.id, r.timein, r.timeout, 
+$query = "SELECT r.record_date, r.timein, r.timeout,
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
-    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
+    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
+    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
     WHERE COALESCE(s.status, e.status, v.status) = 0
+
 ";
 
 // Add date filter if both dates are set
@@ -36,18 +37,19 @@ if (!empty($filter_type)) {
     }
 }
 
+$query .= " ORDER BY r.id DESC";
+
 $cats = $conn->query($query);
 ?>
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-6">
                     <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -97,6 +99,7 @@ $cats = $conn->query($query);
                                     <th class="text-center">School ID</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Role</th>
+                                    <th class="text-center">Date</th>
                                     <th class="text-center">Time in</th>
                                     <th class="text-center">Time out</th>
                                 </tr>
@@ -109,19 +112,24 @@ $cats = $conn->query($query);
                                     <tr>
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
-                                        <td class="text-left"><?php echo htmlspecialchars($row['fname'] . ' ' . $row['lname']); ?></td>
-                                        <td class="text-left"><?php echo htmlspecialchars($row['role_name']); ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['role_name']; ?></td>
+                                        <td>
+                                            <?php
+                                            $date = new DateTime($row['record_date']);
+                                            echo $date->format('F j, Y');
+                                            ?></td>
                                         <td class="text-center">
                                             <?php
                                             $timein = new DateTime($row['timein']);
-                                            echo $timein->format('F j, Y -- h:i A');
+                                            echo $timein->format('h:i A');
                                             ?>
                                         </td>
                                         <td class="text-center">
                                             <?php
                                             if (!empty($row['timeout'])) {
                                                 $timeout = new DateTime($row['timeout']);
-                                                echo $timeout->format('F j, Y -- h:i A');
+                                                echo $timeout->format('h:i A');
                                             } else {
                                                 echo '------';
                                             }
@@ -141,7 +149,11 @@ $cats = $conn->query($query);
 <script>
     $('table').DataTable({
         ordering: false,
-        stateSave: true
+        stateSave: true,
+        layout: {
+            topStart: 'search',
+            topEnd: 'pageLength',
+        }
     });
 
     $('#filter-report').submit(function(e) {

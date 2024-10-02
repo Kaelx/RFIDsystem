@@ -246,7 +246,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" selected disabled>-- Select Gender --</option>
+                                    <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -281,7 +281,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="account_type">Type</label>
                                 <select class="form-control form-control-sm" name="account_type" id="account_type" required>
-                                    <option value="" selected disabled>-- Select Role --</option>
+                                    <option value="" selected disabled>-- Select --</option>
                                     <option value="1">Admin</option>
                                     <option value="2">Staff</option>
                                     <option value="3">Security Personnel</option>

@@ -2,9 +2,12 @@
 if (isset($_GET['uid'])) {
     $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT e.*, r.role_name
+    $query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name
     FROM employees e
-    LEFT JOIN role r ON e.role_id = r.id 
+    LEFT JOIN role r ON e.role_id = r.id
+    LEFT JOIN employee_type et ON e.employee_type_id = et.id
+    LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
+    LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
@@ -64,7 +67,7 @@ if (isset($_GET['uid'])) {
 
 
 
-                    
+
 
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
@@ -263,7 +266,7 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" disabled>-- Select Role --</option>
+                                    <option value="" disabled>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
                                 </select>
@@ -287,20 +290,66 @@ if (isset($_GET['uid'])) {
                             </div>
                         </div>
 
-
+                        <hr>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
+                            <div class="col-md-6 form-group">
+                                <?php
+                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
+                                while ($row = $type->fetch_assoc()) :
+                                ?>
+                                    <label for="role_id">Role</label>
+                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+
+                                    <!-- Read-only input to display the role_name -->
+                                    <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
+                                <?php endwhile; ?>
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <label for="type_id">Employee Type</label>
+                                <select class="form-control form-control-sm" name="type_id" id="type_id" required>
+                                    <option value="" <?= !isset($data['employee_type_id']) || $data['employee_type_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM employee_type ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['employee_type_id']) && $data['employee_type_id'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['employee_type'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required value="<?= isset($data['parent_address']) ? $data['parent_address'] : '' ?>">
+
+
+                            <div class="col-md-2 form-group">
+                                <label for="lvl_id">Position</label>
+                                <select class="form-control form-control-sm" name="lvl_id" id="lvl_id" required>
+                                    <option value="" <?= !isset($data['employee_lvl_id']) || $data['employee_lvl_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM employee_lvl ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['employee_lvl_id']) && $data['employee_lvl_id'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['employee_lvl'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2 form-group">
+                                <label for="dept_id">Department</label>
+                                <select class="form-control form-control-sm" name="dept_id" id="dept_id">
+                                    <option value="" <?= !isset($data['employee_dept_id']) || $data['employee_dept_id'] == '' ? 'selected' : '' ?>>-- Select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM department ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['employee_dept_id']) && $data['employee_dept_id'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['dept_name'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                                <small class="text-danger font-italic">*leave blank if not applicable.</small>
                             </div>
                         </div>
 
@@ -308,24 +357,6 @@ if (isset($_GET['uid'])) {
                             <div class="col-md-4 form-group">
                                 <label for="school_id">School ID</label>
                                 <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
-                            </div>
-
-
-
-
-
-
-                            <div class="col-md-4 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Type</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
                             </div>
 
 

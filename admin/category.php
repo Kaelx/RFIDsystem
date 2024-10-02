@@ -122,7 +122,7 @@
                                             <div class="form-group">
                                                 <label for="dept_id">Department:</label>
                                                 <select class="form-control" name="dept_id" id="dept_id" required>
-                                                    <option value="" selected disabled>-- Select Department --</option>
+                                                    <option value="" selected disabled>-- Select --</option>
                                                     <?php
                                                     $program = $conn->query("SELECT * FROM department order by id asc ");
                                                     while ($row = $program->fetch_assoc()) :

@@ -4,16 +4,16 @@ $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
 
-$query = "SELECT r.id, r.timein, r.timeout, 
+$query = "SELECT r.timein, r.timeout, 
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
-    LEFT JOIN students s ON r.recordable_id = s.id AND r.recordable_table = 'students'
-    LEFT JOIN employees e ON r.recordable_id = e.id AND r.recordable_table = 'employees'
-    LEFT JOIN visitors v ON r.recordable_id = v.id AND r.recordable_table = 'visitors'
+    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
+    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
+    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id

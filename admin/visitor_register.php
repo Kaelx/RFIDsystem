@@ -252,7 +252,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control form-control-sm" name="gender" id="gender" required>
-                                    <option value="" selected disabled>-- Select Gender --</option>
+                                    <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>

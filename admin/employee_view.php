@@ -6,9 +6,12 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, 'employees' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name , 'employees' as type
     FROM employees e
-    LEFT JOIN role r ON e.role_id = r.id 
+    LEFT JOIN role r ON e.role_id = r.id
+    LEFT JOIN employee_type et ON e.employee_type_id = et.id
+    LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
+    LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
@@ -64,7 +67,15 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Birthdate</p>
-                                <p type="date" class="form-control form-control-sm"><?= isset($data['bdate']) ? $data['bdate'] : '' ?></p>
+                                <p type="date" class="form-control form-control-sm">
+                                    <?php
+                                    if (isset($data['bdate'])) {
+                                        $date = new DateTime($data['bdate']);
+                                        echo $date->format('F j, Y');
+                                    } else {
+                                        echo '';
+                                    }
+                                    ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
@@ -90,18 +101,27 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
 
+                        <hr>
+
                         <div class="row">
-                            <div class="col-md-4 form-group mb-0">
-                                <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
-                                <p class="form-control form-control-sm"><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
+                            <div class="col-md-6 form-group mb-0">
+                                <p class="mb-2 text-bold">Role</p>
+                                <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
-                                <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
-                                <p class="form-control form-control-sm"><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Employee Type</p>
+                                <p class="form-control form-control-sm"><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
                             </div>
-                            <div class="col-md-4 form-group mb-0">
-                                <p class="mb-2 text-bold">Address of Parent/Guardian</p>
-                                <p class="form-control form-control-sm"><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Position</p>
+                                <p class="form-control form-control-sm"><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : '' ?></p>
+                            </div>
+                            <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Department</p>
+                                <p class="form-control form-control-sm"><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
                             </div>
                         </div>
 
@@ -109,11 +129,6 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">School ID</p>
                                 <p class="form-control form-control-sm"><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-4 form-group mb-0">
-                                <p class="mb-2 text-bold">Type</p>
-                                <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
                             </div>
                         </div>
 
@@ -128,7 +143,7 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type']?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>
