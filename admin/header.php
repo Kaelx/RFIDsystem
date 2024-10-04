@@ -24,10 +24,8 @@
 <link rel="stylesheet" href="./plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
 <script src="./plugins//bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 
-<!-- Include jQuery UI -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
+<link rel="stylesheet" href="./plugins/select2/css/select2.min.css">
+<script src="./plugins/select2/js/select2.min.js"></script>
 
 <!-- custom css -->
 <link rel="stylesheet" href="css/style.css">

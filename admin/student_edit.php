@@ -335,8 +335,8 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">School Program/Course</label>
-                                <select class="form-control form-control-sm" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
+                                <select class="form-control form-control-sm select2" name="prog_id" id="prog_id" required>
+                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled></option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
@@ -444,5 +444,7 @@ if (isset($_GET['uid'])) {
                 }
             }
         })
-    })
+    });
+
+    $('.select2').select2();
 </script>

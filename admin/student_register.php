@@ -310,35 +310,17 @@
 
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label for="prog_id">School Program/Course</label>
-                                <input class="form-control form-control-sm" name="prog_id" id="prog_id" required>
+                                <label for="prog_id">Course/Program</label>
+                                <select class="form-control form-control-sm select2" name="prog_id" id="prog_id" required>
+                                <option value="" selected disabled></option>
+                                    <?php
+                                    $program = $conn->query("SELECT * FROM program ORDER BY id ASC ");
+                                    while ($row = $program->fetch_assoc()) :
+                                    ?>
+                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['prog_name'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
-
-                            <script>
-                                $('#prog_id').autocomplete({
-                                    source: function(request, response) {
-                                        $.ajax({
-                                            url: 'ajax.php?action=get_programs',
-                                            dataType: 'json',
-                                            data: {
-                                                q: request.term
-                                            },
-                                            success: function(data) {
-                                                response(data.map(course => ({
-                                                    label: course.prog_name,
-                                                    value: course.prog_name,
-                                                    id: course.id
-                                                })));
-                                            }
-                                        });
-                                    },
-                                    select: function(event, ui) {
-                                        // Optionally do something when a suggestion is selected
-                                        $('#prog_id').val(ui.item.label); // Set the input value to the selected suggestion
-                                        return false; // Prevent the default behavior
-                                    }
-                                });
-                            </script>
 
 
                             <div class="col-md-4 form-group mb-0">
@@ -430,5 +412,9 @@
                 }
             }
         })
-    })
+    });
+
+    $('.select2').select2({
+        placeholder: "Select Course/Program",
+    });
 </script>
