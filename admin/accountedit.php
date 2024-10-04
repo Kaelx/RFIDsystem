@@ -1,13 +1,14 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT * from users where id = $uid");
-
-    $member = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=home');
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
 }
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT * from users where id = $uid and status = 0");
+$member = mysqli_fetch_assoc($query);
+
 ?>
 
 

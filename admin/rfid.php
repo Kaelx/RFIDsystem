@@ -33,7 +33,7 @@
 <script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
-        preloader.style.transition = 'opacity 0.3s ease'; // Set a short fade-out
+        preloader.style.transition = 'opacity 0.35s ease'; // Set a short fade-out
         preloader.style.opacity = '0'; // Start fading out
 
         setTimeout(function() {
@@ -147,7 +147,7 @@
                     <!-- error Information Display -->
                     <div class="row align-items-center justify-content-center">
                         <div class="text-center">
-                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
+                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
                         </div>
                     </div>
 

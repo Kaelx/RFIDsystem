@@ -1,8 +1,5 @@
 <?php
 
-if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index');
-}
 
 $uid = $_GET['uid'];
 $type = $_GET['type'];
@@ -120,7 +117,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">#</th>
-                                                    <th class="text-center">Name</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
@@ -162,7 +158,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
-                                                        <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
                                                         <td class="text-center">
                                                             <?php
                                                             $date = new DateTime($row['record_date']);
@@ -216,7 +211,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         </div>
 
                         <div class="m-3 text-right">
-                            <button id="generate-reportv2" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
+                            <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
                             <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>
@@ -291,12 +286,12 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
         }
 
 
-        $('#generate-reportv2').click(function() {
+        $('#generate-report').click(function() {
             var uid = "<?php echo $uid; ?>";
             var type = "<?php echo $type; ?>";
             var startDate = $('#start_date').val();
             var endDate = $('#end_date').val();
 
-            window.location.href = `index.php?page=generate_reportv2&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+            window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         });
     </script>

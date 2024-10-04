@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index.php?page=visitor_data');
+    exit();
 }
 $uid = $_GET['uid'];
 
@@ -111,14 +111,14 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Type</p>
-                            <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
+                            <p class="form-control form-control-sm"><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group">
                             <label for="rfid">RFID</label>
-                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" >
                         </div>
                     </div>
 

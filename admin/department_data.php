@@ -1,9 +1,5 @@
 <?php
 
-if (!isset($_GET['department']) || empty($_GET['department'])) {
-    header('Location: index');
-}
-
 $dept_id = $_GET['department'];
 
 

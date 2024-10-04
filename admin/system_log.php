@@ -20,12 +20,12 @@
                         <table class="table table-hover compact">
                             <thead>
                                 <tr>
-                                    <th class="text-center">User</th>
-                                    <th class="text-center">Type</th>
-                                    <th class="text-center">Description</th>
+                                    <th>User</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
                                     <th>Location</th>
                                     <th>Ip Address</th>
-                                    <th class="text-center">Time</th>
+                                    <th>Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +39,7 @@
                                 ?>
                                         <tr>
                                             <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                            <td class="text-center">
+                                            <td>
                                                 <?php
                                                 echo $row['account_type'] == 1 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown'));
                                                 ?>
@@ -47,7 +47,7 @@
                                             <td><?php echo $row['action']; ?></td>
                                             <td><?php echo $row['device_info']; ?></td>
                                             <td><?php echo $row['ip_address']; ?></td>
-                                            <td class="text-center">
+                                            <td>
                                                 <?php
                                                 $date = new DateTime($row['timestamp']);
                                                 echo $date->format('F j, Y, g:i A');
@@ -73,6 +73,10 @@
     $('table').dataTable({
         ordering: false,
         stateSave: true,
+        layout: {
+            topStart: 'search',
+            topEnd: 'pageLength',
+        }
 
     });
 </script>
