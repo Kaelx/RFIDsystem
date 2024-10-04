@@ -39,3 +39,27 @@ body,
 .nav-treeview .nav-item {
     padding-left: 20px;
 }
+
+
+
+@media print {
+    @page {
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-fluid,
+    .invoice {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    header,
+    footer {
+        display: none;
+    }
+}

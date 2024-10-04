@@ -28,4 +28,4 @@
 <script src="./plugins/select2/js/select2.min.js"></script>
 
 <!-- custom css -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="./css/style.css">

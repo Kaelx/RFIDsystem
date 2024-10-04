@@ -327,11 +327,11 @@ $member = mysqli_fetch_assoc($query);
                                 <div class="row">
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div>
-                                            <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                            <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Back</button>
+                                            <button class="btn btn-danger btn-custom archive_user" type="button" data-id="<?php echo $member['id'] ?>"><i class="fa-solid fa-user-slash"></i> Archive</button>
                                         </div>
                                         <div>
-                                            <button class="btn btn-danger btn-custom archive_user" type="button" data-id="<?php echo $member['id'] ?>">Archive</button>
+                                            <button type="submit" class="btn btn-primary btn-custom">Save</button>
+                                            <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Back</button>
                                         </div>
                                     </div>
                                 </div>

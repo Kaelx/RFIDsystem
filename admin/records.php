@@ -211,7 +211,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         </div>
 
                         <div class="m-3 text-right">
-                            <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
+                            <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Generate Report</button>
                             <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>

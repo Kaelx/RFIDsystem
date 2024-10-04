@@ -4,7 +4,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT s.*, r.role_name, 'students' as type
+$query = $conn->query("SELECT s.*, r.role_name, 'employees' as type
     FROM employees s
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 

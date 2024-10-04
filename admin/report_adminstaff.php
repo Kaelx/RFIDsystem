@@ -9,6 +9,13 @@ $date = date('Y-m-d');
 
 ?>
 
+<style>
+  .content {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+</style>
+
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
@@ -18,8 +25,8 @@ $date = date('Y-m-d');
         </div>
       </div>
       <div class="text-right">
-        <button class="btn btn-primary btn-custom" onclick="window.print();">Print</button>
-        <button class="btn btn-default btn-custom" onclick="window.history.back(); return false;">Back</button>
+        <button class="btn btn-primary btn-custom" onclick="window.print();"><i class="fa-solid fa-print"></i> Print</button>
+        <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
       </div>
     </div>
   </section>
@@ -227,5 +234,4 @@ $date = date('Y-m-d');
     paging: false
   });
 
-  // window.addEventListener("load", window.print());
 </script>

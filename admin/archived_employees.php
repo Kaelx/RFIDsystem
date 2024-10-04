@@ -59,6 +59,10 @@
 <script>
     $('table').DataTable({
         ordering: false,
-        stateSave: true
+        stateSave: true,
+        layout: {
+                topStart: 'search',
+                topEnd: 'pageLength',
+            }
     });
 </script>

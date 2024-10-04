@@ -43,7 +43,7 @@
                                         <td><?php echo $row['email']; ?></td>
                                         <td><?php echo ($row['account_type'] == 1) ? 'Admin' : (($row['account_type'] == 2) ? 'Staff' : 'Security Personnel'); ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-danger btn-sm unarchive_user" data-id="<?php echo $row['id'] ?>">Unarchived</button>
+                                            <button class="btn btn-danger btn-sm unarchive_user" data-id="<?php echo $row['id'] ?>"><i class="fa-solid fa-arrow-rotate-left"></i> Restore</button>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

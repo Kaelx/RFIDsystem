@@ -47,7 +47,7 @@ $cats = $conn->query($query);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="index.php?page=attendance_report" class="btn btn-info"><i class="fa-solid fa-file-export"></i> Attendance Report</a>
+                    <a href="index.php?page=attendance_report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Attendance Report</a>
                 </div>
             </div>
         </div>

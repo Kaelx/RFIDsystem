@@ -14,7 +14,7 @@
                         <div class="col-sm-6">
                             <!-- button -->
                             <a href="index.php?page=accountadduser" class="btn btn-primary mr-3"><i class="fa-solid fa-user-pen"></i> Add user</a>
-                            <a href="index.php?page=accountmanage_archive" class="btn btn-danger"><i class="fa-solid fa-file-zipper"></i> Archived</a>
+                            <a href="index.php?page=accountmanage_archive" class="btn btn-info"><i class="fa-solid fa-file-zipper"></i> Archived</a>
                         </div>
                     </div>
                     <div class="table-responsive">

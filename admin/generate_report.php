@@ -37,6 +37,12 @@ if (!empty($start_date) && !empty($end_date)) {
 $result = $conn->query($query);
 $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
 ?>
+<style>
+  .content{
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+</style>
 
 <div class="content-wrapper">
   <section class="content-header">
@@ -47,15 +53,15 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
         </div>
       </div>
       <div class="text-right">
-        <button class="btn btn-primary btn-custom" onclick="window.print();">Print</button>
-        <button class="btn btn-default btn-custom" onclick="window.history.back(); return false;">Back</button>
+        <button class="btn btn-primary btn-custom" onclick="window.print();"><i class="fa-solid fa-print"></i> Print</button>
+        <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
       </div>
     </div>
   </section>
 
   <section class="content">
     <div class="container-fluid">
-      <div class="invoice p-3">
+      <div class="invoice" style="padding: 100px;">
         <div class="row">
           <div class="col-12">
             <h2 class="page-header" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; display: flex; justify-content: center;">
@@ -71,15 +77,15 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
         </div>
 
         <div class="text-center">
-          <h3 class="mt-3 mb-3" style="font-family: 'Times New Roman', Times, serif;">Record Report</h3>
+          <h3 class="m-3" style="font-family: 'Times New Roman', Times, serif;">Record Report</h3>
         </div>
 
         <div class="row invoice-info">
           <div class="col-sm-6 d-flex align-items-start">
-            <div class="col-sm-4">
-              <img src="<?= 'assets/img/' . $wew['img_path']; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
+            <div class="col-sm-4 p-0">
+              <img src="<?= isset($wew['img_path']) ? 'assets/img/' . $wew['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
             </div>
-            <div class="col-sm-8" style="padding-left: 10px;">
+            <div class="col-sm-8 p-0">
               <p style="margin-bottom: 5px;"><?= $wew['fname'] . ' ' . strtoupper(substr($wew['mname'], 0, 1)) . '. ' . $wew['lname']; ?></p>
               <p style="margin-bottom: 5px;"><?= $wew['school_id']; ?></p>
               <p style="margin-bottom: 5px;"><?= $wew['role_name']; ?></p>
@@ -108,7 +114,7 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
                 <?php
                 $start_date = new DateTime($start_date);
                 $end_date = new DateTime($end_date);
-          
+
                 echo $start_date->format('F j, Y'); ?> to <?php echo $end_date->format('F j, Y'); ?>
               </p>
             </div>
@@ -184,5 +190,5 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
     paging: false
   });
 
-  window.addEventListener("load", window.print());
+  // window.addEventListener("load", window.print());
 </script>
