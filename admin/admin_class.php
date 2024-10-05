@@ -475,7 +475,8 @@ class Action
 		$base64_data = $_POST['croppedImageData'];
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
-		$img_name = strtotime(date('y-m-d H:i')) .$fname.'.png';
+
+		$img_name = time() .$fname.''.$lname.'.png';
 		$img_path = 'assets/img/' . $img_name;
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";

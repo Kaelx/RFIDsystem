@@ -165,5 +165,5 @@ $result_records = $conn->query($query_records);
     paging: false
   });
 
-  // window.addEventListener("load", window.print());
+  window.addEventListener("load", window.print());
 </script>
