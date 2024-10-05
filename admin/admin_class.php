@@ -161,7 +161,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_name = time() .$fname.''.$lname.'.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -181,7 +181,7 @@ class Action
 				if ($save)
 					return 2;
 			}
-		} catch (mysqli_sql_exception $e) {
+		} catch (Exception $e) {
 
 			return $e->getMessage();  // For debugging
 		}
@@ -230,7 +230,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_name = time() .$fname.''.$lname.'.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -248,7 +248,7 @@ class Action
 				if ($save)
 					return 2;
 			}
-		} catch (mysqli_sql_exception $e) {
+		} catch (Exception $e) {
 			return $e->getMessage();  // For debugging
 
 		}
@@ -294,7 +294,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = strtotime(date('y-m-d H:i')) .$rfid.'.png';
+		$img_name = time() .$fname.''.$lname.'.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -312,7 +312,7 @@ class Action
 				if ($save)
 					return 2;
 			}
-		} catch (mysqli_sql_exception $e) {
+		} catch (Exception $e) {
 			return $e->getMessage();  // For debugging
 
 		}

@@ -47,6 +47,16 @@ $data = mysqli_fetch_assoc($query);
     }
 </style>
 
+
+
+<!-- RFID Placeholder (initially hidden) -->
+<div id="rfid_placeholder" class="d-none position-absolute"
+    style="top: 0; left: 0; right: 0; bottom: 0; width: 100%; background-color: rgba(108, 117, 125, 0.5); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-barcode" style="font-size: 200px;"></i>
+    <span style="margin-top: 8px; font-size: 32px; font-weight:bold;">Scan RFID</span>
+</div>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -395,16 +405,19 @@ $data = mysqli_fetch_assoc($query);
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=visitor_data'
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.href = 'index.php?page=visitor_view&uid=' + <?= $data['id'] ?>
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -412,4 +425,16 @@ $data = mysqli_fetch_assoc($query);
             }
         })
     })
+
+
+    $('#rfid').on('focus', function() {
+        $(this).val('');
+        $('.content-wrapper').css('filter', 'blur(8px)');
+        $('#rfid_placeholder').removeClass('d-none');
+    });
+
+    $('#rfid').on('blur', function() {
+        $('.content-wrapper').css('filter', 'none');
+        $('#rfid_placeholder').addClass('d-none');
+    });
 </script>

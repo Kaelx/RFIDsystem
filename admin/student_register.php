@@ -30,6 +30,13 @@
 </style>
 
 
+<!-- RFID Placeholder (initially hidden) -->
+<div id="rfid_placeholder" class="d-none position-absolute"
+    style="top: 0; left: 0; right: 0; bottom: 0; width: 100%; background-color: rgba(108, 117, 125, 0.5); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-barcode" style="font-size: 200px;"></i>
+    <span style="margin-top: 8px; font-size: 32px; font-weight:bold;">Scan RFID</span>
+</div>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -312,7 +319,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Course/Program</label>
                                 <select class="form-control form-control-sm select2" name="prog_id" id="prog_id" required>
-                                <option value="" selected disabled></option>
+                                    <option value="" selected disabled></option>
                                     <?php
                                     $program = $conn->query("SELECT * FROM program ORDER BY id ASC ");
                                     while ($row = $program->fetch_assoc()) :
@@ -406,6 +413,9 @@
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -416,5 +426,17 @@
 
     $('.select2').select2({
         placeholder: "Select Course/Program",
+    });
+
+
+    $('#rfid').on('focus', function() {
+        $(this).val('');
+        $('.content-wrapper').css('filter', 'blur(8px)');
+        $('#rfid_placeholder').removeClass('d-none');
+    });
+
+    $('#rfid').on('blur', function() {
+        $('.content-wrapper').css('filter', 'none');
+        $('#rfid_placeholder').addClass('d-none');
     });
 </script>
