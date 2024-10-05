@@ -214,7 +214,7 @@ if (!isset($_SESSION['login_id'])) {
 
               <li class="nav-item">
                 <a href="index.php?page=system_log" class="nav-link">
-                  <i class="fa-solid fa-box nav-icon"></i>
+                  <i class="fa-solid fa-font-awesome nav-icon"></i>
                   <p>
                     Audit Log
                   </p>

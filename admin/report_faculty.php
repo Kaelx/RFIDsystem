@@ -26,7 +26,7 @@ $date = date('Y-m-d');
       </div>
       <div class="text-right">
         <button class="btn btn-primary btn-custom" onclick="window.print();"><i class="fa-solid fa-print"></i> Print</button>
-        <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+        <button class="btn btn-danger btn-custom" onclick="window.history.back(); return false;">Cancel</button>
       </div>
     </div>
   </section>

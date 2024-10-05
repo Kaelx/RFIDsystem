@@ -20,8 +20,6 @@
                         <table class="table table-hover compact">
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Type</th>
                                     <th>Description</th>
                                     <th>Location</th>
                                     <th>Ip Address</th>
@@ -38,13 +36,13 @@
                                     while ($row = $result->fetch_assoc()) {
                                 ?>
                                         <tr>
-                                            <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                             <td>
                                                 <?php
-                                                echo $row['account_type'] == 1 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown'));
+                                                echo $row['fname'] . ' ' . $row['lname'] . ' (' .
+                                                    ($row['account_type'] == 1 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown')))
+                                                    . ') ' . $row['action'];
                                                 ?>
                                             </td>
-                                            <td><?php echo $row['action']; ?></td>
                                             <td><?php echo $row['device_info']; ?></td>
                                             <td><?php echo $row['ip_address']; ?></td>
                                             <td>
