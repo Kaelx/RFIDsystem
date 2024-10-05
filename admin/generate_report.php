@@ -1,6 +1,5 @@
 <?php
 
-
 $codeNum = rand(100000000000, 999999999999);
 
 $uid = $_GET['uid'];
@@ -9,36 +8,41 @@ $type = $_GET['type'];
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
-$query = "SELECT r.record_date, r.timein, r.timeout,
-COALESCE(s.fname, e.fname, v.fname) AS fname, 
-COALESCE(s.mname, e.mname, v.mname) AS mname, 
-COALESCE(s.lname, e.lname, v.lname) AS lname,
-COALESCE(s.school_id, e.school_id, NULL) AS school_id,
-COALESCE(s.img_path, e.img_path, v.img_path) AS img_path,
-COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name,
-COALESCE(e_t.employee_type,null, null ) AS employee_type,
-COALESCE(e_l.employee_lvl,null, null ) AS employee_lvl
-FROM records r
-LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
-LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
-LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
-LEFT JOIN employee_type e_t ON e.employee_type_id = e_t.id
-LEFT JOIN employee_lvl e_l ON e.employee_lvl_id = e_l.id
-LEFT JOIN role r_s ON s.role_id = r_s.id
-LEFT JOIN role r_e ON e.role_id = r_e.id
-LEFT JOIN role r_v ON v.role_id = r_v.id
-WHERE r.record_id = '$uid' and r.record_table = '$type'";
+$query_profile = "SELECT 
+  COALESCE(s.fname, e.fname, v.fname) AS fname, 
+  COALESCE(s.mname, e.mname, v.mname) AS mname, 
+  COALESCE(s.lname, e.lname, v.lname) AS lname,
+  COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+  COALESCE(s.img_path, e.img_path, v.img_path) AS img_path,
+  COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name,
+  COALESCE(e_t.employee_type,null, null ) AS employee_type,
+  COALESCE(e_l.employee_lvl,null, null ) AS employee_lvl
+  FROM records r
+  LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
+  LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
+  LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
+  LEFT JOIN employee_type e_t ON e.employee_type_id = e_t.id
+  LEFT JOIN employee_lvl e_l ON e.employee_lvl_id = e_l.id
+  LEFT JOIN role r_s ON s.role_id = r_s.id
+  LEFT JOIN role r_e ON e.role_id = r_e.id
+  LEFT JOIN role r_v ON v.role_id = r_v.id
+  WHERE r.record_id = '$uid' and r.record_table = '$type'";
+
+$result_profile = $conn->query($query_profile);
+$profile = $result_profile->fetch_assoc();
+
+$query_records = "SELECT r.record_date, r.timein, r.timeout
+  FROM records r
+  WHERE r.record_id = '$uid' AND r.record_table = '$type'";
 
 if (!empty($start_date) && !empty($end_date)) {
-  $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
-    AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+  $query_records .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
 }
 
-$result = $conn->query($query);
-$wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
+$result_records = $conn->query($query_records);
 ?>
 <style>
-  .content{
+  .content {
     margin-left: 80px;
     margin-right: 80px;
   }
@@ -83,16 +87,17 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
         <div class="row invoice-info">
           <div class="col-sm-6 d-flex align-items-start">
             <div class="col-sm-4 p-0">
-              <img src="<?= isset($wew['img_path']) ? 'assets/img/' . $wew['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
+              <img src="<?= isset($profile['img_path']) ? 'assets/img/' . $profile['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
             </div>
             <div class="col-sm-8 p-0">
-              <p style="margin-bottom: 5px;"><?= $wew['fname'] . ' ' . strtoupper(substr($wew['mname'], 0, 1)) . '. ' . $wew['lname']; ?></p>
-              <p style="margin-bottom: 5px;"><?= $wew['school_id']; ?></p>
-              <p style="margin-bottom: 5px;"><?= $wew['role_name']; ?></p>
-              <?php if (!empty($wew['employee_type'])): ?>
-                <p style="margin-bottom: 5px;">
-                  <?= ($wew['employee_type']); ?>
-                  <span>(<?= ($wew['employee_lvl']); ?>)</span>
+              <p style="margin-bottom: 5px;"><?= isset($profile['fname']) ? $profile['fname'] : ''; ?>
+                <?= isset($profile['mname']) ? strtoupper(substr($profile['mname'], 0, 1)) . '. ' : ''; ?>
+                <?= isset($profile['lname']) ? $profile['lname'] : ''; ?></p>
+              <p style="margin-bottom: 5px;"><?= isset($profile['school_id']) ? $profile['school_id'] : ''; ?></p>
+              <p style="margin-bottom: 5px;"><?= isset($profile['role_name']) ? $profile['role_name'] : ''; ?></p>
+              <?php if (!empty($profile['employee_type'])): ?>
+                <p style="margin-bottom: 5px;"><?= $profile['employee_type']; ?>
+                  <span>(<?= isset($profile['employee_lvl']) ? $profile['employee_lvl'] : ''; ?>)</span>
                 </p>
               <?php endif; ?>
             </div>
@@ -108,17 +113,14 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
 
 
         <div class="table-responsive">
+
+          <!-- Display Date Range -->
           <?php if (!empty($start_date) && !empty($end_date)): ?>
             <div class="text-center mt-2 text-bold">
-              <p>From
-                <?php
-                $start_date = new DateTime($start_date);
-                $end_date = new DateTime($end_date);
-
-                echo $start_date->format('F j, Y'); ?> to <?php echo $end_date->format('F j, Y'); ?>
-              </p>
+              <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
+
           <table class="table table-hover table-bordered compact">
             <thead>
               <tr>
@@ -130,47 +132,20 @@ $wew = $result->fetch_assoc(); // Fetching the profile picture once to use below
               </tr>
             </thead>
             <tbody>
-              <?php
-              $i = 1;
-              // Reset result pointer to fetch data for table
-              $result->data_seek(0);
-              while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                  <td class="text-center"><?= $i++; ?></td>
-                  <td>
-                    <?php
-                    $timein = new DateTime($row['record_date']);
-                    echo $timein->format('F d, Y');
-                    ?>
-                  </td>
-                  <td class="text-center">
-                    <?php
-                    $timein = new DateTime($row['timein']);
-                    echo $timein->format('h:i A');
-                    ?>
-                  </td>
-                  <td class="text-center">
-                    <?php
-                    if (!empty($row['timeout'])) {
-                      $timeout = new DateTime($row['timeout']);
-                      echo $timeout->format('h:i A');
-                    } else {
-                      echo '------';
-                    }
-                    ?>
-                  </td>
-                  <td class="text-center">
-                    <?php
-                    if (!empty($row['timeout'])) {
-                      $interval = $timein->diff($timeout);
-                      echo $interval->format('%h hours %i minutes');
-                    } else {
-                      echo '------';
-                    }
-                    ?>
-                  </td>
-                </tr>
-              <?php endwhile; ?>
+                <?php
+                $i = 1;
+                while ($row = $result_records->fetch_assoc()):
+                  $timein = new DateTime($row['timein']);
+                  $timeout = isset($row['timeout']) ? new DateTime($row['timeout']) : null;
+                ?>
+                  <tr>
+                    <td class="text-center"><?= $i++; ?></td>
+                    <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
+                    <td class="text-center"><?= $timein->format('h:i A'); ?></td>
+                    <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
+                    <td class="text-center"><?= $timeout ? $timein->diff($timeout)->format('%h hours %i minutes') : '------'; ?></td>
+                  </tr>
+                <?php endwhile; ?>
             </tbody>
           </table>
         </div>

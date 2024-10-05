@@ -1,4 +1,50 @@
 <?php
+
+// disable on mobile devices
+$mobileAgents = [
+    'Android',
+    'iPhone',
+    'iPad',
+    'iPod',
+    'BlackBerry',
+    'BB10',
+    'IEMobile',
+    'Windows Phone',
+    'Opera Mini',
+    'Opera Mobi',
+    'Mobile',
+    'webOS',
+    'Fennec',
+    'Silk',
+    'Kindle',
+    'PlayBook',
+    'Nokia',
+    'Mobi',
+    'smartphone',
+    'tablet',
+    'iPad Pro',
+    'Macintosh; Intel Mac OS X'
+];
+
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+$isMobile = false;
+foreach ($mobileAgents as $agent) {
+    if (stripos($userAgent, $agent) !== false) {
+        $isMobile = true;
+        break;
+    }
+}
+
+if ($isMobile) {
+    echo "This website is not accessible on mobile devices.";
+    exit();
+}
+// disable on mobile devices
+
+
+
+
 session_start();
 
 error_reporting(E_ALL);
