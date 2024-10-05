@@ -136,7 +136,7 @@ $data = mysqli_fetch_assoc($query);
                     <div class="row">
                         <div class="col-md-4 form-group">
                             <label for="rfid">RFID</label>
-                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" >
+                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                         </div>
                     </div>
 
