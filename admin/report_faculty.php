@@ -62,7 +62,7 @@ $date = date('Y-m-d');
 
 
         <div>
-          <p class="text-center text-bold">LIST OF DESIGNATED FACULTY</p>
+          <p class="text-center text-bold">LIST OF INSTRUCTOR/TEACHER</p>
         </div>
 
         <?php
@@ -103,7 +103,7 @@ $date = date('Y-m-d');
                   LEFT JOIN employee_type et ON e.employee_type_id = et.id
                   LEFT JOIN records r ON e.id = r.record_id
                   WHERE r.record_table = 'employees'
-                  AND e.employee_type_id = $type
+                  and e.employee_type_id = $type
                   AND e.employee_dept_id = $deptId";
 
                 if (!empty($date)) {

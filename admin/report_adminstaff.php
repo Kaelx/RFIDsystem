@@ -80,9 +80,9 @@ $date = date('Y-m-d');
                 <th class="text-center">Time IN</th>
                 <th class="text-center">Time OUT</th>
               </tr>
-              <tr>
+              <!-- <tr>
                 <th colspan="6">ADMIN</th>
-              </tr>
+              </tr> -->
             </thead>
             <tbody>
               <?php
@@ -154,9 +154,9 @@ $date = date('Y-m-d');
                 <th class="text-center">Time IN</th>
                 <th class="text-center">Time OUT</th>
               </tr>
-              <tr>
+              <!-- <tr>
                 <th colspan="6">ADMIN</th>
-              </tr>
+              </tr> -->
             </thead>
             <tbody>
               <?php

@@ -117,7 +117,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
-                                <p class="form-control form-control-sm"><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : '' ?></p>
+                                <p class="form-control form-control-sm"><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : 'N/A' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Department</p>

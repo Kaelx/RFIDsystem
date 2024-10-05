@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=wew" style="text-decoration: none; color: inherit;">
+                    <a href="index.php?page=report_faculty&employee_type=3" style="text-decoration: none; color: inherit;">
                         <div class="info-box">
                             <span class="info-box-icon bg-primary"><i class="fa-solid fa-user-tie"></i></span>
 
@@ -67,6 +67,10 @@
 
 
             </div>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-secondary m-3" onclick="window.history.back(); return false;"><i class="fa-solid fa-circle-chevron-left"></i> Return</button>
+                </div>
         </div>
     </section>
 
