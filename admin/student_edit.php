@@ -1,8 +1,12 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
+}
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
     FROM students s 
     LEFT JOIN department d ON s.dept_id = d.id 
     LEFT JOIN program p ON s.prog_id = p.id 
@@ -10,10 +14,8 @@ if (isset($_GET['uid'])) {
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=student_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 
@@ -66,7 +68,7 @@ if (isset($_GET['uid'])) {
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
 
-                        
+
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
                                 <img src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">

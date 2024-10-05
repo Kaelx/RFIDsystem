@@ -1,17 +1,18 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, r.role_name 
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
+}
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT s.*, r.role_name 
     FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=visitor_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 
