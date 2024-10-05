@@ -330,7 +330,7 @@ $data = mysqli_fetch_assoc($query);
 
                             <div class="col-md-4 form-group">
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'Student' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <label for="role_id">Type</label>

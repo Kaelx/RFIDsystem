@@ -304,7 +304,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="role_id">Type</label>
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'student' or 'students' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <input type="hidden" name="role_id" value="<?= $row['id'] ?>">

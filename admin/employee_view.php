@@ -104,7 +104,7 @@ $data = mysqli_fetch_assoc($query);
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-6 form-group mb-0">
+                            <div class="col-md-7 form-group mb-0">
                                 <p class="mb-2 text-bold">Role</p>
                                 <p class="form-control form-control-sm"><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
                             </div>
@@ -119,7 +119,7 @@ $data = mysqli_fetch_assoc($query);
                                 <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control form-control-sm"><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : 'N/A' ?></p>
                             </div>
-                            <div class="col-md-2 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Department</p>
                                 <p class="form-control form-control-sm"><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
                             </div>

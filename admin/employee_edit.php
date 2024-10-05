@@ -304,15 +304,13 @@ $data = mysqli_fetch_assoc($query);
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-7 form-group">
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <label for="role_id">Role</label>
                                     <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
                                     <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
                                 <?php endwhile; ?>
                             </div>
@@ -348,7 +346,7 @@ $data = mysqli_fetch_assoc($query);
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
                                 <select class="form-control form-control-sm" name="dept_id" id="dept_id">
                                     <option value="" <?= !isset($data['employee_dept_id']) || $data['employee_dept_id'] == '' ? 'selected' : '' ?>>-- Select --</option>

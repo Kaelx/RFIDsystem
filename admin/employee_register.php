@@ -286,10 +286,10 @@
                         <hr>
                         <div class="row">
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-7 form-group">
                                 <label for="role_id">Role</label>
                                 <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
+                                $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
                                 while ($row = $type->fetch_assoc()) :
                                 ?>
                                     <!-- Hidden input to store the role_id -->
@@ -328,7 +328,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
                                 <select class="form-control form-control-sm" name="dept_id" id="dept_id">
                                     <option value="" selected>-- Select --</option>
