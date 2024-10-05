@@ -83,3 +83,11 @@ window.alert_toast = function ($msg = 'TEST', $bg = 'success') {
         delay: 3000
     }).toast('show');
 }
+
+
+
+const currentYear = new Date().getFullYear();
+const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
+
+document.getElementById('bdate').setAttribute('min', '1950-01-01');
+document.getElementById('bdate').setAttribute('max', maxDate);
