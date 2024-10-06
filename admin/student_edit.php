@@ -460,8 +460,12 @@ $data = mysqli_fetch_assoc($query);
         })
     });
 
-    $('.select2').select2().on('select2:open', function() {
-        $('.select2-search__field').attr('placeholder', 'Search Course/Program');
+    $('.select2').select2();
+    $('.select2').on('select2:open', function() {
+        let searchField = document.querySelector('.select2-container--open .select2-search__field');
+
+        searchField.placeholder = 'Search Course/Program';
+        searchField.focus();
     });
 
 
