@@ -46,10 +46,7 @@ if ($isMobile) {
 
 
 session_start();
-
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+error_reporting(0);
 
 include 'db_connect.php';
 
@@ -232,7 +229,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="top:25px; right: 25px; padding: 1rem; z-index: 99999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>

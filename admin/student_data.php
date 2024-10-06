@@ -7,9 +7,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="container-fluid">
-
-            <div class="card">
+        <div class="container-fluid d-flex flex-column" style="height:800px;">
+            <div class="card flex-grow-1">
                 <div class="card-body">
 
                     <div class="row">
@@ -35,14 +34,13 @@
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
                                 $cats = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
-                                FROM students s 
-                                LEFT JOIN department d ON s.dept_id = d.id 
-                                LEFT JOIN program p ON s.prog_id = p.id 
-                                LEFT JOIN role r ON s.role_id = r.id 
-                                WHERE (r.role_name = 'student' or 'students' OR r.role_name IS NULL)
-                                and s.status = 0
-                                ORDER BY s.id ASC");
-
+                            FROM students s 
+                            LEFT JOIN department d ON s.dept_id = d.id 
+                            LEFT JOIN program p ON s.prog_id = p.id 
+                            LEFT JOIN role r ON s.role_id = r.id 
+                            WHERE (r.role_name = 'student' or 'students' OR r.role_name IS NULL)
+                            and s.status = 0
+                            ORDER BY s.id ASC");
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
@@ -52,7 +50,6 @@
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['email']; ?></td>
                                     </tr>
-
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
@@ -60,14 +57,14 @@
                 </div>
             </div>
 
-
-            <div class="row">
+            <!-- Department Section -->
+            <div class="row" style="margin-top: auto;">
                 <?php
                 $sql = $conn->query("SELECT d.*, COUNT(CASE WHEN s.status = 0 THEN 1 END) AS student_count 
-                        FROM department d
-                        LEFT JOIN students s ON d.id = s.dept_id
-                        GROUP BY d.id
-                    ");
+                    FROM department d
+                    LEFT JOIN students s ON d.id = s.dept_id
+                    GROUP BY d.id
+                ");
 
                 while ($result = $sql->fetch_assoc()) {
                 ?>
@@ -85,12 +82,10 @@
                 <?php
                 }
                 ?>
-
             </div>
-
-
         </div>
     </section>
+
 </div>
 <script>
     $('table').DataTable({

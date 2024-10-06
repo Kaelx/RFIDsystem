@@ -93,7 +93,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 <label for="end_date" class="mr-2">To </label>
                                                 <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
+                                            <button type="submit" class="btn btn-primary mb-2 mr-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
                                         </form>
                                     </div>
 

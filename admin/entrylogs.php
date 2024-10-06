@@ -45,8 +45,8 @@ $cats = $conn->query($query);
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="text-right">
-                <div>
+            <div class="row">
+                <div class="col-md-6">
                     <a href="index.php?page=attendance_report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Attendance Report</a>
                 </div>
             </div>
@@ -71,7 +71,7 @@ $cats = $conn->query($query);
                                     <input type="date" name="end_date" id="end_date" class="form-control"
                                         value="<?= $end_date; ?>">
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                                <button type="submit" class="btn btn-primary mb-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
                             </form>
                         </div>
 
@@ -85,7 +85,7 @@ $cats = $conn->query($query);
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
                                     </ul>
                                 </div>
-                                <button type="button" class="btn btn-default ml-3" id="clear-filters">Reset</button>
+                                <button type="button" class="btn btn-danger ml-3" id="clear-filters"> <i class="fa-solid fa-rotate"></i> </button>
                             </div>
                         </div>
                     </div>

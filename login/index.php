@@ -46,8 +46,7 @@ if ($isMobile) {
 
 
 session_start();
-
-error_reporting(E_ALL);
+error_reporting(0);
 
 include 'db_connect.php';
 
@@ -90,8 +89,8 @@ if (isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
-        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true" style="border: 1px solid #000;">
+    <div class="position-fixed" style="top:50px; right: 50px; padding: 1rem; z-index: 1050;">
+        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body text-white" style="font-size:18px;">
             </div>
         </div>
@@ -128,25 +127,11 @@ include 'footer.php';
             $('#alert_toast').addClass('bg-info')
         if ($bg == 'warning')
             $('#alert_toast').addClass('bg-warning')
-        $('#alert_toast .toast-body').html($msg)
+        $('#alert_toast .toast-body').html($msg + '  <i class="fa-solid fa-circle-exclamation"></i> ')
         $('#alert_toast').toast({
             delay: 3000
         }).toast('show');
     }
-
-
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // Disable autocomplete for all forms
-        document.querySelectorAll('form').forEach((form) => {
-            form.setAttribute('autocomplete', 'off');
-        });
-
-        // Disable autocomplete for all input elements
-        document.querySelectorAll('input').forEach((input) => {
-            input.setAttribute('autocomplete', 'off');
-        });
-    });
 
 
 
