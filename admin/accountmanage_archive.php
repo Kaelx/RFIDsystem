@@ -77,6 +77,7 @@
 
     function unarchive_user($id) {
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=unarchive_user',
             method: 'POST',

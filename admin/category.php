@@ -210,6 +210,7 @@
     $('#set2-category').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=save_category2',
             data: new FormData($(this)[0]),
@@ -243,6 +244,7 @@
     $('#set3-category').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=save_category3',
             data: new FormData($(this)[0]),
@@ -304,6 +306,8 @@
 
 
     function delete_cat2($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=delete_category2',
             method: 'POST',
@@ -323,6 +327,8 @@
     }
 
     function delete_cat3($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=delete_category3',
             method: 'POST',

@@ -30,21 +30,22 @@
     }
 </style>
 
-<script>
+<!-- <script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
-        preloader.style.transition = 'opacity 0.35s ease'; // Set a short fade-out
-        preloader.style.opacity = '0'; // Start fading out
+        preloader.style.transition = 'opacity 0.35s ease'; 
+        preloader.style.opacity = '0';
 
         setTimeout(function() {
-            preloader.style.display = 'none'; // Remove from view after fade-out
-        }, 300); // Match the transition duration (300ms)
+            preloader.style.display = 'none'; 
+        }, 300); 
     };
 </script>
 
-<!-- Preloader -->
 <div class="preloader flex-column justify-content-center align-items-center">
-</div>
+</div> -->
+
+
 
 <div class="content-wrapper">
 
@@ -233,6 +234,7 @@
         if (e.which === 13) {
             e.preventDefault();
 
+            start_load();
             $.ajax({
                 url: 'ajax.php?action=fetch_data',
                 data: new FormData(this),

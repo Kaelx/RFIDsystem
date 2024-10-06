@@ -21,8 +21,6 @@
                             <thead>
                                 <tr>
                                     <th>Description</th>
-                                    <th>Location</th>
-                                    <th>Ip Address</th>
                                     <th>Time</th>
                                 </tr>
                             </thead>
@@ -43,8 +41,6 @@
                                                     . ') ' . $row['action'];
                                                 ?>
                                             </td>
-                                            <td><?php echo $row['device_info']; ?></td>
-                                            <td><?php echo $row['ip_address']; ?></td>
                                             <td>
                                                 <?php
                                                 $date = new DateTime($row['timestamp']);

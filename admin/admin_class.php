@@ -21,9 +21,8 @@ class Action
 
 
 	function logout(){
-		$result = $this->db->query("SELECT * FROM users where id = " . $_SESSION['login_id'])->fetch_array();
 		$log = [
-			'user_id' => $result['id'],
+			'user_id' => $_SESSION['login_id'],
 			'action' => ' has logged out'
 		];
 		$this->save_log($log);
@@ -168,16 +167,31 @@ class Action
 			if (empty($id)) {
 				$save = $this->db->query("INSERT INTO students set " . $data);
 				if ($save)
-					return 1;
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has registered a new student ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 1;
 			} else {
 				$save = $this->db->query("UPDATE students set " . $data . " where id=" . $id);
 				if ($save)
-					return 2;
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has updated the student information of ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 2;
 			}
 		} catch (Exception $e) {
 
 			return $e->getMessage();  // For debugging
 		}
+
 	}
 
 
@@ -235,11 +249,27 @@ class Action
 			if (empty($id)) {
 				$save = $this->db->query("INSERT INTO employees set " . $data);
 				if ($save)
-					return 1;
+
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has registered new employee ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 1;
 			} else {
 				$save = $this->db->query("UPDATE employees set " . $data . " where id=" . $id);
 				if ($save)
-					return 2;
+
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has updated the employee information of ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 2;
 			}
 		} catch (Exception $e) {
 			return $e->getMessage();  // For debugging
@@ -299,11 +329,27 @@ class Action
 			if (empty($id)) {
 				$save = $this->db->query("INSERT INTO visitors set " . $data);
 				if ($save)
-					return 1;
+
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has registered new visitor ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 1;
 			} else {
 				$save = $this->db->query("UPDATE visitors set " . $data . " where id=" . $id);
 				if ($save)
-					return 2;
+
+					$log = [
+						'user_id' => $_SESSION['login_id'],
+						'action' => ' has updated the visitor information of ' . $fname . ' ' . $lname
+					];
+
+
+				$this->save_log($log);
+				return 2;
 			}
 		} catch (Exception $e) {
 			return $e->getMessage();  // For debugging
@@ -318,14 +364,36 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE students set status = 1 where id = " . $id);
 		if ($archive)
-			return 1;
+
+			$qry = $this->db->query("SELECT * FROM students WHERE id = " . $id);
+			$student = $qry->fetch_assoc();
+
+			$log = [
+				'user_id' => $_SESSION['login_id'],
+				'action' => ' has archived a student '. $student['fname'] . ' ' . $student['lname']
+			];
+
+
+		$this->save_log($log);
+		return 1;
 	}
 
 	function unarchive_student(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE students set status = 0 where id = " . $id);
 		if ($archive)
-			return 1;
+
+		$qry = $this->db->query("SELECT * FROM students WHERE id = " . $id);
+		$student = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived a student ' . $student['fname'] . ' ' . $student['lname']
+		];
+
+
+		$this->save_log($log);
+		return 1;
 	}
 
 
@@ -335,14 +403,34 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE employees set status = 1 where id = " . $id);
 		if ($archive)
-			return 1;
+
+		$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
+		$employee = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
 	}
 
 	function unarchive_employee(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE employees set status = 0 where id = " . $id);
 		if ($archive)
-			return 1;
+
+		$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
+		$employee = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
 	}
 
 
@@ -351,6 +439,16 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE visitors set status = 1 where id = " . $id);
 		if ($archive)
+
+		$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
+		$visitor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived a visitor ' . $visitor['fname'] . ' ' . $visitor['lname']
+		];
+
+		$this->save_log($log);
 			return 1;
 	}
 
@@ -358,6 +456,16 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE visitors set status = 0 where id = " . $id);
 		if ($archive)
+
+		$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
+		$visitor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived a visitor ' . $visitor['fname'] . ' ' . $visitor['lname']
+		];
+
+		$this->save_log($log);
 			return 1;
 	}
 
@@ -457,10 +565,7 @@ class Action
 		$data .= ", email = '$email'";
 		$data .= ", school_id = '$school_id'";
 		$data .= ", username = '$username'";
-		
-		if (!empty($account_type)) {
-			$data .= ", account_type = '$account_type'";
-		}
+		$data .= ", account_type = '$account_type'";
 
 		if (!empty($password)) {
 			$hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -471,7 +576,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() .$fname.''.$lname.'.png';
+		$img_name = time() . $fname . '' . $lname . '.png';
 		$img_path = 'assets/img/' . $img_name;
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
@@ -479,24 +584,52 @@ class Action
 
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
 		if ($chk > 0) {
-			return 3; 
-
+			return 3;
 		}
 
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO users SET " . $data);
 			if ($save) {
-				return 1; 
 
+				$account_type_name = '';
+				if ($account_type == 1) {
+					$account_type_name = 'admin';
+				} elseif ($account_type == 2) {
+					$account_type_name = 'staff';
+				} elseif ($account_type == 3) {
+					$account_type_name = 'security personnel';
+				}
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has created an account ' . $account_type_name . ' name ' . $fname . '' . $lname
+				];
+
+				$this->save_log($log);
+				return 1;
 			}
 		} else {
 			$save = $this->db->query("UPDATE users SET " . $data . " WHERE id = " . $id);
 			if ($save) {
+
+				$account_type_name = '';
+				if ($account_type == 1) {
+					$account_type_name = 'admin';
+				} elseif ($account_type == 2) {
+					$account_type_name = 'staff';
+				} elseif ($account_type == 3) {
+					$account_type_name = 'security personnel';
+				}
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has updated the account ' . $account_type_name . ' name ' . $fname . '' . $lname
+				];
+
+				$this->save_log($log);
 				return 2;
 			}
 		}
-
-
 	}
 
 
@@ -505,6 +638,17 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE users set status = 1 where id = " . $id);
 		if ($archive)
+
+
+		$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
+		$user = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived the account '.$user['account_type'].' name '. $user['fname'] . ' ' . $user['lname']
+		];
+
+		$this->save_log($log);
 			return 1;
 	}
 
@@ -512,6 +656,16 @@ class Action
 		extract($_POST);
 		$archive = $this->db->query("UPDATE users set status = 0 where id = " . $id);
 		if ($archive)
+
+		$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
+		$user = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived the account '.$user['account_type'].' name '. $user['fname'] . ' ' . $user['lname']
+		];
+
+		$this->save_log($log);
 			return 1;
 	}
 
@@ -580,23 +734,27 @@ class Action
 
 	function save_log($log) {
 
-		// Get user IP address
-		$ip_address = $_SERVER['REMOTE_ADDR'];
+		// $ip_address = $_SERVER['REMOTE_ADDR'];
 
-		$location = 'Unknown';  // Default location if API fails
-		$geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
-		if ($geo_data) {
-			$geo_data = json_decode($geo_data, true);
-			if ($geo_data['status'] === 'success') {
-				$location = $geo_data['city'] . ', ' . $geo_data['country'];
-			}
-		}
+		// $location = 'Unknown';
+		// $geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
+		// if ($geo_data) {
+		// 	$geo_data = json_decode($geo_data, true);
+		// 	if ($geo_data['status'] === 'success') {
+		// 		$location = $geo_data['city'] . ', ' . $geo_data['country'];
+		// 	}
+		// }
 
-		$info = $location;
+		// $info = $location;
 
 	
-		$qry = $this->db->query("INSERT INTO logs (user_id, action, ip_address, device_info) 
-								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "', '" . $ip_address . "', '" . $info . "')");
+		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
+								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
+										
+		// Check for errors
+		if (!$qry) {
+			error_log("Error saving log: " . $this->db->error);
+		}
 	
 	}
 

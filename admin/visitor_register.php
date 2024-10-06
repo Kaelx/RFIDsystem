@@ -343,6 +343,7 @@
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register3',
             data: new FormData($(this)[0]),

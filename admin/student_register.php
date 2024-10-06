@@ -384,6 +384,7 @@
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register',
             data: new FormData($(this)[0]),

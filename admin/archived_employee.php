@@ -152,6 +152,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function unarchive_employee($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=unarchive_employee',
             method: 'POST',

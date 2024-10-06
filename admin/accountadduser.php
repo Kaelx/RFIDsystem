@@ -319,6 +319,7 @@
     $('#register').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=adduser',
             data: new FormData($(this)[0]),

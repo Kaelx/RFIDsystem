@@ -166,6 +166,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function unarchive_student($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=unarchive_student',
             method: 'POST',

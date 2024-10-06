@@ -163,6 +163,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function archive_student($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_student',
             method: 'POST',

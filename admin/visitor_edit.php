@@ -346,32 +346,6 @@ $data = mysqli_fetch_assoc($query);
 </div>
 
 <script>
-    $('#prog_id').change(function() {
-        var prog_id = $(this).val();
-
-        $.ajax({
-            url: 'ajax.php?action=get_department',
-            type: 'POST',
-            data: {
-                prog_id: prog_id
-            },
-            success: function(response) {
-                var result = JSON.parse(response);
-
-                console.log(response);
-
-                // Set the hidden dept_id
-                $('#dept_id').val(result.dept_id);
-                // Set the visible dept_name
-                $('#dept_name').val(result.dept_name);
-
-            }
-        });
-    });
-
-
-
-
 
     $('#register').submit(function(e) {
         e.preventDefault()
@@ -382,6 +356,7 @@ $data = mysqli_fetch_assoc($query);
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register3',
             data: new FormData($(this)[0]),

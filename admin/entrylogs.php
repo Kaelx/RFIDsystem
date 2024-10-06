@@ -45,8 +45,8 @@ $cats = $conn->query($query);
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
+            <div class="text-right">
+                <div>
                     <a href="index.php?page=attendance_report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Attendance Report</a>
                 </div>
             </div>

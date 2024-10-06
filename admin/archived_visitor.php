@@ -148,6 +148,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function unarchive_visitor($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=unarchive_visitor',
             method: 'POST',

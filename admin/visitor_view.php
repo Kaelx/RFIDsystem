@@ -141,6 +141,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function archive_visitor($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_visitor',
             method: 'POST',

@@ -287,7 +287,7 @@
 
 
                         <?php
-                        
+
                         $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
                         while ($row = $type->fetch_assoc()) :
                         ?>
@@ -375,6 +375,7 @@
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register2',
             data: new FormData($(this)[0]),

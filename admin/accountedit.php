@@ -353,6 +353,7 @@ $member = mysqli_fetch_assoc($query);
     $('#register').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=adduser',
             data: new FormData($(this)[0]),
@@ -396,6 +397,7 @@ $member = mysqli_fetch_assoc($query);
 
     function archive_user($id) {
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_user',
             method: 'POST',

@@ -65,6 +65,7 @@ $member = mysqli_fetch_assoc($query);
                 <div class="card-body">
                     <form action="#" id="profile_update">
                         <input type="hidden" name="id" value="<?= isset($member['id']) ? $member['id'] : '' ?>">
+                        <input type="hidden" name="account_type" value="<?= isset($member['account_type']) ? $member['account_type'] : '' ?>">
 
 
                         <div class="form-group text-right mb-0 mr-5">
@@ -325,6 +326,7 @@ $member = mysqli_fetch_assoc($query);
     $('#profile_update').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=adduser',
             data: new FormData($(this)[0]),
