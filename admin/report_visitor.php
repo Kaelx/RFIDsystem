@@ -66,7 +66,8 @@ $codeNum = rand(100000000000, 999999999999);
             <thead>
               <tr>
                 <th class="text-center" rowspan="2">#</th>
-                <th class="text-center w-50" rowspan="2">Name</th>
+                <th class="text-center w-25" rowspan="2">Name</th>
+                <th class="text-center w-25" rowspan="2">Date</th>
                 <th class="text-center" colspan="2">AM</th>
                 <th class="text-center" colspan="2">PM</th>
               </tr>
@@ -117,6 +118,7 @@ $codeNum = rand(100000000000, 999999999999);
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                  <td class="text-center"><?php echo (new DateTime($row['record_date']))->format('F j, Y'); ?></td>                 
                   <td class="text-center"><?= $amTimeIn; ?></td>
                   <td class="text-center"><?= $amTimeOut; ?></td>
                   <td class="text-center"><?= $pmTimeIn; ?></td>
