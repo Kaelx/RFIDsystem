@@ -347,12 +347,11 @@
     // fold card
     $('.card').each(function() {
         var cardId = $(this).attr('id');
-        if (cardId && localStorage.getItem(cardId) === 'true') {
+        if (cardId && sessionStorage.getItem(cardId) === 'true') {
             $(this).addClass('collapsed-card');
             $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
         }
     });
-
 
     $('.btn-tool').on('click', function() {
         var card = $(this).closest('.card');
@@ -360,11 +359,10 @@
         var isCollapsed = card.hasClass('collapsed-card');
 
         if (isCollapsed) {
-            localStorage.setItem(cardId, 'false');
+            sessionStorage.setItem(cardId, 'false');
             $(this).find('.fas').removeClass('fa-plus').addClass('fa-minus');
-
         } else {
-            localStorage.setItem(cardId, 'true');
+            sessionStorage.setItem(cardId, 'true');
             $(this).find('.fas').removeClass('fa-minus').addClass('fa-plus');
         }
     });

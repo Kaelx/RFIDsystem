@@ -62,80 +62,7 @@ $date = date('Y-m-d');
 
 
         <div>
-          <p class="text-center text-bold">LIST OF ADMINISTRATIVE STAFF</p>
-        </div>
-
-        <div class="table-responsive">
-          <table class="table table-bordered compact">
-            <thead>
-              <tr>
-                <th class="text-center" rowspan="2">#</th>
-                <th class="text-center w-50" rowspan="2">Name of Admin</th>
-                <th class="text-center" colspan="2">AM</th>
-                <th class="text-center" colspan="2">PM</th>
-              </tr>
-              <tr>
-                <th class="text-center">Time IN</th>
-                <th class="text-center">Time OUT</th>
-                <th class="text-center">Time IN</th>
-                <th class="text-center">Time OUT</th>
-              </tr>
-              <!-- <tr>
-                <th colspan="6">ADMIN</th>
-              </tr> -->
-            </thead>
-            <tbody>
-              <?php
-              $i = 1;
-
-              $query = "SELECT e.*, et.employee_type, el.employee_lvl, r.record_date, r.timein, r.timeout from employees e
-              LEFT JOIN employee_type et ON e.employee_type_id = et.id
-              LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
-              LEFT JOIN records r ON e.id = r.record_id
-              WHERE employee_type_id = '$type' AND e.employee_lvl_id = 1 AND r.record_table = 'employee'";
-
-              if (!empty($date)) {
-                $query .= " AND DATE(r.record_date) BETWEEN '$date' AND '$date'";
-              }
-
-              $result = $conn->query($query);
-              while ($row = $result->fetch_assoc()):
-
-                $amTimeIn = $amTimeOut = $pmTimeIn = $pmTimeOut = ' ---- ';
-
-                if (!empty($row['timein'])) {
-                  $timeIn = DateTime::createFromFormat('H:i:s', $row['timein']);
-                  if ($timeIn) {
-                    if ($timeIn->format('A') === 'AM') {
-                      $amTimeIn = $timeIn->format('h:i A');
-                    } else {
-                      $pmTimeIn = $timeIn->format('h:i A');
-                    }
-                  }
-                }
-
-                if (!empty($row['timeout'])) {
-                  $timeOut = DateTime::createFromFormat('H:i:s', $row['timeout']);
-                  if ($timeOut) {
-                    if ($timeOut->format('A') === 'AM') {
-                      $amTimeOut = $timeOut->format('h:i A');
-                    } else {
-                      $pmTimeOut = $timeOut->format('h:i A');
-                    }
-                  }
-                }
-              ?>
-                <tr>
-                  <td class="text-center"><?= $i++; ?></td>
-                  <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                  <td class="text-center"><?= $amTimeIn; ?></td>
-                  <td class="text-center"><?= $amTimeOut; ?></td>
-                  <td class="text-center"><?= $pmTimeIn; ?></td>
-                  <td class="text-center"><?= $pmTimeOut; ?></td>
-                </tr>
-              <?php endwhile; ?>
-            </tbody>
-          </table>
+          <p class="text-center text-bold">COS RECORD</p>
         </div>
 
 
@@ -154,31 +81,27 @@ $date = date('Y-m-d');
                 <th class="text-center">Time IN</th>
                 <th class="text-center">Time OUT</th>
               </tr>
-              <!-- <tr>
-                <th colspan="6">ADMIN</th>
-              </tr> -->
             </thead>
             <tbody>
               <?php
               $i = 1;
 
-              $query = "SELECT e.*, et.employee_type, el.employee_lvl, r.record_date, r.timein, r.timeout 
-                      FROM employees e
-                      LEFT JOIN employee_type et ON e.employee_type_id = et.id
-                      LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
-                      LEFT JOIN records r ON e.id = r.record_id
-                      WHERE employee_type_id = '$type' AND e.employee_lvl_id = 2 AND r.record_table = 'employee'";
+              $query = "SELECT e.*, et.employee_type, r.record_date, r.timein, r.timeout 
+                  FROM employees e
+                  LEFT JOIN employee_type et ON e.employee_type_id = et.id
+                  LEFT JOIN records r ON e.id = r.record_id
+                  WHERE r.record_table = 'employee'
+                  and e.employee_type_id = $type";
 
               if (!empty($date)) {
                 $query .= " AND DATE(r.record_date) BETWEEN '$date' AND '$date'";
               }
 
               $result = $conn->query($query);
-
               while ($row = $result->fetch_assoc()):
-
                 $amTimeIn = $amTimeOut = $pmTimeIn = $pmTimeOut = ' ---- ';
 
+                // Process Time IN
                 if (!empty($row['timein'])) {
                   $timeIn = DateTime::createFromFormat('H:i:s', $row['timein']);
                   if ($timeIn) {
@@ -190,6 +113,7 @@ $date = date('Y-m-d');
                   }
                 }
 
+                // Process Time OUT
                 if (!empty($row['timeout'])) {
                   $timeOut = DateTime::createFromFormat('H:i:s', $row['timeout']);
                   if ($timeOut) {
@@ -201,7 +125,6 @@ $date = date('Y-m-d');
                   }
                 }
               ?>
-
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
@@ -210,10 +133,12 @@ $date = date('Y-m-d');
                   <td class="text-center"><?= $pmTimeIn; ?></td>
                   <td class="text-center"><?= $pmTimeOut; ?></td>
                 </tr>
+
               <?php endwhile; ?>
             </tbody>
           </table>
         </div>
+
 
 
 
@@ -233,5 +158,4 @@ $date = date('Y-m-d');
     info: false,
     paging: false
   });
-
 </script>

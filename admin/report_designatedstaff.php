@@ -102,7 +102,7 @@ $date = date('Y-m-d');
                   FROM employees e
                   LEFT JOIN employee_type et ON e.employee_type_id = et.id
                   LEFT JOIN records r ON e.id = r.record_id
-                  WHERE r.record_table = 'employees'
+                  WHERE r.record_table = 'employee'
                   AND e.employee_type_id = $type
                   AND e.employee_dept_id = $deptId";
 

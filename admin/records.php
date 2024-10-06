@@ -26,7 +26,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                         <?php
                         switch ($type) {
-                            case 'students':
+                            case 'student':
                                 $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
                         FROM students s
                         LEFT JOIN role r ON s.role_id = r.id
@@ -34,7 +34,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
-                            case 'employees':
+                            case 'employee':
                                 $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                         FROM employees e
                         LEFT JOIN role r ON e.role_id = r.id
@@ -42,7 +42,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
-                            case 'visitors':
+                            case 'visitor':
                                 $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
                         FROM visitors v
                         LEFT JOIN role r ON v.role_id = r.id
@@ -133,9 +133,9 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                                 COALESCE(s.school_id, e.school_id, NULL) AS school_id,
                                                                 COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
                                                             FROM records r
-                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
-                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
-                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
+                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
                                                             LEFT JOIN role r_s ON s.role_id = r_s.id
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id

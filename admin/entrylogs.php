@@ -11,9 +11,9 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
-    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
-    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
-    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
+    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id

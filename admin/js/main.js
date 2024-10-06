@@ -1,5 +1,5 @@
-// Check the state of the sidebar from localStorage
-if (localStorage.getItem('sidebarState') === 'collapsed') {
+//state of the sidebar
+if (sessionStorage.getItem('sidebarState') === 'collapsed') {
     $('body').addClass('sidebar-collapse');
 }
 
@@ -7,11 +7,12 @@ $('[data-widget="pushmenu"]').on('click', function () {
     var isCollapsed = $('body').hasClass('sidebar-collapse');
 
     if (isCollapsed) {
-        localStorage.setItem('sidebarState', 'expanded');
+        sessionStorage.setItem('sidebarState', 'expanded');
     } else {
-        localStorage.setItem('sidebarState', 'collapsed');
+        sessionStorage.setItem('sidebarState', 'collapsed');
     }
 });
+
 
 
 
@@ -86,8 +87,10 @@ window.alert_toast = function ($msg = 'TEST', $bg = 'success') {
 
 
 
-const currentYear = new Date().getFullYear();
-const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
+$('input#bdate[type="date"]').each(function () {
+    const currentYear = new Date().getFullYear();
+    const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
 
-document.getElementById('bdate').setAttribute('min', '1950-01-01');
-document.getElementById('bdate').setAttribute('max', maxDate);
+    $(this).attr('min', '1980-01-01');
+    $(this).attr('max', maxDate);
+});

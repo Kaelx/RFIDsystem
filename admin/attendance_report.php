@@ -54,12 +54,24 @@
 
 
                 <div class="col-md-3 col-sm-6 col-12">
-                    <a href="index.php?page=wew" style="text-decoration: none; color: inherit;">
+                    <a href="index.php?page=report_cos&employee_type=4" style="text-decoration: none; color: inherit;">
                         <div class="info-box">
                             <span class="info-box-icon bg-danger"><i class="fa-solid fa-user-tie"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">COS</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                    <a href="index.php?page=report_visitor" style="text-decoration: none; color: inherit;">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fa-solid fa-user-tie text-white"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Visitor</span>
                             </div>
                         </div>
                     </a>

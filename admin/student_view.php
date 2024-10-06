@@ -4,7 +4,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, 'students' as type
+$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, 'student' as type
     FROM students s 
     LEFT JOIN department d ON s.dept_id = d.id 
     LEFT JOIN program p ON s.prog_id = p.id

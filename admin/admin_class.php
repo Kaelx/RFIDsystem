@@ -71,13 +71,6 @@ class Action
 	}
 
 
-	function delete_category(){
-		extract($_POST);
-		$delete = $this->db->query("DELETE FROM role where id = " . $id);
-		if ($delete)
-			return 1;
-	}
-
 	function delete_category2(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = " . $id);
@@ -373,7 +366,7 @@ class Action
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'students' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -382,7 +375,7 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employees' as source_table
+			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -391,7 +384,7 @@ class Action
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitors' as source_table
+			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
