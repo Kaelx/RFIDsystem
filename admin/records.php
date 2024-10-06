@@ -155,52 +155,16 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $i = 1;
                                                 while ($row = $result->fetch_assoc()):
+                                                    $timein = new DateTime($row['timein']);
+                                                    $timeout = isset($row['timeout']) ? new DateTime($row['timeout']) : null;
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            $date = new DateTime($row['record_date']);
-                                                            echo $date->format('F j, Y');
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            $timein = new DateTime($row['timein']);
-                                                            echo $timein->format('g:i A');
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            if (!empty($row['timeout'])) {
-                                                                $timeout = new DateTime($row['timeout']);
-                                                                echo $timeout->format('g:i A');
-                                                            } else {
-                                                                echo '------';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                                $timein = strtotime($row['timein']);
-                                                                $timeout = strtotime($row['timeout']);
-
-                                                                $duration_in_seconds = $timeout - $timein;
-
-                                                                $hours = floor($duration_in_seconds / 3600);
-                                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
-
-                                                                echo $hours . ' hours, ' . $minutes . ' minutes';
-                                                            } else {
-                                                                echo ' ------ ';
-                                                            }
-                                                            ?>
-                                                        </td>
-
-
+                                                        <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
+                                                        <td class="text-center"><?= $timein->format('h:i A'); ?></td>
+                                                        <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
+                                                        <td class="text-center"><?= $timeout ? $timein->diff($timeout)->format('%h hours %i minutes') : '------'; ?></td>
                                                     </tr>
-
                                                 <?php endwhile; ?>
                                             </tbody>
                                         </table>

@@ -45,11 +45,27 @@ class Action
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO department set " . $data);
 			if ($save)
-				return 1;
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has created the ' . $name . ' category'
+				];
+
+
+			$this->save_log($log);
+			return 1;
 		} else {
 			$save = $this->db->query("UPDATE department set " . $data . " where id=" . $id);
 			if ($save)
-				return 2;
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has updated the ' . $name . ' category'
+				];
+
+
+			$this->save_log($log);
+			return 2;
 		}
 	}
 
@@ -61,11 +77,27 @@ class Action
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO program set " . $data);
 			if ($save)
-				return 1;
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has created the ' . $name . ' program'
+				];
+
+
+			$this->save_log($log);
+			return 1;
 		} else {
 			$save = $this->db->query("UPDATE program set " . $data . " where id=" . $id);
 			if ($save)
-				return 2;
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has updated the ' . $name . ' program'
+				];
+
+
+			$this->save_log($log);
+			return 2;
 		}
 	}
 
@@ -74,14 +106,30 @@ class Action
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = " . $id);
 		if ($delete)
-			return 1;
+
+			$log = [
+				'user_id' => $_SESSION['login_id'],
+				'action' => ' has deleted a department'
+			];
+
+
+		$this->save_log($log);
+		return 1;
 	}
 
 	function delete_category3(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM program where id = " . $id);
 		if ($delete)
-			return 1;
+
+			$log = [
+				'user_id' => $_SESSION['login_id'],
+				'action' => ' has deleted a program'
+			];
+
+
+		$this->save_log($log);
+		return 1;
 	}
 
 

@@ -40,10 +40,9 @@ function validateForm(form) {
     $(form).find('input').each(function () {
         // Skip validation for hidden fields like croppedImageData
         if ($(this).attr('type') === 'hidden' || $(this).attr('id') === 'croppedImageData') {
-            return; // Skip this field from validation
+            return;
         }
 
-        // Apply validation for other fields
         if (invalidPattern.test($(this).val())) {
             alert_toast('Invalid. Do not input special character!', 'danger');
             isValid = false;
@@ -79,7 +78,9 @@ window.alert_toast = function ($msg = 'TEST', $bg = 'success') {
         $('#alert_toast').addClass('bg-info')
     if ($bg == 'warning')
         $('#alert_toast').addClass('bg-warning')
-    $('#alert_toast .toast-body').html($msg)
+
+    $('#alert_toast .toast-body').html($msg + '  <i class="fa-solid fa-circle-exclamation"></i> ');
+
     $('#alert_toast').toast({
         delay: 3000
     }).toast('show');
