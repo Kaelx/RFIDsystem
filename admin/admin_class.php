@@ -412,7 +412,8 @@ class Action
 				$chk = $this->db->query("SELECT * FROM records 
 											WHERE record_id = '" . $data['id'] . "' 
 											AND record_table = '" . $data['source_table'] . "' 
-											AND record_date IS NOT NULL 
+											AND record_date IS NOT NULL
+											AND record_date = CURRENT_DATE()
 											AND timein IS NOT NULL
 											AND timeout IS NULL");
 
@@ -421,6 +422,7 @@ class Action
 						SET timeout = CURRENT_TIMESTAMP() 
 						WHERE record_id = '" . $data['id'] . "' 
 						AND record_table = '" . $data['source_table'] . "'
+						AND record_date = CURRENT_DATE()
 						AND timeout IS NULL
 					");
 				} else {
