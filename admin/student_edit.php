@@ -319,6 +319,13 @@ $data = mysqli_fetch_assoc($query);
 
 
                         <div class="row">
+
+                            <div class="col-md-4 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
+                            </div>
+
+
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Program/Course</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
@@ -333,18 +340,10 @@ $data = mysqli_fetch_assoc($query);
                                 </select>
                             </div>
 
-                            <div class="col-md-4 form-group">
-                                <label for="dept_name">Department</label>
-                                <input type="hidden" class="form-control " name="dept_id" id="dept_id" required value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
-                                <input type="text" class="form-control " id="dept_name" required value="<?= isset($data['dept_name']) ? $data['dept_name'] : '' ?>" readonly>
-                            </div>
+                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" required value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
-                            </div>
 
                             <?php
                             $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");

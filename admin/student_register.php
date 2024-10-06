@@ -297,6 +297,12 @@
                         <hr>
 
                         <div class="row">
+
+                            <div class="col-md-4 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required>
+                            </div>
+
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Course/Program</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
@@ -310,19 +316,10 @@
                                 </select>
                             </div>
 
-
-                            <div class="col-md-4 form-group mb-0">
-                                <label for="dept_name">Department</label>
-                                <input type="hidden" name="dept_id" id="dept_id">
-                                <input class="form-control " type="text" name="dept_name_display" id="dept_name" readonly>
-                            </div>
+                            <input type="hidden" name="dept_id" id="dept_id">
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required>
-                            </div>
 
                             <?php
                             $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
