@@ -304,19 +304,13 @@
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="role_id">Type</label>
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <!-- Hidden input to store the role_id -->
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control " id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <!-- Hidden input to store the role_id -->
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
 
                         </div>
 

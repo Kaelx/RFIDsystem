@@ -317,35 +317,10 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                         </div>
 
+
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
-                            </div>
-
-
-
-
-
-
-                            <div class="col-md-4 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Type</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control " id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="prog_id">School Program/Course</label>
+                                <label for="prog_id">Program/Course</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
                                     <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled></option>
                                     <?php
@@ -364,6 +339,22 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " id="dept_name" required value="<?= isset($data['dept_name']) ? $data['dept_name'] : '' ?>" readonly>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
+                            </div>
+
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
+
+                        </div>
+
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>

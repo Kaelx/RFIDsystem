@@ -302,19 +302,12 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <hr>
-
-                        <div class="row">
-                            <div class="col-md-7 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Role</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-                                    <input type="text" class="form-control " id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
-                        </div>
+                        <?php
+                        $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
+                        while ($row = $type->fetch_assoc()) :
+                        ?>
+                            <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                        <?php endwhile; ?>
 
                         <div class="row">
                             <div class="col-md-2 form-group">

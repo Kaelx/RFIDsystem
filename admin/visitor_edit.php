@@ -313,18 +313,12 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Type</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control " id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
 
                         </div>
 

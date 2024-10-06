@@ -298,25 +298,6 @@
 
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="role_id">Type</label>
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-                                    <input type="text" class="form-control " id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
-
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-4 form-group">
                                 <label for="prog_id">Course/Program</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
                                     <option value="" selected disabled></option>
@@ -335,6 +316,21 @@
                                 <input type="hidden" name="dept_id" id="dept_id">
                                 <input class="form-control " type="text" name="dept_name_display" id="dept_name" readonly>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required>
+                            </div>
+
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 2 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
+
                         </div>
 
 

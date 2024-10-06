@@ -109,17 +109,6 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">School ID</p>
-                            <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Type</p>
-                            <p class="form-control " ><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
@@ -130,6 +119,13 @@ $data = mysqli_fetch_assoc($query);
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Department</p>
                             <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : '' ?></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 form-group mb-0">
+                            <p class="mb-2 text-bold">School ID</p>
+                            <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                         </div>
                     </div>
 
