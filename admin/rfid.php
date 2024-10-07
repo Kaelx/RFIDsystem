@@ -30,7 +30,7 @@
     }
 </style>
 
-<!-- <script>
+<script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
         preloader.style.transition = 'opacity 0.35s ease'; 
@@ -43,7 +43,7 @@
 </script>
 
 <div class="preloader flex-column justify-content-center align-items-center">
-</div> -->
+</div>
 
 
 
@@ -234,7 +234,6 @@
         if (e.which === 13) {
             e.preventDefault();
 
-            start_load();
             $.ajax({
                 url: 'ajax.php?action=fetch_data',
                 data: new FormData(this),
