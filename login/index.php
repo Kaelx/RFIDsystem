@@ -1,7 +1,52 @@
 <?php
-session_start();
 
-error_reporting(E_ALL);
+// disable on mobile devices
+$mobileAgents = [
+    'Android',
+    'iPhone',
+    'iPad',
+    'iPod',
+    'BlackBerry',
+    'BB10',
+    'IEMobile',
+    'Windows Phone',
+    'Opera Mini',
+    'Opera Mobi',
+    'Mobile',
+    'webOS',
+    'Fennec',
+    'Silk',
+    'Kindle',
+    'PlayBook',
+    'Nokia',
+    'Mobi',
+    'smartphone',
+    'tablet',
+    'iPad Pro',
+    'Macintosh; Intel Mac OS X'
+];
+
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+$isMobile = false;
+foreach ($mobileAgents as $agent) {
+    if (stripos($userAgent, $agent) !== false) {
+        $isMobile = true;
+        break;
+    }
+}
+
+if ($isMobile) {
+    echo "This website is not accessible on mobile devices.";
+    exit();
+}
+// disable on mobile devices
+
+
+
+
+session_start();
+error_reporting(0);
 
 include 'db_connect.php';
 
@@ -44,8 +89,8 @@ if (isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 0; padding: 1rem; z-index: 1050;">
-        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true" style="border: 1px solid #000;">
+    <div class="position-fixed" style="top:50px; right: 50px; padding: 1rem; z-index: 1050;">
+        <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body text-white" style="font-size:18px;">
             </div>
         </div>
@@ -82,25 +127,11 @@ include 'footer.php';
             $('#alert_toast').addClass('bg-info')
         if ($bg == 'warning')
             $('#alert_toast').addClass('bg-warning')
-        $('#alert_toast .toast-body').html($msg)
+        $('#alert_toast .toast-body').html($msg + '  <i class="fa-solid fa-circle-exclamation"></i> ')
         $('#alert_toast').toast({
             delay: 3000
         }).toast('show');
     }
-
-
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // Disable autocomplete for all forms
-        document.querySelectorAll('form').forEach((form) => {
-            form.setAttribute('autocomplete', 'off');
-        });
-
-        // Disable autocomplete for all input elements
-        document.querySelectorAll('input').forEach((input) => {
-            input.setAttribute('autocomplete', 'off');
-        });
-    });
 
 
 

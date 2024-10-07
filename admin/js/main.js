@@ -1,5 +1,5 @@
-// Check the state of the sidebar from localStorage
-if (localStorage.getItem('sidebarState') === 'collapsed') {
+//state of the sidebar
+if (sessionStorage.getItem('sidebarState') === 'collapsed') {
     $('body').addClass('sidebar-collapse');
 }
 
@@ -7,11 +7,12 @@ $('[data-widget="pushmenu"]').on('click', function () {
     var isCollapsed = $('body').hasClass('sidebar-collapse');
 
     if (isCollapsed) {
-        localStorage.setItem('sidebarState', 'expanded');
+        sessionStorage.setItem('sidebarState', 'expanded');
     } else {
-        localStorage.setItem('sidebarState', 'collapsed');
+        sessionStorage.setItem('sidebarState', 'collapsed');
     }
 });
+
 
 
 
@@ -39,10 +40,9 @@ function validateForm(form) {
     $(form).find('input').each(function () {
         // Skip validation for hidden fields like croppedImageData
         if ($(this).attr('type') === 'hidden' || $(this).attr('id') === 'croppedImageData') {
-            return; // Skip this field from validation
+            return;
         }
 
-        // Apply validation for other fields
         if (invalidPattern.test($(this).val())) {
             alert_toast('Invalid. Do not input special character!', 'danger');
             isValid = false;
@@ -78,8 +78,20 @@ window.alert_toast = function ($msg = 'TEST', $bg = 'success') {
         $('#alert_toast').addClass('bg-info')
     if ($bg == 'warning')
         $('#alert_toast').addClass('bg-warning')
-    $('#alert_toast .toast-body').html($msg)
+
+    $('#alert_toast .toast-body').html($msg + '  <i class="fa-solid fa-circle-exclamation"></i> ');
+
     $('#alert_toast').toast({
         delay: 3000
     }).toast('show');
 }
+
+
+
+$('input#bdate[type="date"]').each(function () {
+    const currentYear = new Date().getFullYear();
+    const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
+
+    $(this).attr('min', '1980-01-01');
+    $(this).attr('max', maxDate);
+});

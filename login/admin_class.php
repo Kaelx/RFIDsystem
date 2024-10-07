@@ -121,30 +121,14 @@ class Action{
 
 	function save_log($log) {
 
-		// Get user IP address
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-
-		$location = 'Unknown';  // Default location if API fails
-		$geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
-		if ($geo_data) {
-			$geo_data = json_decode($geo_data, true);
-			if ($geo_data['status'] === 'success') {
-				$location = $geo_data['city'] . ', ' . $geo_data['country'];
-			}
-		}
-
-		$info = $location;
-
-	
-		$qry = $this->db->query("INSERT INTO logs (user_id, action, ip_address, device_info) 
-								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "', '" . $ip_address . "', '" . $info . "')");
+		
+		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
+								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
 	
 		// Check for errors
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
-	
-		return $qry ? true : false;
 	}
 
 	

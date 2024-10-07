@@ -28,8 +28,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Email</th>
+                                    <th class="text-center w-25">Student ID</th>
+                                    <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-25">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,7 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=archived_student&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
+                                        <td><?= $row['school_id'];?></td>
                                         <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td><?= $row['email'] ?></td>
                                     </tr>
@@ -59,6 +61,10 @@
 <script>
     $('table').DataTable({
         ordering: false,
-        stateSave: true
+        stateSave: true,
+        layout: {
+                topStart: 'search',
+                topEnd: 'pageLength',
+            }
     });
 </script>

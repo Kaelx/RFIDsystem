@@ -30,6 +30,7 @@
     $('#import').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=import',
             data: new FormData($(this)[0]),

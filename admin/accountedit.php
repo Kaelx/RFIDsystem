@@ -1,13 +1,14 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT * from users where id = $uid");
-
-    $member = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=home');
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
 }
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT * from users where id = $uid and status = 0");
+$member = mysqli_fetch_assoc($query);
+
 ?>
 
 
@@ -243,15 +244,15 @@ if (isset($_GET['uid'])) {
                                 <div class="row">
                                     <div class="col-md-3 form-group">
                                         <label for="fname">First Name</label>
-                                        <input type="text" class="form-control form-control-sm" name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
+                                        <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="mname">Middle Name</label>
-                                        <input type="text" class="form-control form-control-sm" name="mname" id="mname" required value="<?= isset($member['mname']) ? $member['mname'] : '' ?>">
+                                        <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($member['mname']) ? $member['mname'] : '' ?>">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="lname">Last Name</label>
-                                        <input type="text" class="form-control form-control-sm" name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
+                                        <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
                                     </div>
                                 </div>
 
@@ -259,11 +260,11 @@ if (isset($_GET['uid'])) {
                                 <div class="row">
                                     <div class="col-md-2 form-group">
                                         <label for="bdate">Birthdate</label>
-                                        <input type="date" class="form-control form-control-sm" name="bdate" id="bdate" required value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
+                                        <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="gender">Gender</label>
-                                        <select class="form-control form-control-sm" name="gender" id="gender" required>
+                                        <select class="form-control " name="gender" id="gender" required>
                                             <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="male" <?= isset($member['gender']) && $member['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
                                             <option value="female" <?= isset($member['gender']) && $member['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
@@ -275,23 +276,23 @@ if (isset($_GET['uid'])) {
                                 <div class="row">
                                     <div class="col-md-3 form-group">
                                         <label for="address">Address</label>
-                                        <input type="text" class="form-control form-control-sm" name="address" id="address" required value="<?= isset($member['address']) ? $member['address'] : '' ?>">
+                                        <input type="text" class="form-control " name="address" id="address" required value="<?= isset($member['address']) ? $member['address'] : '' ?>">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="cellnum">Contact No.</label>
-                                        <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($member['cellnum']) ? $member['cellnum'] : '' ?>">
+                                        <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($member['cellnum']) ? $member['cellnum'] : '' ?>" oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                                     </div>
 
                                     <div class="col-md-3 form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control form-control-sm" name="email" id="email" required value="<?= isset($member['email']) ? $member['email'] : '' ?>">
+                                        <input type="email" class="form-control " name="email" id="email" required value="<?= isset($member['email']) ? $member['email'] : '' ?>">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="school_id">School ID</label>
-                                        <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
+                                        <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
                                     </div>
 
 
@@ -301,7 +302,7 @@ if (isset($_GET['uid'])) {
 
                                     <div class="col-md-4 form-group">
                                         <label for="account_type">Type</label>
-                                        <select class="form-control form-control-sm" name="account_type" id="account_type" required>
+                                        <select class="form-control " name="account_type" id="account_type" required>
                                             <option value="" disabled <?= !isset($member['account_type']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="1" <?= isset($member['account_type']) && $member['account_type'] == '1' ? 'selected' : '' ?>>Admin</option>
                                             <option value="2" <?= isset($member['account_type']) && $member['account_type'] == '2' ? 'selected' : '' ?>>Staff</option>
@@ -315,22 +316,22 @@ if (isset($_GET['uid'])) {
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="username">username</label>
-                                        <input type="username" class="form-control form-control-sm" name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>" required>
+                                        <input type="username" class="form-control " name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>" required>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control form-control-sm" name="password" id="password">
+                                        <input type="password" class="form-control " name="password" id="password">
                                         <small class="text-italic text-danger">*Leave blank if don't want to change password.</small>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div>
-                                            <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                            <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Back</button>
+                                            <button class="btn btn-danger btn-custom archive_user" type="button" data-id="<?php echo $member['id'] ?>"><i class="fa-solid fa-user-slash"></i> Archive</button>
                                         </div>
                                         <div>
-                                            <button class="btn btn-danger btn-custom archive_user" type="button" data-id="<?php echo $member['id'] ?>">Archive</button>
+                                            <button type="submit" class="btn btn-primary btn-custom">Save</button>
+                                            <button onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Back</button>
                                         </div>
                                     </div>
                                 </div>
@@ -352,6 +353,7 @@ if (isset($_GET['uid'])) {
     $('#register').submit(function(e) {
         e.preventDefault()
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=adduser',
             data: new FormData($(this)[0]),
@@ -395,6 +397,7 @@ if (isset($_GET['uid'])) {
 
     function archive_user($id) {
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_user',
             method: 'POST',

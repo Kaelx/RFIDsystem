@@ -1,10 +1,10 @@
 <?php
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index.php?page=visitor_data');
+    exit();
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT s.*, r.role_name, 'visitors' as type
+$query = $conn->query("SELECT s.*, r.role_name, 'visitor' as type
     FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
@@ -42,24 +42,24 @@ $data = mysqli_fetch_assoc($query);
                     <div class="row">
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">First Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Middle Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Last Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Birthdate</p>
-                            <p type="date" class="form-control form-control-sm">
+                            <p type="date" class="form-control ">
                                 <?php
                                 if (isset($data['bdate'])) {
                                     $date = new DateTime($data['bdate']);
@@ -72,53 +72,41 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Address</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Contact No.</p>
-                            <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
+                            <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Email</p>
-                            <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
+                            <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
                         </div>
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
-                        </div>
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Address of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Type</p>
-                            <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group">
                             <label for="rfid">RFID</label>
-                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                            <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                         </div>
                     </div>
 
@@ -149,6 +137,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function archive_visitor($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_visitor',
             method: 'POST',

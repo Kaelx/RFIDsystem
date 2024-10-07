@@ -1,8 +1,5 @@
 <?php
 
-if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index');
-}
 
 $uid = $_GET['uid'];
 $type = $_GET['type'];
@@ -29,7 +26,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                         <?php
                         switch ($type) {
-                            case 'students':
+                            case 'student':
                                 $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
                         FROM students s
                         LEFT JOIN role r ON s.role_id = r.id
@@ -37,7 +34,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
-                            case 'employees':
+                            case 'employee':
                                 $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                         FROM employees e
                         LEFT JOIN role r ON e.role_id = r.id
@@ -45,7 +42,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
-                            case 'visitors':
+                            case 'visitor':
                                 $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
                         FROM visitors v
                         LEFT JOIN role r ON v.role_id = r.id
@@ -96,7 +93,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 <label for="end_date" class="mr-2">To </label>
                                                 <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2 mr-2">Search</button>
+                                            <button type="submit" class="btn btn-primary mb-2 mr-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
                                         </form>
                                     </div>
 
@@ -120,7 +117,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">#</th>
-                                                    <th class="text-center">Name</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
@@ -137,9 +133,9 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                                 COALESCE(s.school_id, e.school_id, NULL) AS school_id,
                                                                 COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
                                                             FROM records r
-                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
-                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
-                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
+                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
                                                             LEFT JOIN role r_s ON s.role_id = r_s.id
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id
@@ -149,8 +145,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 
                                                 if (!empty($start_date) && !empty($end_date)) {
-                                                    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'
-                                                        AND DATE(r.timeout) BETWEEN '$start_date' AND '$end_date'";
+                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
+                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
                                                 $query .= " ORDER BY r.id DESC";
@@ -159,53 +155,16 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $i = 1;
                                                 while ($row = $result->fetch_assoc()):
+                                                    $timein = new DateTime($row['timein']);
+                                                    $timeout = isset($row['timeout']) ? new DateTime($row['timeout']) : null;
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
-                                                        <td class="text-center"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            $date = new DateTime($row['record_date']);
-                                                            echo $date->format('F j, Y');
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            $timein = new DateTime($row['timein']);
-                                                            echo $timein->format('g:i A');
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            if (!empty($row['timeout'])) {
-                                                                $timeout = new DateTime($row['timeout']);
-                                                                echo $timeout->format('g:i A');
-                                                            } else {
-                                                                echo '------';
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <?php
-                                                            if (!empty($row['timein']) && !empty($row['timeout'])) {
-                                                                $timein = strtotime($row['timein']);
-                                                                $timeout = strtotime($row['timeout']);
-
-                                                                $duration_in_seconds = $timeout - $timein;
-
-                                                                $hours = floor($duration_in_seconds / 3600);
-                                                                $minutes = floor(($duration_in_seconds % 3600) / 60);
-
-                                                                echo $hours . ' hours, ' . $minutes . ' minutes';
-                                                            } else {
-                                                                echo ' ------ ';
-                                                            }
-                                                            ?>
-                                                        </td>
-
-
+                                                        <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
+                                                        <td class="text-center"><?= $timein->format('h:i A'); ?></td>
+                                                        <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
+                                                        <td class="text-center"><?= $timeout ? $timein->diff($timeout)->format('%h hours %i minutes') : '------'; ?></td>
                                                     </tr>
-
                                                 <?php endwhile; ?>
                                             </tbody>
                                         </table>
@@ -216,7 +175,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         </div>
 
                         <div class="m-3 text-right">
-                            <button id="generate-reportv2" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
+                            <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Generate Report</button>
                             <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
                         </div>
                     </div>
@@ -291,12 +250,12 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
         }
 
 
-        $('#generate-reportv2').click(function() {
+        $('#generate-report').click(function() {
             var uid = "<?php echo $uid; ?>";
             var type = "<?php echo $type; ?>";
             var startDate = $('#start_date').val();
             var endDate = $('#end_date').val();
 
-            window.location.href = `index.php?page=generate_reportv2&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+            window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         });
     </script>

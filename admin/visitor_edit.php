@@ -1,17 +1,18 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT s.*, r.role_name 
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
+}
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT s.*, r.role_name 
     FROM visitors s 
     LEFT JOIN role r ON s.role_id = r.id 
     WHERE s.id = $uid 
     ORDER BY s.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=visitor_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 
@@ -45,6 +46,16 @@ if (isset($_GET['uid'])) {
         opacity: 0.7;
     }
 </style>
+
+
+
+<!-- RFID Placeholder (initially hidden) -->
+<div id="rfid_placeholder" class="d-none position-absolute"
+    style="top: 0; left: 0; right: 0; bottom: 0; width: 100%; background-color: rgba(108, 117, 125, 0.5); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-barcode" style="font-size: 200px;"></i>
+    <span style="margin-top: 8px; font-size: 32px; font-weight:bold;">Scan RFID</span>
+</div>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -243,15 +254,15 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control form-control-sm" name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
+                                <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control form-control-sm" name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
+                                <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control form-control-sm" name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                                <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
                             </div>
                         </div>
 
@@ -259,11 +270,11 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control form-control-sm" name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
+                                <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control form-control-sm" name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender" required>
                                     <option value="" disabled>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
@@ -274,46 +285,36 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control form-control-sm" name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                                <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
 
                             <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control form-control-sm" name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+                                <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
+                                <input type="text" class="form-control " name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>">
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required value="<?= isset($data['parent_address']) ? $data['parent_address'] : '' ?>">
+                                <input type="number" class="form-control " name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'visitor' or 'visitors' ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Type</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
 
                         </div>
 
@@ -321,7 +322,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
+                                <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -341,33 +342,6 @@ if (isset($_GET['uid'])) {
 </div>
 
 <script>
-    $('#prog_id').change(function() {
-        var prog_id = $(this).val();
-
-        $.ajax({
-            url: 'ajax.php?action=get_department',
-            type: 'POST',
-            data: {
-                prog_id: prog_id
-            },
-            success: function(response) {
-                var result = JSON.parse(response);
-
-                console.log(response);
-
-                // Set the hidden dept_id
-                $('#dept_id').val(result.dept_id);
-                // Set the visible dept_name
-                $('#dept_name').val(result.dept_name);
-
-            }
-        });
-    });
-
-
-
-
-
     $('#register').submit(function(e) {
         e.preventDefault()
 
@@ -377,6 +351,7 @@ if (isset($_GET['uid'])) {
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register3',
             data: new FormData($(this)[0]),
@@ -394,16 +369,19 @@ if (isset($_GET['uid'])) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=visitor_data'
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.href = 'index.php?page=visitor_view&uid=' + <?= $data['id'] ?>
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -411,4 +389,16 @@ if (isset($_GET['uid'])) {
             }
         })
     })
+
+
+    $('#rfid').on('focus', function() {
+        $(this).val('');
+        $('.content-wrapper').css('filter', 'blur(8px)');
+        $('#rfid_placeholder').removeClass('d-none');
+    });
+
+    $('#rfid').on('blur', function() {
+        $('.content-wrapper').css('filter', 'none');
+        $('#rfid_placeholder').addClass('d-none');
+    });
 </script>

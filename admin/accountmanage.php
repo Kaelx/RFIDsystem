@@ -10,11 +10,10 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <!-- button -->
+                    <div class="text-right">
+                        <div>
                             <a href="index.php?page=accountadduser" class="btn btn-primary mr-3"><i class="fa-solid fa-user-pen"></i> Add user</a>
-                            <a href="index.php?page=accountmanage_archive" class="btn btn-danger"><i class="fa-solid fa-file-zipper"></i> Archived</a>
+                            <a href="index.php?page=accountmanage_archive" class="btn btn-info"><i class="fa-solid fa-file-zipper"></i> Archived</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -39,7 +38,7 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=accountedit&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?php echo $i++; ?></td>
-                                        <td class="text-center"><?php echo $row['school_id'];?></td>
+                                        <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td><?php echo $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
                                         <td><?php echo ($row['account_type'] == 1) ? 'Admin' : (($row['account_type'] == 2) ? 'Staff' : 'Security Personnel'); ?></td>
@@ -60,10 +59,14 @@
 <script>
     $('table').DataTable({
         ordering: false,
-        lengthChange: false
+        lengthChange: false,
+        layout: {
+            topStart: 'search',
+            topEnd: null,
+        }
     });
 
-    $('#archive_user').click(function(){
+    $('#archive_user').click(function() {
         alert('Archive');
     });
 </script>

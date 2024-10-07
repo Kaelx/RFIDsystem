@@ -4,7 +4,7 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, 'students' as type
+$query = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name, 'student' as type
     FROM students s 
     LEFT JOIN department d ON s.dept_id = d.id 
     LEFT JOIN program p ON s.prog_id = p.id
@@ -44,24 +44,24 @@ $data = mysqli_fetch_assoc($query);
                     <div class="row">
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">First Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Middle Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Last Name</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Birthdate</p>
-                            <p class="form-control form-control-sm">
+                            <p class="form-control ">
                                 <?php
                                 if (isset($data['bdate'])) {
                                     $date = new DateTime($data['bdate']);
@@ -74,75 +74,64 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Address</p>
-                            <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
+                            <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
                         </div>
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Contact No.</p>
-                            <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
+                            <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Email</p>
-                            <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
+                            <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
                         </div>
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
                         </div>
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Address of Parent/Guardian</p>
-                            <p class="form-control form-control-sm"><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
                         </div>
                     </div>
+
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">School ID</p>
-                            <p class="form-control form-control-sm"><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                         </div>
 
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Type</p>
-                            <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Program/Course</p>
-                            <p class="form-control form-control-sm"><?= isset($data['prog_name']) ? $data['prog_name'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Department</p>
-                            <p class="form-control form-control-sm" readonly><?= isset($data['dept_name']) ? $data['dept_name'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['prog_name']) ? $data['prog_name'] : '' ?></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group">
                             <label for="rfid">RFID</label>
-                            <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                            <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                         </div>
                     </div>
 
                     <div class="row mt-2">
                         <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info">Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <button class="btn btn-danger btn-custom unarchive_student" type="button" data-id="<?php echo $data['id'] ?>">Unarchive</button>
@@ -166,6 +155,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function unarchive_student($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=unarchive_student',
             method: 'POST',
@@ -176,7 +167,7 @@ $data = mysqli_fetch_assoc($query);
                 if (resp == 1) {
                     alert_toast("Data successfully unarchive", 'warning')
                     setTimeout(function() {
-                        window.history.back(); 
+                        window.history.back();
                         return false;
                     }, 1000)
 

@@ -1,8 +1,52 @@
 <?php
-session_start();
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// disable on mobile devices
+$mobileAgents = [
+  'Android',
+  'iPhone',
+  'iPad',
+  'iPod',
+  'BlackBerry',
+  'BB10',
+  'IEMobile',
+  'Windows Phone',
+  'Opera Mini',
+  'Opera Mobi',
+  'Mobile',
+  'webOS',
+  'Fennec',
+  'Silk',
+  'Kindle',
+  'PlayBook',
+  'Nokia',
+  'Mobi',
+  'smartphone',
+  'tablet',
+  'iPad Pro',
+  'Macintosh; Intel Mac OS X'
+];
+
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+$isMobile = false;
+foreach ($mobileAgents as $agent) {
+  if (stripos($userAgent, $agent) !== false) {
+    $isMobile = true;
+    break;
+  }
+}
+
+if ($isMobile) {
+  echo "This website is not accessible on mobile devices.";
+  exit();
+}
+// disable on mobile devices
+
+
+
+
+session_start();
+error_reporting(0);
 
 include 'db_connect.php';
 
@@ -167,7 +211,7 @@ if (!isset($_SESSION['login_id'])) {
 
               <li class="nav-item">
                 <a href="index.php?page=system_log" class="nav-link">
-                  <i class="fa-solid fa-box nav-icon"></i>
+                  <i class="fa-solid fa-font-awesome nav-icon"></i>
                   <p>
                     Audit Log
                   </p>
@@ -185,8 +229,8 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:30px; right: 0; padding: 1rem; z-index: 1050;">
-      <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true" style="border: 1px solid #000;">
+    <div class="position-fixed" style="top:25px; right: 25px; padding: 1rem; z-index: 99999;">
+      <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
       </div>

@@ -11,9 +11,9 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
-    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'students'
-    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employees'
-    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitors'
+    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
@@ -23,7 +23,7 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
 
 // Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
-    $query .= " AND DATE(r.timein) BETWEEN '$start_date' AND '$end_date'";
+    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
 }
 
 // Add filter for type if set
@@ -45,11 +45,11 @@ $cats = $conn->query($query);
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
-            <!-- <div class="row">
-                <div class="col-sm-6">
-                    <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-file-export"></i> Generate Report</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="index.php?page=attendance_report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Attendance Report</a>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -71,7 +71,7 @@ $cats = $conn->query($query);
                                     <input type="date" name="end_date" id="end_date" class="form-control"
                                         value="<?= $end_date; ?>">
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                                <button type="submit" class="btn btn-primary mb-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
                             </form>
                         </div>
 
@@ -85,7 +85,7 @@ $cats = $conn->query($query);
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
                                     </ul>
                                 </div>
-                                <button type="button" class="btn btn-default ml-3" id="clear-filters">Reset</button>
+                                <button type="button" class="btn btn-danger ml-3" id="clear-filters"> <i class="fa-solid fa-rotate"></i> </button>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ $cats = $conn->query($query);
                                 ?>
                                     <tr>
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'Visitor'); ?></td>
+                                        <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td>

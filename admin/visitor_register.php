@@ -30,6 +30,15 @@
 </style>
 
 
+
+<!-- RFID Placeholder (initially hidden) -->
+<div id="rfid_placeholder" class="d-none position-absolute"
+    style="top: 0; left: 0; right: 0; bottom: 0; width: 100%; background-color: rgba(108, 117, 125, 0.5); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-barcode" style="font-size: 200px;"></i>
+    <span style="margin-top: 8px; font-size: 32px; font-weight:bold;">Scan RFID</span>
+</div>
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -231,15 +240,15 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control form-control-sm" name="fname" id="fname" required>
+                                <input type="text" class="form-control " name="fname" id="fname" required>
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control form-control-sm" name="mname" id="mname" required>
+                                <input type="text" class="form-control " name="mname" id="mname" required>
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control form-control-sm" name="lname" id="lname" required>
+                                <input type="text" class="form-control " name="lname" id="lname" required>
                             </div>
                         </div>
 
@@ -247,11 +256,11 @@
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control form-control-sm" name="bdate" id="bdate" required>
+                                <input type="date" class="form-control " name="bdate" id="bdate" required>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control form-control-sm" name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender" required>
                                     <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -262,16 +271,16 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control form-control-sm" name="address" id="address" required>
+                                <input type="text" class="form-control " name="address" id="address" required>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required>
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
 
                             <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control form-control-sm" name="email" id="email" required>
+                                <input type="email" class="form-control " name="email" id="email" required>
                             </div>
                         </div>
 
@@ -280,34 +289,24 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_name" id="parent_name" required>
+                                <input type="text" class="form-control " name="parent_name" id="parent_name" required>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control form-control-sm" name="parent_num" id="parent_num" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control form-control-sm" name="parent_address" id="parent_address" required>
+                                <input type="number" class="form-control " name="parent_num" id="parent_num" required required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                         </div>
 
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="role_id">Type</label>
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'visitor' or 'visitors' ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <!-- Hidden input to store the role_id -->
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
+                            <?php
+                            $type = $conn->query("SELECT * FROM role WHERE id = 3 ORDER BY id ASC");
+                            while ($row = $type->fetch_assoc()) :
+                            ?>
+                                <!-- Hidden input to store the role_id -->
+                                <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                            <?php endwhile; ?>
 
                         </div>
 
@@ -315,7 +314,7 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" required>
                             </div>
                         </div>
                         <div class="text-center">
@@ -340,6 +339,7 @@
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register3',
             data: new FormData($(this)[0]),
@@ -365,6 +365,9 @@
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -372,4 +375,17 @@
             }
         })
     })
+
+
+
+    $('#rfid').on('focus', function() {
+        $(this).val('');
+        $('.content-wrapper').css('filter', 'blur(8px)');
+        $('#rfid_placeholder').removeClass('d-none');
+    });
+
+    $('#rfid').on('blur', function() {
+        $('.content-wrapper').css('filter', 'none');
+        $('#rfid_placeholder').addClass('d-none');
+    });
 </script>

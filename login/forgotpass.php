@@ -70,7 +70,7 @@
                     <form accept="#" id="forgot-pass">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required autofocus>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required autofocus autocomplete="on">
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Recover</button>

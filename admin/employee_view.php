@@ -1,12 +1,12 @@
 <?php
 
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index.php?page=employee_data');
+    exit();
 }
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name , 'employees' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name , 'employee' as type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -50,24 +50,24 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">First Name</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
+                                <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
                             </div>
 
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Middle Name</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                                <p type="text" class="form-control "><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
                             </div>
 
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Last Name</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                                <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Birthdate</p>
-                                <p type="date" class="form-control form-control-sm">
+                                <p type="date" class="form-control ">
                                     <?php
                                     if (isset($data['bdate'])) {
                                         $date = new DateTime($data['bdate']);
@@ -79,7 +79,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Gender</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
+                                <p type="text" class="form-control "><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                             </div>
 
                         </div>
@@ -87,16 +87,16 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Address</p>
-                                <p type="text" class="form-control form-control-sm"><?= isset($data['address']) ? $data['address'] : '' ?></p>
+                                <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
                             </div>
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Contact No.</p>
-                                <p type="number" class="form-control form-control-sm"><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
+                                <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
 
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Email</p>
-                                <p type="email" class="form-control form-control-sm"><?= isset($data['email']) ? $data['email'] : '' ?></p>
+                                <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
                             </div>
                         </div>
 
@@ -104,31 +104,24 @@ $data = mysqli_fetch_assoc($query);
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-6 form-group mb-0">
-                                <p class="mb-2 text-bold">Role</p>
-                                <p class="form-control form-control-sm" readonly><?= isset($data['role_name']) ? $data['role_name'] : '' ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Employee Type</p>
-                                <p class="form-control form-control-sm"><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
-                            </div>
                             <div class="col-md-2 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
-                                <p class="form-control form-control-sm"><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : '' ?></p>
+                                <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
+                                <p class="mb-2 text-bold">Type</p>
+                                <p class="form-control "><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : 'N/A' ?></p>
+                            </div>
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Department</p>
-                                <p class="form-control form-control-sm"><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
+                                <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">School ID</p>
-                                <p class="form-control form-control-sm"><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
+                                <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                             </div>
                         </div>
 
@@ -136,7 +129,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
+                                <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                             </div>
                         </div>
                     </form>
@@ -168,6 +161,8 @@ $data = mysqli_fetch_assoc($query);
     });
 
     function archive_employee($id) {
+
+        start_load();
         $.ajax({
             url: 'ajax.php?action=archive_employee',
             method: 'POST',

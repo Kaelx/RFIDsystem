@@ -25,12 +25,6 @@ if($action == "save_category3"){
 }
 
 
-if($action == "delete_category"){
-	$save = $crud->delete_category();
-	if($save)
-		echo $save;
-}
-
 if($action == "delete_category2"){
 	$save = $crud->delete_category2();
 	if($save)

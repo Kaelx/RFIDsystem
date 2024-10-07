@@ -1,8 +1,12 @@
 <?php
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    $query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name
+if (!isset($_GET['uid']) || empty($_GET['uid'])) {
+    exit();
+}
+
+$uid = $_GET['uid'];
+
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -11,10 +15,8 @@ if (isset($_GET['uid'])) {
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
-    $data = mysqli_fetch_assoc($query);
-} else {
-    header('location: index.php?page=employee_data');
-}
+$data = mysqli_fetch_assoc($query);
+
 ?>
 
 <style>
@@ -47,6 +49,15 @@ if (isset($_GET['uid'])) {
         opacity: 0.7;
     }
 </style>
+
+
+<!-- RFID Placeholder (initially hidden) -->
+<div id="rfid_placeholder" class="d-none position-absolute"
+    style="top: 0; left: 0; right: 0; bottom: 0; width: 100%; background-color: rgba(108, 117, 125, 0.5); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <i class="fa-solid fa-barcode" style="font-size: 200px;"></i>
+    <span style="margin-top: 8px; font-size: 32px; font-weight:bold;">Scan RFID</span>
+</div>
+
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -245,15 +256,15 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control form-control-sm" name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
+                                <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control form-control-sm" name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
+                                <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control form-control-sm" name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                                <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
                             </div>
                         </div>
 
@@ -261,11 +272,11 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control form-control-sm" name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
+                                <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control form-control-sm" name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender" required>
                                     <option value="" disabled>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
@@ -277,40 +288,31 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control form-control-sm" name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                                <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control form-control-sm" name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
 
                             <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control form-control-sm" name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+                                <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
                             </div>
                         </div>
 
                         <hr>
-
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <?php
-                                $type = $conn->query("SELECT * FROM role WHERE role_name = 'employee' or 'employees' ORDER BY id ASC");
-                                while ($row = $type->fetch_assoc()) :
-                                ?>
-                                    <label for="role_id">Role</label>
-                                    <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
-
-                                    <!-- Read-only input to display the role_name -->
-                                    <input type="text" class="form-control form-control-sm" id="role_id" value="<?= $row['role_name'] ?>" readonly>
-                                <?php endwhile; ?>
-                            </div>
-                        </div>
+                        <?php
+                        $type = $conn->query("SELECT * FROM role WHERE id = 1 ORDER BY id ASC");
+                        while ($row = $type->fetch_assoc()) :
+                        ?>
+                            <input type="hidden" name="role_id" value="<?= $row['id'] ?>">
+                        <?php endwhile; ?>
 
                         <div class="row">
                             <div class="col-md-2 form-group">
-                                <label for="type_id">Employee Type</label>
-                                <select class="form-control form-control-sm" name="type_id" id="type_id" required>
+                                <label for="type_id">Position</label>
+                                <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" <?= !isset($data['employee_type_id']) || $data['employee_type_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM employee_type ORDER BY id ASC");
@@ -324,9 +326,9 @@ if (isset($_GET['uid'])) {
 
 
                             <div class="col-md-2 form-group">
-                                <label for="lvl_id">Position</label>
-                                <select class="form-control form-control-sm" name="lvl_id" id="lvl_id" required>
-                                    <option value="" <?= !isset($data['employee_lvl_id']) || $data['employee_lvl_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
+                                <label for="lvl_id">Type</label>
+                                <select class="form-control " name="lvl_id" id="lvl_id" required>
+                                    <option value="" disabled <?= !isset($data['employee_lvl_id']) || $data['employee_lvl_id'] == '' ? 'selected' : '' ?>>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM employee_lvl ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
@@ -337,9 +339,9 @@ if (isset($_GET['uid'])) {
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
-                                <select class="form-control form-control-sm" name="dept_id" id="dept_id">
+                                <select class="form-control " name="dept_id" id="dept_id">
                                     <option value="" <?= !isset($data['employee_dept_id']) || $data['employee_dept_id'] == '' ? 'selected' : '' ?>>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM department ORDER BY id ASC");
@@ -356,7 +358,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="school_id">School ID</label>
-                                <input type="text" class="form-control form-control-sm" name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
+                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
                             </div>
 
 
@@ -365,7 +367,7 @@ if (isset($_GET['uid'])) {
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control form-control-sm" name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
+                                <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -385,32 +387,6 @@ if (isset($_GET['uid'])) {
 </div>
 
 <script>
-    $('#prog_id').change(function() {
-        var prog_id = $(this).val();
-
-        $.ajax({
-            url: 'ajax.php?action=get_department',
-            type: 'POST',
-            data: {
-                prog_id: prog_id
-            },
-            success: function(response) {
-                var result = JSON.parse(response);
-
-                console.log(response);
-
-                // Set the hidden dept_id
-                $('#dept_id').val(result.dept_id);
-                // Set the visible dept_name
-                $('#dept_name').val(result.dept_name);
-
-            }
-        });
-    });
-
-
-
-
 
     $('#register').submit(function(e) {
         e.preventDefault()
@@ -420,6 +396,7 @@ if (isset($_GET['uid'])) {
             return;
         }
 
+        start_load();
         $.ajax({
             url: 'ajax.php?action=register2',
             data: new FormData($(this)[0]),
@@ -437,16 +414,19 @@ if (isset($_GET['uid'])) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_data'
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.href = 'index.php?page=employee_view&uid=' + <?= $data['id'] ?>
-                    }, 1000)
+                    }, 1500)
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -454,4 +434,16 @@ if (isset($_GET['uid'])) {
             }
         })
     })
+
+
+    $('#rfid').on('focus', function() {
+        $(this).val('');
+        $('.content-wrapper').css('filter', 'blur(8px)');
+        $('#rfid_placeholder').removeClass('d-none');
+    });
+
+    $('#rfid').on('blur', function() {
+        $('.content-wrapper').css('filter', 'none');
+        $('#rfid_placeholder').addClass('d-none');
+    });
 </script>
