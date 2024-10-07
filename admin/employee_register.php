@@ -296,7 +296,7 @@
 
                         <div class="row">
                             <div class="col-md-2 form-group">
-                                <label for="type_id">Employee Type</label>
+                                <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
                                     <?php
@@ -309,7 +309,7 @@
                             </div>
 
                             <div class="col-md-2 form-group">
-                                <label for="lvl_id">Position</label>
+                                <label for="lvl_id">Type</label>
                                 <select class="form-control " name="lvl_id" id="lvl_id" required>
                                     <option value="" selected disabled>-- Select --</option>
                                     <?php

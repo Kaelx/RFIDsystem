@@ -105,11 +105,11 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="row">
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Employee Type</p>
+                                <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
                             </div>
                             <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Position</p>
+                                <p class="mb-2 text-bold">Type</p>
                                 <p class="form-control "><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : 'N/A' ?></p>
                             </div>
                             <div class="col-md-3 form-group mb-0">
