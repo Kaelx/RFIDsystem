@@ -288,10 +288,6 @@
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
                                 <input type="number" class="form-control " name="parent_num" id="parent_num" required required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control " name="parent_address" id="parent_address" required>
-                            </div>
                         </div>
 
                         <hr>

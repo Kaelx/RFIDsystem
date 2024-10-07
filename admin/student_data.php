@@ -7,8 +7,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="container-fluid d-flex flex-column" style="height:800px;">
-            <div class="card flex-grow-1">
+        <div class="container-fluid">
+            <div class="card">
                 <div class="card-body">
 
                     <div class="row">
@@ -58,7 +58,7 @@
             </div>
 
             <!-- Department Section -->
-            <div class="row" style="margin-top: auto;">
+            <div class="row">
                 <?php
                 $sql = $conn->query("SELECT d.*, COUNT(CASE WHEN s.status = 0 THEN 1 END) AS student_count 
                     FROM department d

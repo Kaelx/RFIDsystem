@@ -188,7 +188,6 @@ class Action
 		$data .= ", email = '$email' ";
 		$data .= ", parent_name = '$parent_name' ";
 		$data .= ", parent_num = '$parent_num' ";
-		$data .= ", parent_address = '$parent_address' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";
@@ -356,7 +355,6 @@ class Action
 		$data .= ", email = '$email' ";
 		$data .= ", parent_name = '$parent_name' ";
 		$data .= ", parent_num = '$parent_num' ";
-		$data .= ", parent_address = '$parent_address' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 

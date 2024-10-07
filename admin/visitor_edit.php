@@ -306,10 +306,6 @@ $data = mysqli_fetch_assoc($query);
                                 <label for="parent_num">Contact No. of Parent/Guardian</label>
                                 <input type="number" class="form-control " name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_address">Address of Parent/Guardian</label>
-                                <input type="text" class="form-control " name="parent_address" id="parent_address" required value="<?= isset($data['parent_address']) ? $data['parent_address'] : '' ?>">
-                            </div>
                         </div>
 
                         <div class="row">
@@ -346,7 +342,6 @@ $data = mysqli_fetch_assoc($query);
 </div>
 
 <script>
-
     $('#register').submit(function(e) {
         e.preventDefault()
 
