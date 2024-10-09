@@ -22,7 +22,8 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center w-50">Name</th>
-                                    <th class="text-center w-50">Email</th>
+                                    <th class="text-center w-25">Address</th>
+                                    <th class="text-center w-25">Contact No.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,8 +43,9 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=visitor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left w-50"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class="text-left w-50"><?php echo $row['email']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['address']; ?></td>
+                                        <td class="text-left"><?php echo $row['cellnum']; ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>

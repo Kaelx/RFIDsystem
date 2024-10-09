@@ -103,10 +103,6 @@ $data = mysqli_fetch_assoc($query);
                             <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
                             <p class="form-control "><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
                         </div>
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Address of Parent/Guardian</p>
-                            <p class="form-control "><?= isset($data['parent_address']) ? $data['parent_address'] : '' ?></p>
-                        </div>
                     </div>
 
 

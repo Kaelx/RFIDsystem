@@ -348,13 +348,9 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
-		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
-		$data .= ", parent_name = '$parent_name' ";
-		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 

@@ -58,19 +58,6 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-2 form-group mb-0">
-                            <p class="mb-2 text-bold">Birthdate</p>
-                            <p type="date" class="form-control ">
-                                <?php
-                                if (isset($data['bdate'])) {
-                                    $date = new DateTime($data['bdate']);
-                                    echo $date->format('F j, Y');
-                                } else {
-                                    echo '';
-                                }
-                                ?>
-                            </p>
-                        </div>
-                        <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Gender</p>
                             <p type="text" class="form-control "><?= isset($data['gender']) ? ucfirst($data['gender']) : '' ?></p>
                         </div>
@@ -84,22 +71,6 @@ $data = mysqli_fetch_assoc($query);
                         <div class="col-md-2 form-group mb-0">
                             <p class="mb-2 text-bold">Contact No.</p>
                             <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Email</p>
-                            <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
-                            <p class="form-control "><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
-                        </div>
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
-                            <p class="form-control "><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
                         </div>
                     </div>
 

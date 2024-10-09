@@ -269,10 +269,6 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="row">
                             <div class="col-md-2 form-group">
-                                <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
-                            </div>
-                            <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
                                 <select class="form-control " name="gender" id="gender" required>
                                     <option value="" disabled>-- Select --</option>
@@ -290,21 +286,6 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
                                 <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
-                            </div>
-
-                            <div class="col-md-3 form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control " name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control " name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                         </div>
 
