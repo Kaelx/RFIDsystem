@@ -46,7 +46,7 @@ if ($isMobile) {
 
 
 session_start();
-error_reporting(0);
+error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -154,9 +154,15 @@ if (!isset($_SESSION['login_id'])) {
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
               <li class="nav-item">
-                <a href="index.php?page=rfid" class="nav-link">
+                <a href="index.php?page=rfid_in" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
-                  <p>Scan RFID</p>
+                  <p>Scan IN</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.php?page=rfid_out" class="nav-link">
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>Scan OUT</p>
                 </a>
               </li>
             <?php endif; ?>

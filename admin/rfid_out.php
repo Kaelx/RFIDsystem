@@ -235,7 +235,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: 'ajax.php?action=fetch_data',
+                url: 'ajax.php?action=fetch_data_out',
                 data: new FormData(this),
                 cache: false,
                 contentType: false,

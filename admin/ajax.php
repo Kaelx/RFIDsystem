@@ -72,12 +72,24 @@ if($action == "adduser"){
 }
 
 
-if($action == "fetch_data"){
-	$save = $crud->fetch_data();
+if($action == "fetch_data_in"){
+	$save = $crud->fetch_data_in();
 	if($save)
 		echo $save;
 }
 
+if($action == "fetch_data_out"){
+	$save = $crud->fetch_data_out();
+	if($save)
+		echo $save;
+}
+
+
+if($action == "request_report"){
+	$save = $crud->request_report();
+	if($save)
+		echo $save;
+}
 // if($action == "import"){
 // 	$save = $crud->import();
 // 	if($save)
