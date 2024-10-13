@@ -272,7 +272,6 @@ class Action
 		
 
 		$data .= ", employee_type_id = '$type_id' ";
-		$data .= ", employee_lvl_id = '$lvl_id' ";
 		$data .= ", employee_dept_id = '$dept_id' ";
 
 		$data .= ", school_id = '$school_id' ";

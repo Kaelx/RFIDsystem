@@ -18,10 +18,9 @@ WHERE s.id = '$uid'
     break;
 
   case 'employee':
-    $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, el.employee_lvl, et.employee_type, r.role_name, e.rfid, e.img_path, e.gender
+    $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, et.employee_type, r.role_name, e.rfid, e.img_path, e.gender
 FROM employees e
 LEFT JOIN role r ON e.role_id = r.id
-LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
 LEFT JOIN employee_type et ON e.employee_type_id = et.id
 WHERE e.id = '$uid'
 ";
@@ -109,9 +108,7 @@ $result_records = $conn->query($query_records);
               <p style="margin-bottom: 5px;"><?= isset($member['school_id']) ? $member['school_id'] : ''; ?></p>
               <p style="margin-bottom: 5px;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
               <?php if (!empty($member['employee_type'])): ?>
-                <p style="margin-bottom: 5px;"><?= $member['employee_type']; ?>
-                  <span>(<?= isset($member['employee_lvl']) ? $member['employee_lvl'] : ''; ?>)</span>
-                </p>
+                <p style="margin-bottom: 5px;"><?= $member['employee_type']; ?></p>
               <?php endif; ?>
             </div>
           </div>

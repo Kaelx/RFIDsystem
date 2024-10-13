@@ -308,19 +308,6 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
-                                <label for="lvl_id">Type</label>
-                                <select class="form-control " name="lvl_id" id="lvl_id" required>
-                                    <option value="" selected disabled>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM employee_lvl  ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                    ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['employee_lvl'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
                             <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
                                 <select class="form-control " name="dept_id" id="dept_id">

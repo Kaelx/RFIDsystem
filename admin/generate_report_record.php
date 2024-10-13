@@ -22,9 +22,8 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
     IN (0, 1)
 ";
 
-if(!empty($type)){
+if (!empty($type)) {
   $query .= " AND r.record_table = '$type'";
-
 }
 
 if (!empty($start_date) && !empty($end_date)) {
@@ -91,13 +90,20 @@ $result = $conn->query($query);
 
 
         <div class="table-responsive">
+          <!-- Display Type -->
+          <?php if (!empty($type)): ?>
+            <div class="text-center text-bold">
+              <p style="margin: 0; padding: 0;">Record of <?php echo $type.'s' ; ?></p>
+            </div>
+          <?php endif; ?>
 
           <!-- Display Date Range -->
           <?php if (!empty($start_date) && !empty($end_date)): ?>
-            <div class="text-center mt-2 text-bold">
-              <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
+            <div class="text-center text-bold">
+              <p style="margin: 0; padding: 0;">From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
+
 
           <table class="table table-hover table-bordered compact">
             <thead>
@@ -125,7 +131,7 @@ $result = $conn->query($query);
               ?>
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
-                  <td><?= $row['school_id']; ?></td>
+                  <td><?= !empty($row['school_id']) ? $row['school_id'] : 'N/A'; ?></td>
                   <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
                   <td class="text-center"><?= $row['role_name']; ?></td>
                   <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>

@@ -5,7 +5,8 @@ $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['type']) ? $_GET['type'] : '';
 
-$query = "SELECT r.record_date, r.timein, r.timeout,
+$query = "SELECT r.record_date,r.record_table, r.timein, r.timeout,
+        COALESCE(s.id, e.id, v.id) AS id, 
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -38,7 +39,7 @@ if (!empty($filter_type)) {
 
 $query .= " ORDER BY r.id DESC";
 
-$cats = $conn->query($query);
+$result = $conn->query($query);
 ?>
 
 <div class="content-wrapper">
@@ -46,10 +47,12 @@ $cats = $conn->query($query);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <form action="" id="report_id">
-                        <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
-                        <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
-                    </form>
+                    <?php if ($_SESSION['login_account_type'] != 3): ?>
+                        <form action="" id="report_id">
+                            <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
+                            <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                        </form>
+                    <?php endif; ?>
                     <button id="generate-report" style="display:none;"></button>
                 </div>
             </div>
@@ -110,9 +113,9 @@ $cats = $conn->query($query);
                             <tbody>
                                 <?php
                                 $i = 1;
-                                while ($row = $cats->fetch_assoc()):
+                                while ($row = $result->fetch_assoc()):
                                 ?>
-                                    <tr>
+                                    <tr onclick="window.location.href='index.php?page=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
