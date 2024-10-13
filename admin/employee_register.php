@@ -267,7 +267,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required>
                             </div>
