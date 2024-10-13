@@ -801,6 +801,23 @@ class Action
 	}
 
 
+	function get_record() {
+		$qry = $this->db->query("SELECT record_date, COUNT(*) as entry_count FROM records GROUP BY record_date");
+	
+		$data = [];
+		if ($qry->num_rows > 0) {
+			while ($row = $qry->fetch_assoc()) {
+				$data[] = [
+					"record_date" => $row["record_date"],
+					"entry_count" => (int)$row["entry_count"]
+				];
+			}
+		}
+	
+		return json_encode($data);
+	}	
+	
+	
 	// function import() {
 	// 	if (isset($_FILES['csv']['tmp_name'])) {
 	// 		$csvFile = $_FILES['csv']['tmp_name'];
@@ -865,20 +882,6 @@ class Action
 
 	function save_log($log) {
 
-		// $ip_address = $_SERVER['REMOTE_ADDR'];
-
-		// $location = 'Unknown';
-		// $geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
-		// if ($geo_data) {
-		// 	$geo_data = json_decode($geo_data, true);
-		// 	if ($geo_data['status'] === 'success') {
-		// 		$location = $geo_data['city'] . ', ' . $geo_data['country'];
-		// 	}
-		// }
-
-		// $info = $location;
-
-	
 		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
 								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
 										

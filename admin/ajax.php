@@ -147,5 +147,12 @@ if($action == "unarchive_user"){
 }
 
 
+if($action == "get_record"){
+	$save = $crud->get_record();
+	if($save)
+		echo $save;
+}
+
+
 
 ?>
