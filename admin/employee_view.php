@@ -6,11 +6,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name , 'employee' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name , 'employee' as type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
-    LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
     LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
@@ -85,7 +84,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 form-group mb-0">
+                            <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">Address</p>
                                 <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
                             </div>
@@ -104,13 +103,9 @@ $data = mysqli_fetch_assoc($query);
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-2 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
-                            </div>
-                            <div class="col-md-2 form-group mb-0">
-                                <p class="mb-2 text-bold">Type</p>
-                                <p class="form-control "><?= isset($data['employee_lvl']) ? $data['employee_lvl'] : 'N/A' ?></p>
                             </div>
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Department</p>

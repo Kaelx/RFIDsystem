@@ -304,7 +304,7 @@ $member = mysqli_fetch_assoc($query);
                             <div class="col-md-4 form-group">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control " name="password" id="password">
-                                <small class="text-italic text-danger">*Leave blank if don't want to change password.</small>
+                                <small class="text-italic text-danger"><i>*Leave blank if don't want to change password.</i></small>
                             </div>
                         </div>
                         <div class="row">

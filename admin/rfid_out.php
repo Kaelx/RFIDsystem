@@ -30,20 +30,20 @@
     }
 </style>
 
-<!-- <script>
+<script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
-        preloader.style.transition = 'opacity 0.35s ease'; 
+        preloader.style.transition = 'opacity 0.35s ease';
         preloader.style.opacity = '0';
 
         setTimeout(function() {
-            preloader.style.display = 'none'; 
-        }, 300); 
+            preloader.style.display = 'none';
+        }, 300);
     };
 </script>
 
 <div class="preloader flex-column justify-content-center align-items-center">
-</div> -->
+</div>
 
 
 
@@ -80,12 +80,12 @@
                             <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
                         </div>
                         <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5 " style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5 " style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
 
-                            <h1 id="sschool_id" class="text-bold" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sname" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sschool_id" class="text-bold" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sname" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="sgender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="srole" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="stype" class="text-bold" style="font-size: 36px;"></h1>
@@ -108,11 +108,11 @@
 
                         <div class="col-md-5" style="margin-top:100px;">
 
-                            <div class="text-center mb-5 " style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5 " style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
-                            <h1 id="eschool_id" class="text-bold" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="ename" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="eschool_id" class="text-bold" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="ename" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="egender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="erole" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="etype" class="text-bold" style="font-size: 36px;"></h1>
@@ -132,10 +132,11 @@
                         </div>
 
                         <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5" style="font-size: 64px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
-                            <h1 id="vname" class="text-bold mb-4" style="font-size: 64px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vname" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vgender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="vrole" class="text-bold" style="font-size: 36px;"></h1>
                         </div>
                     </div>
@@ -234,9 +235,8 @@
         if (e.which === 13) {
             e.preventDefault();
 
-            start_load();
             $.ajax({
-                url: 'ajax.php?action=fetch_data',
+                url: 'ajax.php?action=fetch_data_out',
                 data: new FormData(this),
                 cache: false,
                 contentType: false,

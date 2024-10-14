@@ -1,57 +1,37 @@
 <?php
 
-
-$report_id = $_GET['report_id'];
-$uid = $_GET['uid'];
 $type = $_GET['type'];
+$report_id = $_GET['report_id'];
+$start_date = $_GET['start_date'];
+$end_date = $_GET['end_date'];
 
-$start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
-$end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
-
-switch ($type) {
-  case 'student':
-    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
-FROM students s
-LEFT JOIN role r ON s.role_id = r.id
-WHERE s.id = '$uid'
+$query = "SELECT r.record_date, r.timein, r.timeout,
+        COALESCE(s.fname, e.fname, v.fname) AS fname, 
+        COALESCE(s.mname, e.mname, v.mname) AS mname, 
+        COALESCE(s.lname, e.lname, v.lname) AS lname,
+        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+    FROM records r
+    LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+    LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+    LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
+    LEFT JOIN role r_s ON s.role_id = r_s.id
+    LEFT JOIN role r_e ON e.role_id = r_e.id
+    LEFT JOIN role r_v ON v.role_id = r_v.id
+    WHERE COALESCE(s.status, e.status, v.status) 
+    IN (0, 1)
 ";
-    break;
 
-  case 'employee':
-    $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, et.employee_type, r.role_name, e.rfid, e.img_path, e.gender
-FROM employees e
-LEFT JOIN role r ON e.role_id = r.id
-LEFT JOIN employee_type et ON e.employee_type_id = et.id
-WHERE e.id = '$uid'
-";
-    break;
+if (!empty($type)) {
+  $query .= " AND r.record_table = '$type'";
+}
 
-  case 'visitor':
-    $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
-FROM visitors v
-LEFT JOIN role r ON v.role_id = r.id
-WHERE v.id = '$uid'
-";
-    break;
-
-  default:
-    die('Invalid type');
+if (!empty($start_date) && !empty($end_date)) {
+  $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
 }
 
 $result = $conn->query($query);
-$member = $result->fetch_assoc();
 
-
-
-$query_records = "SELECT r.record_date, r.timein, r.timeout
-  FROM records r
-  WHERE r.record_id = '$uid' AND r.record_table = '$type'";
-
-if (!empty($start_date) && !empty($end_date)) {
-  $query_records .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
-}
-
-$result_records = $conn->query($query_records);
 ?>
 <style>
   .content {
@@ -98,43 +78,40 @@ $result_records = $conn->query($query_records);
 
         <div class="row invoice-info">
           <div class="col-sm-6 d-flex align-items-start">
-            <div class="col-sm-4 p-0">
-              <img src="<?= isset($member['img_path']) ? 'assets/img/' . $member['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
-            </div>
-            <div class="col-sm-8 p-0">
-              <p style="margin-bottom: 5px;"><?= isset($member['fname']) ? $member['fname'] : ''; ?>
-                <?= isset($member['mname']) ? strtoupper(substr($member['mname'], 0, 1)) . '. ' : ''; ?>
-                <?= isset($member['lname']) ? $member['lname'] : ''; ?></p>
-              <p style="margin-bottom: 5px;"><?= isset($member['school_id']) ? $member['school_id'] : ''; ?></p>
-              <p style="margin-bottom: 5px;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
-              <?php if (!empty($member['employee_type'])): ?>
-                <p style="margin-bottom: 5px;"><?= $member['employee_type']; ?></p>
-              <?php endif; ?>
-            </div>
           </div>
 
           <div class="col-sm-6 text-right">
             <?php date_default_timezone_set('Asia/Manila'); ?>
             <p style="margin-bottom: 5px;">Date: <?= date('F d, Y'); ?><span> <?= date('h:i A'); ?></span></p>
-            <p style="margin-bottom: 5px;">Reference ID: <span> <?php echo $report_id; ?></span></p>
+            <p style="margin-bottom: 5px;">Reference ID: <span><?php echo $report_id; ?></span></p>
           </div>
         </div>
 
 
 
         <div class="table-responsive">
+          <!-- Display Type -->
+          <?php if (!empty($type)): ?>
+            <div class="text-center text-bold">
+              <p style="margin: 0; padding: 0;">Record of <?php echo $type.'s' ; ?></p>
+            </div>
+          <?php endif; ?>
 
           <!-- Display Date Range -->
           <?php if (!empty($start_date) && !empty($end_date)): ?>
-            <div class="text-center mt-2 text-bold">
-              <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
+            <div class="text-center text-bold">
+              <p style="margin: 0; padding: 0;">From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
+
 
           <table class="table table-hover table-bordered compact">
             <thead>
               <tr>
                 <th class="text-center">#</th>
+                <th>School ID</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Role</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Time in</th>
                 <th class="text-center">Time out</th>
@@ -144,7 +121,7 @@ $result_records = $conn->query($query_records);
             <tbody>
               <?php
               $i = 1;
-              while ($row = $result_records->fetch_assoc()):
+              while ($row = $result->fetch_assoc()):
                 // Initialize DateTime objects or set to null
                 $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                 $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
@@ -154,6 +131,9 @@ $result_records = $conn->query($query_records);
               ?>
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
+                  <td><?= !empty($row['school_id']) ? $row['school_id'] : 'N/A'; ?></td>
+                  <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                  <td class="text-center"><?= $row['role_name']; ?></td>
                   <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
                   <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
                   <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>

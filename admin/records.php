@@ -1,6 +1,6 @@
 <?php
 
-
+$report_id = rand(100000000, 999999999);
 $uid = $_GET['uid'];
 $type = $_GET['type'];
 
@@ -101,6 +101,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         <div class="dropdown mb-2">
                                             <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
                                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                                <li><a href="#" class="dropdown-item" onclick="filterBy(' ')">Clear Filter</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
@@ -120,7 +121,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
-                                                    <th class="text-center">Duration</th>
+                                                    <!-- <th class="text-center">Duration</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -155,17 +156,22 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $i = 1;
                                                 while ($row = $result->fetch_assoc()):
-                                                    $timein = new DateTime($row['timein']);
-                                                    $timeout = isset($row['timeout']) ? new DateTime($row['timeout']) : null;
+                                                    // Initialize DateTime objects or set to null
+                                                    $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
+                                                    $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
+
+                                                    // Calculate the duration only if both timein and timeout are set
+                                                    // $duration = ($timein && $timeout) ? $timein->diff($timeout)->format('%h hours %i minutes') : '------';
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
                                                         <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                                                        <td class="text-center"><?= $timein->format('h:i A'); ?></td>
+                                                        <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
                                                         <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
-                                                        <td class="text-center"><?= $timeout ? $timein->diff($timeout)->format('%h hours %i minutes') : '------'; ?></td>
+                                                        <!-- <td class="text-center"><?= $duration; ?></td> -->
                                                     </tr>
                                                 <?php endwhile; ?>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -174,9 +180,18 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                             </div>
                         </div>
 
-                        <div class="m-3 text-right">
-                            <button id="generate-report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Generate Report</button>
-                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+                        <div class="row">
+                            <?php if ($_SESSION['login_account_type'] != 3): ?>
+                                <form action="" id="report_id">
+                                    <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
+                                    <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                                </form>
+                            <?php endif; ?>
+                            <button id="generate-report" style="display:none;"></button>
+
+
+                            <button type="button" class="btn btn-secondary btn-custom m-2" onclick="window.history.back(); return false;">Back</button>
+                            <!-- <button type="button" class="btn btn-secondary btn-custom m-2" id="back-btn">Back</button> -->
                         </div>
                     </div>
                 </div>
@@ -195,6 +210,21 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             }
         });
 
+
+        $('#back-btn').click(function() {
+            var uid = "<?php echo $uid; ?>";
+            var type = "<?php echo $type; ?>";
+
+            if (type === 'student') {
+                window.location.href = 'index.php?page=student_view&uid=' + uid;
+            } else if (type === 'employee') {
+                window.location.href = 'index.php?page=employee_view&uid=' + uid;
+            } else if (type === 'visitor') {
+                window.location.href = 'index.php?page=visitor_view&uid=' + uid;
+            } else {
+                console.error('Unknown user type:', type); // Optional: Handle unknown types
+            }
+        });
 
 
         $('#filter-report').submit(function(e) {
@@ -241,6 +271,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     let endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
                     endDate = formatDate(timezone(endOfMonth));
                     break;
+                default:
+                    // If no period is specified, clear the date values
+                    startDate = '';
+                    endDate = '';
+                    break;
             }
 
             document.getElementById('start_date').value = startDate;
@@ -250,12 +285,35 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
         }
 
 
+
+        $('#report_id').submit(function(e) {
+            e.preventDefault();
+
+            if (!confirm('Are you sure you want to generate report?')) return;
+            $.ajax({
+                url: 'ajax.php?action=request_report',
+                data: new FormData($(this)[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+                success: function(resp) {
+                    console.log(resp);
+                    $('#generate-report').trigger('click');
+                }
+            })
+        });
+
+
+
         $('#generate-report').click(function() {
             var uid = "<?php echo $uid; ?>";
             var type = "<?php echo $type; ?>";
+            var report_id = "<?php echo $report_id; ?>";
             var startDate = $('#start_date').val();
             var endDate = $('#end_date').val();
 
-            window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+            window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         });
     </script>

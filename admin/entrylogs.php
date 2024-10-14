@@ -1,10 +1,12 @@
 <?php
 
+$report_id = rand(100000000, 999999999);
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
-$filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
+$filter_type = isset($_GET['type']) ? $_GET['type'] : '';
 
-$query = "SELECT r.record_date, r.timein, r.timeout,
+$query = "SELECT r.record_date,r.record_table, r.timein, r.timeout,
+        COALESCE(s.id, e.id, v.id) AS id, 
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -17,16 +19,14 @@ $query = "SELECT r.record_date, r.timein, r.timeout,
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
-    WHERE COALESCE(s.status, e.status, v.status) = 0
-
+    WHERE COALESCE(s.status, e.status, v.status) 
+    IN (0, 1)
 ";
 
-// Add date filter if both dates are set
 if (!empty($start_date) && !empty($end_date)) {
     $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
 }
 
-// Add filter for type if set
 if (!empty($filter_type)) {
     if ($filter_type === 'student') {
         $query .= " AND s.id IS NOT NULL";
@@ -39,15 +39,21 @@ if (!empty($filter_type)) {
 
 $query .= " ORDER BY r.id DESC";
 
-$cats = $conn->query($query);
+$result = $conn->query($query);
 ?>
 
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
-                    <a href="index.php?page=attendance_report" class="btn btn-warning"><i class="fa-solid fa-print"></i> Attendance Report</a>
+                <div class="col-12">
+                    <?php if ($_SESSION['login_account_type'] != 3): ?>
+                        <form action="" id="report_id">
+                            <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
+                            <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                        </form>
+                    <?php endif; ?>
+                    <button id="generate-report" style="display:none;"></button>
                 </div>
             </div>
         </div>
@@ -80,12 +86,13 @@ $cats = $conn->query($query);
                                 <div class="dropdown">
                                     <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('')">Clear Filter</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
                                     </ul>
                                 </div>
-                                <button type="button" class="btn btn-danger ml-3" id="clear-filters"> <i class="fa-solid fa-rotate"></i> </button>
+                                <a href="index.php?page=entrylogs" class="btn btn-danger ml-3"> <i class="fa-solid fa-rotate"></i></a>
                             </div>
                         </div>
                     </div>
@@ -107,9 +114,9 @@ $cats = $conn->query($query);
                             <tbody>
                                 <?php
                                 $i = 1;
-                                while ($row = $cats->fetch_assoc()):
+                                while ($row = $result->fetch_assoc()):
                                 ?>
-                                    <tr>
+                                    <tr onclick="window.location.href='index.php?page=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
@@ -121,13 +128,17 @@ $cats = $conn->query($query);
                                             ?></td>
                                         <td class="text-center">
                                             <?php
-                                            $timein = new DateTime($row['timein']);
-                                            echo $timein->format('h:i A');
+                                            if (!empty($row['timein'])) {
+                                                $timein = new DateTime($row['timein']);
+                                                echo $timein->format('h:i A');
+                                            } else {
+                                                echo '------';
+                                            }
                                             ?>
                                         </td>
                                         <td class="text-center">
                                             <?php
-                                            if (!empty($row['timeout'])) {
+                                            if (!empty($row['timeout']) and $row['timeout'] != null and $row['timeout'] != '00:00:00') {
                                                 $timeout = new DateTime($row['timeout']);
                                                 echo $timeout->format('h:i A');
                                             } else {
@@ -159,11 +170,11 @@ $cats = $conn->query($query);
     $('#filter-report').submit(function(e) {
         e.preventDefault();
 
-        // Get the current filter type
-        let filterType = new URLSearchParams(window.location.search).get('filter_type') || '';
+        var type = "<?php echo $filter_type; ?>";
+        let startDate, endDate;
 
-        // Redirect with the serialized form data and filter type
-        location.href = 'index.php?page=entrylogs&' + $(this).serialize() + '&filter_type=' + filterType;
+
+        location.href = `index.php?page=entrylogs&type=${encodeURIComponent(type)}&` + $(this).serialize();
     });
 
 
@@ -172,24 +183,38 @@ $cats = $conn->query($query);
         let endDate = document.getElementById('end_date').value;
 
         // Redirect with selected filter type
-        location.href = `index.php?page=entrylogs&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}&filter_type=${type}`;
+        location.href = `index.php?page=entrylogs&type=${type}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 
-    $('#generate-report').click(function() {
-        const startDate = $('#start_date').val();
-        const endDate = $('#end_date').val();
 
-        let filterType = new URLSearchParams(window.location.search).get('filter_type') || '';
 
-        window.location.href = `index.php?page=generate_report&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}` + '&filter_type=' + filterType;
+    $('#report_id').submit(function(e) {
+        e.preventDefault();
+
+        if (!confirm('Are you sure you want to generate report?')) return;
+        $.ajax({
+            url: 'ajax.php?action=request_report',
+            data: new FormData($(this)[0]),
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
+            type: 'POST',
+            success: function(resp) {
+                console.log(resp);
+                $('#generate-report').trigger('click');
+            }
+        })
     });
 
 
-    $('#clear-filters').click(function() {
-        $('#start_date').val('');
-        $('#end_date').val('');
 
-        const baseUrl = 'index.php?page=entrylogs';
-        location.href = baseUrl;
+    $('#generate-report').click(function() {
+        var type = "<?php echo $filter_type; ?>";
+        var report_id = "<?php echo $report_id; ?>";
+        var startDate = $('#start_date').val();
+        var endDate = $('#end_date').val();
+
+        window.location.href = `index.php?page=generate_report_record&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     });
 </script>

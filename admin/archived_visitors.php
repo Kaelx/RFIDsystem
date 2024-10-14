@@ -8,9 +8,9 @@
 
 
     <?php
-    $query = "SELECT s.id, s.fname, s.mname, s.lname,s.email, r.role_name, s.rfid, s.img_path, s.gender
-            FROM visitors s
-            LEFT JOIN role r ON s.role_id = r.id
+    $query = "SELECT v.id, v.fname, v.mname, v.lname,v.address, v.cellnum, r.role_name, v.rfid, v.img_path, v.gender
+            FROM visitors v
+            LEFT JOIN role r ON v.role_id = r.id
             where status = 1;
             ";
 
@@ -28,8 +28,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Email</th>
+                                    <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-25">Address</th>
+                                    <th class="text-center w-25">Contact No.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,8 +40,9 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=archived_visitor&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td><?= $row['email'] ?></td>
+                                        <td class="text-left"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?= $row['address'] ?></td>
+                                        <td class="text-left"><?= $row['cellnum'] ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>

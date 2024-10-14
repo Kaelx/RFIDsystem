@@ -31,7 +31,7 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" required>
+                                                <input type="text" class="form-control" name="name" placeholder="Enter Department Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="myColor" class="form-label">Choose color</label>
@@ -115,8 +115,7 @@
                                             <input type="hidden" name="id">
 
                                             <div class="form-group">
-                                                <label for="name">Program/Course:</label>
-                                                <input type="text" class="form-control" name="name" id="name" required>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Program/Course Name" required>
                                             </div>
 
                                             <div class="form-group">

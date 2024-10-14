@@ -6,11 +6,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, el.employee_lvl, d.dept_name
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
-    LEFT JOIN employee_lvl el ON e.employee_lvl_id = el.id
     LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
@@ -286,7 +285,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
@@ -310,7 +309,7 @@ $data = mysqli_fetch_assoc($query);
                         <?php endwhile; ?>
 
                         <div class="row">
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" <?= !isset($data['employee_type_id']) || $data['employee_type_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
@@ -320,21 +319,6 @@ $data = mysqli_fetch_assoc($query);
                                         $selected = isset($data['employee_type_id']) && $data['employee_type_id'] == $row['id'] ? 'selected' : '';
                                     ?>
                                         <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['employee_type'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-
-                            <div class="col-md-2 form-group">
-                                <label for="lvl_id">Type</label>
-                                <select class="form-control " name="lvl_id" id="lvl_id" required>
-                                    <option value="" disabled <?= !isset($data['employee_lvl_id']) || $data['employee_lvl_id'] == '' ? 'selected' : '' ?>>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM employee_lvl ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['employee_lvl_id']) && $data['employee_lvl_id'] == $row['id'] ? 'selected' : '';
-                                    ?>
-                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['employee_lvl'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>

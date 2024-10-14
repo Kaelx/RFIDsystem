@@ -48,7 +48,7 @@ class Action
 
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => ' has created the ' . $name . ' category'
+					'action' => ' has created the ' . $name . ' in category'
 				];
 
 
@@ -60,7 +60,7 @@ class Action
 
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => ' has updated the ' . $name . ' category'
+					'action' => ' has updated the ' . $name . ' in category'
 				];
 
 
@@ -272,7 +272,6 @@ class Action
 		
 
 		$data .= ", employee_type_id = '$type_id' ";
-		$data .= ", employee_lvl_id = '$lvl_id' ";
 		$data .= ", employee_dept_id = '$dept_id' ";
 
 		$data .= ", school_id = '$school_id' ";
@@ -348,13 +347,9 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
-		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
-		$data .= ", parent_name = '$parent_name' ";
-		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
@@ -517,7 +512,64 @@ class Action
 
 
 
-	function fetch_data(){
+	function fetch_data_in(){
+		extract($_POST);
+
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+			FROM students s
+			LEFT JOIN role r ON s.role_id = r.id
+			LEFT JOIN program p ON s.prog_id = p.id
+			LEFT JOIN department d ON p.dept_id = d.id
+			WHERE s.rfid = '$rfid' AND s.status = 0
+			
+			UNION
+			
+			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			FROM employees e
+			LEFT JOIN role r ON e.role_id = r.id
+			LEFT JOIN employee_type et ON e.employee_type_id = et.id
+			LEFT JOIN department d ON e.employee_dept_id = d.id
+			WHERE e.rfid = '$rfid' AND e.status = 0
+			
+			UNION
+			
+			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			FROM visitors v
+			LEFT JOIN role r ON v.role_id = r.id
+			WHERE v.rfid = '$rfid' AND v.status = 0
+		");
+
+		if ($fetch->num_rows > 0) {
+			$data = $fetch->fetch_assoc();
+
+			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+
+			$response = [
+				'success' => true,
+				'fname' => $data['fname'],
+				'lname' => $data['lname'],
+				'gender' => ucfirst($data['gender']),
+				'role_name' => $data['role_name'],
+				'prog_name' => $data['prog_name'],
+				'dept_name' => $data['dept_name'],
+				'employee_type' => $data['employee_type'],
+				'school_id' => $data['school_id'],
+				'img_path' => $img_path
+			];
+
+			if ($response) {
+					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
+						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+					");
+			}
+		} else {
+			$response = ['success' => false];
+		}
+
+		echo json_encode($response);
+	}
+
+	function fetch_data_out(){
 		extract($_POST);
 
 		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
@@ -565,22 +617,37 @@ class Action
 			if ($response) {
 				$chk = $this->db->query("SELECT * FROM records 
 											WHERE record_id = '" . $data['id'] . "' 
-											AND record_table = '" . $data['source_table'] . "' 
-											AND record_date IS NOT NULL
+											AND record_table = '" . $data['source_table'] . "'
 											AND record_date = CURRENT_DATE()
 											AND timein IS NOT NULL
-											AND timeout IS NULL");
+											AND timeout IS NULL
+											ORDER BY id DESC
+											LIMIT 1
+										");
 
 				if ($chk->num_rows > 0) {
+					// Step 1: Update only the most recent record with the current timestamp
 					$update = $this->db->query("UPDATE records 
-						SET timeout = CURRENT_TIMESTAMP() 
-						WHERE record_id = '" . $data['id'] . "' 
-						AND record_table = '" . $data['source_table'] . "'
-						AND record_date = CURRENT_DATE()
-						AND timeout IS NULL
-					");
+												SET timeout = CURRENT_TIMESTAMP() 
+												WHERE record_id = '" . $data['id'] . "' 
+												AND record_table = '" . $data['source_table'] . "'
+												AND record_date = CURRENT_DATE()
+												AND timeout IS NULL
+												ORDER BY id DESC 
+												LIMIT 1
+											");
+
+					// Step 2: Update the remaining records to set timeout to 'No data'
+					$update_remaining = $this->db->query("
+					UPDATE records 
+					SET timeout = '00:00:00' 
+					WHERE record_id = '" . $data['id'] . "' 
+					AND record_table = '" . $data['source_table'] . "'
+					AND record_date = CURRENT_DATE()
+					AND timeout IS NULL
+				");
 				} else {
-					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
+					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timeout) 
 						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
 					");
 				}
@@ -716,6 +783,40 @@ class Action
 	}
 
 
+	function request_report() {
+		extract($_POST);
+
+		if (empty($report_id)) {
+			return 'Error: report_id is required.';
+		}
+	
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => 'generate a report with the Reference ID of ' . $report_id
+		];
+	
+		$this->save_log($log);
+		return;
+	}
+
+
+	function get_record() {
+		$qry = $this->db->query("SELECT record_date, COUNT(*) as entry_count FROM records GROUP BY record_date");
+	
+		$data = [];
+		if ($qry->num_rows > 0) {
+			while ($row = $qry->fetch_assoc()) {
+				$data[] = [
+					"record_date" => $row["record_date"],
+					"entry_count" => (int)$row["entry_count"]
+				];
+			}
+		}
+	
+		return json_encode($data);
+	}	
+	
+	
 	// function import() {
 	// 	if (isset($_FILES['csv']['tmp_name'])) {
 	// 		$csvFile = $_FILES['csv']['tmp_name'];
@@ -780,20 +881,6 @@ class Action
 
 	function save_log($log) {
 
-		// $ip_address = $_SERVER['REMOTE_ADDR'];
-
-		// $location = 'Unknown';
-		// $geo_data = @file_get_contents("http://ip-api.com/json/{$ip_address}");
-		// if ($geo_data) {
-		// 	$geo_data = json_decode($geo_data, true);
-		// 	if ($geo_data['status'] === 'success') {
-		// 		$location = $geo_data['city'] . ', ' . $geo_data['country'];
-		// 	}
-		// }
-
-		// $info = $location;
-
-	
 		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
 								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
 										

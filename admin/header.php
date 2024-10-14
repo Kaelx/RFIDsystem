@@ -26,6 +26,9 @@
 <link rel="stylesheet" href="./plugins/select2/css/select2.min.css">
 <script src="./plugins/select2/js/select2.min.js"></script>
 
+<!-- Chart -->
+<script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+
 <!-- adminlte -->
 <script src="dist/js/adminlte.min.js"></script>
 <link rel="stylesheet" href="dist/css/adminlte.min.css">

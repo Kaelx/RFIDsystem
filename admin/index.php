@@ -46,7 +46,7 @@ if ($isMobile) {
 
 
 session_start();
-error_reporting(0);
+error_reporting(E_ALL);
 
 include 'db_connect.php';
 
@@ -93,7 +93,7 @@ if (!isset($_SESSION['login_id'])) {
             <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item " href="index.php?page=setting">Profile settings</a></li>
+            <li><a class="dropdown-item " href="index.php?page=account_setting">Profile settings</a></li>
             <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
           </ul>
         </li>
@@ -154,9 +154,15 @@ if (!isset($_SESSION['login_id'])) {
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
               <li class="nav-item">
-                <a href="index.php?page=rfid" class="nav-link">
+                <a href="index.php?page=rfid_in" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
-                  <p>Scan RFID</p>
+                  <p>Scan IN</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.php?page=rfid_out" class="nav-link">
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>Scan OUT</p>
                 </a>
               </li>
             <?php endif; ?>
@@ -229,7 +235,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:25px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="top:30px; right: 25px; padding: 1rem; z-index: 99999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>

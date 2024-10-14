@@ -302,7 +302,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Course/Program</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
-                                    <option value="" selected disabled></option>
+                                    <option value="" selected disabled>-- Select --</option>
                                     <?php
                                     $program = $conn->query("SELECT * FROM program ORDER BY id ASC ");
                                     while ($row = $program->fetch_assoc()) :
@@ -330,7 +330,7 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="click here then SCAN!" required>
                             </div>
                         </div>
                         <div class="text-center">

@@ -67,6 +67,8 @@
     $('table').dataTable({
         ordering: false,
         stateSave: true,
+        pageLength: 15,
+        lengthMenu: [15, 50, 100],
         layout: {
             topStart: 'search',
             topEnd: 'pageLength',

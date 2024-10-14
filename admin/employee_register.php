@@ -267,7 +267,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required>
                             </div>
@@ -295,7 +295,7 @@
                         <?php endwhile; ?>
 
                         <div class="row">
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
@@ -308,21 +308,8 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-2 form-group">
-                                <label for="lvl_id">Type</label>
-                                <select class="form-control " name="lvl_id" id="lvl_id" required>
-                                    <option value="" selected disabled>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM employee_lvl  ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                    ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['employee_lvl'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
                             <div class="col-md-3 form-group">
-                                <label for="dept_id">Department</label>
+                                <label for="dept_id">Department Assigned</label>
                                 <select class="form-control " name="dept_id" id="dept_id">
                                     <option value="" selected>-- Select --</option>
                                     <?php
@@ -350,7 +337,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="Click here then SCAN!" required>
                             </div>
                         </div>
                         <div class="text-center">
