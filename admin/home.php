@@ -121,11 +121,29 @@ if ($result->num_rows > 0) {
           <!-- LINE CHART -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Entry Graph</h3>
+              <h3 class="card-title">Entry Line Graph (Past 7 days)</h3>
             </div>
             <div class="card-body">
               <div class="chart">
-                <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="lineChart" style="min-height: 200px; height: 200px; max-height: 200px; max-width: 100%;"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <!-- BAR CHART -->
+          <div class="card">
+            <div class="card-header">
+              <p class="card-title">Entry Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <canvas id="barChart" style="min-height: 200PX; height: 200PX; max-height: 200PX; max-width: 100%;"></canvas>
               </div>
             </div>
           </div>
@@ -143,13 +161,37 @@ if ($result->num_rows > 0) {
 
 <script>
   $(function() {
-    var data = <?php echo json_encode($data); ?>;
-    var labels = <?php echo json_encode($labels); ?>;
+    var data = <?php echo json_encode($data); ?>; //[0, 10, 5, 2, 20];
+    var labels = <?php echo json_encode($labels); ?>; //['October 3, 2021', 'October 4, 2021', 'October 5, 2021', 'October 6, 2021', 'October 7, 2021' ];
+
+
+
+    //-------------
+    //- LINE CHART -
+    //-------------
+    var currentDate = new Date();
+    var sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+
+
+    var filteredData = [];
+    var filteredLabels = [];
+
+    for (var i = 0; i < labels.length; i++) {
+      var entryDate = new Date(labels[i]);
+
+      if (entryDate >= sevenDaysAgo && entryDate <= currentDate) {
+        filteredLabels.push(labels[i]);
+        filteredData.push(data[i]);
+      }
+    }
 
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d');
+    var currentDate = new Date();
+
 
     var lineChartData = {
-      labels: labels,
+      labels: filteredLabels,
       datasets: [{
         label: 'Entries',
         backgroundColor: 'rgba(60,141,188,0.9)',
@@ -159,7 +201,7 @@ if ($result->num_rows > 0) {
         pointStrokeColor: 'rgba(60,141,188,1)',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
-        data: data,
+        data: filteredData,
         fill: false
       }]
     };
@@ -181,7 +223,8 @@ if ($result->num_rows > 0) {
             display: false,
           },
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            stepSize: 10
           }
         }]
       }
@@ -193,5 +236,75 @@ if ($result->num_rows > 0) {
       data: lineChartData,
       options: lineChartOptions
     });
+
+
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var monthLabels = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+
+    var monthlyData = new Array(12).fill(0);
+
+    labels.forEach((label, index) => {
+      var date = new Date(label);
+      var month = date.getMonth();
+
+      var value = parseFloat(data[index]) || 0;
+      monthlyData[month] += value;
+    });
+
+    console.log(monthlyData);
+
+    var barChartData = {
+      labels: monthLabels,
+      datasets: [{
+        label: 'Entries',
+        backgroundColor: '#0073b7',
+        borderColor: '#0073b7',
+        borderWidth: 1,
+        data: monthlyData
+      }]
+    }
+
+    var barChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      datasetFill: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false,
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            display: true,
+          },
+          ticks: {
+            beginAtZero: true,
+            stepSize: 10
+          }
+        }]
+      }
+
+    }
+
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+
+
+
   });
 </script>

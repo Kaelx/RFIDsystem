@@ -101,6 +101,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         <div class="dropdown mb-2">
                                             <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
                                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                                <li><a href="#" class="dropdown-item" onclick="filterBy(' ')">Clear Filter</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('week')">This Week</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('month')">This Month</a></li>
@@ -180,11 +181,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         </div>
 
                         <div class="row">
-                            <?php if($_SESSION['login_account_type']!=3):?>
-                            <form action="" id="report_id">
-                                <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
-                                <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
-                            </form>
+                            <?php if ($_SESSION['login_account_type'] != 3): ?>
+                                <form action="" id="report_id">
+                                    <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
+                                    <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                                </form>
                             <?php endif; ?>
                             <button id="generate-report" style="display:none;"></button>
 
@@ -270,6 +271,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     let endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
                     endDate = formatDate(timezone(endOfMonth));
                     break;
+                default:
+                    // If no period is specified, clear the date values
+                    startDate = '';
+                    endDate = '';
+                    break;
             }
 
             document.getElementById('start_date').value = startDate;
@@ -310,6 +316,4 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
             window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         });
-
-        
     </script>

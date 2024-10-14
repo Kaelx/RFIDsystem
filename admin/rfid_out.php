@@ -33,12 +33,12 @@
 <script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
-        preloader.style.transition = 'opacity 0.35s ease'; 
+        preloader.style.transition = 'opacity 0.35s ease';
         preloader.style.opacity = '0';
 
         setTimeout(function() {
-            preloader.style.display = 'none'; 
-        }, 300); 
+            preloader.style.display = 'none';
+        }, 300);
     };
 </script>
 
@@ -136,6 +136,7 @@
                                 <h1>INFORMATION</h1>
                             </div>
                             <h1 id="vname" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vgender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="vrole" class="text-bold" style="font-size: 36px;"></h1>
                         </div>
                     </div>

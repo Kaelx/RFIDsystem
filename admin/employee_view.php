@@ -103,7 +103,7 @@ $data = mysqli_fetch_assoc($query);
                         <hr>
 
                         <div class="row">
-                            <div class="col-md-2 form-group mb-0">
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
                             </div>

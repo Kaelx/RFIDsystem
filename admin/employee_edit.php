@@ -309,7 +309,7 @@ $data = mysqli_fetch_assoc($query);
                         <?php endwhile; ?>
 
                         <div class="row">
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" <?= !isset($data['employee_type_id']) || $data['employee_type_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>

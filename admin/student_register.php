@@ -330,7 +330,7 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="click here then SCAN!" required>
                             </div>
                         </div>
                         <div class="text-center">

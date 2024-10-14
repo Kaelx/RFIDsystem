@@ -86,6 +86,7 @@ $result = $conn->query($query);
                                 <div class="dropdown">
                                     <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('')">Clear Filter</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>

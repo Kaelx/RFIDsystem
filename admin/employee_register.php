@@ -295,7 +295,7 @@
                         <?php endwhile; ?>
 
                         <div class="row">
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
@@ -309,7 +309,7 @@
                             </div>
 
                             <div class="col-md-3 form-group">
-                                <label for="dept_id">Department</label>
+                                <label for="dept_id">Department Assigned</label>
                                 <select class="form-control " name="dept_id" id="dept_id">
                                     <option value="" selected>-- Select --</option>
                                     <?php
@@ -337,7 +337,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="Click here then SCAN!" required>
                             </div>
                         </div>
                         <div class="text-center">
