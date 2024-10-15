@@ -125,7 +125,7 @@ if ($result->num_rows > 0) {
           <!-- LINE CHART -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Attendance Line Graph (Past 7 days)</h3>
+              <h3 class="card-title">Line Graph (Past 7 days)</h3>
             </div>
             <div class="card-body">
               <div class="chart">
@@ -143,7 +143,7 @@ if ($result->num_rows > 0) {
           <!-- BAR CHART -->
           <div class="card">
             <div class="card-header">
-              <p class="card-title">Attendance Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
+              <p class="card-title">Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
             </div>
             <div class="card-body">
               <div class="chart">
