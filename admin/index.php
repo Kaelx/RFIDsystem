@@ -191,12 +191,6 @@ if (!isset($_SESSION['login_id'])) {
               </li>
 
 
-            <?php endif; ?>
-
-            <?php
-            if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
-            ?>
-
               <li class="nav-item">
                 <a href="index.php?page=category" class="nav-link">
                   <i class="fa-solid fa-bars-progress nav-icon"></i>
@@ -205,6 +199,13 @@ if (!isset($_SESSION['login_id'])) {
                   </p>
                 </a>
               </li>
+
+
+            <?php endif; ?>
+
+            <?php
+            if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
+            ?>
 
               <li class="nav-item">
                 <a href="index.php?page=accountmanage" class="nav-link">

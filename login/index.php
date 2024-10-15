@@ -67,8 +67,6 @@ if (isset($_SESSION['login_id'])) {
 
     <?php
     include 'header.php';
-    include 'db_connect.php';
-
     ?>
 
 </head>

@@ -715,7 +715,7 @@ class Action
 
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => ' has created an account ' . $account_type_name . ' name ' . $fname . '' . $lname
+					'action' => ' has created an account ' . $account_type_name . ' name ' . $fname . ' ' . $lname
 				];
 
 				$this->save_log($log);

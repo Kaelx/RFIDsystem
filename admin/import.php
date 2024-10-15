@@ -46,13 +46,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')

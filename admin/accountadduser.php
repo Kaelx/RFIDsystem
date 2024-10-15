@@ -336,13 +336,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=accountmanage'
-                    }, 1200)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=accountmanage'
-                    }, 1200)
+                    }, 1000)
 
                 } else if (resp == 3) {
                     alert_toast("Email already exist", 'info')

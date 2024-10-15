@@ -342,13 +342,13 @@ $member = mysqli_fetch_assoc($query);
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.reload()
-                    }, 1200)
+                    }, 1000)
 
                 } else if (resp == 3) {
                     alert_toast("Email already exist", 'info')

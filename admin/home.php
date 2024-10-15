@@ -39,54 +39,58 @@ if ($result->num_rows > 0) {
 
       <!-- Small boxes (Stat box) -->
       <div class="row">
-
-        <?php
-        if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
-        ?>
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-info">
-              <div class="inner">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <?php
+              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              ?>
                 <a href="index.php?page=employee_data" style="text-decoration: none; color: inherit;">
 
-                  <?php
-                  $sql = $conn->query("SELECT COUNT(*) as total FROM employees where status=0");
-                  $result = $sql->fetch_assoc();
-                  $count = $result['total'];
-                  ?>
-                  <h3><?php echo $count; ?></h3>
-                  <p>Employee</p>
+                <?php endif; ?>
+
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM employees where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Employee</p>
                 </a>
-              </div>
-              <div class="icon">
-                <i class="fa-solid fa-user-tie"></i>
-              </div>
-              <a href="index.php?page=employee_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
+            <div class="icon">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <p class="small-box-footer"><i class="fa-solid fa-circle-info"></i></p>
           </div>
+        </div>
 
 
-          <div class="col-lg-3 col-6">
-            <div class="small-box bg-success">
-              <div class="inner">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <?php
+              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              ?>
                 <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
-                  <?php
-                  $sql = $conn->query("SELECT COUNT(*) as total FROM students where status=0");
-                  $result = $sql->fetch_assoc();
-                  $count = $result['total'];
-                  ?>
-                  <h3><?php echo $count; ?></h3>
-                  <p>Students</p>
-                </a>
-              </div>
-              <div class="icon">
-                <i class="fa-solid fa-graduation-cap"></i>
-              </div>
-              <a href="index.php?page=student_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
 
+                <?php endif; ?>
+                <?php
+                $sql = $conn->query("SELECT COUNT(*) as total FROM students where status=0");
+                $result = $sql->fetch_assoc();
+                $count = $result['total'];
+                ?>
+                <h3><?php echo $count; ?></h3>
+                <p>Students</p>
+                </a>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <p class="small-box-footer"><i class="fa-solid fa-circle-info"></i></p>
           </div>
 
-        <?php endif; ?>
+        </div>
 
 
 
@@ -106,7 +110,7 @@ if ($result->num_rows > 0) {
             <div class="icon">
               <i class="fa-solid fa-person-walking"></i>
             </div>
-            <a href="index.php?page=visitor_data" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <p class="small-box-footer"><i class="fa-solid fa-circle-info"></i></p>
           </div>
         </div>
 
@@ -121,7 +125,7 @@ if ($result->num_rows > 0) {
           <!-- LINE CHART -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Entry Line Graph (Past 7 days)</h3>
+              <h3 class="card-title">Line Graph (Past 7 days)</h3>
             </div>
             <div class="card-body">
               <div class="chart">
@@ -139,7 +143,7 @@ if ($result->num_rows > 0) {
           <!-- BAR CHART -->
           <div class="card">
             <div class="card-header">
-              <p class="card-title">Entry Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
+              <p class="card-title">Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
             </div>
             <div class="card-body">
               <div class="chart">
@@ -169,9 +173,10 @@ if ($result->num_rows > 0) {
     //-------------
     //- LINE CHART -
     //-------------
+    // Set up current date and seven days ago
     var currentDate = new Date();
     var sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+    sevenDaysAgo.setDate(currentDate.getDate() - 8);
 
 
     var filteredData = [];
@@ -243,23 +248,26 @@ if ($result->num_rows > 0) {
     //- BAR CHART -
     //-------------
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
+
+    var currentYear = new Date().getFullYear();
     var monthLabels = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-
     var monthlyData = new Array(12).fill(0);
 
     labels.forEach((label, index) => {
       var date = new Date(label);
+      var year = date.getFullYear();
       var month = date.getMonth();
 
-      var value = parseFloat(data[index]) || 0;
-      monthlyData[month] += value;
+      if (year === currentYear) {
+        var value = parseFloat(data[index]) || 0;
+        monthlyData[month] += value;
+      }
     });
 
-    console.log(monthlyData);
 
     var barChartData = {
       labels: monthLabels,

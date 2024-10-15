@@ -119,7 +119,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                         alert_toast('Password successfully updated', 'success')
                         setTimeout(function() {
                             location.replace('index.php?page=login')
-                        }, 2000)
+                        }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Something went wrong', 'danger')
                     } else if (resp == 3) {

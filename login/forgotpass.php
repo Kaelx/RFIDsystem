@@ -110,7 +110,7 @@
                         alert_toast('OTP CODE has been sent to your email', 'success');
                         setTimeout(function() {
                             location.replace('index.php?page=update_password')
-                        }, 2000)
+                        }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Wrong password', 'danger');
                     } else if (resp == 3) {
