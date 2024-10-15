@@ -225,13 +225,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -257,13 +257,13 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
@@ -318,7 +318,7 @@
                     alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 }
             }
@@ -339,7 +339,7 @@
                     alert_toast("Data successfully deleted", 'warning')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 }
             }

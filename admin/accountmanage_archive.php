@@ -91,7 +91,7 @@
                     alert_toast("Data successfully unarchived", 'success')
                     setTimeout(function() {
                         location.reload();
-                    }, 1500)
+                    }, 1000)
                 } else {
                     alert_toast("An error occured", 'danger')
                 }

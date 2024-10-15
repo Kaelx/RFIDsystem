@@ -333,19 +333,19 @@
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=visitor_data';
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
                     setTimeout(function() {
                         location.reload()
-                    }, 1500)
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')

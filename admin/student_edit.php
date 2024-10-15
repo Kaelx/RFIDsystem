@@ -426,19 +426,19 @@ $data = mysqli_fetch_assoc($query);
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
                         location.href = 'index.php?page=student_data'
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
                         location.href = 'index.php?page=student_view&uid=' + <?= $data['id'] ?>
-                    }, 1500)
+                    }, 1000)
 
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
                     setTimeout(function() {
                         location.reload();
-                    }, 1500)
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
