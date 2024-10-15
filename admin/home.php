@@ -125,7 +125,7 @@ if ($result->num_rows > 0) {
           <!-- LINE CHART -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Entry Line Graph (Past 7 days)</h3>
+              <h3 class="card-title">Attendance Line Graph (Past 7 days)</h3>
             </div>
             <div class="card-body">
               <div class="chart">
@@ -143,7 +143,7 @@ if ($result->num_rows > 0) {
           <!-- BAR CHART -->
           <div class="card">
             <div class="card-header">
-              <p class="card-title">Entry Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
+              <p class="card-title">Attendance Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
             </div>
             <div class="card-body">
               <div class="chart">
@@ -173,9 +173,10 @@ if ($result->num_rows > 0) {
     //-------------
     //- LINE CHART -
     //-------------
+    // Set up current date and seven days ago
     var currentDate = new Date();
     var sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+    sevenDaysAgo.setDate(currentDate.getDate() - 8);
 
 
     var filteredData = [];
@@ -247,23 +248,26 @@ if ($result->num_rows > 0) {
     //- BAR CHART -
     //-------------
     var barChartCanvas = $('#barChart').get(0).getContext('2d')
+
+    var currentYear = new Date().getFullYear();
     var monthLabels = [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-
     var monthlyData = new Array(12).fill(0);
 
     labels.forEach((label, index) => {
       var date = new Date(label);
+      var year = date.getFullYear();
       var month = date.getMonth();
 
-      var value = parseFloat(data[index]) || 0;
-      monthlyData[month] += value;
+      if (year === currentYear) {
+        var value = parseFloat(data[index]) || 0;
+        monthlyData[month] += value;
+      }
     });
 
-    console.log(monthlyData);
 
     var barChartData = {
       labels: monthLabels,
