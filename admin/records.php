@@ -99,7 +99,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                     <div class="ml-auto mr-2">
                                         <div class="dropdown mb-2">
-                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Date</button>
                                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy(' ')">Clear Filter</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
