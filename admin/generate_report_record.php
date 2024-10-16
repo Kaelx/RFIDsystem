@@ -93,7 +93,7 @@ $result = $conn->query($query);
           <!-- Display Type -->
           <?php if (!empty($type)): ?>
             <div class="text-center text-bold">
-              <p style="margin: 0; padding: 0;">Record of <?php echo $type.'s' ; ?></p>
+              <p style="margin: 0; padding: 0;">Record of <?php echo ucfirst($type).'s' ; ?></p>
             </div>
           <?php endif; ?>
 

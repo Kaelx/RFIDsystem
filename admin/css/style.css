@@ -2,139 +2,148 @@
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    overflow: hidden;
-    background: #fff;
-  }
-  
-  #preloader:before {
-    content: "";
-    position: fixed;
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
-    border: 6px solid #1977cc;
-    border-top-color: #d1e6f9;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: animate-preloader 1s linear infinite;
-    animation: animate-preloader 1s linear infinite;
-  }
-  #preloader2 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    overflow: hidden;
-    background: #ffffff82;
-  }
-  
-  #preloader2:before {
-    content: "";
-    position: fixed;
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
-    border: 6px solid #1977cc;
-    border-top-color: #d1e6f9;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: animate-preloader 1s linear infinite;
-    animation: animate-preloader 1s linear infinite;
-  }
-  @-webkit-keyframes animate-preloader {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes animate-preloader {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #fff;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #1977cc;
+  border-top-color: #d1e6f9;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+#preloader2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #ffffff82;
+}
+
+#preloader2:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #1977cc;
+  border-top-color: #d1e6f9;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
   }
 
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
-  
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
 /*--------------------------------------------------------------
 # CSS
 --------------------------------------------------------------*/
 #rfid-form {
-    position: absolute;
-    left: -9999px;
-    width: 0;
-    opacity: 0;
+  position: absolute;
+  left: -9999px;
+  width: 0;
+  opacity: 0;
 }
 
 .sidebar .nav-header {
-    color: orange;
+  color: orange;
 }
 
 
 body,
 .content-wrapper {
-    padding-top: 25px;
+  padding-top: 25px;
 }
 
 .content-wrapper {
-    margin-top: 15px;
-    padding: 10px;
-    overflow: hidden;
-    box-sizing: border-box;
+  margin-top: 15px;
+  padding: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 
 .btn-custom {
-    width: 100px;
+  width: 100px;
+}
+
+.no-space {
+  margin: 0;
+  padding: 0;
 }
 
 
 .main-header {
-    background-color: #a91414;
-    color: #fff;
+  background-color: #a91414;
+  color: #fff;
 }
 
 .nav-treeview .nav-item {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 
 
 @media print {
-    @page {
-        margin: 0;
-    }
+  @page {
+    margin: 0;
+  }
 
-    body {
-        margin: 0;
-        padding: 0;
-    }
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
-    .container-fluid,
-    .invoice {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
+  .container-fluid,
+  .invoice {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 
-    header,
-    footer {
-        display: none;
-    }
+  header,
+  footer {
+    display: none;
+  }
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }

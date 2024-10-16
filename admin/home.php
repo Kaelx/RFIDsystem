@@ -229,7 +229,7 @@ if ($result->num_rows > 0) {
           },
           ticks: {
             beginAtZero: true,
-            stepSize: 10
+            stepSize: 100
           }
         }]
       }
@@ -299,7 +299,7 @@ if ($result->num_rows > 0) {
           },
           ticks: {
             beginAtZero: true,
-            stepSize: 10
+            stepSize: 100
           }
         }]
       }

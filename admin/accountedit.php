@@ -68,10 +68,11 @@ $member = mysqli_fetch_assoc($query);
 
                                 <div class="form-group text-right mb-0 mr-5">
                                     <div style="position: relative; display: inline-block;">
-                                        <img src="assets/img/<?php echo isset($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                        <img src="assets/img/<?php echo !empty($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                         <input type="hidden" id="croppedImageData" name="croppedImageData">
                                     </div>
                                 </div>
+
 
                                 <div class="modal fade" id="modal-default" data-backdrop="static">
                                     <div class="modal-dialog modal-lg">
@@ -385,10 +386,15 @@ $member = mysqli_fetch_assoc($query);
 
                 } else if (resp == 3) {
                     alert_toast("Email already exist", 'danger')
-                    end_load();
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
                 }
             }
         })

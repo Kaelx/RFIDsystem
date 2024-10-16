@@ -358,9 +358,15 @@ $member = mysqli_fetch_assoc($query);
 
                 } else if (resp == 3) {
                     alert_toast("Email already exist", 'info')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
                 }
             }
         })

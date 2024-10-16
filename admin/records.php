@@ -27,7 +27,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         <?php
                         switch ($type) {
                             case 'student':
-                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
+                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, NULL as employee_type, s.rfid, s.img_path, s.gender
                         FROM students s
                         LEFT JOIN role r ON s.role_id = r.id
                         WHERE s.id = '$uid'
@@ -35,15 +35,16 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 break;
 
                             case 'employee':
-                                $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
+                                $query = "SELECT e.id, e.fname, e.mname, e.lname, et.employee_type, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                         FROM employees e
                         LEFT JOIN role r ON e.role_id = r.id
+                        LEFT JOIN employee_type et ON e.employee_type_id = et.id
                         WHERE e.id = '$uid'
                         ";
                                 break;
 
                             case 'visitor':
-                                $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
+                                $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, NULL as employee_type, v.rfid, v.img_path, v.gender
                         FROM visitors v
                         LEFT JOIN role r ON v.role_id = r.id
                         WHERE v.id = '$uid'
@@ -73,7 +74,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 <h3 class="profile-username text-center">
                                     <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] ?>
                                 </h3>
-                                <p class="text-muted text-center"><?= $member['role_name'] ?></p>
+
+                                <p class="text-center no-space"><?= $member['role_name']; ?></p>
+                                <p class="text-center no-space"><?= $member['employee_type']; ?></p>
+                                <p class="text-center no-space"><?= $member['school_id']; ?></p>
+
                             </div>
                         </div>
 
