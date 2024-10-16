@@ -112,9 +112,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(resp) {
-                    end_load()
-
-                    console.log(resp);
+                    
                     if (resp == 1) {
                         alert_toast('Password successfully updated', 'success')
                         setTimeout(function() {
@@ -122,12 +120,24 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                         }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Something went wrong', 'danger')
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     } else if (resp == 3) {
                         alert_toast('Password did not match', 'danger')
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     } else if (resp == 4) {
                         alert_toast('OTP Code did not match', 'danger')
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     } else {
                         alert_toast('An error occured', 'danger')
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     }
                 }
             })
