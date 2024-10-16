@@ -109,17 +109,24 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(resp) {
-                    end_load()
-
-                    console.log(resp);
+                    
                     if (resp == 1) {
                         location.href = 'index';
                     } else if (resp == 2) {
                         alert_toast('Wrong password', 'danger');
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     } else if (resp == 3) {
                         alert_toast('No account found', 'danger');
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     } else {
                         alert_toast('An error occured', 'danger')
+                        setTimeout(function() {
+                            end_load();
+                        }, 1000)
                     }
                 }
             })

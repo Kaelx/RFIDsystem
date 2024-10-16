@@ -88,42 +88,47 @@ $data = mysqli_fetch_assoc($query);
                         <div class="modal fade" id="modal-default" data-backdrop="static">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Choose Image</h5>
-                                    </div>
                                     <div class="modal-body text-center">
-                                        <div class="m-2">
-                                            <button type="button" id="uploadImg" class="btn btn-success">Upload Image</button>
-                                            <button type="button" id="useCamera" class="btn btn-info">Use Camera</button>
+                                        <!-- Button container, responsive with Bootstrap's d-flex and flex-column for mobile -->
+                                        <div class="m-2 d-flex flex-wrap justify-content-center">
+                                            <button type="button" id="uploadImg" class="btn btn-success m-1">Upload Image</button>
+                                            <button type="button" id="useCamera" class="btn btn-info m-1">Use Camera</button>
                                         </div>
 
+                                        <!-- File input container, responsive class for input -->
                                         <div id="fileInputDiv">
                                             <input type="file" name="img" id="img" accept="image/*" class="form-control mb-3" onchange="previewImage(event)" style="display: none;">
                                         </div>
 
-                                        <div id="cameraDiv" style="display: none;">
-                                            <video id="cameraStream" autoplay class="img-fluid rounded mb-3"></video>
+                                        <!-- Camera section -->
+                                        <div id="cameraDiv" class="mb-3" style="display: none;">
+                                            <video id="cameraStream" autoplay class="img-fluid rounded mb-3 w-100"></video>
                                             <button type="button" class="btn btn-primary" id="captureImage">Capture Image</button>
 
                                             <hr>
                                             <canvas id="cameraCanvas" style="display: none;"></canvas>
                                         </div>
+
+                                        <!-- Image preview -->
                                         <div class="img-fluid">
-                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid rounded" />
+                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
                                         </div>
                                     </div>
-                                    <div class="modal-footer d-flex justify-content-between">
-                                        <div>
+                                    <div class="modal-footer d-flex justify-content-between flex-wrap">
+                                        <!-- Reset Button -->
+                                        <div class="mb-2 mb-md-0">
                                             <button type="button" class="btn btn-danger" id="cropReset">Reset</button>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                        <!-- Crop & Save and Cancel buttons -->
+                                        <div class="d-flex flex-column flex-md-row">
+                                            <button type="button" class="btn btn-primary mr-2" id="btnCrop">Crop & Save</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <script>
                             let cropper;
@@ -196,16 +201,17 @@ $data = mysqli_fetch_assoc($query);
                                     cropper.destroy(); // Destroy the previous instance if it exists
                                 }
                                 cropper = new Cropper(image, {
+                                    dragMode: 'move',
                                     aspectRatio: 1,
-                                    viewMode: 3,
+                                    viewMode: 1,
                                 });
                             }
 
                             document.getElementById('btnCrop').addEventListener('click', function() {
                                 if (cropper) { // Check if cropper is defined
                                     var cropImgData = cropper.getCroppedCanvas({
-                                        width: 400,
-                                        height: 400
+                                        width: 600,
+                                        height: 600
                                     });
 
                                     cropImgData.toBlob(function(blob) {
@@ -262,8 +268,8 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
+                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                                <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
@@ -302,16 +308,6 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control " name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control " name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
-                            </div>
-                        </div>
 
 
                         <div class="row">
@@ -325,7 +321,7 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Program/Course</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled></option>
+                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
@@ -435,13 +431,24 @@ $data = mysqli_fetch_assoc($query);
                     }, 1000)
 
                 } else if (resp == 3) {
-                    alert_toast("RFID already rigestered to someone", 'danger')
+                    alert_toast("RFID already registered to someone", 'danger')
                     setTimeout(function() {
-                        location.reload();
+                        end_load();
+                    }, 1000)
+
+                    $('#rfid').val('');
+
+                } else if (resp == 4) {
+                    alert_toast("Email already taken", 'danger')
+                    setTimeout(function() {
+                        end_load();
                     }, 1000)
 
                 } else {
                     alert_toast("An error occured", 'danger')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
                 }
             }
         })

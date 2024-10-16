@@ -178,6 +178,11 @@ class Action
 			}
 		}
 
+		$chk = $this->db->query("SELECT * FROM students WHERE email = '$email' AND id != '$id'")->num_rows;
+		if ($chk > 0) {
+			return 4;
+		}
+
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
@@ -186,8 +191,6 @@ class Action
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-		$data .= ", parent_name = '$parent_name' ";
-		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";
@@ -200,7 +203,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() .$fname.''.$lname.'.png';
+		$img_name = time() . $fname . '' . $lname . '.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -238,7 +241,6 @@ class Action
 
 			return $e->getMessage();  // For debugging
 		}
-
 	}
 
 
@@ -260,6 +262,12 @@ class Action
 			}
 		}
 
+
+		$chk = $this->db->query("SELECT * FROM employees WHERE email = '$email' AND id != '$id'")->num_rows;
+		if ($chk > 0) {
+			return 4;
+		}
+
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
@@ -269,7 +277,7 @@ class Action
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-		
+
 
 		$data .= ", employee_type_id = '$type_id' ";
 		$data .= ", employee_dept_id = '$dept_id' ";
@@ -283,7 +291,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() .$fname.''.$lname.'.png';
+		$img_name = time() . $fname . '' . $lname . '.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -337,7 +345,7 @@ class Action
 		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
-			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' and status = 0");
 
 			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
 				return 3;
@@ -358,7 +366,7 @@ class Action
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() .$fname.''.$lname.'.png';
+		$img_name = time() . $fname . '' . $lname . '.png';
 		$img_path = 'assets/img/' . $img_name;
 
 		if (file_put_contents($img_path, $decoded_image)) {
@@ -407,12 +415,12 @@ class Action
 		if ($archive)
 
 			$qry = $this->db->query("SELECT * FROM students WHERE id = " . $id);
-			$student = $qry->fetch_assoc();
+		$student = $qry->fetch_assoc();
 
-			$log = [
-				'user_id' => $_SESSION['login_id'],
-				'action' => ' has archived a student '. $student['fname'] . ' ' . $student['lname']
-			];
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived a student ' . $student['fname'] . ' ' . $student['lname']
+		];
 
 
 		$this->save_log($log);
@@ -424,7 +432,7 @@ class Action
 		$archive = $this->db->query("UPDATE students set status = 0 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM students WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM students WHERE id = " . $id);
 		$student = $qry->fetch_assoc();
 
 		$log = [
@@ -445,7 +453,7 @@ class Action
 		$archive = $this->db->query("UPDATE employees set status = 1 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
 		$employee = $qry->fetch_assoc();
 
 		$log = [
@@ -462,7 +470,7 @@ class Action
 		$archive = $this->db->query("UPDATE employees set status = 0 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM employees WHERE id = " . $id);
 		$employee = $qry->fetch_assoc();
 
 		$log = [
@@ -481,7 +489,7 @@ class Action
 		$archive = $this->db->query("UPDATE visitors set status = 1 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
 		$visitor = $qry->fetch_assoc();
 
 		$log = [
@@ -490,7 +498,7 @@ class Action
 		];
 
 		$this->save_log($log);
-			return 1;
+		return 1;
 	}
 
 	function unarchive_visitor(){
@@ -498,7 +506,7 @@ class Action
 		$archive = $this->db->query("UPDATE visitors set status = 0 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM visitors WHERE id = " . $id);
 		$visitor = $qry->fetch_assoc();
 
 		$log = [
@@ -507,7 +515,84 @@ class Action
 		];
 
 		$this->save_log($log);
-			return 1;
+		return 1;
+	}
+
+
+
+	function fetch_data(){
+		extract($_POST);
+
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+			FROM students s
+			LEFT JOIN role r ON s.role_id = r.id
+			LEFT JOIN program p ON s.prog_id = p.id
+			LEFT JOIN department d ON p.dept_id = d.id
+			WHERE s.rfid = '$rfid' AND s.status = 0
+			
+			UNION
+			
+			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			FROM employees e
+			LEFT JOIN role r ON e.role_id = r.id
+			LEFT JOIN employee_type et ON e.employee_type_id = et.id
+			LEFT JOIN department d ON e.employee_dept_id = d.id
+			WHERE e.rfid = '$rfid' AND e.status = 0
+			
+			UNION
+			
+			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			FROM visitors v
+			LEFT JOIN role r ON v.role_id = r.id
+			WHERE v.rfid = '$rfid' AND v.status = 0
+		");
+
+		if ($fetch->num_rows > 0) {
+			$data = $fetch->fetch_assoc();
+
+			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+
+			$response = [
+				'success' => true,
+				'fname' => $data['fname'],
+				'lname' => $data['lname'],
+				'gender' => ucfirst($data['gender']),
+				'role_name' => $data['role_name'],
+				'prog_name' => $data['prog_name'],
+				'dept_name' => $data['dept_name'],
+				'employee_type' => $data['employee_type'],
+				'school_id' => $data['school_id'],
+				'img_path' => $img_path
+			];
+
+			if ($response) {
+				$chk = $this->db->query("SELECT * FROM records 
+											WHERE record_id = '" . $data['id'] . "' 
+											AND record_table = '" . $data['source_table'] . "' 
+											AND record_date IS NOT NULL
+											AND record_date = CURRENT_DATE()
+											AND timein IS NOT NULL
+											AND timeout IS NULL");
+
+				if ($chk->num_rows > 0) {
+					$update = $this->db->query("UPDATE records 
+						SET timeout = CURRENT_TIMESTAMP() 
+						WHERE record_id = '" . $data['id'] . "' 
+						AND record_table = '" . $data['source_table'] . "'
+						AND record_date = CURRENT_DATE()
+						AND timeout IS NULL
+					");
+				} else {
+					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
+						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+					");
+				}
+			}
+		} else {
+			$response = ['success' => false];
+		}
+
+		echo json_encode($response);
 	}
 
 
@@ -558,7 +643,7 @@ class Action
 			];
 
 			if ($response) {
-					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
+				$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
 						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
 					");
 			}
@@ -753,56 +838,57 @@ class Action
 		if ($archive)
 
 
-		$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
 		$user = $qry->fetch_assoc();
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has archived the account '.$user['account_type'].' name '. $user['fname'] . ' ' . $user['lname']
+			'action' => ' has archived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
-			return 1;
+		return 1;
 	}
+
 
 	function unarchive_user(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE users set status = 0 where id = " . $id);
 		if ($archive)
 
-		$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
+			$qry = $this->db->query("SELECT * FROM users WHERE id = " . $id);
 		$user = $qry->fetch_assoc();
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has unarchived the account '.$user['account_type'].' name '. $user['fname'] . ' ' . $user['lname']
+			'action' => ' has unarchived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
-			return 1;
+		return 1;
 	}
 
 
-	function request_report() {
+	function request_report(){
 		extract($_POST);
 
 		if (empty($report_id)) {
 			return 'Error: report_id is required.';
 		}
-	
+
 		$log = [
 			'user_id' => $_SESSION['login_id'],
 			'action' => 'generate a report with the Reference ID of ' . $report_id
 		];
-	
+
 		$this->save_log($log);
 		return;
 	}
 
 
-	function get_record() {
+	function get_record(){
 		$qry = $this->db->query("SELECT record_date, COUNT(*) as entry_count FROM records GROUP BY record_date");
-	
+
 		$data = [];
 		if ($qry->num_rows > 0) {
 			while ($row = $qry->fetch_assoc()) {
@@ -812,11 +898,11 @@ class Action
 				];
 			}
 		}
-	
+
 		return json_encode($data);
-	}	
-	
-	
+	}
+
+
 	// function import() {
 	// 	if (isset($_FILES['csv']['tmp_name'])) {
 	// 		$csvFile = $_FILES['csv']['tmp_name'];
@@ -879,17 +965,14 @@ class Action
 	// }
 
 
-	function save_log($log) {
+	function save_log($log){
 
 		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
 								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
-										
+
 		// Check for errors
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
-	
 	}
-
-	
 }

@@ -75,11 +75,11 @@ class Action{
 					$mail->Username = $mailUsername; 
 					$mail->Password = $mailPassword;
 			
-					$mail->setFrom('evsuoc-rfid@gmail.com', 'OTP Verification');
+					$mail->setFrom('evsuoc-rfid@gmail.com', 'EVSU-OC RFID Verification Code');
 					$mail->addAddress($email);
 			
 					$mail->isHTML(true);
-					$mail->Subject = "Verification code";
+					$mail->Subject = "EVSU-OC RFID Verification Code";
 					$mail->Body = "<h5>Dear user, </h5> <h3>Your recovery OTP code is $otp <br></h3>";
 			
 					return $mail->send();

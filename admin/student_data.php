@@ -14,7 +14,6 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <a href="index.php?page=student_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                            <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
                         </div>
                     </div>
 
@@ -34,13 +33,13 @@
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
                                 $cats = $conn->query("SELECT s.*, d.dept_name, p.prog_name, r.role_name 
-                            FROM students s 
-                            LEFT JOIN department d ON s.dept_id = d.id 
-                            LEFT JOIN program p ON s.prog_id = p.id 
-                            LEFT JOIN role r ON s.role_id = r.id 
-                            WHERE (r.role_name = 'student' or 'students' OR r.role_name IS NULL)
-                            and s.status = 0
-                            ORDER BY s.id ASC");
+                                                FROM students s 
+                                                LEFT JOIN department d ON s.dept_id = d.id 
+                                                LEFT JOIN program p ON s.prog_id = p.id 
+                                                LEFT JOIN role r ON s.role_id = r.id 
+                                                WHERE (r.role_name = 'student' or 'students' OR r.role_name IS NULL)
+                                                and s.status = 0
+                                                ORDER BY s.id ASC");
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>

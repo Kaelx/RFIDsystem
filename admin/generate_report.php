@@ -105,11 +105,11 @@ $result_records = $conn->query($query_records);
               <p style="margin-bottom: 5px;"><?= isset($member['fname']) ? $member['fname'] : ''; ?>
                 <?= isset($member['mname']) ? strtoupper(substr($member['mname'], 0, 1)) . '. ' : ''; ?>
                 <?= isset($member['lname']) ? $member['lname'] : ''; ?></p>
-              <p style="margin-bottom: 5px;"><?= isset($member['school_id']) ? $member['school_id'] : ''; ?></p>
-              <p style="margin-bottom: 5px;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
+              <p style="margin-bottom: 0;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
               <?php if (!empty($member['employee_type'])): ?>
-                <p style="margin-bottom: 5px;"><?= $member['employee_type']; ?></p>
+                <p style="margin-bottom: 0;"><?= $member['employee_type']; ?></p>
               <?php endif; ?>
+              <p style="margin-bottom: 0;"><?= isset($member['school_id']) ? $member['school_id'] : ''; ?></p>
             </div>
           </div>
 

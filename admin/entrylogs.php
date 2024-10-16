@@ -84,7 +84,7 @@ $result = $conn->query($query);
                         <div class="ml-auto mr-2">
                             <div class="row">
                                 <div class="dropdown">
-                                    <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Filter</button>
+                                    <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Type</button>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('')">Clear Filter</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
