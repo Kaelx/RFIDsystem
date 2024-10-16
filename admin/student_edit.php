@@ -268,7 +268,7 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label>  <i> (Optional)</i>
+                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
                                 <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
@@ -431,12 +431,14 @@ $data = mysqli_fetch_assoc($query);
                     }, 1000)
 
                 } else if (resp == 3) {
-                    alert_toast("RFID already rigestered to someone", 'danger')
+                    alert_toast("RFID already registered to someone", 'danger')
                     setTimeout(function() {
                         end_load();
                     }, 1000)
 
-                }else if (resp == 4) {
+                    $('#rfid').val('');
+
+                } else if (resp == 4) {
                     alert_toast("Email already taken", 'danger')
                     setTimeout(function() {
                         end_load();
@@ -444,6 +446,9 @@ $data = mysqli_fetch_assoc($query);
 
                 } else {
                     alert_toast("An error occured", 'danger')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
                 }
             }
         })

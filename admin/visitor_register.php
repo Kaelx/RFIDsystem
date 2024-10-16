@@ -348,10 +348,12 @@
                     }, 1000)
 
                 } else if (resp == 3) {
-                    alert_toast("RFID already rigestered to someone", 'danger')
+                    alert_toast("RFID already registered to someone", 'danger')
                     setTimeout(function() {
-                        location.reload()
+                        end_load();
                     }, 1000)
+
+                    $('#rfid').val('');
 
                 } else if (resp == 4) {
                     alert_toast("Email already taken", 'danger')
@@ -361,6 +363,9 @@
 
                 } else {
                     alert_toast("An error occured", 'danger')
+                    setTimeout(function() {
+                        end_load();
+                    }, 1000)
                 }
             }
         })
