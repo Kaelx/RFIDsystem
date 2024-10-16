@@ -321,7 +321,7 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Program/Course</label>
                                 <select class="form-control  select2" name="prog_id" id="prog_id" required>
-                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled></option>
+                                    <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
