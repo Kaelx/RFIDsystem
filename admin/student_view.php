@@ -48,8 +48,8 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Middle Name</p>
-                            <p type="text" class="form-control "><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                            <p class="mb-2 text-bold">Middle Initial</p>
+                            <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
@@ -94,17 +94,6 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Complete Name of Parent/Guardian</p>
-                            <p class="form-control "><?= isset($data['parent_name']) ? $data['parent_name'] : '' ?></p>
-                        </div>
-                        <div class="col-md-4 form-group mb-0">
-                            <p class="mb-2 text-bold">Contact No. of Parent/Guardian</p>
-                            <p class="form-control "><?= isset($data['parent_num']) ? $data['parent_num'] : '' ?></p>
-                        </div>
-                    </div>
-
 
                     <div class="row">
                         <div class="col-md-4 form-group mb-0">
@@ -114,7 +103,7 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Program/Course</p>
-                            <p class="form-control "><?= isset($data['prog_name']) ? $data['prog_name'] : '' ?></p>
+                            <input class="form-control " value="<?= isset($data['prog_name']) ? $data['prog_name'] : '' ?>">
                         </div>
                     </div>
 

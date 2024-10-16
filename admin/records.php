@@ -70,8 +70,9 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                     <?php endif; ?>
                                 </div>
 
-                                <h3 class="profile-username text-center"><?= $member['fname'] . ' ' . $member['mname'] . ' ' . $member['lname'] ?></h3>
-
+                                <h3 class="profile-username text-center">
+                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] ?>
+                                </h3>
                                 <p class="text-muted text-center"><?= $member['role_name'] ?></p>
                             </div>
                         </div>

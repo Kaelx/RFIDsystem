@@ -46,8 +46,8 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Middle Name</p>
-                            <p type="text" class="form-control "><?= isset($data['mname']) ? $data['mname'] : '' ?></p>
+                            <p class="mb-2 text-bold">Middle Initial</p>
+                            <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
                         </div>
 
                         <div class="col-md-3 form-group mb-0">

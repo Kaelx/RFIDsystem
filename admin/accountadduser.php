@@ -59,36 +59,40 @@
                         <div class="modal fade" id="modal-default" data-backdrop="static">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Choose Image</h5>
-                                    </div>
                                     <div class="modal-body text-center">
-                                        <div class="m-2">
-                                            <button type="button" id="uploadImg" class="btn btn-success">Upload Image</button>
-                                            <button type="button" id="useCamera" class="btn btn-info">Use Camera</button>
+                                        <!-- Button container, responsive with Bootstrap's d-flex and flex-column for mobile -->
+                                        <div class="m-2 d-flex flex-wrap justify-content-center">
+                                            <button type="button" id="uploadImg" class="btn btn-success m-1">Upload Image</button>
+                                            <button type="button" id="useCamera" class="btn btn-info m-1">Use Camera</button>
                                         </div>
 
+                                        <!-- File input container, responsive class for input -->
                                         <div id="fileInputDiv">
                                             <input type="file" name="img" id="img" accept="image/*" class="form-control mb-3" onchange="previewImage(event)" style="display: none;">
                                         </div>
 
-                                        <div id="cameraDiv" style="display: none;">
-                                            <video id="cameraStream" autoplay class="img-fluid rounded mb-3"></video>
+                                        <!-- Camera section -->
+                                        <div id="cameraDiv" class="mb-3" style="display: none;">
+                                            <video id="cameraStream" autoplay class="img-fluid rounded mb-3 w-100"></video>
                                             <button type="button" class="btn btn-primary" id="captureImage">Capture Image</button>
 
                                             <hr>
                                             <canvas id="cameraCanvas" style="display: none;"></canvas>
                                         </div>
+
+                                        <!-- Image preview -->
                                         <div class="img-fluid">
-                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid rounded" />
+                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
                                         </div>
                                     </div>
-                                    <div class="modal-footer d-flex justify-content-between">
-                                        <div>
+                                    <div class="modal-footer d-flex justify-content-between flex-wrap">
+                                        <!-- Reset Button -->
+                                        <div class="mb-2 mb-md-0">
                                             <button type="button" class="btn btn-danger" id="cropReset">Reset</button>
                                         </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                        <!-- Crop & Save and Cancel buttons -->
+                                        <div class="d-flex flex-column flex-md-row">
+                                            <button type="button" class="btn btn-primary mr-2" id="btnCrop">Crop & Save</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
@@ -168,15 +172,15 @@
                                 }
                                 cropper = new Cropper(image, {
                                     aspectRatio: 1,
-                                    viewMode: 3,
+                                    viewMode: 1,
                                 });
                             }
 
                             document.getElementById('btnCrop').addEventListener('click', function() {
                                 if (cropper) { // Check if cropper is defined
                                     var cropImgData = cropper.getCroppedCanvas({
-                                        width: 400,
-                                        height: 400
+                                        width: 600,
+                                        height: 600
                                     });
 
                                     cropImgData.toBlob(function(blob) {

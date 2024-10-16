@@ -87,7 +87,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="modal fade" id="modal-default" data-backdrop="static">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-body text-center">
                                         <!-- Button container, responsive with Bootstrap's d-flex and flex-column for mobile -->
@@ -209,8 +209,8 @@ $data = mysqli_fetch_assoc($query);
                             document.getElementById('btnCrop').addEventListener('click', function() {
                                 if (cropper) { // Check if cropper is defined
                                     var cropImgData = cropper.getCroppedCanvas({
-                                        width: 400,
-                                        height: 400
+                                        width: 600,
+                                        height: 600
                                     });
 
                                     cropImgData.toBlob(function(blob) {
@@ -261,9 +261,10 @@ $data = mysqli_fetch_assoc($query);
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
+
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
+                                <label for="mname">Middle Initial</label>  <i> (Optional)</i>
+                                <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>

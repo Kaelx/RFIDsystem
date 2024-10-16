@@ -195,8 +195,6 @@ class Action
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 		$data .= ", email = '$email' ";
-		$data .= ", parent_name = '$parent_name' ";
-		$data .= ", parent_num = '$parent_num' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";

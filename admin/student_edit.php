@@ -86,7 +86,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="modal fade" id="modal-default" data-backdrop="static">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-body text-center">
                                         <!-- Button container, responsive with Bootstrap's d-flex and flex-column for mobile -->
@@ -209,8 +209,8 @@ $data = mysqli_fetch_assoc($query);
                             document.getElementById('btnCrop').addEventListener('click', function() {
                                 if (cropper) { // Check if cropper is defined
                                     var cropImgData = cropper.getCroppedCanvas({
-                                        width: 400,
-                                        height: 400
+                                        width: 600,
+                                        height: 600
                                     });
 
                                     cropImgData.toBlob(function(blob) {
@@ -267,8 +267,8 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($data['mname']) ? $data['mname'] : '' ?>">
+                                <label for="mname">Middle Initial</label>  <i> (Optional)</i>
+                                <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
@@ -305,16 +305,6 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="parent_name">Complete Name of Parent/Guardian</label>
-                                <input type="text" class="form-control " name="parent_name" id="parent_name" required value="<?= isset($data['parent_name']) ? $data['parent_name'] : '' ?>">
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="parent_num">Contact No. of Parent/Guardian</label>
-                                <input type="number" class="form-control " name="parent_num" id="parent_num" required value="<?= isset($data['parent_num']) ? $data['parent_num'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                         </div>
 

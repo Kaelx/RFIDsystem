@@ -192,8 +192,8 @@
                             document.getElementById('btnCrop').addEventListener('click', function() {
                                 if (cropper) { // Check if cropper is defined
                                     var cropImgData = cropper.getCroppedCanvas({
-                                        width: 400,
-                                        height: 400
+                                        width: 600,
+                                        height: 600
                                     });
 
                                     cropImgData.toBlob(function(blob) {
@@ -246,9 +246,10 @@
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required>
                             </div>
+
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Name</label>
-                                <input type="text" class="form-control " name="mname" id="mname" required>
+                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                                <input type="text" class="form-control" name="mname" id="mname" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
