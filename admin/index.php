@@ -153,7 +153,8 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">Attendance</li>
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
-              <li class="nav-item">
+
+              <!-- <li class="nav-item">
                 <a href="index.php?page=rfid_in" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
                   <p>Scan IN</p>
@@ -164,8 +165,18 @@ if (!isset($_SESSION['login_id'])) {
                   <i class="fa-solid fa-qrcode nav-icon"></i>
                   <p>Scan OUT</p>
                 </a>
+              </li> -->
+
+              <li class="nav-item">
+                <a href="index.php?page=rfid" class="nav-link">
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>Scan RFID</p>
+                </a>
               </li>
+
             <?php endif; ?>
+
+
             <li class="nav-item">
               <a href="index.php?page=entrylogs" class="nav-link">
                 <i class="fa-solid fa-clipboard-user nav-icon"></i>
