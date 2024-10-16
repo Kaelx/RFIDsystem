@@ -345,7 +345,7 @@ class Action
 		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
-			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' and status = 0");
 
 			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
 				return 3;
