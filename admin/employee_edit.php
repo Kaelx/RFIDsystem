@@ -201,6 +201,7 @@ $data = mysqli_fetch_assoc($query);
                                     cropper.destroy(); // Destroy the previous instance if it exists
                                 }
                                 cropper = new Cropper(image, {
+                                    dragMode: 'move',
                                     aspectRatio: 1,
                                     viewMode: 1,
                                 });
@@ -263,7 +264,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
 
                             <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label>  <i> (Optional)</i>
+                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
                                 <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
@@ -413,7 +414,13 @@ $data = mysqli_fetch_assoc($query);
                 } else if (resp == 3) {
                     alert_toast("RFID already rigestered to someone", 'danger')
                     setTimeout(function() {
-                        location.reload();
+                        end_load();
+                    }, 1000)
+
+                } else if (resp == 4) {
+                    alert_toast("Email already taken", 'danger')
+                    setTimeout(function() {
+                        end_load();
                     }, 1000)
 
                 } else {

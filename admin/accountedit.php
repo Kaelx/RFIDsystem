@@ -188,6 +188,7 @@ $member = mysqli_fetch_assoc($query);
                                             cropper.destroy(); // Destroy the previous instance if it exists
                                         }
                                         cropper = new Cropper(image, {
+                                            dragMode: 'move',
                                             aspectRatio: 1,
                                             viewMode: 1,
                                         });
@@ -250,9 +251,10 @@ $member = mysqli_fetch_assoc($query);
                                         <label for="fname">First Name</label>
                                         <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
                                     </div>
+
                                     <div class="col-md-3 form-group">
-                                        <label for="mname">Middle Name</label>
-                                        <input type="text" class="form-control " name="mname" id="mname" required value="<?= isset($member['mname']) ? $member['mname'] : '' ?>">
+                                        <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                                        <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($member['mname']) ? $member['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="lname">Last Name</label>
@@ -382,7 +384,8 @@ $member = mysqli_fetch_assoc($query);
                     }, 1000)
 
                 } else if (resp == 3) {
-                    alert_toast("Email already exist", 'info')
+                    alert_toast("Email already exist", 'danger')
+                    end_load();
 
                 } else {
                     alert_toast("An error occured", 'danger')

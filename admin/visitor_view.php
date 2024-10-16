@@ -81,8 +81,8 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
+                    <div class="row">
+                        <div class="col-md-6">
                             <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
                         </div>
                         <div class="col-md-6 text-right">

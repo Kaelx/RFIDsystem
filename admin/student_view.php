@@ -103,7 +103,7 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="col-md-4 form-group mb-0">
                             <p class="mb-2 text-bold">Program/Course</p>
-                            <input class="form-control " value="<?= isset($data['prog_name']) ? $data['prog_name'] : '' ?>">
+                            <p class="form-control "><?= isset($data['prog_name']) ? $data['prog_name'] : '' ?></p>
                         </div>
                     </div>
 
@@ -114,9 +114,9 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Records</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>

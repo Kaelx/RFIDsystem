@@ -184,6 +184,7 @@
                                     cropper.destroy(); // Destroy the previous instance if it exists
                                 }
                                 cropper = new Cropper(image, {
+                                    dragMode: 'move',
                                     aspectRatio: 1,
                                     viewMode: 1,
                                 });
@@ -350,6 +351,12 @@
                     alert_toast("RFID already rigestered to someone", 'danger')
                     setTimeout(function() {
                         location.reload()
+                    }, 1000)
+
+                } else if (resp == 4) {
+                    alert_toast("Email already taken", 'danger')
+                    setTimeout(function() {
+                        end_load();
                     }, 1000)
 
                 } else {
