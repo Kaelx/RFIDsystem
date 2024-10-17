@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 // Validate for all form
 function validateForm(form) {
-    const invalidPattern = /(--|'|`|<|>|=)/;
+    const invalidPattern = /(--|..|'|.'|."|".|'.|`|<|>|=)/;
     let isValid = true;
 
     $(form).find('input').each(function () {
@@ -44,7 +44,7 @@ function validateForm(form) {
         }
 
         if (invalidPattern.test($(this).val())) {
-            alert_toast('Invalid. Do not input special character!', 'danger');
+            alert_toast('Invalid. Do not input special character', 'danger');
             isValid = false;
             return false;
         }

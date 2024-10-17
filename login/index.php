@@ -134,12 +134,12 @@ include 'footer.php';
 
 
     function validateForm(form) {
-        const invalidPattern = /(--|'|`|<|>|=)/;
+        const invalidPattern = /(--|..|'|.'|."|".|'.|`|<|>|=)/;
         let isValid = true;
 
         $(form).find('input').each(function() {
             if (invalidPattern.test($(this).val())) {
-                alert_toast('Invalid. Do not input special character!', 'danger');
+                alert_toast('Invalid. Do not input special character', 'danger');
                 isValid = false;
                 return false;
             }
