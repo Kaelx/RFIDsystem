@@ -134,7 +134,7 @@ include 'footer.php';
 
 
     function validateForm(form) {
-        const invalidPattern = /(--|..|'|.'|."|".|'.|`|<|>|=)/;
+        const invalidPattern = /(--|'|.'|."|".|'.|`|<|>|=)/;
         let isValid = true;
 
         $(form).find('input').each(function() {

@@ -24,6 +24,12 @@ if($action == "save_category3"){
 		echo $save;
 }
 
+if($action == "save_category4"){
+	$save = $crud->save_category4();
+	if($save)
+		echo $save;
+}
+
 
 if($action == "delete_category2"){
 	$save = $crud->delete_category2();
@@ -33,6 +39,12 @@ if($action == "delete_category2"){
 
 if($action == "delete_category3"){
 	$save = $crud->delete_category3();
+	if($save)
+		echo $save;
+}
+
+if($action == "delete_category4"){
+	$save = $crud->delete_category4();
 	if($save)
 		echo $save;
 }

@@ -102,6 +102,37 @@ class Action
 	}
 
 
+	function save_category4(){
+		extract($_POST);
+		$data = " employee_type = '$name' ";
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO employee_type set " . $data);
+			if ($save)
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has created the ' . $name . ' in category'
+				];
+
+
+			$this->save_log($log);
+			return 1;
+		} else {
+			$save = $this->db->query("UPDATE employee_type set " . $data . " where id=" . $id);
+			if ($save)
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has updated the ' . $name . ' in category'
+				];
+
+
+			$this->save_log($log);
+			return 2;
+		}
+	}
+
+
 	function delete_category2(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = " . $id);
@@ -125,6 +156,22 @@ class Action
 			$log = [
 				'user_id' => $_SESSION['login_id'],
 				'action' => ' has deleted a program'
+			];
+
+
+		$this->save_log($log);
+		return 1;
+	}
+
+
+	function delete_category4(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM employee_type where id = " . $id);
+		if ($delete)
+
+			$log = [
+				'user_id' => $_SESSION['login_id'],
+				'action' => ' has deleted an employee type'
 			];
 
 
