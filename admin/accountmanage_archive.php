@@ -24,7 +24,7 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Account Type</th>
-                                    <th></th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
