@@ -241,14 +241,16 @@ class Action
 
 		$base64_data = $_POST['croppedImageData'];
 
-		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
-		$decoded_image = base64_decode($base64_data);
+		if (!empty($base64_data)) {
+			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+			$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() . $fname . '' . $lname . '.png';
-		$img_path = 'assets/img/' . $img_name;
+			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_path = 'assets/img/' . $img_name;
 
-		if (file_put_contents($img_path, $decoded_image)) {
-			$data .= ", img_path = '$img_name' ";
+			if (file_put_contents($img_path, $decoded_image)) {
+				$data .= ", img_path = '$img_name' ";
+			}
 		}
 
 
@@ -323,6 +325,7 @@ class Action
 
 		$base64_data = $_POST['croppedImageData'];
 
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -332,6 +335,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 
 		try {
@@ -398,6 +402,7 @@ class Action
 
 		$base64_data = $_POST['croppedImageData'];
 
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -407,6 +412,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 
 		try {
@@ -806,6 +812,8 @@ class Action
 		}
 
 		$base64_data = $_POST['croppedImageData'];
+		
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -814,6 +822,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
 		if ($chk > 0) {
