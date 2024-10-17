@@ -178,11 +178,6 @@ class Action
 			}
 		}
 
-		$chk = $this->db->query("SELECT * FROM students WHERE email = '$email' AND id != '$id'")->num_rows;
-		if ($chk > 0) {
-			return 4;
-		}
-
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
@@ -190,7 +185,6 @@ class Action
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";
@@ -821,7 +815,7 @@ class Action
 
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => ' has updated the account ' . $account_type_name . ' name ' . $fname . '' . $lname
+					'action' => ' has updated the account ' . $account_type_name . ' name ' . $fname . ' ' . $lname
 				];
 
 				$this->save_log($log);
