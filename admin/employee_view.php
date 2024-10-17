@@ -47,19 +47,13 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">First Name</p>
-                                <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Middle Initial</p>
-                                <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
-                            </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Last Name</p>
-                                <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                            <div class="col-md-8 form-group mb-0">
+                                <p class="mb-2 text-bold">Name</p>
+                                <p type="text" class="form-control "><?= $data['fname'] .
+                                                                            (!empty($data['mname']) ? ' ' . $data['mname'] . '.' : '') .
+                                                                            ' ' . $data['lname'] .
+                                                                            (!empty($data['sname']) ? ' ' . $data['sname'] : '');
+                                                                        ?></p>
                             </div>
                         </div>
 
@@ -99,6 +93,10 @@ $data = mysqli_fetch_assoc($query);
 
                         <div class="row">
                             <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">School ID</p>
+                                <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
+                            </div>
+                            <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
                             </div>
@@ -108,16 +106,9 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-4 form-group mb-0">
-                                <p class="mb-2 text-bold">School ID</p>
-                                <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
-                            </div>
-                        </div>
-
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                             </div>

@@ -27,7 +27,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         <?php
                         switch ($type) {
                             case 'student':
-                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, NULL as employee_type, s.rfid, s.img_path, s.gender
+                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.sname, s.school_id, r.role_name, NULL as employee_type, s.rfid, s.img_path, s.gender
                         FROM students s
                         LEFT JOIN role r ON s.role_id = r.id
                         WHERE s.id = '$uid'
@@ -35,7 +35,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 break;
 
                             case 'employee':
-                                $query = "SELECT e.id, e.fname, e.mname, e.lname, et.employee_type, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
+                                $query = "SELECT e.id, e.fname, e.mname, e.lname, e.sname, et.employee_type, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                         FROM employees e
                         LEFT JOIN role r ON e.role_id = r.id
                         LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -44,7 +44,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 break;
 
                             case 'visitor':
-                                $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, NULL as employee_type, v.rfid, v.img_path, v.gender
+                                $query = "SELECT v.id, v.fname, v.mname, v.lname, v.sname, NULL as school_id, r.role_name, NULL as employee_type, v.rfid, v.img_path, v.gender
                         FROM visitors v
                         LEFT JOIN role r ON v.role_id = r.id
                         WHERE v.id = '$uid'
@@ -72,7 +72,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 </div>
 
                                 <h3 class="profile-username text-center">
-                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] ?>
+                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'].' '.(isset($member['sname']) && !empty($member['sname']) ? $member['sname'] : '')  ?>
                                 </h3>
 
                                 <p class="text-center no-space"><?= $member['role_name']; ?></p>

@@ -228,6 +228,7 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
@@ -309,6 +310,7 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 
@@ -394,6 +396,7 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";

@@ -244,13 +244,17 @@
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required>
                             </div>
-                            <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                            <div class="col-md-1 form-group">
+                                <label for="mname">M. I.</label>
                                 <input type="text" class="form-control" name="mname" id="mname" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control " name="lname" id="lname" required>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="sname">Suffix</label> <small> (Optional)</small>
+                                <input type="text" class="form-control " name="sname" id="sname">
                             </div>
                         </div>
 
@@ -298,6 +302,11 @@
 
                         <div class="row">
                             <div class="col-md-3 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required>
+                            </div>
+
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
@@ -324,13 +333,6 @@
                                 <small class="text-danger font-italic">*leave blank if not applicable.</small>
                             </div>
 
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required>
-                            </div>
                         </div>
 
 
@@ -396,7 +398,7 @@
 
                     $('#rfid').val('');
 
-                }else if (resp == 4) {
+                } else if (resp == 4) {
                     alert_toast("Email already taken", 'danger')
                     setTimeout(function() {
                         end_load();
