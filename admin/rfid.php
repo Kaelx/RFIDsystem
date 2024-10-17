@@ -321,7 +321,10 @@
 
             console.log(responseData);
 
-            if (!data.success) {
+            if (data.success) {
+                const audio = new Audio('assets/defaults/alert_success.mp3');
+                audio.play();
+            } else {
                 const audio = new Audio('assets/defaults/alert_beep.mp3');
                 audio.play();
             }
