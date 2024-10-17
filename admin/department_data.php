@@ -48,8 +48,9 @@ ORDER BY s.id ASC");
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-50">School ID</th>
+                                    <th class="text-center w-25">School ID</th>
                                     <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-25">Contact No.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +61,7 @@ ORDER BY s.id ASC");
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['cellnum']; ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>
