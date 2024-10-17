@@ -255,12 +255,7 @@ class Action
 				return 3;
 			}
 		}
-
-
-		$chk = $this->db->query("SELECT * FROM employees WHERE email = '$email' AND id != '$id'")->num_rows;
-		if ($chk > 0) {
-			return 4;
-		}
+		
 
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
@@ -270,7 +265,6 @@ class Action
 
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
 
 
 		$data .= ", employee_type_id = '$type_id' ";

@@ -92,11 +92,6 @@ $data = mysqli_fetch_assoc($query);
                                 <p class="mb-2 text-bold">Contact No.</p>
                                 <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Email</p>
-                                <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
-                            </div>
                         </div>
 
 
