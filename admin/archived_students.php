@@ -8,7 +8,7 @@
 
 
     <?php
-    $query = "SELECT s.id, s.fname, s.mname, s.lname,s.email, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
+    $query = "SELECT s.id, s.fname, s.mname, s.lname,s.email,s.cellnum, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
             FROM students s
             LEFT JOIN role r ON s.role_id = r.id
             where status = 1;
@@ -28,9 +28,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-25">Student ID</th>
+                                    <th class="text-center w-25">School ID</th>
                                     <th class="text-center w-50">Name</th>
-                                    <th class="text-center w-25">Email</th>
+                                    <th class="text-center w-25">Contact No.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,9 +40,9 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=archived_student&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td><?= $row['school_id'];?></td>
-                                        <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td><?= $row['email'] ?></td>
+                                        <td class="text-center"><?= $row['school_id'];?></td>
+                                        <td class="text-left"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"left><?= $row['cellnum'] ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>
