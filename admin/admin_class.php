@@ -317,10 +317,7 @@ class Action
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
 
-
 		$data .= ", employee_type_id = '$type_id' ";
-		$data .= ", employee_dept_id = '$dept_id' ";
-
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";

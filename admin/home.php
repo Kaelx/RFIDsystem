@@ -173,9 +173,11 @@ if ($result->num_rows > 0) {
     //-------------
     //- LINE CHART -
     //-------------
+    
     // Set up current date and seven days ago
     var currentDate = new Date();
     var sevenDaysAgo = new Date();
+
     sevenDaysAgo.setDate(currentDate.getDate() - 8);
 
 
@@ -192,8 +194,6 @@ if ($result->num_rows > 0) {
     }
 
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d');
-    var currentDate = new Date();
-
 
     var lineChartData = {
       labels: filteredLabels,

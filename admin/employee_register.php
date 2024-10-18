@@ -319,20 +319,6 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-3 form-group">
-                                <label for="dept_id">Department Assigned</label>
-                                <select class="form-control " name="dept_id" id="dept_id">
-                                    <option value="" selected>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM department  ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                    ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['dept_name'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                                <small class="text-danger font-italic">*leave blank if not applicable.</small>
-                            </div>
-
                         </div>
 
 

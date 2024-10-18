@@ -6,11 +6,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name , 'employee' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type , 'employee' as type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
-    LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
@@ -99,10 +98,6 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-3 form-group mb-0">
                                 <p class="mb-2 text-bold">Position</p>
                                 <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
-                            </div>
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Department</p>
-                                <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
                             </div>
                         </div>
 
