@@ -564,7 +564,7 @@ class Action
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -573,16 +573,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -597,6 +596,7 @@ class Action
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -638,10 +638,11 @@ class Action
 
 
 
+
 	function fetch_data_in(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -650,16 +651,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -674,6 +674,7 @@ class Action
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -685,8 +686,8 @@ class Action
 
 			if ($response) {
 				$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
-						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
-					");
+				VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+			");
 			}
 		} else {
 			$response = ['success' => false];
@@ -695,10 +696,11 @@ class Action
 		echo json_encode($response);
 	}
 
+
 	function fetch_data_out(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -707,16 +709,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -731,6 +732,7 @@ class Action
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -742,40 +744,40 @@ class Action
 
 			if ($response) {
 				$chk = $this->db->query("SELECT * FROM records 
-											WHERE record_id = '" . $data['id'] . "' 
-											AND record_table = '" . $data['source_table'] . "'
-											AND record_date = CURRENT_DATE()
-											AND timein IS NOT NULL
-											AND timeout IS NULL
-											ORDER BY id DESC
-											LIMIT 1
-										");
+									WHERE record_id = '" . $data['id'] . "' 
+									AND record_table = '" . $data['source_table'] . "'
+									AND record_date = CURRENT_DATE()
+									AND timein IS NOT NULL
+									AND timeout IS NULL
+									ORDER BY id DESC
+									LIMIT 1
+								");
 
 				if ($chk->num_rows > 0) {
 					// Step 1: Update only the most recent record with the current timestamp
 					$update = $this->db->query("UPDATE records 
-												SET timeout = CURRENT_TIMESTAMP() 
-												WHERE record_id = '" . $data['id'] . "' 
-												AND record_table = '" . $data['source_table'] . "'
-												AND record_date = CURRENT_DATE()
-												AND timeout IS NULL
-												ORDER BY id DESC 
-												LIMIT 1
-											");
+										SET timeout = CURRENT_TIMESTAMP() 
+										WHERE record_id = '" . $data['id'] . "' 
+										AND record_table = '" . $data['source_table'] . "'
+										AND record_date = CURRENT_DATE()
+										AND timeout IS NULL
+										ORDER BY id DESC 
+										LIMIT 1
+									");
 
 					// Step 2: Update the remaining records to set timeout to 'No data'
 					$update_remaining = $this->db->query("
-					UPDATE records 
-					SET timeout = '00:00:00' 
-					WHERE record_id = '" . $data['id'] . "' 
-					AND record_table = '" . $data['source_table'] . "'
-					AND record_date = CURRENT_DATE()
-					AND timeout IS NULL
-				");
+			UPDATE records 
+			SET timeout = '00:00:00' 
+			WHERE record_id = '" . $data['id'] . "' 
+			AND record_table = '" . $data['source_table'] . "'
+			AND record_date = CURRENT_DATE()
+			AND timeout IS NULL
+		");
 				} else {
 					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timeout) 
-						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
-					");
+				VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+			");
 				}
 			}
 		} else {
