@@ -154,25 +154,38 @@ if (!isset($_SESSION['login_id'])) {
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
 
-              <!-- <li class="nav-item">
-                <a href="index.php?page=rfid_in" class="nav-link">
-                  <i class="fa-solid fa-qrcode nav-icon"></i>
-                  <p>Scan IN</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="index.php?page=rfid_out" class="nav-link">
-                  <i class="fa-solid fa-qrcode nav-icon"></i>
-                  <p>Scan OUT</p>
-                </a>
-              </li> -->
+              <?php
 
-              <li class="nav-item">
-                <a href="index.php?page=rfid" class="nav-link">
-                  <i class="fa-solid fa-qrcode nav-icon"></i>
-                  <p>Scan RFID</p>
-                </a>
-              </li>
+              $mode = $conn->query("SELECT * FROM settings ");
+              if ($mode->num_rows > 0) {
+                $row = $mode->fetch_assoc();
+                $mode = $row['mode']; // Fetch the 'mode' value
+              }
+
+              if ($mode == 1):
+              ?>
+                <li class="nav-item">
+                  <a href="index.php?page=rfid_in" class="nav-link">
+                    <i class="fa-solid fa-qrcode nav-icon"></i>
+                    <p>Scan IN</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="index.php?page=rfid_out" class="nav-link">
+                    <i class="fa-solid fa-qrcode nav-icon"></i>
+                    <p>Scan OUT</p>
+                  </a>
+                </li>
+
+              <?php elseif ($mode == 2): ?>
+
+                <li class="nav-item">
+                  <a href="index.php?page=rfid" class="nav-link">
+                    <i class="fa-solid fa-qrcode nav-icon"></i>
+                    <p>Scan RFID</p>
+                  </a>
+                </li>
+              <?php endif; ?>
 
             <?php endif; ?>
 
@@ -235,6 +248,15 @@ if (!isset($_SESSION['login_id'])) {
                   </p>
                 </a>
               </li>
+
+              <!-- <li class="nav-item">
+                <a href="index.php?page=settings" class="nav-link">
+                <i class="fa-solid fa-gear nav-icon"></i>
+                  <p>
+                    Settings
+                  </p>
+                </a>
+              </li> -->
 
             <?php }; ?>
 

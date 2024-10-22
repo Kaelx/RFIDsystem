@@ -80,12 +80,12 @@
                             <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
                         </div>
                         <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5 " style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5 " style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
 
-                            <h1 id="sschool_id" class="text-bold" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sname" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sschool_id" class="text-bold" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sname" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="sgender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="srole" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="stype" class="text-bold" style="font-size: 36px;"></h1>
@@ -108,11 +108,11 @@
 
                         <div class="col-md-5" style="margin-top:100px;">
 
-                            <div class="text-center mb-5 " style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5 " style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
-                            <h1 id="eschool_id" class="text-bold" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="ename" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="eschool_id" class="text-bold" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="ename" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="egender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="erole" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="etype" class="text-bold" style="font-size: 36px;"></h1>
@@ -132,10 +132,10 @@
                         </div>
 
                         <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5" style="font-size: 58px; font-family:'Times New Roman', Times, serif ;">
+                            <div class="text-center mb-5" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
                                 <h1>INFORMATION</h1>
                             </div>
-                            <h1 id="vname" class="text-bold mb-4" style="font-size: 58px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vname" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="vgender" class="text-bold" style="font-size: 36px;"></h1>
                             <h1 id="vrole" class="text-bold" style="font-size: 36px;"></h1>
                         </div>
@@ -263,7 +263,7 @@
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
             var role = data.role_name;
-            var fullName = data.fname + ' ' + data.lname;
+            var fullName = data.fname + ' ' + data.lname +' '+ data.sname;
 
             if (role == "Student") {
                 $('#student-img').attr('src', imgPath);
@@ -321,7 +321,10 @@
 
             console.log(responseData);
 
-            if (!data.success) {
+            if (data.success) {
+                const audio = new Audio('assets/defaults/alert_success.mp3');
+                audio.play();
+            } else {
                 const audio = new Audio('assets/defaults/alert_beep.mp3');
                 audio.play();
             }

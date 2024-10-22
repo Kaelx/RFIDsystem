@@ -10,6 +10,7 @@ $query = "SELECT r.record_date,r.record_table, r.timein, r.timeout,
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
+        COALESCE(s.sname, e.sname, v.sname) AS sname,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
@@ -119,7 +120,14 @@ $result = $conn->query($query);
                                     <tr onclick="window.location.href='index.php?page=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+
+                                        <td class="text-left"> <?= $row['fname'] .
+                                                                    (!empty($row['mname']) ? ' ' . $row['mname'] . '.' : '') .
+                                                                    ' ' . $row['lname'] .
+                                                                    (!empty($row['sname']) ? ' ' . $row['sname'] : '');
+                                                                ?></td>
+
+
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td>
                                             <?php

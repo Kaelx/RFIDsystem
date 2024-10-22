@@ -171,5 +171,12 @@ if($action == "get_record"){
 }
 
 
+if($action == "mode"){
+	$save = $crud->mode();
+	if($save)
+		echo $save;
+}
+
+
 
 ?>

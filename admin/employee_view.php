@@ -76,7 +76,7 @@ $data = mysqli_fetch_assoc($query);
 
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">Address</p>
                                 <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
@@ -85,7 +85,7 @@ $data = mysqli_fetch_assoc($query);
                                 <p class="mb-2 text-bold">Contact No.</p>
                                 <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <hr>

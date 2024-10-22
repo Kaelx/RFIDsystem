@@ -101,7 +101,7 @@ $member = mysqli_fetch_assoc($query);
 
                                         <!-- Image preview -->
                                         <div class="img-fluid">
-                                            <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
+                                            <img id="modalImg" src="assets/img/<?php echo isset($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
                                         </div>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-between flex-wrap">

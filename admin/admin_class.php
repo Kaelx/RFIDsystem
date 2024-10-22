@@ -314,8 +314,8 @@ class Action
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 
-		$data .= ", address = '$address' ";
-		$data .= ", cellnum = '$cellnum' ";
+		// $data .= ", address = '$address' ";
+		// $data .= ", cellnum = '$cellnum' ";
 
 		$data .= ", employee_type_id = '$type_id' ";
 		$data .= ", school_id = '$school_id' ";
@@ -946,6 +946,16 @@ class Action
 		}
 
 		return json_encode($data);
+	}
+
+	function mode(){
+		extract($_POST);
+
+		$qry = $this->db->query("SELECT mode FROM settings");
+		if ($qry->num_rows > 0) {
+			$mode = $this->db->query("UPDATE settings SET mode = $mode");
+		} 
+		
 	}
 
 

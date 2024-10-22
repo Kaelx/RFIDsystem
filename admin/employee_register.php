@@ -277,7 +277,7 @@
 
 
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required>
@@ -286,7 +286,7 @@
                                 <label for="cellnum">Contact No.</label>
                                 <input type="number" class="form-control " name="cellnum" id="cellnum" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <hr>

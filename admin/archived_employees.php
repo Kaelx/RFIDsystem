@@ -8,7 +8,7 @@
 
 
     <?php
-    $query = "SELECT s.id, s.fname, s.mname, s.lname,s.email, s.cellnum, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
+    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.sname,s.email, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
             FROM employees s
             LEFT JOIN role r ON s.role_id = r.id
             where status = 1;
@@ -29,8 +29,7 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center w-25">School ID</th>
-                                    <th class="text-center w-50">Name</th>
-                                    <th class="text-center w-25">Contact No.</th>
+                                    <th class="text-center w-75">Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,8 +40,11 @@
                                     <tr onclick="window.location.href='index.php?page=archived_employee&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?= $row['school_id'];?></td>
-                                        <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
-                                        <td class="text-left"><?= $row['cellnum']; ?></td>
+                                        <td class="text-left"> <?= $row['fname'] .
+                                                                    (!empty($row['mname']) ? ' ' . $row['mname'] . '.' : '') .
+                                                                    ' ' . $row['lname'] .
+                                                                    (!empty($row['sname']) ? ' ' . $row['sname'] : '');
+                                                                ?></td>
                                     </tr>
 
                                 <?php endwhile; ?>
