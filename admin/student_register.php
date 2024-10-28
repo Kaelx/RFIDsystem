@@ -249,7 +249,7 @@
                                 <input type="text" class="form-control " name="lname" id="lname" required>
                             </div>
                             <div class="col-md-2 form-group">
-                                <label for="sname">Suffix</label><small> (Optional)</small>
+                                <label for="sname">Suffix</label>
                                 <input type="text" class="form-control " name="sname" id="sname">
                             </div>
                         </div>

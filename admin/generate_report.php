@@ -124,7 +124,6 @@ $result_records = $conn->query($query_records);
 
         <div class="table-responsive">
 
-          <!-- Display Date Range -->
           <?php if (!empty($start_date) && !empty($end_date)): ?>
             <div class="text-center mt-2 text-bold">
               <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
@@ -134,35 +133,58 @@ $result_records = $conn->query($query_records);
           <table class="table table-hover table-bordered compact">
             <thead>
               <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Date</th>
+                <th class="text-center" rowspan="2">#</th>
+                <th class="text-center" rowspan="2">Date</th>
+                <th class="text-center" colspan="2">AM</th>
+                <th class="text-center" colspan="2">PM</th>
+              </tr>
+              <tr>
                 <th class="text-center">Time in</th>
                 <th class="text-center">Time out</th>
-                <!-- <th class="text-center">Duration</th> -->
+                <th class="text-center">Time in</th>
+                <th class="text-center">Time out</th>
               </tr>
             </thead>
             <tbody>
               <?php
               $i = 1;
               while ($row = $result_records->fetch_assoc()):
-                // Initialize DateTime objects or set to null
                 $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                 $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
 
-                // Calculate the duration only if both timein and timeout are set
-                // $duration = ($timein && $timeout) ? $timein->diff($timeout)->format('%h hours %i minutes') : '------';
+                // Initialize placeholders
+                $amTimeIn = $amTimeOut = $pmTimeIn = $pmTimeOut = '------';
+
+                if ($timein) {
+                  // Check if time in is AM or PM
+                  if ($timein->format('A') === 'AM') {
+                    $amTimeIn = $timein->format('h:i A');
+                  } else {
+                    $pmTimeIn = $timein->format('h:i A');
+                  }
+                }
+
+                if ($timeout) {
+                  // Check if time out is AM or PM
+                  if ($timeout->format('A') === 'AM') {
+                    $amTimeOut = $timeout->format('h:i A');
+                  } else {
+                    $pmTimeOut = $timeout->format('h:i A');
+                  }
+                }
               ?>
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                  <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
-                  <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
-                  <!-- <td class="text-center"><?= $duration; ?></td> -->
+                  <td class="text-center"><?= $amTimeIn; ?></td>
+                  <td class="text-center"><?= $amTimeOut; ?></td>
+                  <td class="text-center"><?= $pmTimeIn; ?></td>
+                  <td class="text-center"><?= $pmTimeOut; ?></td>
                 </tr>
               <?php endwhile; ?>
             </tbody>
-
           </table>
+
         </div>
 
       </div>

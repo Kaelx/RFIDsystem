@@ -276,7 +276,7 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
-                                <label for="sname">Suffix</label><small> (Optional)</small>
+                                <label for="sname">Suffix</label>
                                 <input type="text" class="form-control " name="sname" id="sname" value="<?= isset($data['sname']) ? $data['sname'] : '' ?>">
                             </div>
                         </div>

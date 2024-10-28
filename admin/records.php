@@ -126,17 +126,21 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         <table class="table table-hover table-bordered compact">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">#</th>
-                                                    <th class="text-center">Date</th>
+                                                    <th class="text-center" rowspan="2">#</th>
+                                                    <th class="text-center w-25" rowspan="2">Date</th>
+                                                    <th class="text-center" colspan="2">AM</th>
+                                                    <th class="text-center" colspan="2">PM</th>
+                                                </tr>
+                                                <tr>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
-                                                    <!-- <th class="text-center">Duration</th> -->
+                                                    <th class="text-center">Time in</th>
+                                                    <th class="text-center">Time out</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-
-                                                $query = "SELECT r.record_date,r.timein, r.timeout,
+                                                $query = "SELECT r.record_date, r.timein, r.timeout,
                                                                 COALESCE(s.fname, e.fname, v.fname) AS fname, 
                                                                 COALESCE(s.mname, e.mname, v.mname) AS mname, 
                                                                 COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -150,13 +154,10 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id
                                                             WHERE r.record_id = '$uid' and r.record_table = '$type'
-                                                        ";
-
-
+                                                            ";
 
                                                 if (!empty($start_date) && !empty($end_date)) {
-                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
-                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
                                                 $query .= " ORDER BY r.id DESC";
@@ -165,24 +166,38 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $i = 1;
                                                 while ($row = $result->fetch_assoc()):
-                                                    // Initialize DateTime objects or set to null
                                                     $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                                                     $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
 
-                                                    // Calculate the duration only if both timein and timeout are set
-                                                    // $duration = ($timein && $timeout) ? $timein->diff($timeout)->format('%h hours %i minutes') : '------';
+                                                    $am_timein = $am_timeout = $pm_timein = $pm_timeout = '------';
+
+                                                    if ($timein) {
+                                                        if ($timein->format('A') == 'AM') {
+                                                            $am_timein = $timein->format('h:i A');
+                                                        } else {
+                                                            $pm_timein = $timein->format('h:i A');
+                                                        }
+                                                    }
+                                                    if ($timeout) {
+                                                        if ($timeout->format('A') == 'AM') {
+                                                            $am_timeout = $timeout->format('h:i A');
+                                                        } else {
+                                                            $pm_timeout = $timeout->format('h:i A');
+                                                        }
+                                                    }
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
                                                         <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                                                        <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
-                                                        <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
-                                                        <!-- <td class="text-center"><?= $duration; ?></td> -->
+                                                        <td class="text-center"><?= $am_timein; ?></td>
+                                                        <td class="text-center"><?= $am_timeout; ?></td>
+                                                        <td class="text-center"><?= $pm_timein; ?></td>
+                                                        <td class="text-center"><?= $pm_timeout; ?></td>
                                                     </tr>
                                                 <?php endwhile; ?>
-
                                             </tbody>
                                         </table>
+
                                     </div>
 
                                 </div>
