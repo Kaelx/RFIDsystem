@@ -76,21 +76,17 @@
                 <div class="card-body">
                     <!-- STUDENT Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5">
-                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
+                        <div class="col-md-5 text-center">
+                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
+                            <h1 id="sschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
-                        <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5 " style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
-                                <h1>INFORMATION</h1>
-                            </div>
-
-                            <h1 id="sschool_id" class="text-bold" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sname" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sgender" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="srole" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="stype" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="sprog_name" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="sdept_name" class="text-bold" style="font-size: 36px;"></h1>
+                        <div class="col-md-5" style="margin-top:200px;">
+                            <h1 id="sname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="stype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
 
@@ -102,20 +98,17 @@
                 <div class="card-body">
                     <!-- employee Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5">
-                            <img id="employee-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
+                        <div class="col-md-5 text-center">
+                            <img id="employee-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
+                            <h1 id="eschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
-
-                        <div class="col-md-5" style="margin-top:100px;">
-
-                            <div class="text-center mb-5 " style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
-                                <h1>INFORMATION</h1>
-                            </div>
-                            <h1 id="eschool_id" class="text-bold" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="ename" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="egender" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="erole" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="etype" class="text-bold" style="font-size: 36px;"></h1>
+                        <div class="col-md-5" style="margin-top:200px;">
+                            <h1 id="ename" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="egender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="erole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="etype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="edept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="eprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
 
@@ -127,17 +120,17 @@
                 <div class="card-body">
                     <!-- Visitor Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5">
-                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px; border: 12px solid #a91414;">
+                        <div class="col-md-5 text-center">
+                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
+                            <h1 id="vschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
-
-                        <div class="col-md-5" style="margin-top:100px;">
-                            <div class="text-center mb-5" style="font-size: 56px; font-family:'Times New Roman', Times, serif ;">
-                                <h1>INFORMATION</h1>
-                            </div>
-                            <h1 id="vname" class="text-bold mb-4" style="font-size: 56px; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vgender" class="text-bold" style="font-size: 36px;"></h1>
-                            <h1 id="vrole" class="text-bold" style="font-size: 36px;"></h1>
+                        <div class="col-md-5" style="margin-top:200px;">
+                            <h1 id="vname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vtype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
 

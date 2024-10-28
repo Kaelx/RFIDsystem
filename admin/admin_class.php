@@ -564,7 +564,7 @@ class Action
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -573,7 +573,7 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -581,7 +581,7 @@ class Action
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -595,6 +595,7 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
+				'lname' => $data['lname'],
 				'lname' => $data['lname'],
 				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
@@ -642,7 +643,7 @@ class Action
 	function fetch_data_in(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname,s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -651,7 +652,7 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -659,7 +660,7 @@ class Action
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -673,6 +674,7 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
+				'mname' => $data['mname'],
 				'lname' => $data['lname'],
 				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
@@ -700,7 +702,7 @@ class Action
 	function fetch_data_out(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname,s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -709,7 +711,7 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -717,7 +719,7 @@ class Action
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -731,6 +733,7 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
+				'lname' => $data['lname'],
 				'lname' => $data['lname'],
 				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
