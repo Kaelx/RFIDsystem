@@ -1,6 +1,10 @@
 <?php
 
-$report_id = rand(100000000, 999999999);
+do {
+    $report_id = rand(100000000, 999999999);
+} while ($conn->query("SELECT * FROM gen_reports WHERE report_id = '$report_id'")->num_rows > 0);
+
+
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['type']) ? $_GET['type'] : '';

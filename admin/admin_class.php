@@ -922,6 +922,11 @@ class Action
 			return 'Error: report_id is required.';
 		}
 
+		$qry = $this->db->query("INSERT into gen_reports (report_id) values ('$report_id')");
+		if (!$qry) {
+			return 'Error';
+		}
+
 		$log = [
 			'user_id' => $_SESSION['login_id'],
 			'action' => 'generate a report with the Reference ID of ' . $report_id

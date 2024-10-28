@@ -1,6 +1,9 @@
 <?php
 
-$report_id = rand(100000000, 999999999);
+do {
+    $report_id = rand(100000000, 999999999);
+} while ($conn->query("SELECT * FROM gen_reports WHERE report_id = '$report_id'")->num_rows > 0);
+
 $uid = $_GET['uid'];
 $type = $_GET['type'];
 
@@ -72,7 +75,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 </div>
 
                                 <h3 class="profile-username text-center">
-                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'].' '.(isset($member['sname']) && !empty($member['sname']) ? $member['sname'] : '')  ?>
+                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] . ' ' . (isset($member['sname']) && !empty($member['sname']) ? $member['sname'] : '')  ?>
                                 </h3>
 
                                 <p class="text-center no-space"><?= $member['role_name']; ?></p>
