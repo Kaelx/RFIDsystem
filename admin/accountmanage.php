@@ -37,7 +37,7 @@
                                     <tr onclick="window.location.href='index.php?page=accountedit&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?php echo $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
-                                        <td><?php echo $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
                                         <td><?php echo ($row['account_type'] == 1) ? 'Admin' : (($row['account_type'] == 2) ? 'Staff' : 'Security Personnel'); ?></td>
                                     </tr>
