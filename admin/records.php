@@ -128,8 +128,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                 <tr>
                                                     <th class="text-center" rowspan="2">#</th>
                                                     <th class="text-center w-25" rowspan="2">Date</th>
-                                                    <th class="text-center" colspan="2">AM</th>
-                                                    <th class="text-center" colspan="2">PM</th>
+                                                    <th class="text-center" colspan="2">A.M.</th>
+                                                    <th class="text-center" colspan="2">P.M.</th>
                                                 </tr>
                                                 <tr>
                                                     <th class="text-center">Time in</th>

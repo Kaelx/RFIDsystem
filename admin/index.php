@@ -249,14 +249,14 @@ if (!isset($_SESSION['login_id'])) {
                 </a>
               </li>
 
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <a href="index.php?page=settings" class="nav-link">
                 <i class="fa-solid fa-gear nav-icon"></i>
                   <p>
                     Settings
                   </p>
                 </a>
-              </li> -->
+              </li>
 
             <?php }; ?>
 

@@ -105,7 +105,7 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Record</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>

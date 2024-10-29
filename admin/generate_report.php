@@ -53,34 +53,23 @@ if (!empty($start_date) && !empty($end_date)) {
 
 $result_records = $conn->query($query_records);
 ?>
-<style>
-  .content {
-    margin-left: 80px;
-    margin-right: 80px;
-  }
-</style>
 
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Data Report</h1>
-        </div>
-      </div>
-      <div class="row">
-        <button class="btn btn-primary btn-custom m-2" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-        <button class="btn btn-secondary btn-custom m-2" onclick="window.history.back(); return false;">Back</button>
+      <div class="text-right">
+        <button class="btn btn-primary btn-custom" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
+        <a href="index.php?page=student_data" class="btn btn-danger btn-custom">Cancel</a>
       </div>
     </div>
   </section>
 
   <section class="content">
     <div class="container-fluid">
-      <div class="invoice" style="padding: 100px;">
+      <div class="invoice p-5">
         <div class="row">
           <div class="col-12">
-            <h2 class="page-header" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; display: flex; justify-content: center;">
+            <h2 class="page-header" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; display: flex; justify-content: center; margin-top:10px">
               <img src="assets/defaults/evsu.png" alt="evsu-logo" style="height: 100px; width: auto; margin-right: 10px;">
               <div style="text-align: center; margin-right: 100px;">
                 <p style="margin: 0;">Republic of the Philippines</p>
@@ -91,17 +80,15 @@ $result_records = $conn->query($query_records);
             </h2>
           </div>
         </div>
-
         <div class="text-center">
           <h3 class="m-3" style="font-family: 'Times New Roman', Times, serif;">Record Report</h3>
         </div>
-
         <div class="row invoice-info">
           <div class="col-sm-6 d-flex align-items-start">
-            <div class="col-sm-4 p-0">
-              <img src="<?= isset($member['img_path']) ? 'assets/img/' . $member['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto;">
+            <div>
+              <img src="<?= isset($member['img_path']) ? 'assets/img/' . $member['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto; margin-right:20px">
             </div>
-            <div class="col-sm-8 p-0">
+            <div>
               <p style="margin-bottom: 5px;"><?= isset($member['fname']) ? $member['fname'] : ''; ?>
                 <?= isset($member['mname']) ? strtoupper(substr($member['mname'], 0, 1)) . '. ' : ''; ?>
                 <?= isset($member['lname']) ? $member['lname'] : ''; ?></p>
@@ -112,31 +99,25 @@ $result_records = $conn->query($query_records);
               <p style="margin-bottom: 0;"><?= isset($member['school_id']) ? $member['school_id'] : ''; ?></p>
             </div>
           </div>
-
           <div class="col-sm-6 text-right">
             <?php date_default_timezone_set('Asia/Manila'); ?>
             <p style="margin-bottom: 5px;">Date: <?= date('F d, Y'); ?><span> <?= date('h:i A'); ?></span></p>
             <p style="margin-bottom: 5px;">Reference ID: <span> <?php echo $report_id; ?></span></p>
           </div>
         </div>
-
-
-
         <div class="table-responsive">
-
           <?php if (!empty($start_date) && !empty($end_date)): ?>
             <div class="text-center mt-2 text-bold">
               <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
-
           <table class="table table-hover table-bordered compact">
             <thead>
               <tr>
                 <th class="text-center" rowspan="2">#</th>
                 <th class="text-center" rowspan="2">Date</th>
-                <th class="text-center" colspan="2">AM</th>
-                <th class="text-center" colspan="2">PM</th>
+                <th class="text-center" colspan="2">A.M.</th>
+                <th class="text-center" colspan="2">P.M.</th>
               </tr>
               <tr>
                 <th class="text-center">Time in</th>
@@ -151,10 +132,8 @@ $result_records = $conn->query($query_records);
               while ($row = $result_records->fetch_assoc()):
                 $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                 $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
-
                 // Initialize placeholders
                 $amTimeIn = $amTimeOut = $pmTimeIn = $pmTimeOut = '------';
-
                 if ($timein) {
                   // Check if time in is AM or PM
                   if ($timein->format('A') === 'AM') {
@@ -163,7 +142,6 @@ $result_records = $conn->query($query_records);
                     $pmTimeIn = $timein->format('h:i A');
                   }
                 }
-
                 if ($timeout) {
                   // Check if time out is AM or PM
                   if ($timeout->format('A') === 'AM') {
@@ -184,9 +162,7 @@ $result_records = $conn->query($query_records);
               <?php endwhile; ?>
             </tbody>
           </table>
-
         </div>
-
       </div>
     </div>
   </section>

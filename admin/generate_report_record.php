@@ -33,31 +33,20 @@ if (!empty($start_date) && !empty($end_date)) {
 $result = $conn->query($query);
 
 ?>
-<style>
-  .content {
-    margin-left: 80px;
-    margin-right: 80px;
-  }
-</style>
 
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>Data Report</h1>
-        </div>
-      </div>
-      <div class="row">
-        <button class="btn btn-primary btn-custom m-2" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-        <button class="btn btn-secondary btn-custom m-2" onclick="window.history.back(); return false;">Back</button>
+      <div class="text-right">
+        <button class="btn btn-primary btn-custom" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
+        <a href="index.php?page=entrylogs" class="btn btn-danger btn-custom">Cancel</a>
       </div>
     </div>
   </section>
 
   <section class="content">
     <div class="container-fluid">
-      <div class="invoice" style="padding: 100px;">
+      <div class="invoice p-5">
         <div class="row">
           <div class="col-12">
             <h2 class="page-header" style="font-family: 'Times New Roman', Times, serif; font-size: 20px; display: flex; justify-content: center;">
@@ -93,7 +82,7 @@ $result = $conn->query($query);
           <!-- Display Type -->
           <?php if (!empty($type)): ?>
             <div class="text-center text-bold">
-              <p style="margin: 0; padding: 0;">Record of <?php echo ucfirst($type).'s' ; ?></p>
+              <p style="margin: 0; padding: 0;">Record of <?php echo ucfirst($type) . 's'; ?></p>
             </div>
           <?php endif; ?>
 
