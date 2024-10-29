@@ -55,7 +55,7 @@ $result = $conn->query($query);
                     <?php if ($_SESSION['login_account_type'] != 3): ?>
                         <form action="" id="report_id">
                             <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
-                            <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                            <button type="submit" class="btn btn-warning"><i class="fa-solid fa-print"></i> Generate Report</button>
                         </form>
                     <?php endif; ?>
                     <button id="generate-report" style="display:none;"></button>
