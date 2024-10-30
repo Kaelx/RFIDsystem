@@ -147,7 +147,7 @@ $monthFormatted = date('F', mktime(0, 0, 0, $currentMonth, 10));
 
               <!-- Display Attendance Table -->
               <div class="table-responsive">
-                <table class="table table-hover table-bordered compact">
+                <table class="table text-nowrap table-hover table-bordered compact">
                   <thead>
                     <tr>
                       <th class="text-center" rowspan="2">Days</th>

@@ -24,7 +24,7 @@
                 <div class="card-header text-center text-bold">Student's Archived Data</div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
+                        <table class="table text-nowrap table-hover table-bordered compact">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>

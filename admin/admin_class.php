@@ -320,6 +320,7 @@ class Action
 		$data .= ", employee_type_id = '$type_id' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
+		$data .= ", dept_id = '$dept_id' ";
 		$data .= ", rfid = '$rfid' ";
 
 		$base64_data = $_POST['croppedImageData'];

@@ -111,7 +111,7 @@ $result_records = $conn->query($query_records);
               <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
-          <table class="table table-hover table-bordered compact">
+          <table class="table text-nowrap table-hover table-bordered compact">
             <thead>
               <tr>
                 <th class="text-center" rowspan="2">#</th>

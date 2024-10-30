@@ -103,16 +103,33 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Record</a>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>
-                            <button class="btn btn-danger btn-custom archive_student" type="button" data-id="<?php echo $data['id'] ?>">Archive</button>
-                            <a href="index.php?page=student_data" class="btn btn-secondary btn-custom">Back</a>
+                    <div>
+                        <div class="row">
+                            <!-- Left Column (Record Button) -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                                <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
+                                    class="btn btn-info btn-custom">
+                                    <i class="fa-solid fa-clipboard"></i> Record
+                                </a>
+                            </div>
+                            <!-- Right Column (Edit, Archive, Back Buttons) -->
+                            <div class="col-12 col-md-6 d-flex flex-wrap justify-content-center justify-content-md-end">
+                                <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>"
+                                    class="btn btn-primary btn-custom mb-2 mb-md-0 mx-1">
+                                    Edit
+                                </a>
+                                <button class="btn btn-danger btn-custom archive_student mb-2 mb-md-0 mx-1"
+                                    type="button" data-id="<?= $data['id'] ?>">
+                                    Archive
+                                </button>
+                                <a href="index.php?page=student_data"
+                                    class="btn btn-secondary btn-custom mb-2 mb-md-0 mx-1">
+                                    Back
+                                </a>
+                            </div>
                         </div>
                     </div>
+
 
 
                 </div>

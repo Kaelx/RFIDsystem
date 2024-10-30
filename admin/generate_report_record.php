@@ -94,7 +94,7 @@ $result = $conn->query($query);
           <?php endif; ?>
 
 
-          <table class="table table-hover table-bordered compact">
+          <table class="table text-nowrap table-hover table-bordered compact">
             <thead>
               <tr>
                 <th class="text-center">#</th>

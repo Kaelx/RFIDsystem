@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover compact">
+                        <table class="table text-nowrap table-hover compact">
                             <thead>
                                 <tr>
                                     <th>Description</th>

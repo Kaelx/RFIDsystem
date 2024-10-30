@@ -90,25 +90,32 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     <div class="col-md-9">
                         <div class="card">
 
-                            <div class="card-header p-2">
-                                <div class="row">
-                                    <div class="ml-2">
-                                        <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
-                                            <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                            <div class="card-header">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <!-- Filter Form -->
+                                    <div class="col-12 col-md-8 mb-3 mb-md-0">
+                                        <form action="#" id="filter-report" class="form-inline d-flex flex-wrap align-items-center">
+                                            <div class="form-group mb-2 mr-md-2 d-flex align-items-center">
                                                 <label for="start_date" class="mr-2">Date:</label>
-                                                <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
+                                                <input type="date" name="start_date" id="start_date" class="form-control"
+                                                    value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                                             </div>
-                                            <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                                                <label for="end_date" class="mr-2">To </label>
-                                                <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
+                                            <div class="form-group mb-2 mr-md-2 d-flex align-items-center">
+                                                <label for="end_date" class="mr-2">To</label>
+                                                <input type="date" name="end_date" id="end_date" class="form-control"
+                                                    value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2 mr-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+                                            <button type="submit" class="btn btn-primary mb-2 mr-md-2">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </button>
                                         </form>
                                     </div>
 
-                                    <div class="ml-auto mr-2">
-                                        <div class="dropdown mb-2">
-                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Date</button>
+                                    <!-- Date Filter Dropdown -->
+                                    <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+                                        <div class="dropdown">
+                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                class="btn btn-secondary dropdown-toggle">Date</button>
                                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy(' ')">Clear Filter</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
@@ -120,10 +127,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 </div>
                             </div>
 
+
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-bordered compact">
+                                        <table class="table text-nowrap table-hover table-bordered compact">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" rowspan="2">#</th>

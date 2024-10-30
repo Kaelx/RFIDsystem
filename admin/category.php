@@ -55,7 +55,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
@@ -149,7 +149,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
@@ -229,7 +229,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>

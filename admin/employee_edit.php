@@ -292,7 +292,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
 
                         </div>
-<!--                    <div class="row">
+                        <!--                    <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
@@ -320,7 +320,7 @@ $data = mysqli_fetch_assoc($query);
 
                             <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
-                                <select class="form-control " name="type_id" id="type_id" required>
+                                <select class="form-control select2" name="type_id" id="type_id" required>
                                     <option value="" <?= !isset($data['employee_type_id']) || $data['employee_type_id'] == '' ? 'selected' : '' ?> disabled>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM employee_type ORDER BY id ASC");
@@ -328,6 +328,20 @@ $data = mysqli_fetch_assoc($query);
                                         $selected = isset($data['employee_type_id']) && $data['employee_type_id'] == $row['id'] ? 'selected' : '';
                                     ?>
                                         <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['employee_type'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label for="dept_id">Department</label>
+                                <select class="form-control  select2" name="dept_id" id="dept_id" required>
+                                    <option value="" <?= !empty($data['dept_id']) || $data['dept_id'] == '0' || $data['dept_id'] == '' ? 'selected' : '' ?> disabled>-- select --</option>
+                                    <?php
+                                    $type = $conn->query("SELECT * FROM department ORDER BY id ASC");
+                                    while ($row = $type->fetch_assoc()) :
+                                        $selected = isset($data['dept_id']) && $data['dept_id'] == $row['id'] ? 'selected' : '';
+                                    ?>
+                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['dept_name'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -425,5 +439,15 @@ $data = mysqli_fetch_assoc($query);
     $('#rfid').on('blur', function() {
         $('.content-wrapper').css('filter', 'none');
         $('#rfid_placeholder').addClass('d-none');
+    });
+
+
+
+    $('.select2').select2();
+    $('.select2').on('select2:open', function() {
+        let searchField = document.querySelector('.select2-container--open .select2-search__field');
+
+        searchField.placeholder = 'Search';
+        searchField.focus();
     });
 </script>

@@ -308,13 +308,26 @@
 
                             <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
-                                <select class="form-control " name="type_id" id="type_id" required>
+                                <select class="form-control select2" name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM employee_type  ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
                                     ?>
                                         <option value="<?= $row['id'] ?>"><?= $row['employee_type'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label for="dept_id">Department</label>
+                                <select class="form-control select2" name="dept_id" id="dept_id" required>
+                                    <option value="" selected disabled>-- Select --</option>
+                                    <?php
+                                    $dept = $conn->query("SELECT * FROM department  ORDER BY id ASC");
+                                    while ($row = $dept->fetch_assoc()) :
+                                    ?>
+                                        <option value="<?= $row['id'] ?>"><?= $row['dept_name'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -410,5 +423,14 @@
     $('#rfid').on('blur', function() {
         $('.content-wrapper').css('filter', 'none');
         $('#rfid_placeholder').addClass('d-none');
+    });
+
+
+    $('.select2').select2();
+    $('.select2').on('select2:open', function() {
+        let searchField = document.querySelector('.select2-container--open .select2-search__field');
+
+        searchField.placeholder = 'Search';
+        searchField.focus();
     });
 </script>

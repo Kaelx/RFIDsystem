@@ -104,7 +104,7 @@ $result = $conn->query($query);
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
+                        <table class="table text-nowrap table-hover table-bordered compact">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
