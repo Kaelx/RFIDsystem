@@ -40,19 +40,13 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">First Name</p>
-                            <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Middle Initial</p>
-                            <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Last Name</p>
-                            <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                        <div class="col-md-8 form-group mb-0">
+                            <p class="mb-2 text-bold">Name</p>
+                            <p type="text" class="form-control "><?= $data['fname'] .
+                                                                        (!empty($data['mname']) ? ' ' . $data['mname'] . '.' : '') .
+                                                                        ' ' . $data['lname'] .
+                                                                        (!empty($data['sname']) ? ' ' . $data['sname'] : '');
+                                                                    ?></p>
                         </div>
                     </div>
 
@@ -75,21 +69,35 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <label for="rfid">RFID</label>
                             <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-                        <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <button class="btn btn-danger btn-custom unarchive_visitor" type="button" data-id="<?php echo $data['id'] ?>">Unarchive</button>
-                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+                    <div>
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <!-- Left Column (Record Button) -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                                <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
+                                    class="btn btn-info">
+                                    <i class="fa-solid fa-clipboard"></i> Record
+                                </a>
+                            </div>
+
+                            <!-- Right Column (Unarchive and Back Buttons) -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                                <button class="btn btn-danger btn-custom unarchive_visitor mb-2 mb-md-0 mx-1"
+                                    type="button" data-id="<?= $data['id'] ?>">
+                                    Unarchive
+                                </button>
+                                <button class="btn btn-secondary btn-custom mx-1" onclick="window.history.back(); return false;">
+                                    Back
+                                </button>
+                            </div>
                         </div>
                     </div>
+
 
 
                 </div>
