@@ -138,60 +138,100 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <table class="table text-nowrap table-hover table-bordered compact">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">#</th>
-                                                <th class="text-center w-50">Date</th>
-                                                <th class="text-center">Time IN</th>
-                                                <th class="text-center">Time OUT</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
+                                    <div class="table-responsive">
+                                        <?php
+                                        // Adjusted Query to Select All Entries for a Date
+                                        $query = "SELECT r.record_date, r.timein, r.timeout,
+                                        COALESCE(s.fname, e.fname, v.fname) AS fname,
+                                        COALESCE(s.mname, e.mname, v.mname) AS mname,
+                                        COALESCE(s.lname, e.lname, v.lname) AS lname,
+                                        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
+                                        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+                                        FROM records r
+                                        LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
+                                        LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
+                                        LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
+                                        LEFT JOIN role r_s ON s.role_id = r_s.id
+                                        LEFT JOIN role r_e ON e.role_id = r_e.id
+                                        LEFT JOIN role r_v ON v.role_id = r_v.id
+                                        WHERE r.record_id = '$uid' and r.record_table = '$type'";
 
-                                            $query = "SELECT r.record_date,r.timein, r.timeout,
-                                                                COALESCE(s.fname, e.fname, v.fname) AS fname, 
-                                                                COALESCE(s.mname, e.mname, v.mname) AS mname, 
-                                                                COALESCE(s.lname, e.lname, v.lname) AS lname,
-                                                                COALESCE(s.school_id, e.school_id, NULL) AS school_id,
-                                                                COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
-                                                            FROM records r
-                                                            LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
-                                                            LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
-                                                            LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
-                                                            LEFT JOIN role r_s ON s.role_id = r_s.id
-                                                            LEFT JOIN role r_e ON e.role_id = r_e.id
-                                                            LEFT JOIN role r_v ON v.role_id = r_v.id
-                                                            WHERE r.record_id = '$uid' and r.record_table = '$type'
-                                                        ";
+                                        if (!empty($start_date) && !empty($end_date)) {
+                                            $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+                                        }
 
+                                        $query .= " ORDER BY r.record_date DESC, r.timein ASC"; // Ensure ordered by date and time
 
+                                        $result = $conn->query($query);
 
-                                            if (!empty($start_date) && !empty($end_date)) {
-                                                $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
-                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+                                        $records_by_date = [];
+
+                                        // Process Result to Organize Entries by Date
+                                        while ($row = $result->fetch_assoc()) {
+                                            $date = $row['record_date'];
+                                            $timein = !empty($row['timein']) && $row['timein'] != '00:00:00' ? new DateTime($row['timein']) : null;
+                                            $timeout = !empty($row['timeout']) && $row['timeout'] != '00:00:00' ? new DateTime($row['timeout']) : null;
+
+                                            if (!isset($records_by_date[$date])) {
+                                                $records_by_date[$date] = [
+                                                    'am_timein' => '------',
+                                                    'am_timeout' => '------',
+                                                    'pm_timein' => '------',
+                                                    'pm_timeout' => '------'
+                                                ];
                                             }
 
-                                            $query .= " ORDER BY r.id DESC";
+                                            // Determine A.M. or P.M. for each time and assign appropriately
+                                            if ($timein) {
+                                                if ($timein->format('A') == 'AM') {
+                                                    $records_by_date[$date]['am_timein'] = $timein->format('h:i A');
+                                                } else {
+                                                    $records_by_date[$date]['pm_timein'] = $timein->format('h:i A');
+                                                }
+                                            }
 
-                                            $result = $conn->query($query);
+                                            if ($timeout) {
+                                                if ($timeout->format('A') == 'AM') {
+                                                    $records_by_date[$date]['am_timeout'] = $timeout->format('h:i A');
+                                                } else {
+                                                    $records_by_date[$date]['pm_timeout'] = $timeout->format('h:i A');
+                                                }
+                                            }
+                                        }
 
-                                            $i = 1;
-                                            while ($row = $result->fetch_assoc()):
-                                                $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
-                                                $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
-                                            ?>
+                                        $i = 1;
+                                        ?>
+                                        <table class="table text-nowrap table-hover table-bordered compact">
+                                            <thead>
                                                 <tr>
-                                                    <td class="text-center"><?= $i++; ?></td>
-                                                    <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                                                    <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
-                                                    <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
+                                                    <th class="text-center" rowspan="2">#</th>
+                                                    <th class="text-center w-25" rowspan="2">Date</th>
+                                                    <th class="text-center" colspan="2">A.M.</th>
+                                                    <th class="text-center" colspan="2">P.M.</th>
                                                 </tr>
-                                            <?php endwhile; ?>
+                                                <tr>
+                                                    <th class="text-center">Time in</th>
+                                                    <th class="text-center">Time out</th>
+                                                    <th class="text-center">Time in</th>
+                                                    <th class="text-center">Time out</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($records_by_date as $date => $times): ?>
+                                                    <tr>
+                                                        <td class="text-center"><?= $i++; ?></td>
+                                                        <td class="text-center"><?= (new DateTime($date))->format('F d, Y'); ?></td>
+                                                        <td class="text-center"><?= $times['am_timein']; ?></td>
+                                                        <td class="text-center"><?= $times['am_timeout']; ?></td>
+                                                        <td class="text-center"><?= $times['pm_timein']; ?></td>
+                                                        <td class="text-center"><?= $times['pm_timeout']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
 
-                                        </tbody>
-                                    </table>
+
+                                    </div>
 
                                 </div>
                             </div>

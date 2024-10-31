@@ -77,6 +77,13 @@ if($action == "register3"){
 		echo $save;
 }
 
+//register vendors
+if($action == "register4"){
+	$save = $crud->register4();
+	if($save)
+		echo $save;
+}
+
 if($action == "adduser"){
 	$save = $crud->adduser();
 	if($save)
@@ -147,6 +154,20 @@ if($action == "archive_visitor"){
 
 if($action == "unarchive_visitor"){
 	$save = $crud->unarchive_visitor();
+	if($save)
+		echo $save;
+}
+
+
+
+if($action == "archive_vendor"){
+	$save = $crud->archive_vendor();
+	if($save)
+		echo $save;
+}
+
+if($action == "unarchive_vendor"){
+	$save = $crud->unarchive_vendor();
 	if($save)
 		echo $save;
 }

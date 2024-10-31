@@ -12,8 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
-                            <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                            <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
+                            <a href="index.php?page=vendor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -21,7 +20,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-50">Visitor Name</th>
+                                    <th class="text-center w-50">Vendor Name</th>
                                     <th class="text-center w-25">Address</th>
                                     <th class="text-center w-25">Contact No.</th>
                                 </tr>
@@ -31,19 +30,19 @@
                                 $i = 1;
 
                                 // Use LEFT JOIN to allow NULL values for department, program, and role
-                                $cats = $conn->query("SELECT v.*, r.role_name 
-                                FROM visitors v 
-                                LEFT JOIN role r ON v.role_id = r.id 
-                                WHERE (r.role_name = 'visitor' or 'visitors' OR r.role_name IS NULL)
-                                and v.status = 0
-                                ORDER BY v.id ASC");
+                                $cats = $conn->query("SELECT cv.*, r.role_name 
+                                FROM vendors cv 
+                                LEFT JOIN role r ON cv.role_id = r.id 
+                                WHERE (r.role_name = 'vendor' or 'vendors' OR r.role_name IS NULL)
+                                and cv.status = 0
+                                ORDER BY cv.id ASC");
 
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=visitor_view&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='index.php?page=vendor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' .(!empty($row['mname']) ? $row['mname'].'.' : ''). ' ' . $row['lname'].' '.$row['sname']; ?></td>
                                         <td class="text-left"><?php echo $row['address']; ?></td>
                                         <td class="text-left"><?php echo $row['cellnum']; ?></td>
                                     </tr>

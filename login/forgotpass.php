@@ -36,8 +36,8 @@
 <div class="container vh-100 d-flex justify-content-center align-items-center">
     <div class="card shadow w-100">
         <div class="row g-0">
-            <!-- Left Image -->
-            <div class="col-md-6 col-12 p-3">
+            <!-- Left Image (Carousel) - Hidden on Mobile -->
+            <div class="col-md-6 d-none d-md-block p-3">
                 <div class="container">
                     <div id="carouselExample" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
@@ -64,8 +64,8 @@
             </div>
 
             <!-- Right Form -->
-            <div class="col-md-6 col-12 p-3">
-                <div class="container p-5">
+            <div class="col-12 col-md-6 p-3">
+                <div class="container p-4">
                     <h1 class="mb-4 text-center">Password Recovery</h1>
                     <form accept="#" id="forgot-pass">
                         <div class="mb-3">

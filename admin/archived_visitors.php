@@ -8,7 +8,7 @@
 
 
     <?php
-    $query = "SELECT v.id, v.fname, v.mname, v.lname,v.address, v.cellnum, r.role_name, v.rfid, v.img_path, v.gender
+    $query = "SELECT v.id, v.fname, v.mname, v.lname, v.sname,v.address, v.cellnum, r.role_name, v.rfid, v.img_path, v.gender
             FROM visitors v
             LEFT JOIN role r ON v.role_id = r.id
             where status = 1;
@@ -40,7 +40,7 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=archived_visitor&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td class="text-left"><?= $row['address'] ?></td>
                                         <td class="text-left"><?= $row['cellnum'] ?></td>
                                     </tr>
@@ -63,8 +63,8 @@
         ordering: false,
         stateSave: true,
         layout: {
-                topStart: 'search',
-                topEnd: 'pageLength',
-            }
+            topStart: 'search',
+            topEnd: 'pageLength',
+        }
     });
 </script>

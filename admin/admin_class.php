@@ -451,6 +451,89 @@ class Action
 
 
 
+
+
+		//register vendors
+		function register4(){
+			extract($_POST);
+	
+			if (!empty($id)) {
+				$current_rfid = $this->db->query("SELECT rfid FROM vendors WHERE id = '$id'")->fetch_assoc()['rfid'];
+			}
+	
+			if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
+				$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+				$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+				$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+				$check_vendors = $this->db->query("SELECT * FROM vendors WHERE rfid = '$rfid' and status = 0");
+	
+				if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0 || $check_vendors->num_rows > 0) {
+					return 3;
+				}
+			}
+	
+			$data = " fname = '$fname' ";
+			$data .= ", mname = '$mname' ";
+			$data .= ", lname = '$lname' ";
+			$data .= ", sname = '$sname' ";
+			$data .= ", gender = '$gender' ";
+			$data .= ", address = '$address' ";
+			$data .= ", cellnum = '$cellnum' ";
+			$data .= ", role_id = '$role_id' ";
+			$data .= ", rfid = '$rfid' ";
+	
+			$base64_data = $_POST['croppedImageData'];
+	
+			if (!empty($base64_data)) {
+			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+			$decoded_image = base64_decode($base64_data);
+	
+			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_path = 'assets/img/' . $img_name;
+	
+			if (file_put_contents($img_path, $decoded_image)) {
+				$data .= ", img_path = '$img_name' ";
+			}
+		}
+	
+	
+			try {
+				if (empty($id)) {
+					$save = $this->db->query("INSERT INTO vendors set " . $data);
+					if ($save)
+	
+						$log = [
+							'user_id' => $_SESSION['login_id'],
+							'action' => ' has registered new vendor ' . $fname . ' ' . $lname
+						];
+	
+	
+					$this->save_log($log);
+					return 1;
+				} else {
+					$save = $this->db->query("UPDATE vendors set " . $data . " where id=" . $id);
+					if ($save)
+	
+						$log = [
+							'user_id' => $_SESSION['login_id'],
+							'action' => ' has updated the vendor information of ' . $fname . ' ' . $lname
+						];
+	
+	
+					$this->save_log($log);
+					return 2;
+				}
+			} catch (Exception $e) {
+				return $e->getMessage();  // For debugging
+	
+			}
+		}
+
+
+
+
+
+
 	function archive_student(){
 		extract($_POST);
 		$archive = $this->db->query("UPDATE students set status = 1 where id = " . $id);
@@ -554,6 +637,41 @@ class Action
 		$log = [
 			'user_id' => $_SESSION['login_id'],
 			'action' => ' has unarchived a visitor ' . $visitor['fname'] . ' ' . $visitor['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
+	}
+
+
+	function archive_vendor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE vendors set status = 1 where id = " . $id);
+		if ($archive)
+
+			$qry = $this->db->query("SELECT * FROM vendors WHERE id = " . $id);
+		$vendor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived a vendor ' . $vendor['fname'] . ' ' . $vendor['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
+	}
+
+	function unarchive_vendor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE vendors set status = 0 where id = " . $id);
+		if ($archive)
+
+			$qry = $this->db->query("SELECT * FROM vendors WHERE id = " . $id);
+		$vendor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived a vendor ' . $vendor['fname'] . ' ' . $vendor['lname']
 		];
 
 		$this->save_log($log);

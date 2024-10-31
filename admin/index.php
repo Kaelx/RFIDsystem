@@ -60,7 +60,7 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
         <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">EVSU RFID</span>
+        <span class="brand-text font-weight-light">EVSU-OC RFID</span>
       </a>
 
       <!-- Sidebar -->
@@ -83,15 +83,22 @@ if (!isset($_SESSION['login_id'])) {
             if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
-                  <i class="fa-solid fa-building-user nav-icon"></i>
-                  <p>Employee</p>
+                <i class="fa-solid fa-user-tie nav-icon"></i>
+                  <p>Employees</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="index.php?page=student_data" class="nav-link">
-                  <i class="fa-solid fa-id-card nav-icon"></i>
+                <i class="fa-solid fa-graduation-cap nav-icon"></i>
                   <p>Students</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="index.php?page=vendor_data" class="nav-link">
+                <i class="fa-solid fa-store nav-icon"></i>
+                  <p>Vendors</p>
                 </a>
               </li>
 
@@ -100,7 +107,7 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-item">
               <a href="index.php?page=visitor_data" class="nav-link">
                 <i class="fa-solid fa-people-group nav-icon"></i>
-                <p>Visitor</p>
+                <p>Visitors</p>
               </a>
             </li>
 

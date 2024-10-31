@@ -52,6 +52,26 @@
                     </a>
                 </div>
 
+
+                <div class="col-md-3 col-sm-6 col-12">
+                <?php 
+                        $qry = $conn->query("SELECT * FROM vendors where status = 1");
+                        $data = mysqli_fetch_assoc($qry);
+                        $count = $qry->num_rows;
+                    ?>
+                    <a href="index.php?page=archived_vendors" style="text-decoration: none; color: inherit;">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning"><i class="fa-solid fa-store text-white"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Vendors</span>
+                                <span class="info-box-number"><?php echo $count; ?></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
                 <div class="col-md-3 col-sm-6 col-12">
                 <?php 
                         $qry = $conn->query("SELECT * FROM visitors where status = 1");
