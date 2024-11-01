@@ -123,9 +123,14 @@ $data = mysqli_fetch_assoc($query);
                                     class="btn btn-info btn-custom">
                                     <i class="fa-solid fa-clipboard"></i> Record
                                 </a>
+
+                                <!-- <a href="index.php?page=dtr&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
+                                    class="btn btn-warning btn-custom ml-2 text-white">
+                                    <i class="fa-solid fa-clipboard"></i> DTR
+                                </a> -->
                             </div>
                             <!-- Right Column (Edit, Archive, Back Buttons) -->
-                            <div class="col-12 col-md-6 d-flex flex-wrap justify-content-center justify-content-md-end">
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
                                 <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>"
                                     class="btn btn-primary btn-custom mb-2 mb-md-0 mx-1">
                                     Edit

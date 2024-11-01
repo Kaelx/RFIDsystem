@@ -92,6 +92,6 @@ $('input#bdate[type="date"]').each(function () {
     const currentYear = new Date().getFullYear();
     const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
 
-    $(this).attr('min', '1980-01-01');
+    $(this).attr('min', '1960-01-01');
     $(this).attr('max', maxDate);
 });

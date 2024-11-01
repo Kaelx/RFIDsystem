@@ -76,7 +76,7 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div>
-                        <div class="row d-flex justify-content-between align-items-center">
+                        <div class="row">
                             <!-- Left Column (Record Button) -->
                             <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
                                 <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"

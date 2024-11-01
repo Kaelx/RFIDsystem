@@ -98,10 +98,12 @@ $result_records = $conn->query($query_records);
               <img src="<?= isset($member['img_path']) ? 'assets/img/' . $member['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto; margin-right:20px">
             </div>
             <div>
-              <p style="margin-bottom: 5px;"><?= isset($member['fname']) ? $member['fname'] : ''; ?>
-                <?= isset($member['mname']) ? strtoupper(substr($member['mname'], 0, 1)) . '. ' : ''; ?>
-                <?= isset($member['lname']) ? $member['lname'] : ''; ?>
-                <?= isset($member['sname']) ? $member['sname'] : ''; ?></p>
+              <p style="margin-bottom: 5px;">
+                <td><?= $member['fname'] . (!empty($member['mname']) ? ' ' . $member['mname'] . '.' : '') .
+                      ' ' . $member['lname'] .
+                      (!empty($member['sname']) ? ' ' . $member['sname'] : '');
+                    ?></td>
+              </p>
               <p style="margin-bottom: 0;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
               <?php if (!empty($member['employee_type'])): ?>
                 <p style="margin-bottom: 0;"><?= $member['employee_type']; ?></p>
@@ -126,8 +128,8 @@ $result_records = $conn->query($query_records);
               <tr>
                 <th class="text-center">#</th>
                 <th class="text-center w-50">Date</th>
-                <th class="text-center">Time IN</th>
-                <th class="text-center">Time OUT</th>
+                <th class="text-center">Time in</th>
+                <th class="text-center">Time in</th>
               </tr>
             </thead>
             <tbody>

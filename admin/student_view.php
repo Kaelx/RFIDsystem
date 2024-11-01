@@ -113,7 +113,7 @@ $data = mysqli_fetch_assoc($query);
                                 </a>
                             </div>
                             <!-- Right Column (Edit, Archive, Back Buttons) -->
-                            <div class="col-12 col-md-6 d-flex flex-wrap justify-content-center justify-content-md-end">
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
                                 <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>"
                                     class="btn btn-primary btn-custom mb-2 mb-md-0 mx-1">
                                     Edit

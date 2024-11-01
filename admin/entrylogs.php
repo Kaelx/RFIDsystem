@@ -10,21 +10,23 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['type']) ? $_GET['type'] : '';
 
 $query = "SELECT r.record_date,r.record_table, r.timein, r.timeout,
-        COALESCE(s.id, e.id, v.id) AS id, 
-        COALESCE(s.fname, e.fname, v.fname) AS fname, 
-        COALESCE(s.mname, e.mname, v.mname) AS mname, 
-        COALESCE(s.lname, e.lname, v.lname) AS lname,
-        COALESCE(s.sname, e.sname, v.sname) AS sname,
-        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
-        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+        COALESCE(s.id, e.id, v.id, cv.id) AS id, 
+        COALESCE(s.fname, e.fname, v.fname, cv.fname) AS fname, 
+        COALESCE(s.mname, e.mname, v.mname, cv.mname) AS mname, 
+        COALESCE(s.lname, e.lname, v.lname, cv.lname) AS lname,
+        COALESCE(s.sname, e.sname, v.sname, cv.sname) AS sname,
+        COALESCE(s.school_id, e.school_id, NULL, NULL) AS school_id,
+        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name, r_cv.role_name) AS role_name
     FROM records r
     LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
     LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
     LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
+    LEFT JOIN vendors cv ON r.record_id = cv.id AND r.record_table = 'vendor'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
-    WHERE COALESCE(s.status, e.status, v.status) 
+    LEFT JOIN role r_cv ON cv.role_id = r_cv.id
+    WHERE COALESCE(s.status, e.status, v.status, cv.status)
     IN (0, 1)
 ";
 
@@ -39,6 +41,8 @@ if (!empty($filter_type)) {
         $query .= " AND e.id IS NOT NULL";
     } elseif ($filter_type === 'visitor') {
         $query .= " AND v.id IS NOT NULL";
+    } elseif ($filter_type === 'vendor') {
+        $query .= " AND cv.id IS NOT NULL";
     }
 }
 
@@ -68,9 +72,9 @@ $result = $conn->query($query);
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header text-right">
-                    <div class="row">
-                        <div class="ml-2">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div>
                             <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                                 <div class="form-group mb-2 mr-2 d-flex align-items-center">
                                     <label for="start_date" class="mr-2">Date:</label>
@@ -86,18 +90,18 @@ $result = $conn->query($query);
                             </form>
                         </div>
 
-                        <div class="ml-auto mr-2">
+                        <div>
                             <div class="row">
                                 <div class="dropdown">
                                     <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Type</button>
                                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                        <li><a href="#" class="dropdown-item" onclick="filterBy('')">Clear Filter</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
+                                        <li><a href="#" class="dropdown-item" onclick="filterBy('vendor')">Vendor</a></li>
                                         <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
                                     </ul>
                                 </div>
-                                <a href="index.php?page=entrylogs" class="btn btn-danger ml-3"> <i class="fa-solid fa-rotate"></i></a>
+                                <a href="index.php?page=entrylogs" class="btn btn-danger ml-2 mr-2"> <i class="fa-solid fa-rotate"></i></a>
                             </div>
                         </div>
                     </div>
@@ -108,12 +112,12 @@ $result = $conn->query($query);
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">School ID</th>
-                                    <th class="text-center">Name</th>
+                                    <th class="text-center w-25">School ID</th>
+                                    <th class="text-center w-25">Name</th>
                                     <th class="text-center">Role</th>
                                     <th class="text-center">Date</th>
-                                    <th class="text-center">Time IN</th>
-                                    <th class="text-center">Time OUT</th>
+                                    <th class="text-center">Time in</th>
+                                    <th class="text-center">Time in</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -99,28 +99,25 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         <div class="card">
 
                             <div class="card-header">
-                                <div class="row d-flex justify-content-between align-items-center">
+
+                                <div class="row justify-content-between">
                                     <!-- Filter Form -->
-                                    <div class="col-12 col-md-8 mb-3 mb-md-0">
-                                        <form action="#" id="filter-report" class="form-inline d-flex flex-wrap align-items-center">
-                                            <div class="form-group mb-2 mr-md-2 d-flex align-items-center">
-                                                <label for="start_date" class="mr-2">Date:</label>
-                                                <input type="date" name="start_date" id="start_date" class="form-control"
-                                                    value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
+                                    <div>
+                                        <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
+                                            <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                                <label for="start_date">Date:</label>
+                                                <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                                             </div>
-                                            <div class="form-group mb-2 mr-md-2 d-flex align-items-center">
-                                                <label for="end_date" class="mr-2">To</label>
-                                                <input type="date" name="end_date" id="end_date" class="form-control"
-                                                    value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
+                                            <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                                <label for="end_date">To</label>
+                                                <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2 mr-md-2">
-                                                <i class="fa-solid fa-magnifying-glass"></i>
-                                            </button>
+                                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-magnifying-glass"></i></button>
                                         </form>
                                     </div>
 
                                     <!-- Date Filter Dropdown -->
-                                    <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+                                    <div>
                                         <div class="dropdown">
                                             <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                 class="btn btn-secondary dropdown-toggle">Date</button>
@@ -133,6 +130,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
 
@@ -143,8 +141,8 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                             <tr>
                                                 <th class="text-center">#</th>
                                                 <th class="text-center w-50">Date</th>
-                                                <th class="text-center">Time IN</th>
-                                                <th class="text-center">Time OUT</th>
+                                                <th class="text-center">Time in</th>
+                                                <th class="text-center">Time in</th>
                                             </tr>
                                         </thead>
                                         <tbody>

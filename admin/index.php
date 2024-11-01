@@ -40,7 +40,7 @@ if (!isset($_SESSION['login_id'])) {
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto mr-4">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -83,21 +83,21 @@ if (!isset($_SESSION['login_id'])) {
             if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
-                <i class="fa-solid fa-user-tie nav-icon"></i>
+                  <i class="fa-solid fa-user-tie nav-icon"></i>
                   <p>Employees</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="index.php?page=student_data" class="nav-link">
-                <i class="fa-solid fa-graduation-cap nav-icon"></i>
+                  <i class="fa-solid fa-graduation-cap nav-icon"></i>
                   <p>Students</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="index.php?page=vendor_data" class="nav-link">
-                <i class="fa-solid fa-store nav-icon"></i>
+                  <i class="fa-solid fa-store nav-icon"></i>
                   <p>Vendors</p>
                 </a>
               </li>
@@ -210,14 +210,14 @@ if (!isset($_SESSION['login_id'])) {
                 </a>
               </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="index.php?page=settings" class="nav-link">
-                <i class="fa-solid fa-gear nav-icon"></i>
+                  <i class="fa-solid fa-gear nav-icon"></i>
                   <p>
                     Settings
                   </p>
                 </a>
-              </li>
+              </li> -->
 
             <?php }; ?>
 
