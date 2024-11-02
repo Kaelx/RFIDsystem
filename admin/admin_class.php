@@ -948,8 +948,6 @@ class Action
 		$data .= ", sname = '$sname'";
 		$data .= ", bdate = '$bdate'";
 		$data .= ", gender = '$gender'";
-		$data .= ", address = '$address'";
-		$data .= ", cellnum = '$cellnum'";
 		$data .= ", email = '$email'";
 		$data .= ", school_id = '$school_id'";
 		$data .= ", username = '$username'";
@@ -1064,10 +1062,6 @@ class Action
 
 	function request_report(){
 		extract($_POST);
-
-		if (empty($report_id)) {
-			return 'Error: report_id is required.';
-		}
 
 		$qry = $this->db->query("INSERT into gen_reports (report_id) values ('$report_id')");
 		if (!$qry) {

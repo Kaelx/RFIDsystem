@@ -369,7 +369,8 @@ $data = mysqli_fetch_assoc($query);
             return;
         }
 
-        if (!$('#register').valid()) {
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
             return;
         }
 

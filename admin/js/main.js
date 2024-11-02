@@ -107,82 +107,83 @@ $('.select2').on('select2:open', function () {
 });
 
 
-// Check if an input field with id="cellnum" exists
-const cellnumInputField = document.getElementById('cellnum');
-
-if (cellnumInputField) {
-    // Initialize Cleave.js for Philippine phone number formatting
-    var cleave = new Cleave('#cellnum', {
-        phone: true,
-        phoneRegionCode: 'PH',
-        prefix: '09',
-        noImmediatePrefix: true
-    });
-
-    // Regular expression to validate Philippine phone numbers (09XX XXX XXXX format)
-    const phNumberPattern = /^(09|\+639)\d{9}$/;
-
-    // Validate input on change
-    cellnumInputField.addEventListener('input', function () {
-        const cellnumInput = this.value.replace(/\D/g, ''); // Remove all non-numeric characters
-        const isValidPhNumber = phNumberPattern.test(cellnumInput);
-
-        // Display error message if not valid
-        document.getElementById('cellnumError').style.display = isValidPhNumber ? 'none' : 'block';
-
-        // Set input validity for form validation
-        this.setCustomValidity(isValidPhNumber ? '' : 'Invalid phone number');
-    });
-}
+// Add a custom rule for Philippine phone number validation
+$.validator.addMethod("phonePH", function (value, element) {
+    return this.optional(element) || /^(\+63|0)9\d{9}$/.test(value);
+}, "Please enter a valid phone number.");
 
 
-// jquery validation
-$('#register').validate({
-    rules: {
-        fname: {
-            required: true,
+// Global jQuery validation for all forms
+$('form').each(function () {
+    $(this).validate({
+        rules: {
+            name: {
+                required: true
+            },
+            fname: {
+                required: true
+            },
+            lname: {
+                required: true
+            },
+            bdate: {
+                required: true,
+                date: true
+            },
+            address: {
+                required: true
+            },
+            cellnum: {
+                required: true,
+                phonePH: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            account_type: {
+                required: true
+            },
+            school_id: {
+                required: true
+            },
+            rfid: {
+                required: true
+            },
+            gender: {
+                required: true
+            },
+            type_id: {
+                required: true
+            },
+            dept_id: {
+                required: true
+            },
+            prog_id: {
+                required: true
+            },
+            username: {
+                required: true
+            },
+            confirmpass: {
+                equalTo: '#password'
+            },
         },
-        lname: {
-            required: true,
+        messages: {
+            confirmpass: {
+                equalTo: "Password does not match"
+            },
         },
-        bdate: {
-            required: true,
-            date: true
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
         },
-        address: {
-            required: true,
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
         },
-        cellnum: {
-            required: true,
-        },
-        school_id: {
-            required: true,
-        },
-        rfid: {
-            required: true,
-        },
-        gender: {
-            required: true
-        },
-        type_id: {
-            required: true
-        },
-        dept_id: {
-            required: true
-        },
-        prog_id: {
-            required: true
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
         }
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-        error.addClass('invalid-feedback');
-        element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass('is-invalid');
-    }
+    });
 });

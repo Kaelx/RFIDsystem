@@ -66,7 +66,7 @@
                 while ($result = $sql->fetch_assoc()) {
                 ?>
                     <div class="col-md-3 col-sm-6 col-12">
-                        <a href="index.php?page=department_data&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
+                        <a href="index.php?page=department_student&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
                             <div class="info-box">
                                 <span class="info-box-icon text-white" style="background-color: <?= $result['color']; ?>"><i class="fa-solid fa-building"></i></span>
                                 <div class="info-box-content">

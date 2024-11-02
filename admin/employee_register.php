@@ -351,7 +351,9 @@
         if (!validateForm(this)) {
             return;
         }
-        if (!$('#register').valid()) {
+
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
             return;
         }
 

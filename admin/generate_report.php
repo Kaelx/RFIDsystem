@@ -129,7 +129,7 @@ $result_records = $conn->query($query_records);
                 <th class="text-center">#</th>
                 <th class="text-center w-50">Date</th>
                 <th class="text-center">Time in</th>
-                <th class="text-center">Time in</th>
+                <th class="text-center">Time out</th>
               </tr>
             </thead>
             <tbody>

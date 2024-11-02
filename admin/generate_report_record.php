@@ -106,7 +106,7 @@ $result = $conn->query($query);
                 <th class="text-center">Role</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Time in</th>
-                <th class="text-center">Time in</th>
+                <th class="text-center">Time out</th>
                 <!-- <th class="text-center">Duration</th> -->
               </tr>
             </thead>

@@ -100,7 +100,7 @@ $member = mysqli_fetch_assoc($query);
 
                                                 <!-- Image preview -->
                                                 <div class="img-fluid">
-                                                    <img id="modalImg" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
+                                                    <img id="modalImg" src="assets/img/<?php echo isset($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
                                                 </div>
                                             </div>
                                             <div class="modal-footer d-flex justify-content-between flex-wrap">
@@ -250,7 +250,7 @@ $member = mysqli_fetch_assoc($query);
                                 <div class="row">
                                     <div class="col-md-3 form-group">
                                         <label for="fname">First Name</label>
-                                        <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
+                                        <input type="text" class="form-control " name="fname" id="fname" value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
                                     </div>
 
                                     <div class="col-md-1 form-group">
@@ -259,7 +259,7 @@ $member = mysqli_fetch_assoc($query);
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="lname">Last Name</label>
-                                        <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
+                                        <input type="text" class="form-control " name="lname" id="lname" value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="sname">Suffix</label>
@@ -271,40 +271,27 @@ $member = mysqli_fetch_assoc($query);
                                 <div class="row">
                                     <div class="col-md-2 form-group">
                                         <label for="bdate">Birthdate</label>
-                                        <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
+                                        <input type="date" class="form-control " name="bdate" id="bdate" value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="gender">Gender</label>
-                                        <select class="form-control " name="gender" id="gender" required>
+                                        <select class="form-control " name="gender" id="gender">
                                             <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="male" <?= isset($member['gender']) && $member['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
                                             <option value="female" <?= isset($member['gender']) && $member['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
                                         </select>
                                     </div>
 
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-3 form-group">
-                                        <label for="address">Address</label>
-                                        <input type="text" class="form-control " name="address" id="address" required value="<?= isset($member['address']) ? $member['address'] : '' ?>">
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="cellnum">Contact No.</label>
-                                        <input type="tel" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($member['cellnum']) ? $member['cellnum'] : '' ?>">
-                                        <small class="text-danger" id="cellnumError" style="display: none;">Please enter a valid phone number.</small>
-                                    </div>
-
                                     <div class="col-md-3 form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control " name="email" id="email" required value="<?= isset($member['email']) ? $member['email'] : '' ?>">
+                                        <input type="email" class="form-control " name="email" id="email" value="<?= isset($member['email']) ? $member['email'] : '' ?>">
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="school_id">School ID</label>
-                                        <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
+                                        <input type="text" class="form-control " name="school_id" id="school_id" value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
                                     </div>
 
 
@@ -313,8 +300,8 @@ $member = mysqli_fetch_assoc($query);
 
 
                                     <div class="col-md-4 form-group">
-                                        <label for="account_type">Type</label>
-                                        <select class="form-control " name="account_type" id="account_type" required>
+                                        <label for="account_type">Account Type</label>
+                                        <select class="form-control " name="account_type" id="account_type">
                                             <option value="" disabled <?= !isset($member['account_type']) ? 'selected' : '' ?>>-- Select --</option>
                                             <option value="1" <?= isset($member['account_type']) && $member['account_type'] == '1' ? 'selected' : '' ?>>Admin</option>
                                             <option value="2" <?= isset($member['account_type']) && $member['account_type'] == '2' ? 'selected' : '' ?>>Staff</option>
@@ -328,12 +315,18 @@ $member = mysqli_fetch_assoc($query);
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="username">username</label>
-                                        <input type="username" class="form-control " name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>" required>
+                                        <input type="username" class="form-control " name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>">
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control " name="password" id="password">
-                                        <small class="text-italic text-danger"><i>*Leave blank to remain the same password.</i></small>
+                                        <input type="password" class="form-control " name="password" id="password" minlength="8">
+                                        <small class="text-italic text-danger"><span>Leave blank to remain the same password*</span></small>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="confirmpass">Confirm Password</label>
+                                        <input type="password" class="form-control " name="confirmpass" id="confirmpass">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -364,6 +357,16 @@ $member = mysqli_fetch_assoc($query);
 <script>
     $('#register').submit(function(e) {
         e.preventDefault()
+
+        //regex validation
+        if (!validateForm(this)) {
+            return;
+        }
+
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
+            return;
+        }
 
         start_load();
         $.ajax({

@@ -296,7 +296,6 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
                                 <input type="tel" class="form-control " name="cellnum" id="cellnum" value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
-                                <small class="text-danger" id="cellnumError" style="display: none;">Please enter a valid phone number.</small>
                             </div>
                         </div>
 
@@ -343,7 +342,8 @@ $data = mysqli_fetch_assoc($query);
             return;
         }
 
-        if (!$('#register').valid()) {
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
             return;
         }
 
