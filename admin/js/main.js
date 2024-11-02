@@ -99,7 +99,7 @@ $('input#bdate[type="date"]').each(function () {
 
 
 $('.select2').select2();
-$('.select2').on('select2:open', function() {
+$('.select2').on('select2:open', function () {
     let searchField = document.querySelector('.select2-container--open .select2-search__field');
 
     searchField.placeholder = 'Search';
@@ -134,3 +134,55 @@ if (cellnumInputField) {
         this.setCustomValidity(isValidPhNumber ? '' : 'Invalid phone number');
     });
 }
+
+
+// jquery validation
+$('#register').validate({
+    rules: {
+        fname: {
+            required: true,
+        },
+        lname: {
+            required: true,
+        },
+        bdate: {
+            required: true,
+            date: true
+        },
+        address: {
+            required: true,
+        },
+        cellnum: {
+            required: true,
+        },
+        school_id: {
+            required: true,
+        },
+        rfid: {
+            required: true,
+        },
+        gender: {
+            required: true
+        },
+        type_id: {
+            required: true
+        },
+        dept_id: {
+            required: true
+        },
+        prog_id: {
+            required: true
+        }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+    }
+});

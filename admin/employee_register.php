@@ -242,7 +242,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control " name="fname" id="fname" required>
+                                <input type="text" class="form-control " name="fname" id="fname" autofocus>
                             </div>
                             <div class="col-md-1 form-group">
                                 <label for="mname">M. I.</label>
@@ -250,7 +250,7 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control " name="lname" id="lname" required>
+                                <input type="text" class="form-control " name="lname" id="lname">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="sname">Suffix</label>
@@ -262,11 +262,11 @@
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control " name="bdate" id="bdate" required>
+                                <input type="date" class="form-control " name="bdate" id="bdate">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control " name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender">
                                     <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -290,12 +290,12 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required>
+                                <input type="text" class="form-control " name="school_id" id="school_id">
                             </div>
 
                             <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
-                                <select class="form-control select2" name="type_id" id="type_id" required>
+                                <select class="form-control select2" name="type_id" id="type_id">
                                     <option value="" selected disabled>-- Select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM employee_type  ORDER BY id ASC");
@@ -308,7 +308,7 @@
 
                             <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
-                                <select class="form-control select2" name="dept_id" id="dept_id" required>
+                                <select class="form-control select2" name="dept_id" id="dept_id">
                                     <option value="" selected disabled>-- Select --</option>
                                     <?php
                                     $dept = $conn->query("SELECT * FROM department  ORDER BY id ASC");
@@ -327,7 +327,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="Click here then SCAN!" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="Click here then SCAN!">
                             </div>
                         </div>
                         <div class="text-center">
@@ -349,6 +349,9 @@
 
         //regex validation
         if (!validateForm(this)) {
+            return;
+        }
+        if (!$('#register').valid()) {
             return;
         }
 
