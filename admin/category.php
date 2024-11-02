@@ -281,6 +281,13 @@
         layout: {
             bottom: 'paging',
             bottomEnd: null
+        },
+        pagingType: 'simple',
+        language: {
+            paginate: {
+                previous: "< Previous", // Custom text for "Previous" button
+                next: "Next Page >" // Custom text for "Next" button
+            }
         }
     })
 
