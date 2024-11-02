@@ -95,3 +95,28 @@ $('input#bdate[type="date"]').each(function () {
     $(this).attr('min', '1960-01-01');
     $(this).attr('max', maxDate);
 });
+
+
+
+// Initialize Cleave.js for Philippine phone number formatting
+var cleave = new Cleave('#cellnum', {
+    phone: true,
+    phoneRegionCode: 'PH',
+    prefix: '09',
+    noImmediatePrefix: true
+});
+
+// Regular expression to validate Philippine phone numbers (09XX XXX XXXX format)
+const phNumberPattern = /^(09|\+639)\d{9}$/;
+
+// Validate input on change
+document.getElementById('cellnum').addEventListener('input', function () {
+    const cellnumInput = this.value.replace(/\D/g, ''); // Remove all non-numeric characters
+    const isValidPhNumber = phNumberPattern.test(cellnumInput);
+
+    // Display error message if not valid
+    document.getElementById('cellnumError').style.display = isValidPhNumber ? 'none' : 'block';
+
+    // Set input validity for form validation
+    this.setCustomValidity(isValidPhNumber ? '' : 'Invalid phone number');
+});

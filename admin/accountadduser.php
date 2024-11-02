@@ -271,7 +271,8 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="tel" class="form-control " name="cellnum" id="cellnum" required>
+                                <small class="text-danger" id="cellnumError" style="display: none;">Please enter a valid phone number.</small>
                             </div>
 
                             <div class="col-md-3 form-group">

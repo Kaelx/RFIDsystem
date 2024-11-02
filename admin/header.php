@@ -33,5 +33,8 @@
 <script src="dist/js/adminlte.min.js"></script>
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.0.2/addons/cleave-phone.ph.js" integrity="sha512-fEm9MK/lrDLPPzNZm5t84NO8DiaOZpZTHBSHpxyOFjIMWEeX98Ikwwl5J3iux4L1PUh9S8mh+ij0a1m8lVVxzw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <!-- custom css -->
 <link rel="stylesheet" href="./css/style.css">
