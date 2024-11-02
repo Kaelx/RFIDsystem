@@ -96,7 +96,12 @@ if ($result->num_rows > 0) {
         <div class="col-lg-3 col-6">
           <div class="small-box bg-warning">
             <div class="inner">
-              <a href="index.php?page=vendor_data" style="text-decoration: none; color: inherit;">
+              <?php
+              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              ?>
+                <a href="index.php?page=vendor_data" style="text-decoration: none; color: inherit;">
+
+                <?php endif; ?>
                 <?php
                 $sql = $conn->query("SELECT COUNT(*) as total FROM vendors where status=0");
                 $result = $sql->fetch_assoc();
@@ -104,10 +109,10 @@ if ($result->num_rows > 0) {
                 ?>
                 <h3 class="text-white"><?php echo $count; ?></h3>
                 <p class="text-white">Vendors</p>
-              </a>
+                </a>
             </div>
             <div class="icon">
-            <i class="fa-solid fa-store"></i>
+              <i class="fa-solid fa-store"></i>
             </div>
             <p class="small-box-footer m-0 p-0"><i class="fa-solid fa-circle-info"></i></p>
           </div>
@@ -194,7 +199,7 @@ if ($result->num_rows > 0) {
     //-------------
     //- LINE CHART -
     //-------------
-    
+
     // Set up current date and seven days ago
     var currentDate = new Date();
     var sevenDaysAgo = new Date();
