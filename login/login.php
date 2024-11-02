@@ -67,7 +67,7 @@
             <!-- Right Form (Login Form) -->
             <div class="col-12 col-md-6 p-3">
                 <div class="container p-4">
-                    <h1 class="mb-4 text-center" style="color: #a91414; font-weight:bold; font-size: 54px;">LOGIN</h1>
+                    <h1 class="mb-4 text-center" style="font-weight:bold; font-size: 48px;">LOGIN</h1>
                     <form action="#" id="submit-form">
                         <div class="form-group mb-4">
                             <label for="username" class="form-label">Username</label>
@@ -78,11 +78,11 @@
                             <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" autocomplete="on">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary w-50">Login</button>
                         </div>
                         <hr>
                         <div class="login-footer mt-3 text-center">
-                            <a href="index.php?page=forgotpass">Forgot Password?</a>
+                            <a href="index.php?page=forgotpass" style="text-decoration:underline;">Forgot Password?</a>
                         </div>
                     </form>
                 </div>
