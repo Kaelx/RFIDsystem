@@ -10,14 +10,14 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                <div class="row">
-                <div class="col-sm-6">
-                    <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                    <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="index.php?page=visitor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                            <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
+                        </div>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered compact">
+                        <table class="table text-nowrap table-hover table-bordered compact">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
@@ -43,7 +43,7 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=visitor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td class="text-left"><?php echo $row['address']; ?></td>
                                         <td class="text-left"><?php echo $row['cellnum']; ?></td>
                                     </tr>

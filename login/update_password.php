@@ -69,19 +69,19 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
     <div class="card shadow login-card" style="width: 600px;">
         <div>
             <div class="p-5">
-                <h1 class="mb-4 text-center">Update your password</h1>
-                <form accept="#" id="updatepass">
-                    <div class="mb-3">
+                <h1 class="mb-4 text-center" style="color: #a91414; font-weight:bold; font-size: 54px;">Password Update</h1>
+                <form accept="#" id="submit-form">
+                    <div class="form-group mb-3">
                         <label for="otpcode" class="form-label">OTP Code</label>
-                        <input type="number" class="form-control" name="otpcode" id="otpcode" placeholder="Enter your OTP Code" required autofocus>
+                        <input type="number" class="form-control" name="otpcode" id="otpcode" placeholder="Enter your OTP Code" autofocus>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group mb-3">
                         <label for="newpass" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" required>
+                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password">
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group mb-3">
                         <label for="confirmpass" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password" required>
+                        <input type="password" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Update</button>
@@ -98,11 +98,16 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
 
 <script>
     $(document).ready(function() {
-        $('#updatepass').submit(function(e) {
+        $('#submit-form').submit(function(e) {
             e.preventDefault()
 
             //regex validation
             if (!validateForm(this)) {
+                return;
+            }
+
+            // Validate the form before AJAX submission
+            if (!$(this).valid()) {
                 return;
             }
 
@@ -112,7 +117,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(resp) {
-                    
+
                     if (resp == 1) {
                         alert_toast('Password successfully updated', 'success')
                         setTimeout(function() {

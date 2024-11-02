@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover compact">
+                        <table class="table text-nowrap table-hover compact">
                             <thead>
                                 <tr>
                                     <th>Description</th>
@@ -66,7 +66,6 @@
 <script>
     $('table').dataTable({
         ordering: false,
-        stateSave: true,
         pageLength: 15,
         lengthMenu: [15, 50, 100],
         layout: {

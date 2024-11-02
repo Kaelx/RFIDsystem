@@ -31,11 +31,11 @@
                                         <div class="card-body">
                                             <input type="hidden" name="id">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="Enter Department Name" required>
+                                                <input type="text" class="form-control" name="name" placeholder="Enter Department Name">
                                             </div>
                                             <div class="form-group">
                                                 <label for="myColor" class="form-label">Choose color</label>
-                                                <input type="color" class="form-control form-control-color" id="myColor" name="colorpick" value="#000000" title="Choose a color" required>
+                                                <input type="color" class="form-control form-control-color" id="myColor" name="colorpick" value="#000000" title="Choose a color">
                                             </div>
 
                                         </div>
@@ -55,7 +55,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
@@ -115,12 +115,12 @@
                                             <input type="hidden" name="id">
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Program/Course Name" required>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Program/Course Name">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="dept_id">Department:</label>
-                                                <select class="form-control" name="dept_id" id="dept_id" required>
+                                                <select class="form-control" name="dept_id" id="dept_id">
                                                     <option value="" selected disabled>-- Select --</option>
                                                     <?php
                                                     $program = $conn->query("SELECT * FROM department order by id asc ");
@@ -149,7 +149,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
@@ -209,7 +209,7 @@
                                             <input type="hidden" name="id">
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Employee Position" required>
+                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Employee Position">
                                             </div>
 
                                         </div>
@@ -229,7 +229,7 @@
                                 <div class="card shadow-none">
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table table-hover compact">
+                                            <table class="table text-nowrap table-hover compact">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">#</th>
@@ -289,6 +289,11 @@
     $('#set2-category').submit(function(e) {
         e.preventDefault()
 
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
+            return;
+        }
+
         start_load();
         $.ajax({
             url: 'ajax.php?action=save_category2',
@@ -323,6 +328,11 @@
     $('#set3-category').submit(function(e) {
         e.preventDefault()
 
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
+            return;
+        }
+
         start_load();
         $.ajax({
             url: 'ajax.php?action=save_category3',
@@ -355,6 +365,11 @@
 
     $('#set4-category').submit(function(e) {
         e.preventDefault()
+
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
+            return;
+        }
 
         start_load();
         $.ajax({

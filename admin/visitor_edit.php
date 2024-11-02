@@ -259,7 +259,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
+                                <input type="text" class="form-control " name="fname" id="fname" value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
 
                             <div class="col-md-1 form-group">
@@ -268,7 +268,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                                <input type="text" class="form-control " name="lname" id="lname" value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="sname">Suffix</label>
@@ -280,7 +280,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control " name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender">
                                     <option value="" disabled>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
@@ -291,11 +291,11 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                                <input type="text" class="form-control " name="address" id="address" value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="tel" class="form-control " name="cellnum" id="cellnum" value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
                             </div>
                         </div>
 
@@ -313,7 +313,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
+                                <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -339,6 +339,11 @@ $data = mysqli_fetch_assoc($query);
 
         //regex validation
         if (!validateForm(this)) {
+            return;
+        }
+
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
             return;
         }
 

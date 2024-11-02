@@ -92,6 +92,98 @@ $('input#bdate[type="date"]').each(function () {
     const currentYear = new Date().getFullYear();
     const maxDate = new Date(currentYear - 10, 11, 31).toISOString().split('T')[0];
 
-    $(this).attr('min', '1980-01-01');
+    $(this).attr('min', '1960-01-01');
     $(this).attr('max', maxDate);
+});
+
+
+
+$('.select2').select2();
+$('.select2').on('select2:open', function () {
+    let searchField = document.querySelector('.select2-container--open .select2-search__field');
+
+    searchField.placeholder = 'Search';
+    searchField.focus();
+});
+
+
+// Add a custom rule for Philippine phone number validation
+$.validator.addMethod("phonePH", function (value, element) {
+    return this.optional(element) || /^(\+63|0)9\d{9}$/.test(value);
+}, "Please enter a valid phone number.");
+
+
+// Global jQuery validation for all forms
+$('form').each(function () {
+    $(this).validate({
+        rules: {
+            name: {
+                required: true
+            },
+            fname: {
+                required: true
+            },
+            lname: {
+                required: true
+            },
+            bdate: {
+                required: true,
+                date: true
+            },
+            address: {
+                required: true
+            },
+            cellnum: {
+                required: true,
+                phonePH: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            account_type: {
+                required: true
+            },
+            school_id: {
+                required: true
+            },
+            rfid: {
+                required: true
+            },
+            gender: {
+                required: true
+            },
+            type_id: {
+                required: true
+            },
+            dept_id: {
+                required: true
+            },
+            prog_id: {
+                required: true
+            },
+            username: {
+                required: true
+            },
+            confirmpass: {
+                equalTo: '#password'
+            },
+        },
+        messages: {
+            confirmpass: {
+                equalTo: "Password does not match"
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 });

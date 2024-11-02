@@ -4,9 +4,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 }
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type , 'employee' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name , 'employee' as type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
+    LEFT JOIN department d ON e.dept_id = d.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
@@ -81,9 +82,13 @@ $data = mysqli_fetch_assoc($query);
                             <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                         </div>
 
-                        <div class="col-md-2 form-group mb-0">
-                            <p class="mb-2 text-bold">Employee Type</p>
+                        <div class="col-md-3 form-group mb-0">
+                            <p class="mb-2 text-bold">Position</p>
                             <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
+                        </div>
+                        <div class="col-md-3 form-group mb-0">
+                            <p class="mb-2 text-bold">Department</p>
+                            <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : '' ?></p>
                         </div>
                     </div>
 
@@ -95,15 +100,29 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 ">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <button class="btn btn-danger btn-custom unarchive_employee" type="button" data-id="<?php echo $data['id'] ?>">Unarchive</button>
-                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Back</button>
+                    <div>
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <!-- Left Column (Record Button) -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                                <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
+                                    class="btn btn-info btn-custom">
+                                    <i class="fa-solid fa-clipboard"></i> Record
+                                </a>
+                            </div>
+
+                            <!-- Right Column (Unarchive and Back Buttons) -->
+                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                                <button class="btn btn-danger btn-custom unarchive_employee mb-2 mb-md-0 mx-1"
+                                    type="button" data-id="<?= $data['id'] ?>">
+                                    Unarchive
+                                </button>
+                                <button class="btn btn-secondary btn-custom mx-1" onclick="window.history.back(); return false;">
+                                    Back
+                                </button>
+                            </div>
                         </div>
                     </div>
+
 
 
                 </div>

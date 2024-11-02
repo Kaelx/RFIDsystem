@@ -265,7 +265,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
+                                <input type="text" class="form-control " name="fname" id="fname" value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
                             <div class="col-md-1 form-group">
                                 <label for="mname">M. I.</label>
@@ -273,7 +273,7 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                                <input type="text" class="form-control " name="lname" id="lname" value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="sname">Suffix</label>
@@ -285,11 +285,11 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control " name="bdate" id="bdate" required value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
+                                <input type="date" class="form-control " name="bdate" id="bdate" value="<?= isset($data['bdate']) ? $data['bdate'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control " name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender">
                                     <option value="" disabled <?= empty($data['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                     <option value="male" <?= ($data['gender'] == 'male') ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= ($data['gender'] == 'female') ? 'selected' : '' ?>>Female</option>
@@ -300,11 +300,11 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
+                                <input type="text" class="form-control " name="address" id="address" value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="tel" class="form-control" name="cellnum" id="cellnum" value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>">
                             </div>
                         </div>
 
@@ -313,13 +313,13 @@ $data = mysqli_fetch_assoc($query);
 
                             <div class="col-md-3 form-group">
                                 <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
+                                <input type="text" class="form-control " name="school_id" id="school_id" value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
                             </div>
 
 
                             <div class="col-md-4 form-group">
                                 <label for="prog_id">Program/Course</label>
-                                <select class="form-control  select2" name="prog_id" id="prog_id" required>
+                                <select class="form-control  select2" name="prog_id" id="prog_id">
                                     <option value="" <?= !isset($data['prog_id']) || $data['prog_id'] == '' ? 'selected' : '' ?> disabled>-- select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM program ORDER BY id ASC");
@@ -331,7 +331,7 @@ $data = mysqli_fetch_assoc($query);
                                 </select>
                             </div>
 
-                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" required value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
+                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
                         </div>
 
                         <div class="row">
@@ -348,7 +348,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
+                                <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -403,6 +403,11 @@ $data = mysqli_fetch_assoc($query);
             return;
         }
 
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
+            return;
+        }
+
         start_load();
         $.ajax({
             url: 'ajax.php?action=register',
@@ -451,14 +456,6 @@ $data = mysqli_fetch_assoc($query);
                 }
             }
         })
-    });
-
-    $('.select2').select2();
-    $('.select2').on('select2:open', function() {
-        let searchField = document.querySelector('.select2-container--open .select2-search__field');
-
-        searchField.placeholder = 'Search Course/Program';
-        searchField.focus();
     });
 
 

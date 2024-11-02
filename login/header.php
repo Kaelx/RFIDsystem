@@ -14,5 +14,9 @@
 <!-- google font CDN -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+<!-- jquery-validation -->
+<script src="../admin/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="../admin/plugins/jquery-validation/additional-methods.min.js"></script>
+
 <!-- custom css -->
 <link rel="stylesheet" href="../css/style.css">

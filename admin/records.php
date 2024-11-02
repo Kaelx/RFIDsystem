@@ -54,6 +54,14 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
+                            case 'vendor':
+                                $query = "SELECT cv.id, cv.fname, cv.mname, cv.lname, cv.sname, NULL as school_id, r.role_name, NULL as employee_type, cv.rfid, cv.img_path, cv.gender
+                            FROM vendors cv
+                            LEFT JOIN role r ON cv.role_id = r.id
+                            WHERE cv.id = '$uid'
+                            ";
+                                break;
+
                             default:
                                 die('Invalid type');
                         }
@@ -90,25 +98,29 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                     <div class="col-md-9">
                         <div class="card">
 
-                            <div class="card-header p-2">
-                                <div class="row">
-                                    <div class="ml-2">
+                            <div class="card-header">
+
+                                <div class="row justify-content-between">
+                                    <!-- Filter Form -->
+                                    <div>
                                         <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
                                             <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                                                <label for="start_date" class="mr-2">Date:</label>
+                                                <label for="start_date">Date:</label>
                                                 <input type="date" name="start_date" id="start_date" class="form-control" value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>">
                                             </div>
                                             <div class="form-group mb-2 mr-2 d-flex align-items-center">
-                                                <label for="end_date" class="mr-2">To </label>
+                                                <label for="end_date">To</label>
                                                 <input type="date" name="end_date" id="end_date" class="form-control" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>">
                                             </div>
-                                            <button type="submit" class="btn btn-primary mb-2 mr-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+                                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-magnifying-glass"></i></button>
                                         </form>
                                     </div>
 
-                                    <div class="ml-auto mr-2">
-                                        <div class="dropdown mb-2">
-                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Date</button>
+                                    <!-- Date Filter Dropdown -->
+                                    <div>
+                                        <div class="dropdown">
+                                            <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                class="btn btn-secondary dropdown-toggle">Date</button>
                                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy(' ')">Clear Filter</a></li>
                                                 <li><a href="#" class="dropdown-item" onclick="filterBy('day')">This Day</a></li>
@@ -118,29 +130,25 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
+
 
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-bordered compact">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center" rowspan="2">#</th>
-                                                    <th class="text-center w-25" rowspan="2">Date</th>
-                                                    <th class="text-center" colspan="2">A.M.</th>
-                                                    <th class="text-center" colspan="2">P.M.</th>
-                                                </tr>
-                                                <tr>
-                                                    <th class="text-center">Time in</th>
-                                                    <th class="text-center">Time out</th>
-                                                    <th class="text-center">Time in</th>
-                                                    <th class="text-center">Time out</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $query = "SELECT r.record_date, r.timein, r.timeout,
+                                    <table class="table text-nowrap table-hover table-bordered compact">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center w-50">Date</th>
+                                                <th class="text-center">Time in</th>
+                                                <th class="text-center">Time out</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+
+                                            $query = "SELECT r.record_date,r.timein, r.timeout,
                                                                 COALESCE(s.fname, e.fname, v.fname) AS fname, 
                                                                 COALESCE(s.mname, e.mname, v.mname) AS mname, 
                                                                 COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -154,51 +162,34 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id
                                                             WHERE r.record_id = '$uid' and r.record_table = '$type'
-                                                            ";
+                                                        ";
 
-                                                if (!empty($start_date) && !empty($end_date)) {
-                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
-                                                }
 
-                                                $query .= " ORDER BY r.id DESC";
 
-                                                $result = $conn->query($query);
+                                            if (!empty($start_date) && !empty($end_date)) {
+                                                $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
+                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+                                            }
 
-                                                $i = 1;
-                                                while ($row = $result->fetch_assoc()):
-                                                    $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
-                                                    $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
+                                            $query .= " ORDER BY r.id DESC";
 
-                                                    $am_timein = $am_timeout = $pm_timein = $pm_timeout = '------';
+                                            $result = $conn->query($query);
 
-                                                    if ($timein) {
-                                                        if ($timein->format('A') == 'AM') {
-                                                            $am_timein = $timein->format('h:i A');
-                                                        } else {
-                                                            $pm_timein = $timein->format('h:i A');
-                                                        }
-                                                    }
-                                                    if ($timeout) {
-                                                        if ($timeout->format('A') == 'AM') {
-                                                            $am_timeout = $timeout->format('h:i A');
-                                                        } else {
-                                                            $pm_timeout = $timeout->format('h:i A');
-                                                        }
-                                                    }
-                                                ?>
-                                                    <tr>
-                                                        <td class="text-center"><?= $i++; ?></td>
-                                                        <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                                                        <td class="text-center"><?= $am_timein; ?></td>
-                                                        <td class="text-center"><?= $am_timeout; ?></td>
-                                                        <td class="text-center"><?= $pm_timein; ?></td>
-                                                        <td class="text-center"><?= $pm_timeout; ?></td>
-                                                    </tr>
-                                                <?php endwhile; ?>
-                                            </tbody>
-                                        </table>
+                                            $i = 1;
+                                            while ($row = $result->fetch_assoc()):
+                                                $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
+                                                $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
+                                            ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $i++; ?></td>
+                                                    <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
+                                                    <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
+                                                    <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
+                                                </tr>
+                                            <?php endwhile; ?>
 
-                                    </div>
+                                        </tbody>
+                                    </table>
 
                                 </div>
                             </div>

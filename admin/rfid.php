@@ -137,6 +137,32 @@
                 </div>
             </div>
 
+
+
+            <div id="vendor-card" style="display: none;">
+                <div class="card-body">
+                    <!-- vendor Information Display -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 text-center">
+                            <img id="vendor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
+                            <h1 id="cvschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                        </div>
+                        <div class="col-md-5" style="margin-top:200px;">
+                            <h1 id="cvname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvtype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
             <div id="error-card" style="display: none;">
                 <div class="card-body">
                     <!-- error Information Display -->
@@ -173,6 +199,7 @@
             $('#visitor-card').hide();
             $('#student-card').hide();
             $('#employee-card').hide();
+            $('#vendor-card').hide();
             $('#error-card').hide();
 
         }, idleWait);
@@ -301,6 +328,22 @@
 
                 $('#rfid').val("");
                 $('#visitor-card').show();
+
+
+
+            } else if (role == "Vendor") {
+                $('#vendor-img').attr('src', imgPath);
+                $('#cvname').text(fullName.toUpperCase());
+                $('#cvgender').text(data.gender);
+                $('#cvrole').text(data.role_name);
+                $('#cvtype').text(data.employee_type);
+                $('#cvprog_name').text(data.prog_name);
+                $('#cvdept_name').text(data.dept_name);
+                $('#cvschool_id').text(data.school_id);
+
+
+                $('#rfid').val("");
+                $('#vendor-card').show();
 
 
 

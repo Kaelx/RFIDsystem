@@ -33,5 +33,10 @@
 <script src="dist/js/adminlte.min.js"></script>
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
+<!-- jquery-validation -->
+<script src="./plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="./plugins/jquery-validation/additional-methods.min.js"></script>
+
+
 <!-- custom css -->
 <link rel="stylesheet" href="./css/style.css">

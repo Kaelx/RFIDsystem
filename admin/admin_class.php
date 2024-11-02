@@ -219,8 +219,9 @@ class Action
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
 			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+			$check_vendors = $this->db->query("SELECT * FROM vendors WHERE rfid = '$rfid'");
 
-			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0 || $check_vendors->num_rows > 0) {
 				return 3;
 			}
 		}
@@ -300,8 +301,9 @@ class Action
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
 			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+			$check_vendors = $this->db->query("SELECT * FROM vendors WHERE rfid = '$rfid'");
 
-			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0 || $check_vendors->num_rows > 0) {
 				return 3;
 			}
 		}
@@ -320,6 +322,7 @@ class Action
 		$data .= ", employee_type_id = '$type_id' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
+		$data .= ", dept_id = '$dept_id' ";
 		$data .= ", rfid = '$rfid' ";
 
 		$base64_data = $_POST['croppedImageData'];
@@ -383,9 +386,10 @@ class Action
 		if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
 			$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
 			$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+			$check_vendors = $this->db->query("SELECT * FROM vendors WHERE rfid = '$rfid'");
 			$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid' and status = 0");
 
-			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0) {
+			if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0 || $check_vendors->num_rows > 0) {
 				return 3;
 			}
 		}
@@ -446,6 +450,89 @@ class Action
 
 		}
 	}
+
+
+
+
+
+
+		//register vendors
+		function register4(){
+			extract($_POST);
+	
+			if (!empty($id)) {
+				$current_rfid = $this->db->query("SELECT rfid FROM vendors WHERE id = '$id'")->fetch_assoc()['rfid'];
+			}
+	
+			if (empty($id) || (!empty($id) && $rfid != $current_rfid)) {
+				$check_students = $this->db->query("SELECT * FROM students WHERE rfid = '$rfid'");
+				$check_employees = $this->db->query("SELECT * FROM employees WHERE rfid = '$rfid'");
+				$check_vistors = $this->db->query("SELECT * FROM visitors WHERE rfid = '$rfid'");
+				$check_vendors = $this->db->query("SELECT * FROM vendors WHERE rfid = '$rfid'");
+	
+				if ($check_students->num_rows > 0 || $check_employees->num_rows > 0 || $check_vistors->num_rows > 0 || $check_vendors->num_rows > 0) {
+					return 3;
+				}
+			}
+	
+			$data = " fname = '$fname' ";
+			$data .= ", mname = '$mname' ";
+			$data .= ", lname = '$lname' ";
+			$data .= ", sname = '$sname' ";
+			$data .= ", gender = '$gender' ";
+			$data .= ", address = '$address' ";
+			$data .= ", cellnum = '$cellnum' ";
+			$data .= ", role_id = '$role_id' ";
+			$data .= ", rfid = '$rfid' ";
+	
+			$base64_data = $_POST['croppedImageData'];
+	
+			if (!empty($base64_data)) {
+			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+			$decoded_image = base64_decode($base64_data);
+	
+			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_path = 'assets/img/' . $img_name;
+	
+			if (file_put_contents($img_path, $decoded_image)) {
+				$data .= ", img_path = '$img_name' ";
+			}
+		}
+	
+	
+			try {
+				if (empty($id)) {
+					$save = $this->db->query("INSERT INTO vendors set " . $data);
+					if ($save)
+	
+						$log = [
+							'user_id' => $_SESSION['login_id'],
+							'action' => ' has registered new vendor ' . $fname . ' ' . $lname
+						];
+	
+	
+					$this->save_log($log);
+					return 1;
+				} else {
+					$save = $this->db->query("UPDATE vendors set " . $data . " where id=" . $id);
+					if ($save)
+	
+						$log = [
+							'user_id' => $_SESSION['login_id'],
+							'action' => ' has updated the vendor information of ' . $fname . ' ' . $lname
+						];
+	
+	
+					$this->save_log($log);
+					return 2;
+				}
+			} catch (Exception $e) {
+				return $e->getMessage();  // For debugging
+	
+			}
+		}
+
+
 
 
 
@@ -560,6 +647,41 @@ class Action
 	}
 
 
+	function archive_vendor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE vendors set status = 1 where id = " . $id);
+		if ($archive)
+
+			$qry = $this->db->query("SELECT * FROM vendors WHERE id = " . $id);
+		$vendor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has archived a vendor ' . $vendor['fname'] . ' ' . $vendor['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
+	}
+
+	function unarchive_vendor(){
+		extract($_POST);
+		$archive = $this->db->query("UPDATE vendors set status = 0 where id = " . $id);
+		if ($archive)
+
+			$qry = $this->db->query("SELECT * FROM vendors WHERE id = " . $id);
+		$vendor = $qry->fetch_assoc();
+
+		$log = [
+			'user_id' => $_SESSION['login_id'],
+			'action' => ' has unarchived a vendor ' . $vendor['fname'] . ' ' . $vendor['lname']
+		];
+
+		$this->save_log($log);
+		return 1;
+	}
+
+
 
 	function fetch_data(){
 		extract($_POST);
@@ -585,6 +707,13 @@ class Action
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
+
+			UNION
+			
+			SELECT cv.id, cv.fname,cv.mname, cv.lname, cv.sname, cv.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, cv.rfid, cv.img_path, 'vendor' as source_table
+			FROM vendors cv
+			LEFT JOIN role r ON cv.role_id = r.id
+			WHERE cv.rfid = '$rfid' AND cv.status = 0
 		");
 
 		if ($fetch->num_rows > 0) {
@@ -595,7 +724,7 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
-				'lname' => $data['lname'],
+				'mname' => $data['mname'],
 				'lname' => $data['lname'],
 				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
@@ -664,6 +793,13 @@ class Action
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
+
+			UNION
+			
+			SELECT cv.id, cv.fname,cv.mname, cv.lname, cv.sname, cv.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, cv.rfid, cv.img_path, 'vendor' as source_table
+			FROM vendors cv
+			LEFT JOIN role r ON cv.role_id = r.id
+			WHERE cv.rfid = '$rfid' AND cv.status = 0
 		");
 
 		if ($fetch->num_rows > 0) {
@@ -723,6 +859,13 @@ class Action
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
+
+			UNION
+			
+			SELECT cv.id, cv.fname,cv.mname, cv.lname, cv.sname, cv.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, cv.rfid, cv.img_path, 'vendor' as source_table
+			FROM vendors cv
+			LEFT JOIN role r ON cv.role_id = r.id
+			WHERE cv.rfid = '$rfid' AND cv.status = 0
 		");
 
 		if ($fetch->num_rows > 0) {
@@ -733,7 +876,7 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
-				'lname' => $data['lname'],
+				'mname' => $data['mname'],
 				'lname' => $data['lname'],
 				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
@@ -805,8 +948,6 @@ class Action
 		$data .= ", sname = '$sname'";
 		$data .= ", bdate = '$bdate'";
 		$data .= ", gender = '$gender'";
-		$data .= ", address = '$address'";
-		$data .= ", cellnum = '$cellnum'";
 		$data .= ", email = '$email'";
 		$data .= ", school_id = '$school_id'";
 		$data .= ", username = '$username'";
@@ -922,10 +1063,6 @@ class Action
 	function request_report(){
 		extract($_POST);
 
-		if (empty($report_id)) {
-			return 'Error: report_id is required.';
-		}
-
 		$qry = $this->db->query("INSERT into gen_reports (report_id) values ('$report_id')");
 		if (!$qry) {
 			return 'Error';
@@ -957,6 +1094,7 @@ class Action
 		return json_encode($data);
 	}
 
+	
 	function mode(){
 		extract($_POST);
 
@@ -966,68 +1104,6 @@ class Action
 		} 
 		
 	}
-
-
-	// function import() {
-	// 	if (isset($_FILES['csv']['tmp_name'])) {
-	// 		$csvFile = $_FILES['csv']['tmp_name'];
-
-	// 		// Check if the file exists
-	// 		if (($handle = fopen($csvFile, 'r')) !== FALSE) {
-	// 			// Skip the first row if it contains column headers
-	// 			fgetcsv($handle);
-
-	// 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-	// 				// Check if the row has the expected number of columns
-	// 				if (count($data) < 6) {
-	// 					// Handle the error: Skip this row or log an error
-	// 					continue; // Skip the row if it doesn't have enough columns
-	// 				}
-
-	// 				// Assign each CSV column to a variable, using a default value if it's missing
-	// 				$id = !empty($data[0]) ? $data[0] : NULL; // or some default value
-	// 				$fname = !empty($data[1]) ? $data[1] : '';
-	// 				$lname = !empty($data[2]) ? $data[2] : '';
-	// 				$role_id = !empty($data[3]) ? $data[3] : NULL;
-	// 				$school_id = !empty($data[4]) ? $data[4] : NULL;
-	// 				$email = !empty($data[5]) ? $data[5] : '';
-
-	// 				// Adjust the SQL query to exclude rfid and img_path
-	// 				$query = "INSERT INTO member (id, fname, lname, role_id, school_id, email) 
-	// 						VALUES ('$id', '$fname', '$lname', '$role_id', '$school_id', '$email') 
-	// 						ON DUPLICATE KEY UPDATE 
-	// 						fname='$fname', lname='$lname', role_id='$role_id', school_id='$school_id', email='$email'";
-
-	// 				if ($this->db->query($query) === TRUE) {
-	// 					continue; // Data successfully added or updated, continue to next row
-	// 				} else {
-	// 					return 0; // Error occurred
-	// 				}
-	// 			}
-
-	// 			fclose($handle);
-	// 			return 1; // All data processed successfully
-	// 		} else {
-	// 			return 0; // Could not open the file
-	// 		}
-	// 	} else {
-	// 		return 0; // File not set
-	// 	}
-	// }
-
-
-
-
-	// function save_log($log){
-	// 	$qry = $this->db->query("INSERT INTO logs (user_id, action) 
-	// 							VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
-
-	// 	if (!$qry) {
-	// 		error_log("Error saving log: " . $this->db->error);
-	// 	}
-
-	// 	return $qry ? true : false;
-	// }
 
 
 	function save_log($log){

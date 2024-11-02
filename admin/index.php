@@ -1,50 +1,4 @@
 <?php
-
-// disable on mobile devices
-$mobileAgents = [
-  'Android',
-  'iPhone',
-  'iPad',
-  'iPod',
-  'BlackBerry',
-  'BB10',
-  'IEMobile',
-  'Windows Phone',
-  'Opera Mini',
-  'Opera Mobi',
-  'Mobile',
-  'webOS',
-  'Fennec',
-  'Silk',
-  'Kindle',
-  'PlayBook',
-  'Nokia',
-  'Mobi',
-  'smartphone',
-  'tablet',
-  'iPad Pro',
-  'Macintosh; Intel Mac OS X'
-];
-
-$userAgent = $_SERVER['HTTP_USER_AGENT'];
-
-$isMobile = false;
-foreach ($mobileAgents as $agent) {
-  if (stripos($userAgent, $agent) !== false) {
-    $isMobile = true;
-    break;
-  }
-}
-
-if ($isMobile) {
-  echo "This website is not accessible on mobile devices.";
-  exit();
-}
-// disable on mobile devices
-
-
-
-
 session_start();
 error_reporting(E_ALL);
 
@@ -86,7 +40,7 @@ if (!isset($_SESSION['login_id'])) {
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto mr-3">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -106,7 +60,7 @@ if (!isset($_SESSION['login_id'])) {
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
         <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">EVSU RFID</span>
+        <span class="brand-text font-weight-light">EVSU-OC RFID</span>
       </a>
 
       <!-- Sidebar -->
@@ -129,15 +83,22 @@ if (!isset($_SESSION['login_id'])) {
             if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
-                  <i class="fa-solid fa-building-user nav-icon"></i>
-                  <p>Employee</p>
+                  <i class="fa-solid fa-user-tie nav-icon"></i>
+                  <p>Employees</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="index.php?page=student_data" class="nav-link">
-                  <i class="fa-solid fa-id-card nav-icon"></i>
+                  <i class="fa-solid fa-graduation-cap nav-icon"></i>
                   <p>Students</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="index.php?page=vendor_data" class="nav-link">
+                  <i class="fa-solid fa-store nav-icon"></i>
+                  <p>Vendors</p>
                 </a>
               </li>
 
@@ -146,7 +107,7 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-item">
               <a href="index.php?page=visitor_data" class="nav-link">
                 <i class="fa-solid fa-people-group nav-icon"></i>
-                <p>Visitor</p>
+                <p>Visitors</p>
               </a>
             </li>
 
@@ -249,14 +210,14 @@ if (!isset($_SESSION['login_id'])) {
                 </a>
               </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="index.php?page=settings" class="nav-link">
-                <i class="fa-solid fa-gear nav-icon"></i>
+                  <i class="fa-solid fa-gear nav-icon"></i>
                   <p>
                     Settings
                   </p>
                 </a>
-              </li>
+              </li> -->
 
             <?php }; ?>
 

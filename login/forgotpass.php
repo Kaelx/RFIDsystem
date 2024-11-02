@@ -36,10 +36,10 @@
 <div class="container vh-100 d-flex justify-content-center align-items-center">
     <div class="card shadow w-100">
         <div class="row g-0">
-            <!-- Left Image -->
-            <div class="col-md-6 col-12 p-3">
+            <!-- Left Image (Carousel) - Hidden on Mobile -->
+            <div class="col-md-6 d-none d-md-flex justify-content-center p-3">
                 <div class="container">
-                    <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                    <div id="carouselExample" class="carousel slide  w-100" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <img src="../assets/defaults/evsu.png" class="d-block w-100" alt="First slide">
@@ -64,13 +64,13 @@
             </div>
 
             <!-- Right Form -->
-            <div class="col-md-6 col-12 p-3">
-                <div class="container p-5">
-                    <h1 class="mb-4 text-center">Password Recovery</h1>
-                    <form accept="#" id="forgot-pass">
-                        <div class="mb-3">
+            <div class="col-12 col-md-6 p-3">
+                <div class="container p-4">
+                    <h1 class="mb-4 text-center" style="color: #a91414; font-weight:bold; font-size: 54px;">Password Recovery</h1>
+                    <form accept="#" id="submit-form">
+                        <div class="form-group mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required autofocus autocomplete="on">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" autofocus autocomplete="on">
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Recover</button>
@@ -89,11 +89,16 @@
 
 <script>
     $(document).ready(function() {
-        $('#forgot-pass').submit(function(e) {
+        $('#submit-form').submit(function(e) {
             e.preventDefault()
 
             //regex validation
             if (!validateForm(this)) {
+                return;
+            }
+
+            // Validate the form before AJAX submission
+            if (!$(this).valid()) {
                 return;
             }
 

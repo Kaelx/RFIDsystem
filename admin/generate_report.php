@@ -10,7 +10,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
 switch ($type) {
   case 'student':
-    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
+    $query = "SELECT s.id, s.fname, s.mname, s.lname, s.sname, s.school_id, r.role_name, s.rfid, s.img_path, s.gender
 FROM students s
 LEFT JOIN role r ON s.role_id = r.id
 WHERE s.id = '$uid'
@@ -18,7 +18,7 @@ WHERE s.id = '$uid'
     break;
 
   case 'employee':
-    $query = "SELECT e.id, e.fname, e.mname, e.lname, e.school_id, et.employee_type, r.role_name, e.rfid, e.img_path, e.gender
+    $query = "SELECT e.id, e.fname, e.mname, e.lname, e.sname, e.school_id, et.employee_type, r.role_name, e.rfid, e.img_path, e.gender
 FROM employees e
 LEFT JOIN role r ON e.role_id = r.id
 LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -27,11 +27,20 @@ WHERE e.id = '$uid'
     break;
 
   case 'visitor':
-    $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
+    $query = "SELECT v.id, v.fname, v.mname, v.lname, v.sname, NULL as school_id, r.role_name, v.rfid, v.img_path, v.gender
 FROM visitors v
 LEFT JOIN role r ON v.role_id = r.id
 WHERE v.id = '$uid'
 ";
+    break;
+
+
+  case 'vendor':
+    $query = "SELECT cv.id, cv.fname, cv.mname, cv.lname, cv.sname, NULL as school_id, r.role_name, cv.rfid, cv.img_path, cv.gender
+  FROM vendors cv
+  LEFT JOIN role r ON cv.role_id = r.id
+  WHERE cv.id = '$uid'
+  ";
     break;
 
   default:
@@ -59,7 +68,7 @@ $result_records = $conn->query($query_records);
     <div class="container-fluid">
       <div class="text-right">
         <button class="btn btn-primary btn-custom" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-        <a href="index.php?page=student_data" class="btn btn-danger btn-custom">Cancel</a>
+        <button class="btn btn-danger btn-custom" onclick="window.history.back(); return false;">Cancel</button>
       </div>
     </div>
   </section>
@@ -89,9 +98,12 @@ $result_records = $conn->query($query_records);
               <img src="<?= isset($member['img_path']) ? 'assets/img/' . $member['img_path'] : 'assets/img/blank-img.png'; ?>" alt="Profile Picture" style="height: 125px; width: auto; margin-right:20px">
             </div>
             <div>
-              <p style="margin-bottom: 5px;"><?= isset($member['fname']) ? $member['fname'] : ''; ?>
-                <?= isset($member['mname']) ? strtoupper(substr($member['mname'], 0, 1)) . '. ' : ''; ?>
-                <?= isset($member['lname']) ? $member['lname'] : ''; ?></p>
+              <p style="margin-bottom: 5px;">
+                <td><?= $member['fname'] . (!empty($member['mname']) ? ' ' . $member['mname'] . '.' : '') .
+                      ' ' . $member['lname'] .
+                      (!empty($member['sname']) ? ' ' . $member['sname'] : '');
+                    ?></td>
+              </p>
               <p style="margin-bottom: 0;"><?= isset($member['role_name']) ? $member['role_name'] : ''; ?></p>
               <?php if (!empty($member['employee_type'])): ?>
                 <p style="margin-bottom: 0;"><?= $member['employee_type']; ?></p>
@@ -111,17 +123,11 @@ $result_records = $conn->query($query_records);
               <p>From <?= (new DateTime($start_date))->format('F j, Y'); ?> to <?= (new DateTime($end_date))->format('F j, Y'); ?></p>
             </div>
           <?php endif; ?>
-          <table class="table table-hover table-bordered compact">
+          <table class="table text-nowrap table-hover table-bordered compact">
             <thead>
               <tr>
-                <th class="text-center" rowspan="2">#</th>
-                <th class="text-center" rowspan="2">Date</th>
-                <th class="text-center" colspan="2">A.M.</th>
-                <th class="text-center" colspan="2">P.M.</th>
-              </tr>
-              <tr>
-                <th class="text-center">Time in</th>
-                <th class="text-center">Time out</th>
+                <th class="text-center">#</th>
+                <th class="text-center w-50">Date</th>
                 <th class="text-center">Time in</th>
                 <th class="text-center">Time out</th>
               </tr>
@@ -132,35 +138,17 @@ $result_records = $conn->query($query_records);
               while ($row = $result_records->fetch_assoc()):
                 $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                 $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
-                // Initialize placeholders
-                $amTimeIn = $amTimeOut = $pmTimeIn = $pmTimeOut = '------';
-                if ($timein) {
-                  // Check if time in is AM or PM
-                  if ($timein->format('A') === 'AM') {
-                    $amTimeIn = $timein->format('h:i A');
-                  } else {
-                    $pmTimeIn = $timein->format('h:i A');
-                  }
-                }
-                if ($timeout) {
-                  // Check if time out is AM or PM
-                  if ($timeout->format('A') === 'AM') {
-                    $amTimeOut = $timeout->format('h:i A');
-                  } else {
-                    $pmTimeOut = $timeout->format('h:i A');
-                  }
-                }
+
               ?>
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                  <td class="text-center"><?= $amTimeIn; ?></td>
-                  <td class="text-center"><?= $amTimeOut; ?></td>
-                  <td class="text-center"><?= $pmTimeIn; ?></td>
-                  <td class="text-center"><?= $pmTimeOut; ?></td>
+                  <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
+                  <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
                 </tr>
               <?php endwhile; ?>
             </tbody>
+
           </table>
         </div>
       </div>

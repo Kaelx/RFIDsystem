@@ -6,19 +6,22 @@ $start_date = $_GET['start_date'];
 $end_date = $_GET['end_date'];
 
 $query = "SELECT r.record_date, r.timein, r.timeout,
-        COALESCE(s.fname, e.fname, v.fname) AS fname, 
-        COALESCE(s.mname, e.mname, v.mname) AS mname, 
-        COALESCE(s.lname, e.lname, v.lname) AS lname,
-        COALESCE(s.school_id, e.school_id, NULL) AS school_id,
-        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
+        COALESCE(s.fname, e.fname, v.fname, cv.fname) AS fname, 
+        COALESCE(s.mname, e.mname, v.mname, cv.mname) AS mname, 
+        COALESCE(s.lname, e.lname, v.lname, cv.lname) AS lname,
+        COALESCE(s.sname, e.sname, v.sname, cv.sname) AS sname,
+        COALESCE(s.school_id, e.school_id, NULL, NULL) AS school_id,
+        COALESCE(r_s.role_name, r_e.role_name, r_v.role_name, r_cv.role_name) AS role_name
     FROM records r
     LEFT JOIN students s ON r.record_id = s.id AND r.record_table = 'student'
     LEFT JOIN employees e ON r.record_id = e.id AND r.record_table = 'employee'
     LEFT JOIN visitors v ON r.record_id = v.id AND r.record_table = 'visitor'
+    LEFT JOIN vendors cv ON r.record_id = cv.id AND r.record_table = 'vendor'
     LEFT JOIN role r_s ON s.role_id = r_s.id
     LEFT JOIN role r_e ON e.role_id = r_e.id
     LEFT JOIN role r_v ON v.role_id = r_v.id
-    WHERE COALESCE(s.status, e.status, v.status) 
+    LEFT JOIN role r_cv ON cv.role_id = r_cv.id
+    WHERE COALESCE(s.status, e.status, v.status, cv.status)
     IN (0, 1)
 ";
 
@@ -94,7 +97,7 @@ $result = $conn->query($query);
           <?php endif; ?>
 
 
-          <table class="table table-hover table-bordered compact">
+          <table class="table text-nowrap table-hover table-bordered compact">
             <thead>
               <tr>
                 <th class="text-center">#</th>
@@ -121,7 +124,10 @@ $result = $conn->query($query);
                 <tr>
                   <td class="text-center"><?= $i++; ?></td>
                   <td><?= !empty($row['school_id']) ? $row['school_id'] : 'N/A'; ?></td>
-                  <td><?= $row['fname'] . ' ' . $row['lname']; ?></td>
+                  <td><?= $row['fname'] . (!empty($row['mname']) ? ' ' . $row['mname'] . '.' : '') .
+                        ' ' . $row['lname'] .
+                        (!empty($row['sname']) ? ' ' . $row['sname'] : '');
+                      ?></td>
                   <td class="text-center"><?= $row['role_name']; ?></td>
                   <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
                   <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>

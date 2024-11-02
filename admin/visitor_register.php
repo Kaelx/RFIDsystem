@@ -245,7 +245,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control " name="fname" id="fname" required>
+                                <input type="text" class="form-control " name="fname" id="fname" autofocus>
                             </div>
 
                             <div class="col-md-1 form-group">
@@ -254,7 +254,7 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control " name="lname" id="lname" required>
+                                <input type="text" class="form-control " name="lname" id="lname">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="sname">Suffix</label>
@@ -266,7 +266,7 @@
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control " name="gender" id="gender" required>
+                                <select class="form-control " name="gender" id="gender">
                                     <option value="" selected disabled>-- Select --</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -277,11 +277,11 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control " name="address" id="address" required>
+                                <input type="text" class="form-control " name="address" id="address">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="tel" class="form-control " name="cellnum" id="cellnum">
                             </div>
                         </div>
 
@@ -302,7 +302,7 @@
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
-                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="click here then SCAN!" required>
+                                <input type="password" class="form-control " name="rfid" id="rfid" placeholder="click here then SCAN!">
                             </div>
                         </div>
                         <div class="text-center">
@@ -324,6 +324,11 @@
 
         //regex validation
         if (!validateForm(this)) {
+            return;
+        }
+
+        // Validate the form before AJAX submission
+        if (!$(this).valid()) {
             return;
         }
 
