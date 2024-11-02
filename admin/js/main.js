@@ -98,6 +98,15 @@ $('input#bdate[type="date"]').each(function () {
 
 
 
+$('.select2').select2();
+$('.select2').on('select2:open', function() {
+    let searchField = document.querySelector('.select2-container--open .select2-search__field');
+
+    searchField.placeholder = 'Search';
+    searchField.focus();
+});
+
+
 // Check if an input field with id="cellnum" exists
 const cellnumInputField = document.getElementById('cellnum');
 
