@@ -6,11 +6,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name , 'employee' as type
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type , 'employee' as type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
-    LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
@@ -47,19 +46,13 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">First Name</p>
-                                <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
-                            </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Middle Initial</p>
-                                <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
-                            </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Last Name</p>
-                                <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                            <div class="col-md-8 form-group mb-0">
+                                <p class="mb-2 text-bold">Name</p>
+                                <p type="text" class="form-control "><?= $data['fname'] .
+                                                                            (!empty($data['mname']) ? ' ' . $data['mname'] . '.' : '') .
+                                                                            ' ' . $data['lname'] .
+                                                                            (!empty($data['sname']) ? ' ' . $data['sname'] : '');
+                                                                        ?></p>
                             </div>
                         </div>
 
@@ -83,7 +76,7 @@ $data = mysqli_fetch_assoc($query);
 
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">Address</p>
                                 <p type="text" class="form-control "><?= isset($data['address']) ? $data['address'] : '' ?></p>
@@ -92,37 +85,25 @@ $data = mysqli_fetch_assoc($query);
                                 <p class="mb-2 text-bold">Contact No.</p>
                                 <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                             </div>
-
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Email</p>
-                                <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
-                            </div>
-                        </div>
+                        </div> -->
 
 
                         <hr>
 
                         <div class="row">
                             <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Position</p>
-                                <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
-                            </div>
-                            <div class="col-md-3 form-group mb-0">
-                                <p class="mb-2 text-bold">Department</p>
-                                <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 form-group mb-0">
                                 <p class="mb-2 text-bold">School ID</p>
                                 <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                             </div>
+                            <div class="col-md-3 form-group mb-0">
+                                <p class="mb-2 text-bold">Position</p>
+                                <p class="form-control "><?= isset($data['employee_type']) ? $data['employee_type'] : '' ?></p>
+                            </div>
                         </div>
 
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                             </div>
@@ -131,7 +112,8 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info"><i class="fa-solid fa-clipboard"></i> Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Record</a>
+                            <a href="index.php?page=dtr&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-success btn-custom"><i class="fa-solid fa-calendar-check"></i> DTR</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=employee_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>

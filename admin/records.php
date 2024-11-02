@@ -1,6 +1,9 @@
 <?php
 
-$report_id = rand(100000000, 999999999);
+do {
+    $report_id = rand(100000000, 999999999);
+} while ($conn->query("SELECT * FROM gen_reports WHERE report_id = '$report_id'")->num_rows > 0);
+
 $uid = $_GET['uid'];
 $type = $_GET['type'];
 
@@ -27,7 +30,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         <?php
                         switch ($type) {
                             case 'student':
-                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.school_id, r.role_name, NULL as employee_type, s.rfid, s.img_path, s.gender
+                                $query = "SELECT s.id, s.fname, s.mname, s.lname, s.sname, s.school_id, r.role_name, NULL as employee_type, s.rfid, s.img_path, s.gender
                         FROM students s
                         LEFT JOIN role r ON s.role_id = r.id
                         WHERE s.id = '$uid'
@@ -35,7 +38,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 break;
 
                             case 'employee':
-                                $query = "SELECT e.id, e.fname, e.mname, e.lname, et.employee_type, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
+                                $query = "SELECT e.id, e.fname, e.mname, e.lname, e.sname, et.employee_type, e.school_id, r.role_name, e.rfid, e.img_path, e.gender
                         FROM employees e
                         LEFT JOIN role r ON e.role_id = r.id
                         LEFT JOIN employee_type et ON e.employee_type_id = et.id
@@ -44,7 +47,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 break;
 
                             case 'visitor':
-                                $query = "SELECT v.id, v.fname, v.mname, v.lname, NULL as school_id, r.role_name, NULL as employee_type, v.rfid, v.img_path, v.gender
+                                $query = "SELECT v.id, v.fname, v.mname, v.lname, v.sname, NULL as school_id, r.role_name, NULL as employee_type, v.rfid, v.img_path, v.gender
                         FROM visitors v
                         LEFT JOIN role r ON v.role_id = r.id
                         WHERE v.id = '$uid'
@@ -72,7 +75,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                 </div>
 
                                 <h3 class="profile-username text-center">
-                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] ?>
+                                    <?= $member['fname'] . ' ' . (isset($member['mname']) && !empty($member['mname']) ? $member['mname'] . '.' : '') . ' ' . $member['lname'] . ' ' . (isset($member['sname']) && !empty($member['sname']) ? $member['sname'] : '')  ?>
                                 </h3>
 
                                 <p class="text-center no-space"><?= $member['role_name']; ?></p>
@@ -123,17 +126,21 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                         <table class="table table-hover table-bordered compact">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">#</th>
-                                                    <th class="text-center">Date</th>
+                                                    <th class="text-center" rowspan="2">#</th>
+                                                    <th class="text-center w-25" rowspan="2">Date</th>
+                                                    <th class="text-center" colspan="2">A.M.</th>
+                                                    <th class="text-center" colspan="2">P.M.</th>
+                                                </tr>
+                                                <tr>
                                                     <th class="text-center">Time in</th>
                                                     <th class="text-center">Time out</th>
-                                                    <!-- <th class="text-center">Duration</th> -->
+                                                    <th class="text-center">Time in</th>
+                                                    <th class="text-center">Time out</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-
-                                                $query = "SELECT r.record_date,r.timein, r.timeout,
+                                                $query = "SELECT r.record_date, r.timein, r.timeout,
                                                                 COALESCE(s.fname, e.fname, v.fname) AS fname, 
                                                                 COALESCE(s.mname, e.mname, v.mname) AS mname, 
                                                                 COALESCE(s.lname, e.lname, v.lname) AS lname,
@@ -147,13 +154,10 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                                                             LEFT JOIN role r_e ON e.role_id = r_e.id
                                                             LEFT JOIN role r_v ON v.role_id = r_v.id
                                                             WHERE r.record_id = '$uid' and r.record_table = '$type'
-                                                        ";
-
-
+                                                            ";
 
                                                 if (!empty($start_date) && !empty($end_date)) {
-                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'
-                                                        AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
+                                                    $query .= " AND DATE(r.record_date) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
                                                 $query .= " ORDER BY r.id DESC";
@@ -162,24 +166,38 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                                                 $i = 1;
                                                 while ($row = $result->fetch_assoc()):
-                                                    // Initialize DateTime objects or set to null
                                                     $timein = (!empty($row['timein']) && $row['timein'] != '00:00:00') ? new DateTime($row['timein']) : null;
                                                     $timeout = (!empty($row['timeout']) && $row['timeout'] != '00:00:00') ? new DateTime($row['timeout']) : null;
 
-                                                    // Calculate the duration only if both timein and timeout are set
-                                                    // $duration = ($timein && $timeout) ? $timein->diff($timeout)->format('%h hours %i minutes') : '------';
+                                                    $am_timein = $am_timeout = $pm_timein = $pm_timeout = '------';
+
+                                                    if ($timein) {
+                                                        if ($timein->format('A') == 'AM') {
+                                                            $am_timein = $timein->format('h:i A');
+                                                        } else {
+                                                            $pm_timein = $timein->format('h:i A');
+                                                        }
+                                                    }
+                                                    if ($timeout) {
+                                                        if ($timeout->format('A') == 'AM') {
+                                                            $am_timeout = $timeout->format('h:i A');
+                                                        } else {
+                                                            $pm_timeout = $timeout->format('h:i A');
+                                                        }
+                                                    }
                                                 ?>
                                                     <tr>
                                                         <td class="text-center"><?= $i++; ?></td>
                                                         <td class="text-center"><?= (new DateTime($row['record_date']))->format('F d, Y'); ?></td>
-                                                        <td class="text-center"><?= $timein ? $timein->format('h:i A') : '------'; ?></td>
-                                                        <td class="text-center"><?= $timeout ? $timeout->format('h:i A') : '------'; ?></td>
-                                                        <!-- <td class="text-center"><?= $duration; ?></td> -->
+                                                        <td class="text-center"><?= $am_timein; ?></td>
+                                                        <td class="text-center"><?= $am_timeout; ?></td>
+                                                        <td class="text-center"><?= $pm_timein; ?></td>
+                                                        <td class="text-center"><?= $pm_timeout; ?></td>
                                                     </tr>
                                                 <?php endwhile; ?>
-
                                             </tbody>
                                         </table>
+
                                     </div>
 
                                 </div>

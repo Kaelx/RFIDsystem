@@ -42,19 +42,13 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">First Name</p>
-                            <p type="text" class="form-control "><?= isset($data['fname']) ? $data['fname'] : '' ?></p>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Middle Initial</p>
-                            <p type="text" class="form-control "><?= isset($data['mname']) && !empty($data['mname']) ? $data['mname'] : 'N/A' ?></p>
-                        </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Last Name</p>
-                            <p type="text" class="form-control "><?= isset($data['lname']) ? $data['lname'] : '' ?></p>
+                        <div class="col-md-8 form-group mb-0">
+                            <p class="mb-2 text-bold">Name</p>
+                            <p type="text" class="form-control "><?= $data['fname'] .
+                                                                        (!empty($data['mname']) ? ' ' . $data['mname'] . '.' : '') .
+                                                                        ' ' . $data['lname'] .
+                                                                        (!empty($data['sname']) ? ' ' . $data['sname'] : '');
+                                                                    ?></p>
                         </div>
                     </div>
 
@@ -87,16 +81,11 @@ $data = mysqli_fetch_assoc($query);
                             <p class="mb-2 text-bold">Contact No.</p>
                             <p type="number" class="form-control "><?= isset($data['cellnum']) ? $data['cellnum'] : '' ?></p>
                         </div>
-
-                        <div class="col-md-3 form-group mb-0">
-                            <p class="mb-2 text-bold">Email</p>
-                            <p type="email" class="form-control "><?= isset($data['email']) ? $data['email'] : '' ?></p>
-                        </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-md-4 form-group mb-0">
+                        <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">School ID</p>
                             <p class="form-control "><?= isset($data['school_id']) ? $data['school_id'] : '' ?></p>
                         </div>
@@ -108,7 +97,7 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <label for="rfid">RFID</label>
                             <input type="password" class="form-control " name="rfid" id="rfid" value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>" readonly>
                         </div>
@@ -116,7 +105,7 @@ $data = mysqli_fetch_assoc($query);
 
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Records</a>
+                            <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>" class="btn btn-info btn-custom"><i class="fa-solid fa-clipboard"></i> Record</a>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="index.php?page=student_edit&uid=<?= $data['id'] ?>" class="btn btn-primary btn-custom">Edit</a>

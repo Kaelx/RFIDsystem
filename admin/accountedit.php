@@ -253,13 +253,17 @@ $member = mysqli_fetch_assoc($query);
                                         <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
                                     </div>
 
-                                    <div class="col-md-3 form-group">
-                                        <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                                    <div class="col-md-1 form-group">
+                                        <label for="mname">M. I.</label>
                                         <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($member['mname']) ? $member['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="lname">Last Name</label>
                                         <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="sname">Suffix</label>
+                                        <input type="text" class="form-control " name="sname" id="sname" value="<?= isset($member['sname']) ? $member['sname'] : '' ?>">
                                     </div>
                                 </div>
 
@@ -328,7 +332,7 @@ $member = mysqli_fetch_assoc($query);
                                     <div class="col-md-4 form-group">
                                         <label for="password">Password</label>
                                         <input type="password" class="form-control " name="password" id="password">
-                                        <small class="text-italic text-danger"><i>*Leave blank if don't want to change password.</i></small>
+                                        <small class="text-italic text-danger"><i>*Leave blank to remain the same password.</i></small>
                                     </div>
                                 </div>
                                 <div class="row">

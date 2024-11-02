@@ -44,7 +44,7 @@ function validateForm(form) {
         }
 
         if (invalidPattern.test($(this).val())) {
-            alert_toast('Invalid. Do not input special character!', 'danger');
+            alert_toast('Invalid. Do not input special character', 'danger');
             isValid = false;
             return false;
         }

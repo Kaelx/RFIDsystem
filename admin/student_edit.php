@@ -267,13 +267,17 @@ $data = mysqli_fetch_assoc($query);
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
-                            <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                            <div class="col-md-1 form-group">
+                                <label for="mname">M. I.</label>
                                 <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="sname">Suffix</label>
+                                <input type="text" class="form-control " name="sname" id="sname" value="<?= isset($data['sname']) ? $data['sname'] : '' ?>">
                             </div>
                         </div>
 
@@ -300,19 +304,14 @@ $data = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
-                            </div>
-
-                            <div class="col-md-3 form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
                         </div>
 
 
                         <div class="row">
 
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="school_id">School ID</label>
                                 <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
                             </div>
@@ -347,7 +346,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>

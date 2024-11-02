@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center w-50">Name</th>
+                                    <th class="text-center w-50">Visitor Name</th>
                                     <th class="text-center w-25">Address</th>
                                     <th class="text-center w-25">Contact No.</th>
                                 </tr>

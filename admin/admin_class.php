@@ -102,6 +102,37 @@ class Action
 	}
 
 
+	function save_category4(){
+		extract($_POST);
+		$data = " employee_type = '$name' ";
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO employee_type set " . $data);
+			if ($save)
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has created the ' . $name . ' in category'
+				];
+
+
+			$this->save_log($log);
+			return 1;
+		} else {
+			$save = $this->db->query("UPDATE employee_type set " . $data . " where id=" . $id);
+			if ($save)
+
+				$log = [
+					'user_id' => $_SESSION['login_id'],
+					'action' => ' has updated the ' . $name . ' in category'
+				];
+
+
+			$this->save_log($log);
+			return 2;
+		}
+	}
+
+
 	function delete_category2(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM department where id = " . $id);
@@ -125,6 +156,22 @@ class Action
 			$log = [
 				'user_id' => $_SESSION['login_id'],
 				'action' => ' has deleted a program'
+			];
+
+
+		$this->save_log($log);
+		return 1;
+	}
+
+
+	function delete_category4(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM employee_type where id = " . $id);
+		if ($delete)
+
+			$log = [
+				'user_id' => $_SESSION['login_id'],
+				'action' => ' has deleted an employee type'
 			];
 
 
@@ -178,19 +225,14 @@ class Action
 			}
 		}
 
-		$chk = $this->db->query("SELECT * FROM students WHERE email = '$email' AND id != '$id'")->num_rows;
-		if ($chk > 0) {
-			return 4;
-		}
-
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", prog_id = '$prog_id' ";
@@ -200,14 +242,16 @@ class Action
 
 		$base64_data = $_POST['croppedImageData'];
 
-		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
-		$decoded_image = base64_decode($base64_data);
+		if (!empty($base64_data)) {
+			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
+			$decoded_image = base64_decode($base64_data);
 
-		$img_name = time() . $fname . '' . $lname . '.png';
-		$img_path = 'assets/img/' . $img_name;
+			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_path = 'assets/img/' . $img_name;
 
-		if (file_put_contents($img_path, $decoded_image)) {
-			$data .= ", img_path = '$img_name' ";
+			if (file_put_contents($img_path, $decoded_image)) {
+				$data .= ", img_path = '$img_name' ";
+			}
 		}
 
 
@@ -261,33 +305,26 @@ class Action
 				return 3;
 			}
 		}
-
-
-		$chk = $this->db->query("SELECT * FROM employees WHERE email = '$email' AND id != '$id'")->num_rows;
-		if ($chk > 0) {
-			return 4;
-		}
+		
 
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", bdate = '$bdate' ";
 		$data .= ", gender = '$gender' ";
 
-		$data .= ", address = '$address' ";
-		$data .= ", cellnum = '$cellnum' ";
-		$data .= ", email = '$email' ";
-
+		// $data .= ", address = '$address' ";
+		// $data .= ", cellnum = '$cellnum' ";
 
 		$data .= ", employee_type_id = '$type_id' ";
-		$data .= ", employee_dept_id = '$dept_id' ";
-
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
 		$data .= ", rfid = '$rfid' ";
 
 		$base64_data = $_POST['croppedImageData'];
 
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -297,6 +334,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 
 		try {
@@ -355,6 +393,7 @@ class Action
 		$data = " fname = '$fname' ";
 		$data .= ", mname = '$mname' ";
 		$data .= ", lname = '$lname' ";
+		$data .= ", sname = '$sname' ";
 		$data .= ", gender = '$gender' ";
 		$data .= ", address = '$address' ";
 		$data .= ", cellnum = '$cellnum' ";
@@ -363,6 +402,7 @@ class Action
 
 		$base64_data = $_POST['croppedImageData'];
 
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -372,6 +412,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 
 		try {
@@ -523,7 +564,7 @@ class Action
 	function fetch_data(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname, s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -532,16 +573,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -556,6 +596,8 @@ class Action
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
+				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -597,10 +639,11 @@ class Action
 
 
 
+
 	function fetch_data_in(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname,s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -609,16 +652,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -632,7 +674,9 @@ class Action
 			$response = [
 				'success' => true,
 				'fname' => $data['fname'],
+				'mname' => $data['mname'],
 				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -644,8 +688,8 @@ class Action
 
 			if ($response) {
 				$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timein) 
-						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
-					");
+				VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+			");
 			}
 		} else {
 			$response = ['success' => false];
@@ -654,10 +698,11 @@ class Action
 		echo json_encode($response);
 	}
 
+
 	function fetch_data_out(){
 		extract($_POST);
 
-		$fetch = $this->db->query("SELECT s.id, s.fname, s.lname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
+		$fetch = $this->db->query("SELECT s.id, s.fname,s.mname, s.lname, s.sname, s.gender, s.school_id, r.role_name, p.prog_name,d.dept_name ,null as employee_type, s.rfid, s.img_path, 'student' as source_table
 			FROM students s
 			LEFT JOIN role r ON s.role_id = r.id
 			LEFT JOIN program p ON s.prog_id = p.id
@@ -666,16 +711,15 @@ class Action
 			
 			UNION
 			
-			SELECT e.id, e.fname, e.lname, e.gender, e.school_id, r.role_name, null as prog_name,d.dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
+			SELECT e.id, e.fname,e.mname, e.lname, e.sname, e.gender, e.school_id, r.role_name, null as prog_name,null as dept_name, et.employee_type, e.rfid, e.img_path, 'employee' as source_table
 			FROM employees e
 			LEFT JOIN role r ON e.role_id = r.id
 			LEFT JOIN employee_type et ON e.employee_type_id = et.id
-			LEFT JOIN department d ON e.employee_dept_id = d.id
 			WHERE e.rfid = '$rfid' AND e.status = 0
 			
 			UNION
 			
-			SELECT v.id, v.fname, v.lname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
+			SELECT v.id, v.fname,v.mname, v.lname, v.sname, v.gender, null as school_id, r.role_name, null as prog_name, null as dept_name, null as employee_type, v.rfid, v.img_path, 'visitor' as source_table
 			FROM visitors v
 			LEFT JOIN role r ON v.role_id = r.id
 			WHERE v.rfid = '$rfid' AND v.status = 0
@@ -690,6 +734,8 @@ class Action
 				'success' => true,
 				'fname' => $data['fname'],
 				'lname' => $data['lname'],
+				'lname' => $data['lname'],
+				'sname' => $data['sname'],
 				'gender' => ucfirst($data['gender']),
 				'role_name' => $data['role_name'],
 				'prog_name' => $data['prog_name'],
@@ -701,40 +747,40 @@ class Action
 
 			if ($response) {
 				$chk = $this->db->query("SELECT * FROM records 
-											WHERE record_id = '" . $data['id'] . "' 
-											AND record_table = '" . $data['source_table'] . "'
-											AND record_date = CURRENT_DATE()
-											AND timein IS NOT NULL
-											AND timeout IS NULL
-											ORDER BY id DESC
-											LIMIT 1
-										");
+									WHERE record_id = '" . $data['id'] . "' 
+									AND record_table = '" . $data['source_table'] . "'
+									AND record_date = CURRENT_DATE()
+									AND timein IS NOT NULL
+									AND timeout IS NULL
+									ORDER BY id DESC
+									LIMIT 1
+								");
 
 				if ($chk->num_rows > 0) {
 					// Step 1: Update only the most recent record with the current timestamp
 					$update = $this->db->query("UPDATE records 
-												SET timeout = CURRENT_TIMESTAMP() 
-												WHERE record_id = '" . $data['id'] . "' 
-												AND record_table = '" . $data['source_table'] . "'
-												AND record_date = CURRENT_DATE()
-												AND timeout IS NULL
-												ORDER BY id DESC 
-												LIMIT 1
-											");
+										SET timeout = CURRENT_TIMESTAMP() 
+										WHERE record_id = '" . $data['id'] . "' 
+										AND record_table = '" . $data['source_table'] . "'
+										AND record_date = CURRENT_DATE()
+										AND timeout IS NULL
+										ORDER BY id DESC 
+										LIMIT 1
+									");
 
 					// Step 2: Update the remaining records to set timeout to 'No data'
 					$update_remaining = $this->db->query("
-					UPDATE records 
-					SET timeout = '00:00:00' 
-					WHERE record_id = '" . $data['id'] . "' 
-					AND record_table = '" . $data['source_table'] . "'
-					AND record_date = CURRENT_DATE()
-					AND timeout IS NULL
-				");
+			UPDATE records 
+			SET timeout = '00:00:00' 
+			WHERE record_id = '" . $data['id'] . "' 
+			AND record_table = '" . $data['source_table'] . "'
+			AND record_date = CURRENT_DATE()
+			AND timeout IS NULL
+		");
 				} else {
 					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timeout) 
-						VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
-					");
+				VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
+			");
 				}
 			}
 		} else {
@@ -756,6 +802,7 @@ class Action
 		$data = " fname = '$fname'";
 		$data .= ", mname = '$mname'";
 		$data .= ",lname = '$lname'";
+		$data .= ", sname = '$sname'";
 		$data .= ", bdate = '$bdate'";
 		$data .= ", gender = '$gender'";
 		$data .= ", address = '$address'";
@@ -771,6 +818,8 @@ class Action
 		}
 
 		$base64_data = $_POST['croppedImageData'];
+		
+		if (!empty($base64_data)) {
 		$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 		$decoded_image = base64_decode($base64_data);
 
@@ -779,6 +828,7 @@ class Action
 		if (file_put_contents($img_path, $decoded_image)) {
 			$data .= ", img_path = '$img_name' ";
 		}
+	}
 
 		$chk = $this->db->query("SELECT * FROM users WHERE email = '$email' AND id != '$id'")->num_rows;
 		if ($chk > 0) {
@@ -821,7 +871,7 @@ class Action
 
 				$log = [
 					'user_id' => $_SESSION['login_id'],
-					'action' => ' has updated the account ' . $account_type_name . ' name ' . $fname . '' . $lname
+					'action' => ' has updated the account ' . $account_type_name . ' name ' . $fname . ' ' . $lname
 				];
 
 				$this->save_log($log);
@@ -876,6 +926,11 @@ class Action
 			return 'Error: report_id is required.';
 		}
 
+		$qry = $this->db->query("INSERT into gen_reports (report_id) values ('$report_id')");
+		if (!$qry) {
+			return 'Error';
+		}
+
 		$log = [
 			'user_id' => $_SESSION['login_id'],
 			'action' => 'generate a report with the Reference ID of ' . $report_id
@@ -900,6 +955,16 @@ class Action
 		}
 
 		return json_encode($data);
+	}
+
+	function mode(){
+		extract($_POST);
+
+		$qry = $this->db->query("SELECT mode FROM settings");
+		if ($qry->num_rows > 0) {
+			$mode = $this->db->query("UPDATE settings SET mode = $mode");
+		} 
+		
 	}
 
 

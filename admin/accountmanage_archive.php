@@ -24,7 +24,7 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Account Type</th>
-                                    <th></th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,8 +38,8 @@
                                 ?>
                                     <tr>
                                         <td class="text-center"><?php echo $i++; ?></td>
-                                        <td class="text-center"><?php echo $row['school_id'];?></td>
-                                        <td><?php echo $row['fname'] . ' ' . $row['mname'] . ' ' . $row['lname']; ?></td>
+                                        <td class="text-center"><?php echo $row['school_id']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
                                         <td><?php echo ($row['account_type'] == 1) ? 'Admin' : (($row['account_type'] == 2) ? 'Staff' : 'Security Personnel'); ?></td>
                                         <td class="text-center">

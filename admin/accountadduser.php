@@ -226,19 +226,23 @@
                         </script>
 
 
-
+                        <p class="text-bold text-red"><i>User Information *</i></p>
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required>
                             </div>
-                            <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                            <div class="col-md-1 form-group">
+                                <label for="mname">M. I.</label>
                                 <input type="text" class="form-control" name="mname" id="mname" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control " name="lname" id="lname" required>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="sname">Suffix</label>
+                                <input type="text" class="form-control " name="sname" id="sname">
                             </div>
                         </div>
 

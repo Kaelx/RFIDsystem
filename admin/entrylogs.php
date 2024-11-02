@@ -1,6 +1,10 @@
 <?php
 
-$report_id = rand(100000000, 999999999);
+do {
+    $report_id = rand(100000000, 999999999);
+} while ($conn->query("SELECT * FROM gen_reports WHERE report_id = '$report_id'")->num_rows > 0);
+
+
 $start_date = isset($_GET['start_date']) ? ($_GET['start_date']) : '';
 $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 $filter_type = isset($_GET['type']) ? $_GET['type'] : '';
@@ -10,6 +14,7 @@ $query = "SELECT r.record_date,r.record_table, r.timein, r.timeout,
         COALESCE(s.fname, e.fname, v.fname) AS fname, 
         COALESCE(s.mname, e.mname, v.mname) AS mname, 
         COALESCE(s.lname, e.lname, v.lname) AS lname,
+        COALESCE(s.sname, e.sname, v.sname) AS sname,
         COALESCE(s.school_id, e.school_id, NULL) AS school_id,
         COALESCE(r_s.role_name, r_e.role_name, r_v.role_name) AS role_name
     FROM records r
@@ -50,7 +55,7 @@ $result = $conn->query($query);
                     <?php if ($_SESSION['login_account_type'] != 3): ?>
                         <form action="" id="report_id">
                             <input type="hidden" name="report_id" value="<?php echo $report_id ?>">
-                            <button type="submit" class="btn btn-warning m-2"><i class="fa-solid fa-print"></i> Generate Report</button>
+                            <button type="submit" class="btn btn-warning"><i class="fa-solid fa-print"></i> Generate Report</button>
                         </form>
                     <?php endif; ?>
                     <button id="generate-report" style="display:none;"></button>
@@ -119,7 +124,14 @@ $result = $conn->query($query);
                                     <tr onclick="window.location.href='index.php?page=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+
+                                        <td class="text-left"> <?= $row['fname'] .
+                                                                    (!empty($row['mname']) ? ' ' . $row['mname'] . '.' : '') .
+                                                                    ' ' . $row['lname'] .
+                                                                    (!empty($row['sname']) ? ' ' . $row['sname'] : '');
+                                                                ?></td>
+
+
                                         <td class="text-left"><?php echo $row['role_name']; ?></td>
                                         <td>
                                             <?php

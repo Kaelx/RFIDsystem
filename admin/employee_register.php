@@ -244,13 +244,17 @@
                                 <label for="fname">First Name</label>
                                 <input type="text" class="form-control " name="fname" id="fname" required>
                             </div>
-                            <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                            <div class="col-md-1 form-group">
+                                <label for="mname">M. I.</label>
                                 <input type="text" class="form-control" name="mname" id="mname" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control " name="lname" id="lname" required>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="sname">Suffix</label>
+                                <input type="text" class="form-control " name="sname" id="sname">
                             </div>
                         </div>
 
@@ -273,21 +277,16 @@
 
 
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required>
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
-
-                            <div class="col-md-3 form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control " name="email" id="email" required>
-                            </div>
-                        </div>
+                        </div> -->
 
 
                         <hr>
@@ -303,6 +302,11 @@
 
                         <div class="row">
                             <div class="col-md-3 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required>
+                            </div>
+
+                            <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
                                     <option value="" selected disabled>-- Select --</option>
@@ -315,27 +319,6 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-3 form-group">
-                                <label for="dept_id">Department Assigned</label>
-                                <select class="form-control " name="dept_id" id="dept_id">
-                                    <option value="" selected>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM department  ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                    ?>
-                                        <option value="<?= $row['id'] ?>"><?= $row['dept_name'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                                <small class="text-danger font-italic">*leave blank if not applicable.</small>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required>
-                            </div>
                         </div>
 
 
@@ -401,7 +384,7 @@
 
                     $('#rfid').val('');
 
-                }else if (resp == 4) {
+                } else if (resp == 4) {
                     alert_toast("Email already taken", 'danger')
                     setTimeout(function() {
                         end_load();

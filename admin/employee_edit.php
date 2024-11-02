@@ -6,11 +6,10 @@ if (!isset($_GET['uid']) || empty($_GET['uid'])) {
 
 $uid = $_GET['uid'];
 
-$query = $conn->query("SELECT e.*, r.role_name, et.employee_type, d.dept_name
+$query = $conn->query("SELECT e.*, r.role_name, et.employee_type
     FROM employees e
     LEFT JOIN role r ON e.role_id = r.id
     LEFT JOIN employee_type et ON e.employee_type_id = et.id
-    LEFT JOIN department d ON e.employee_dept_id = d.id
     WHERE e.id = $uid 
     ORDER BY e.id ASC");
 
@@ -263,13 +262,17 @@ $data = mysqli_fetch_assoc($query);
                                 <input type="text" class="form-control " name="fname" id="fname" required value="<?= isset($data['fname']) ? $data['fname'] : '' ?>">
                             </div>
 
-                            <div class="col-md-3 form-group">
-                                <label for="mname">Middle Initial</label> <i> (Optional)</i>
+                            <div class="col-md-1 form-group">
+                                <label for="mname">M. I.</label>
                                 <input type="text" class="form-control " name="mname" id="mname" value="<?= isset($data['mname']) ? $data['mname'] : '' ?>" oninput="this.value = this.value.slice(0, 1).toUpperCase()">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
                                 <input type="text" class="form-control " name="lname" id="lname" required value="<?= isset($data['lname']) ? $data['lname'] : '' ?>">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="sname">Suffix</label>
+                                <input type="text" class="form-control " name="sname" id="sname" value="<?= isset($data['sname']) ? $data['sname'] : '' ?>">
                             </div>
                         </div>
 
@@ -289,22 +292,16 @@ $data = mysqli_fetch_assoc($query);
                             </div>
 
                         </div>
-
-                        <div class="row">
+<!--                    <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control " name="address" id="address" required value="<?= isset($data['address']) ? $data['address'] : '' ?>">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="cellnum">Contact No.</label>
-                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" required oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
+                                <input type="number" class="form-control " name="cellnum" id="cellnum" required value="<?= isset($data['cellnum']) ? $data['cellnum'] : '' ?>" oninput="this.value = this.value.slice(0, 11);" pattern="\d{11}" title="Please enter exactly 11 digits">
                             </div>
-
-                            <div class="col-md-3 form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control " name="email" id="email" required value="<?= isset($data['email']) ? $data['email'] : '' ?>">
-                            </div>
-                        </div>
+                        </div> -->
 
                         <hr>
                         <?php
@@ -315,6 +312,12 @@ $data = mysqli_fetch_assoc($query);
                         <?php endwhile; ?>
 
                         <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for="school_id">School ID</label>
+                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
+                            </div>
+
+
                             <div class="col-md-3 form-group">
                                 <label for="type_id">Position</label>
                                 <select class="form-control " name="type_id" id="type_id" required>
@@ -328,34 +331,11 @@ $data = mysqli_fetch_assoc($query);
                                     <?php endwhile; ?>
                                 </select>
                             </div>
+                        </div>
 
+
+                        <div class="row">
                             <div class="col-md-3 form-group">
-                                <label for="dept_id">Department</label>
-                                <select class="form-control " name="dept_id" id="dept_id">
-                                    <option value="" <?= !isset($data['employee_dept_id']) || $data['employee_dept_id'] == '' ? 'selected' : '' ?>>-- Select --</option>
-                                    <?php
-                                    $type = $conn->query("SELECT * FROM department ORDER BY id ASC");
-                                    while ($row = $type->fetch_assoc()) :
-                                        $selected = isset($data['employee_dept_id']) && $data['employee_dept_id'] == $row['id'] ? 'selected' : '';
-                                    ?>
-                                        <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['dept_name'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                                <small class="text-danger font-italic">*leave blank if not applicable.</small>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id" required value="<?= isset($data['school_id']) ? $data['school_id'] : '' ?>">
-                            </div>
-
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 form-group">
                                 <label for="rfid">RFID</label>
                                 <input type="password" class="form-control " name="rfid" id="rfid" required value="<?= isset($data['rfid']) ? $data['rfid'] : '' ?>">
                             </div>
@@ -416,7 +396,7 @@ $data = mysqli_fetch_assoc($query);
                     setTimeout(function() {
                         end_load();
                     }, 1000)
-                    
+
                     $('#rfid').val('');
 
                 } else if (resp == 4) {
