@@ -1,8 +1,8 @@
 <?php
 
-if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
-    header('location:index.php?page=login');
-}
+// if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
+//     header('location:index.php?page=login');
+// }
 
 ?>
 
@@ -77,7 +77,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                     </div>
                     <div class="form-group mb-3">
                         <label for="newpass" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password">
+                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" minlength="8">
                     </div>
                     <div class="form-group mb-3">
                         <label for="confirmpass" class="form-label">Confirm Password</label>
