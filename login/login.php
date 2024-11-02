@@ -92,49 +92,77 @@
 </div>
 
 
-
 <script>
     $(document).ready(function() {
+
+        const cooldownTime = 60 * 1000;
+
         $('#submit-form').submit(function(e) {
-            e.preventDefault()
+            e.preventDefault();
 
-            //regex validation
-            if (!validateForm(this)) {
+            // Form validation
+            if (!validateForm(this) || !$(this).valid()) {
                 return;
             }
 
-            // Validate the form before AJAX submission
-            if (!$(this).valid()) {
+            const cooldownEnd = parseInt(localStorage.getItem('cooldownEnd'), 10);
+
+            const currentTime = new Date().getTime();
+            if (cooldownEnd && currentTime < cooldownEnd) {
+                const remainingTime = Math.ceil((cooldownEnd - currentTime) / 1000);
+                alert_toast(`Too many failed attempts. Please wait ${remainingTime} seconds before trying again `, 'danger');
                 return;
             }
 
-            start_load()
+            if (cooldownEnd && currentTime >= cooldownEnd) {
+                localStorage.removeItem('cooldownEnd');
+                localStorage.setItem('failedAttempts', '0');
+            }
+
+            start_load();
             $.ajax({
                 url: 'ajax.php?action=login',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(resp) {
-
                     if (resp == 1) {
+                        localStorage.setItem('failedAttempts', '0');
                         location.href = 'index';
-                    } else if (resp == 2) {
-                        alert_toast('Wrong password', 'danger');
-                        setTimeout(function() {
-                            end_load();
-                        }, 1000)
-                    } else if (resp == 3) {
-                        alert_toast('No account found', 'danger');
-                        setTimeout(function() {
-                            end_load();
-                        }, 1000)
                     } else {
-                        alert_toast('An error occured', 'danger')
-                        setTimeout(function() {
-                            end_load();
-                        }, 1000)
+                        handleFailedLogin(resp);
                     }
+                },
+                error: function() {
+                    alert_toast('An error occurred', 'danger');
+                    setTimeout(end_load, 1000);
                 }
-            })
-        })
+            });
+        });
+
+        function handleFailedLogin(resp) {
+            let failedAttempts = parseInt(localStorage.getItem('failedAttempts'), 10) || 0;
+            failedAttempts += 1;
+            localStorage.setItem('failedAttempts', failedAttempts);
+
+            if (failedAttempts >= 3) {
+                const newCooldownEnd = new Date().getTime() + cooldownTime; // Set cooldown for 60 seconds
+                localStorage.setItem('cooldownEnd', newCooldownEnd);
+                alert_toast('Too many failed attempts. Please wait 60 seconds before trying again ', 'danger');
+            } else {
+                // Display specific error messages based on response
+                switch (resp) {
+                    case '2':
+                        alert_toast('Invalid Credentials ', 'danger');
+                        break;
+                    case '3':
+                        alert_toast('Invalid Credentials ', 'danger');
+                        break;
+                    default:
+                        alert_toast('An error occurred ', 'danger');
+                        break;
+                }
+            }
+            setTimeout(end_load, 1000);
+        }
     });
 </script>
