@@ -30,6 +30,7 @@
     }
 </style>
 
+
 <script>
     window.onload = function() {
         const preloader = document.querySelector('.preloader');
@@ -38,7 +39,7 @@
 
         setTimeout(function() {
             preloader.style.display = 'none';
-        }, 300);
+        }, 200);
     };
 </script>
 
@@ -53,7 +54,7 @@
         <div class="container-fluid">
             <!-- Clock and Date Display -->
             <center>
-                <div>
+                <div class="mb-3">
                     <div id="clock" class="display-2 font-weight-bold"></div>
                     <div id="date" class="h2"></div>
                 </div>
@@ -75,39 +76,52 @@
                 <div class="card-body">
                     <!-- STUDENT Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5 text-center">
-                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
-                            <h1 id="sschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                        <div class="col-md-5 mr-3 text-center">
+                            <img id="student-img" src="assets/img/blank-img.png" class="img-fluid mb-4" alt="Avatar" style="object-fit: cover; width: 620px; height: 620px; border: 4px solid #a91414;">
                         </div>
-                        <div class="col-md-5" style="margin-top:200px;">
+                        <div class="col-md-5 ml-3" style="margin-top:80px;">
                             <h1 id="sname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="stype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="sprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="stype" style="font-size: 42px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
+                            <h1 id="sdept_name" style="font-size: 38px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
+                            <h1 id="sprog_name" style="font-size: 38px; font-style:italic; font-family: Arial, sans-serif;"></h1>
                         </div>
                     </div>
+                </div>
+            </div>
 
+            <div id="employee-card" style="display: none;">
+                <div class="card-body">
+                    <!-- STUDENT Information Display -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 mr-3 text-center">
+                            <img id="employee-img" src="assets/img/blank-img.png" class="img-fluid mb-4" alt="Avatar" style="object-fit: cover; width: 620px; height: 620px; border: 4px solid #a91414;">
+                        </div>
+                        <div class="col-md-5 ml-3" style="margin-top:80px;">
+                            <h1 id="ename" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="eschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="egender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="erole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
+                            <h1 id="etype" style="font-size: 42px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
-            <div id="employee-card" style="display: none;">
+            <div id="vendor-card" style="display: none;">
                 <div class="card-body">
-                    <!-- employee Information Display -->
+                    <!-- STUDENT Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5 text-center">
-                            <img id="employee-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
-                            <h1 id="eschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                        <div class="col-md-5 mr-3 text-center">
+                            <img id="vendor-img" src="assets/img/blank-img.png" class="img-fluid mb-4" alt="Avatar" style="object-fit: cover; width: 620px; height: 620px; border: 4px solid #a91414;">
                         </div>
-                        <div class="col-md-5" style="margin-top:200px;">
-                            <h1 id="ename" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="egender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="erole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="etype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="edept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="eprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                        <div class="col-md-5 ml-3" style="margin-top:80px;">
+                            <h1 id="cvname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="cvrole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
                         </div>
                     </div>
                 </div>
@@ -116,41 +130,15 @@
 
             <div id="visitor-card" style="display: none;">
                 <div class="card-body">
-                    <!-- Visitor Information Display -->
+                    <!-- STUDENT Information Display -->
                     <div class="row justify-content-center">
-                        <div class="col-md-5 text-center">
-                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
-                            <h1 id="vschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                        <div class="col-md-5 mr-3 text-center">
+                            <img id="visitor-img" src="assets/img/blank-img.png" class="img-fluid mb-4" alt="Avatar" style="object-fit: cover; width: 620px; height: 620px; border: 4px solid #a91414;">
                         </div>
-                        <div class="col-md-5" style="margin-top:200px;">
+                        <div class="col-md-5 ml-3" style="margin-top:80px;">
                             <h1 id="vname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vtype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div id="vendor-card" style="display: none;">
-                <div class="card-body">
-                    <!-- vendor Information Display -->
-                    <div class="row justify-content-center">
-                        <div class="col-md-5 text-center">
-                            <img id="vendor-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle mb-4" alt="Avatar" style="object-fit: cover; width: 680px; height: 680px; border: 12px solid #a91414;">
-                            <h1 id="cvschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                        </div>
-                        <div class="col-md-5" style="margin-top:200px;">
-                            <h1 id="cvname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvtype" style="font-size: 42px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvdept_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvprog_name" style="font-size: 38px; font-style:italic; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="vrole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
                         </div>
                     </div>
                 </div>
@@ -163,12 +151,19 @@
                     <!-- error Information Display -->
                     <div class="row align-items-center justify-content-center">
                         <div class="text-center">
-                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle" alt="Avatar" style="object-fit: cover; width: 700px; height: 700px;">
+                            <img id="error-img" src="assets/img/blank-img.png" class="img-fluid rounded-circle" alt="Avatar" style="object-fit: cover; width: 620px; height: 620px;">
                         </div>
                     </div>
 
                 </div>
             </div>
+
+            <div id="cooldown-card" style="display: none;">
+                <div class="d-flex justify-content-center align-items-center">
+                    <p id="cooldown-message" style="margin-top: 200px; font-weight:bold; font-size: 56px;"></p>
+                </div>
+            </div>
+
 
         </div>
     </section>
@@ -181,7 +176,7 @@
 <script>
     let idleTimer;
     let idleState = false;
-    const idleWait = 5500;
+    const idleWait = 5000;
 
     function resetIdleTimer() {
         clearTimeout(idleTimer);
@@ -196,6 +191,8 @@
             $('#employee-card').hide();
             $('#vendor-card').hide();
             $('#error-card').hide();
+            $('#cooldown-card').hide();
+            $('#rfid').val("");
 
         }, idleWait);
     }
@@ -246,10 +243,17 @@
 
 
 
+    let isSubmitting = false;
+
     $('#rfid-form').keypress(function(e) {
-        if (e.which === 13) {
+        if (e.which === 13) { // Checks if Enter key is pressed
             e.preventDefault();
 
+            if (isSubmitting) return; // Prevents further submission if already submitting
+
+            isSubmitting = true; // Lock submission
+
+            start_load();
             $.ajax({
                 url: 'ajax.php?action=fetch_data_out',
                 data: new FormData(this),
@@ -258,14 +262,16 @@
                 processData: false,
                 method: 'POST',
                 success: function(resp) {
-
                     sessionStorage.setItem('responseData', resp);
-
                     location.reload();
+                },
+                complete: function() {
+                    isSubmitting = false; // Unlock submission once done
                 }
             });
         }
     });
+
 
 
     $(document).ready(function() {
@@ -273,9 +279,24 @@
         if (responseData) {
 
             sessionStorage.removeItem('responseData');
-
             const data = JSON.parse(responseData);
             const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
+
+            if (data.success) {
+                const audio = new Audio('assets/defaults/alert_success.mp3');
+                audio.play();
+            } else if (data.cooldown) {
+                $('#cooldown-message').html(data.message + ' <i class="fa-solid fa-user-check"></i>');
+                $('#cooldown-card').show();
+                $('#rfid').val("");
+
+                const audio = new Audio('assets/defaults/alert_success.mp3');
+                audio.play();
+                return;
+            } else {
+                const audio = new Audio('assets/defaults/alert_beep.mp3');
+                audio.play();
+            }
 
             var role = data.role_name;
             var fullName = data.fname + ' ' + data.lname + ' ' + data.sname;
@@ -344,21 +365,11 @@
 
             } else {
                 $('#error-img').attr('src', imgPath);
-
-
                 $('#rfid').val("");
                 $('#error-card').show();
             }
 
             console.log(responseData);
-
-            if (data.success) {
-                const audio = new Audio('assets/defaults/alert_success.mp3');
-                audio.play();
-            } else {
-                const audio = new Audio('assets/defaults/alert_beep.mp3');
-                audio.play();
-            }
         }
     });
 </script>
