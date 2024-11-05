@@ -128,13 +128,13 @@ if (!isset($_SESSION['login_id'])) {
                 <li class="nav-item">
                   <a href="index.php?page=rfid_in" class="nav-link">
                     <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan IN</p>
+                    <p>SCAN ENTRY</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="index.php?page=rfid_out" class="nav-link">
                     <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan OUT</p>
+                    <p>SCAN EXIT</p>
                   </a>
                 </li>
 
