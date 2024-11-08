@@ -166,6 +166,15 @@
             </div>
 
 
+            <div id="spam-card" class="card container bg-danger" style="display: none; margin-top: 150px;">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <p id="spam-message" style="font-weight:bolder; font-size:48px;"></p>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </section>
 </div>
@@ -177,7 +186,7 @@
 <script>
     let idleTimer;
     let idleState = false;
-    const idleWait = 5000;
+    const idleWait = 7000;
 
     function resetIdleTimer() {
         clearTimeout(idleTimer);
@@ -194,6 +203,7 @@
             $('#error-card').hide();
             $('#cooldown-card').hide();
             $('#wew-card').show();
+            $('#spam-card').hide();
             $('#rfid').val("");
 
         }, idleWait);
@@ -258,10 +268,11 @@
                 processData: false,
                 method: 'POST',
                 success: function(resp) {
+                    console.log(resp);
                     if (resp) {
                         end_load();
                         // Hide all cards before showing the specific one
-                        $('#student-card, #employee-card, #visitor-card, #vendor-card, #error-card, #cooldown-card, #wew-card').hide();
+                        $('#student-card, #employee-card, #visitor-card, #vendor-card, #error-card, #cooldown-card, #wew-card, #spam-card').hide();
                         const data = JSON.parse(resp);
                         const imgPath = data.success ? `assets/img/${data.img_path}` : 'assets/img/unauth-img.png';
 
@@ -271,9 +282,15 @@
                         } else if (data.cooldown) {
                             $('#cooldown-message').html(data.message + ' <i class="fa-solid fa-user-check"></i>');
                             $('#cooldown-card').show();
-                            $('#rfid').val("");
 
                             const audio = new Audio('assets/defaults/alert_success.mp3');
+                            audio.play();
+                            return;
+                        } else if (data.spam) {
+                            $('#spam-message').html(data.message + ' <i class="fa-solid fa-ban"></i>');
+                            $('#spam-card').show();
+
+                            const audio = new Audio('assets/defaults/alert_beep.mp3');
                             audio.play();
                             return;
                         } else {
@@ -285,64 +302,65 @@
                         var fullName = data.fname + ' ' + data.lname + ' ' + data.sname;
 
                         if (role == "Student") {
-                            $('#student-img').attr('src', imgPath);
-                            $('#sname').text(fullName.toUpperCase());
-                            $('#sgender').text(data.gender);
-                            $('#srole').text(data.role_name);
-                            $('#stype').text(data.employee_type);
-                            $('#sprog_name').text(data.prog_name);
-                            $('#sdept_name').text(data.dept_name);
-                            $('#sschool_id').text(data.school_id);
+                            $('#student-img').on('load', function() {
+                                $('#sname').text(fullName.toUpperCase());
+                                $('#sgender').text(data.gender);
+                                $('#srole').text(data.role_name);
+                                $('#stype').text(data.employee_type);
+                                $('#sprog_name').text(data.prog_name);
+                                $('#sdept_name').text(data.dept_name);
+                                $('#sschool_id').text(data.school_id);
 
-                            $('#rfid').val("");
-                            $('#student-card').show();
+                                $('#student-card').show();
+                            }).attr('src', imgPath);
 
                         } else if (role == "Employee") {
-                            $('#employee-img').attr('src', imgPath);
-                            $('#ename').text(fullName.toUpperCase());
-                            $('#egender').text(data.gender);
-                            $('#erole').text(data.role_name);
-                            $('#etype').text(data.employee_type);
-                            $('#eprog_name').text(data.prog_name);
-                            $('#edept_name').text(data.dept_name);
-                            $('#eschool_id').text(data.school_id);
+                            $('#employee-img').on('load', function() {
+                                $('#ename').text(fullName.toUpperCase());
+                                $('#egender').text(data.gender);
+                                $('#erole').text(data.role_name);
+                                $('#etype').text(data.employee_type);
+                                $('#eprog_name').text(data.prog_name);
+                                $('#edept_name').text(data.dept_name);
+                                $('#eschool_id').text(data.school_id);
 
-                            $('#rfid').val("");
-                            $('#employee-card').show();
+                                $('#employee-card').show();
+                            }).attr('src', imgPath);
 
                         } else if (role == "Visitor") {
-                            $('#visitor-img').attr('src', imgPath);
-                            $('#vname').text(fullName.toUpperCase());
-                            $('#vgender').text(data.gender);
-                            $('#vrole').text(data.role_name);
-                            $('#vtype').text(data.employee_type);
-                            $('#vprog_name').text(data.prog_name);
-                            $('#vdept_name').text(data.dept_name);
-                            $('#vschool_id').text(data.school_id);
+                            $('#visitor-img').on('load', function() {
+                                $('#vname').text(fullName.toUpperCase());
+                                $('#vgender').text(data.gender);
+                                $('#vrole').text(data.role_name);
+                                $('#vtype').text(data.employee_type);
+                                $('#vprog_name').text(data.prog_name);
+                                $('#vdept_name').text(data.dept_name);
+                                $('#vschool_id').text(data.school_id);
 
-                            $('#rfid').val("");
-                            $('#visitor-card').show();
+                                $('#visitor-card').show();
+                            }).attr('src', imgPath);
 
                         } else if (role == "Vendor") {
-                            $('#vendor-img').attr('src', imgPath);
-                            $('#cvname').text(fullName.toUpperCase());
-                            $('#cvgender').text(data.gender);
-                            $('#cvrole').text(data.role_name);
-                            $('#cvtype').text(data.employee_type);
-                            $('#cvprog_name').text(data.prog_name);
-                            $('#cvdept_name').text(data.dept_name);
-                            $('#cvschool_id').text(data.school_id);
+                            $('#vendor-img').on('load', function() {
+                                $('#cvname').text(fullName.toUpperCase());
+                                $('#cvgender').text(data.gender);
+                                $('#cvrole').text(data.role_name);
+                                $('#cvtype').text(data.employee_type);
+                                $('#cvprog_name').text(data.prog_name);
+                                $('#cvdept_name').text(data.dept_name);
+                                $('#cvschool_id').text(data.school_id);
 
-                            $('#rfid').val("");
-                            $('#vendor-card').show();
+                                $('#vendor-card').show();
+                            }).attr('src', imgPath);
 
                         } else {
-                            $('#error-img').attr('src', imgPath);
-                            $('#rfid').val("");
-                            $('#error-card').show();
+                            $('#error-img').on('load', function() {
+                                $('#error-card').show();
+                            }).attr('src', imgPath);
                         }
 
-                        console.log(resp);
+
+                        $('#rfid').val("");
                     }
                 },
 

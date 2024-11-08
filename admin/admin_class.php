@@ -247,7 +247,7 @@ class Action
 			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 			$decoded_image = base64_decode($base64_data);
 
-			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_name = date('Ymd_His') . $lname . '.png';
 			$img_path = 'assets/img/' . $img_name;
 
 			if (file_put_contents($img_path, $decoded_image)) {
@@ -331,7 +331,7 @@ class Action
 			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 			$decoded_image = base64_decode($base64_data);
 
-			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_name = date('Ymd_His') . $lname . '.png';
 			$img_path = 'assets/img/' . $img_name;
 
 			if (file_put_contents($img_path, $decoded_image)) {
@@ -410,7 +410,7 @@ class Action
 			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 			$decoded_image = base64_decode($base64_data);
 
-			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_name = date('Ymd_His') . $lname . '.png';
 			$img_path = 'assets/img/' . $img_name;
 
 			if (file_put_contents($img_path, $decoded_image)) {
@@ -491,7 +491,7 @@ class Action
 			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 			$decoded_image = base64_decode($base64_data);
 
-			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_name = date('Ymd_His') . $lname . '.png';
 			$img_path = 'assets/img/' . $img_name;
 
 			if (file_put_contents($img_path, $decoded_image)) {
@@ -809,17 +809,17 @@ class Action
 
 			$response = [
 				'success' => true,
-				'fname' => $data['fname'],
-				'mname' => $data['mname'],
-				'lname' => $data['lname'],
-				'sname' => $data['sname'],
-				'gender' => ucfirst($data['gender']),
-				'role_name' => $data['role_name'],
-				'prog_name' => $data['prog_name'],
-				'dept_name' => $data['dept_name'],
-				'employee_type' => $data['employee_type'],
-				'school_id' => $data['school_id'],
-				'img_path' => $img_path
+				'fname' => $data['fname'] ?? '',
+				'mname' => $data['mname'] ?? '',
+				'lname' => $data['lname'] ?? '',
+				'sname' => $data['sname'] ?? '',
+				'gender' => ucfirst($data['gender'] ?? ''),
+				'role_name' => $data['role_name'] ?? '',
+				'prog_name' => $data['prog_name'] ?? '',
+				'dept_name' => $data['dept_name'] ?? '',
+				'employee_type' => $data['employee_type'] ?? '',
+				'school_id' => $data['school_id'] ?? '',
+				'img_path' => $img_path ?? ''
 			];
 
 			// Check for a recent entry within the last 15 seconds
@@ -831,11 +831,26 @@ class Action
 								AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
 							");
 
+			$cooldown_check2 = $this->db->query("
+							SELECT * FROM records 
+							WHERE record_id = '" . $data['id'] . "' 
+							AND record_table = '" . $data['source_table'] . "'
+							AND record_date = CURRENT_DATE() 
+							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
+						");
+
+
 			if ($cooldown_check->num_rows > 0) {
 				$response = [
 					'success' => false,
 					'cooldown' => true,
 					'message' => 'You already scanned your RFID. You are verified'
+				];
+			}elseif ($cooldown_check2->num_rows > 0) {
+				$response = [
+					'success' => false,
+					'spam' => true,
+					'message' => 'Please do not spam. Try again later'
 				];
 			} else {
 				// Insert new record since cooldown period has passed
@@ -892,21 +907,21 @@ class Action
 
 			$response = [
 				'success' => true,
-				'fname' => $data['fname'],
-				'mname' => $data['mname'],
-				'lname' => $data['lname'],
-				'sname' => $data['sname'],
-				'gender' => ucfirst($data['gender']),
-				'role_name' => $data['role_name'],
-				'prog_name' => $data['prog_name'],
-				'dept_name' => $data['dept_name'],
-				'employee_type' => $data['employee_type'],
-				'school_id' => $data['school_id'],
-				'img_path' => $img_path
+				'fname' => $data['fname'] ?? '',
+				'mname' => $data['mname'] ?? '',
+				'lname' => $data['lname'] ?? '',
+				'sname' => $data['sname'] ?? '',
+				'gender' => ucfirst($data['gender'] ?? ''),
+				'role_name' => $data['role_name'] ?? '',
+				'prog_name' => $data['prog_name'] ?? '',
+				'dept_name' => $data['dept_name'] ?? '',
+				'employee_type' => $data['employee_type'] ?? '',
+				'school_id' => $data['school_id'] ?? '',
+				'img_path' => $img_path ?? ''
 			];
 
-				// Check for a recent entry within the last 15 seconds
-				$cooldown_check = $this->db->query("
+			// Check for a recent entry within the last 15 seconds
+			$cooldown_check = $this->db->query("
 										SELECT * FROM records 
 										WHERE record_id = '" . $data['id'] . "' 
 										AND record_table = '" . $data['source_table'] . "'
@@ -914,13 +929,30 @@ class Action
 										AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
 									");
 
+									$cooldown_check2 = $this->db->query("
+									SELECT * FROM records 
+									WHERE record_id = '" . $data['id'] . "' 
+									AND record_table = '" . $data['source_table'] . "'
+									AND record_date = CURRENT_DATE() 
+									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
+								");
+		
+
+
 				if ($cooldown_check->num_rows > 0) {
 					$response = [
 						'success' => false,
 						'cooldown' => true,
 						'message' => 'You already scanned your RFID. You are verified'
 					];
-				}else{
+				}elseif($cooldown_check2->num_rows > 0){
+						$response = [
+							'success' => false,
+							'spam' => true,
+							'message' => 'Please do not spam. Try again later'
+						];
+				}
+				else{
 				$chk = $this->db->query("SELECT * FROM records 
 									WHERE record_id = '" . $data['id'] . "' 
 									AND record_table = '" . $data['source_table'] . "'
@@ -996,7 +1028,7 @@ class Action
 			$base64_data = preg_replace('/^data:image\/\w+;base64,/', '', $base64_data);
 			$decoded_image = base64_decode($base64_data);
 
-			$img_name = time() . $fname . '' . $lname . '.png';
+			$img_name = date('Ymd_His') . $lname . '.png';
 			$img_path = 'assets/img/' . $img_name;
 			if (file_put_contents($img_path, $decoded_image)) {
 				$data .= ", img_path = '$img_name' ";
