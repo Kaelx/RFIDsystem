@@ -1,8 +1,8 @@
 <?php
 
-if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
-    header('location:index.php?page=login');
-}
+// if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
+//     header('location:index.php?page=login');
+// }
 
 ?>
 
@@ -69,7 +69,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
     <div class="card shadow login-card" style="width: 600px;">
         <div>
             <div class="p-5">
-                <h1 class="mb-4 text-center" style="color: #a91414; font-weight:bold; font-size: 54px;">Password Update</h1>
+                <h1 class="mb-4 text-center" style="font-weight:bold; font-size: 48px;">Password Update</h1>
                 <form accept="#" id="submit-form">
                     <div class="form-group mb-3">
                         <label for="otpcode" class="form-label">OTP Code</label>
@@ -77,18 +77,18 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                     </div>
                     <div class="form-group mb-3">
                         <label for="newpass" class="form-label">New Password</label>
-                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password">
+                        <input type="password" class="form-control" name="newpass" id="newpass" placeholder="Enter your new password" minlength="8">
                     </div>
                     <div class="form-group mb-3">
                         <label for="confirmpass" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" name="confirmpass" id="confirmpass" placeholder="Confirm you password">
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary w-50">Update</button>
                     </div>
                     <hr>
                     <div class="login-footer mt-3">
-                        <a href="index.php?page=login">Go back to Login</a>
+                        <a href="index.php?page=login" style="text-decoration:underline;">Go back to Login</a>
                     </div>
                 </form>
             </div>

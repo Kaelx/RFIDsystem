@@ -88,7 +88,7 @@ $data = mysqli_fetch_assoc($query);
                         </div>
                         <div class="col-md-3 form-group mb-0">
                             <p class="mb-2 text-bold">Department</p>
-                            <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : '' ?></p>
+                            <p class="form-control "><?= isset($data['dept_name']) ? $data['dept_name'] : 'N/A' ?></p>
                         </div>
                     </div>
 

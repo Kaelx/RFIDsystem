@@ -309,7 +309,7 @@
                             <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
                                 <select class="form-control select2" name="dept_id" id="dept_id">
-                                    <option value="" selected disabled>-- Select --</option>
+                                    <option value="" selected>-- Select --</option>
                                     <?php
                                     $dept = $conn->query("SELECT * FROM department  ORDER BY id ASC");
                                     while ($row = $dept->fetch_assoc()) :
@@ -317,6 +317,7 @@
                                         <option value="<?= $row['id'] ?>"><?= $row['dept_name'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
+                                <small class="text-danger">leave blank if not applicable*</small>
                             </div>
 
                         </div>

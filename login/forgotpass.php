@@ -66,18 +66,18 @@
             <!-- Right Form -->
             <div class="col-12 col-md-6 p-3">
                 <div class="container p-4">
-                    <h1 class="mb-4 text-center" style="color: #a91414; font-weight:bold; font-size: 54px;">Password Recovery</h1>
+                    <h1 class="mb-4 text-center" style="font-weight:bold; font-size: 48px;">Password Recovery</h1>
                     <form accept="#" id="submit-form">
                         <div class="form-group mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" autofocus autocomplete="on">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Recover</button>
+                            <button type="submit" class="btn btn-primary w-50">Recover</button>
                         </div>
                         <hr>
                         <div class="login-footer mt-3 text-center">
-                            <a href="index.php?page=login">Go back to Login</a>
+                            <a href="index.php?page=login" style="text-decoration:underline;">Go back to Login</a>
                         </div>
                     </form>
                 </div>

@@ -40,7 +40,7 @@ if (!isset($_SESSION['login_id'])) {
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto mr-3">
+      <ul class="navbar-nav ml-auto">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -128,13 +128,13 @@ if (!isset($_SESSION['login_id'])) {
                 <li class="nav-item">
                   <a href="index.php?page=rfid_in" class="nav-link">
                     <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan IN</p>
+                    <p>SCAN ENTRY</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="index.php?page=rfid_out" class="nav-link">
                     <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan OUT</p>
+                    <p>SCAN EXIT</p>
                   </a>
                 </li>
 
@@ -230,7 +230,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:30px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="top:45px; right: 25px; padding: 1rem; z-index: 99999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>

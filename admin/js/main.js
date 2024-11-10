@@ -156,9 +156,6 @@ $('form').each(function () {
             type_id: {
                 required: true
             },
-            dept_id: {
-                required: true
-            },
             prog_id: {
                 required: true
             },

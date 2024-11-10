@@ -73,35 +73,50 @@ $result = $conn->query($query);
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <div class="row justify-content-between">
+                    <div class="row">
                         <div>
                             <form action="#" id="filter-report" class="form-inline d-flex align-items-center">
-                                <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                <div class="form-group mr-2 d-flex align-items-center">
                                     <label for="start_date" class="mr-2">Date:</label>
                                     <input type="date" name="start_date" id="start_date" class="form-control"
                                         value="<?= $start_date; ?>">
                                 </div>
-                                <div class="form-group mb-2 mr-2 d-flex align-items-center">
+                                <div class="form-group  mr-2 d-flex align-items-center">
                                     <label for="end_date" class="mr-2">To </label>
                                     <input type="date" name="end_date" id="end_date" class="form-control"
                                         value="<?= $end_date; ?>">
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-2"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-magnifying-glass"></i> </button>
+                                </div>
                             </form>
                         </div>
 
                         <div>
-                            <div class="row">
-                                <div class="dropdown">
-                                    <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Type</button>
-                                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                        <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
-                                        <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
-                                        <li><a href="#" class="dropdown-item" onclick="filterBy('vendor')">Vendor</a></li>
-                                        <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
-                                    </ul>
-                                </div>
-                                <a href="index.php?page=entrylogs" class="btn btn-danger ml-2 mr-2"> <i class="fa-solid fa-rotate"></i></a>
+                            <div class="dropdown">
+                                <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle ml-2">Date</button>
+                                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                    <li><a href="#" class="dropdown-item" onclick="date('day')">This Day</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="date('week')">This Week</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="date('month')">This Month</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="dropdown">
+                                <button id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle ml-2">Type</button>
+                                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('employee')">Employee</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('student')">Student</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('vendor')">Vendor</a></li>
+                                    <li><a href="#" class="dropdown-item" onclick="filterBy('visitor')">Visitor</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <button class="btn btn-default ml-2" onclick="location.href='index.php?page=entrylogs'"><i class="fa-solid fa-rotate"></i></button>
                             </div>
                         </div>
                     </div>
@@ -200,6 +215,51 @@ $result = $conn->query($query);
 
         // Redirect with selected filter type
         location.href = `index.php?page=entrylogs&type=${type}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+    }
+
+
+    function date(period) {
+
+        var type = "<?php echo $filter_type; ?>";
+        const formatDate = date => date.toISOString().split('T')[0];
+        const gmtPlus8Offset = 8 * 60 * 60 * 1000;
+
+        const timezone = date => new Date(date.getTime() + gmtPlus8Offset);
+
+        let today = new Date();
+        let startDate, endDate;
+
+        switch (period) {
+            case 'day':
+                startDate = endDate = formatDate(timezone(today));
+                break;
+            case 'week':
+                let startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay());
+                startDate = formatDate(timezone(startOfWeek));
+
+                let endOfWeek = new Date(today);
+                endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
+                endDate = formatDate(timezone(endOfWeek));
+                break;
+            case 'month':
+                let startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                startDate = formatDate(timezone(startOfMonth));
+
+                let endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                endDate = formatDate(timezone(endOfMonth));
+                break;
+            default:
+                // If no period is specified, clear the date values
+                startDate = '';
+                endDate = '';
+                break;
+        }
+
+        document.getElementById('start_date').value = startDate;
+        document.getElementById('end_date').value = endDate;
+
+        location.href = `index.php?page=entrylogs&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 
 

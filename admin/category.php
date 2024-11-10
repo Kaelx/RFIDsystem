@@ -281,7 +281,14 @@
         layout: {
             bottom: 'paging',
             bottomEnd: null
-        }
+        },
+        pagingType: 'simple',
+        // language: {
+        //     paginate: {
+        //         previous: "< Previous", 
+        //         next: "Next Page >"
+        //     }
+        // }
     })
 
 

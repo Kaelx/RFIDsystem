@@ -325,7 +325,7 @@ $data = mysqli_fetch_assoc($query);
                             <div class="col-md-3 form-group">
                                 <label for="dept_id">Department</label>
                                 <select class="form-control  select2" name="dept_id" id="dept_id">
-                                    <option value="" <?= !empty($data['dept_id']) || $data['dept_id'] == '0' || $data['dept_id'] == '' ? 'selected' : '' ?> disabled>-- select --</option>
+                                    <option value="" <?= !empty($data['dept_id']) || $data['dept_id'] == '0' || $data['dept_id'] == '' ? 'selected' : '' ?>>-- select --</option>
                                     <?php
                                     $type = $conn->query("SELECT * FROM department ORDER BY id ASC");
                                     while ($row = $type->fetch_assoc()) :
@@ -334,6 +334,7 @@ $data = mysqli_fetch_assoc($query);
                                         <option value="<?= $row['id'] ?>" <?= $selected ?>><?= $row['dept_name'] ?></option>
                                     <?php endwhile; ?>
                                 </select>
+                                <small class="text-danger">leave blank if not applicable*</small>
                             </div>
                         </div>
 
