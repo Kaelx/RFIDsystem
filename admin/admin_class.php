@@ -322,7 +322,7 @@ class Action
 		$data .= ", employee_type_id = '$type_id' ";
 		$data .= ", school_id = '$school_id' ";
 		$data .= ", role_id = '$role_id' ";
-		$data .= ", dept_id = '$dept_id' ";
+		$data .= ", dept_id = '" . (isset($dept_id) ? $dept_id : '') . "' ";
 		$data .= ", rfid = '$rfid' ";
 
 		$base64_data = $_POST['croppedImageData'];
@@ -822,7 +822,6 @@ class Action
 				'img_path' => $img_path ?? ''
 			];
 
-			// Check for a recent entry within the last 15 seconds
 			$cooldown_check = $this->db->query("
 								SELECT * FROM records 
 								WHERE record_id = '" . $data['id'] . "' 
@@ -920,7 +919,6 @@ class Action
 				'img_path' => $img_path ?? ''
 			];
 
-			// Check for a recent entry within the last 15 seconds
 			$cooldown_check = $this->db->query("
 										SELECT * FROM records 
 										WHERE record_id = '" . $data['id'] . "' 

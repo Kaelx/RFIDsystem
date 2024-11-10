@@ -282,6 +282,7 @@
                         } else if (data.cooldown) {
                             $('#cooldown-message').html(data.message + ' <i class="fa-solid fa-user-check"></i>');
                             $('#cooldown-card').show();
+                            $('#rfid').val("");
 
                             const audio = new Audio('assets/defaults/alert_success.mp3');
                             audio.play();
@@ -289,6 +290,7 @@
                         } else if (data.spam) {
                             $('#spam-message').html(data.message + ' <i class="fa-solid fa-ban"></i>');
                             $('#spam-card').show();
+                            $('#rfid').val("");
 
                             const audio = new Audio('assets/defaults/alert_beep.mp3');
                             audio.play();

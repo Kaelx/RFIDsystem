@@ -191,38 +191,35 @@ if ($result->num_rows > 0) {
 
 <script>
   $(function() {
-    var data = <?php echo json_encode($data); ?>; //[0, 10, 5, 2, 20];
-    var labels = <?php echo json_encode($labels); ?>; //['October 3, 2021', 'October 4, 2021', 'October 5, 2021', 'October 6, 2021', 'October 7, 2021' ];
+    var data = <?php echo json_encode($data); ?>;
+    var labels = <?php echo json_encode($labels); ?>;
 
-
-
-    //-------------
-    //- LINE CHART -
-    //-------------
-
-    // Set up current date and seven days ago
     var currentDate = new Date();
     var sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(currentDate.getDate() - 6);
 
-    sevenDaysAgo.setDate(currentDate.getDate() - 8);
+    var last7DaysLabels = [];
+    var last7DaysData = [];
 
+    for (var d = new Date(sevenDaysAgo); d <= currentDate; d.setDate(d.getDate() + 1)) {
+      var formattedDate = d.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      last7DaysLabels.push(formattedDate);
 
-    var filteredData = [];
-    var filteredLabels = [];
+      // Find the index of the date in the original labels
+      var index = labels.indexOf(formattedDate);
 
-    for (var i = 0; i < labels.length; i++) {
-      var entryDate = new Date(labels[i]);
-
-      if (entryDate >= sevenDaysAgo && entryDate <= currentDate) {
-        filteredLabels.push(labels[i]);
-        filteredData.push(data[i]);
-      }
+      // If the date is found in labels, use its data; otherwise, set it to zero
+      last7DaysData.push(index !== -1 ? data[index] : 0);
     }
 
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d');
 
     var lineChartData = {
-      labels: filteredLabels,
+      labels: last7DaysLabels,
       datasets: [{
         label: 'Entries',
         backgroundColor: 'rgba(60,141,188,0.9)',
@@ -232,7 +229,7 @@ if ($result->num_rows > 0) {
         pointStrokeColor: 'rgba(60,141,188,1)',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
-        data: filteredData,
+        data: last7DaysData,
         fill: false
       }]
     };
@@ -261,13 +258,11 @@ if ($result->num_rows > 0) {
       }
     };
 
-
     new Chart(lineChartCanvas, {
       type: 'line',
       data: lineChartData,
       options: lineChartOptions
     });
-
 
 
     //-------------

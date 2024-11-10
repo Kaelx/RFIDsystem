@@ -40,7 +40,7 @@ if (!isset($_SESSION['login_id'])) {
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto mr-3">
+      <ul class="navbar-nav ml-auto">
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
