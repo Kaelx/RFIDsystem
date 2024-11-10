@@ -230,7 +230,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:30px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="top:45px; right: 25px; padding: 1rem; z-index: 99999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
