@@ -35,14 +35,45 @@
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <!-- Clock and Date Display -->
-            <center>
-                <div class="mb-3">
-                    <div id="clock" class="display-2 font-weight-bold"></div>
-                    <div id="date" class="h1"></div>
-                </div>
-            </center>
+        <div class="container-fluid position-relative">
+
+            <!-- Centered Clock and Date Display -->
+            <div class="text-center">
+                <div id="clock" class="display-2 font-weight-bold"></div>
+                <div id="date" class="h1"></div>
+            </div>
+
+            <!-- Right-aligned Icon Button -->
+            <div class="position-absolute" style="top: 0; left: 0; z-index:999;">
+                <button id="fullscreenButton" type="button" class="btn btn-lg" onclick="toggleFullscreen()">
+                    <i class="fa-solid fa-expand" style="font-size: 42px;"></i>
+                </button>
+
+            </div>
+            <script>
+                function toggleFullscreen() {
+                    if (!document.fullscreenElement) {
+                        $(document.documentElement).get(0).requestFullscreen().then(() => {
+                            $('#fullscreenButton').hide();
+                            $('body').addClass('hide-cursor');
+                        })
+                    }
+                }
+
+                // Listen for fullscreen change to show/hide the button
+                $(document).on('fullscreenchange', function() {
+                    if (document.fullscreenElement) {
+                        // In full-screen mode, hide the button
+                        $('#fullscreenButton').hide();
+                        $('body').addClass('hide-cursor');
+                    } else {
+                        // Not in full-screen mode, show the button
+                        $('#fullscreenButton').show();
+                        $('body').removeClass('hide-cursor');
+                    }
+                });
+            </script>
+
         </div>
     </div>
 

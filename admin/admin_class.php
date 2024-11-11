@@ -835,7 +835,7 @@ class Action
 							WHERE record_id = '" . $data['id'] . "' 
 							AND record_table = '" . $data['source_table'] . "'
 							AND record_date = CURRENT_DATE() 
-							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
+							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 5
 						");
 
 
@@ -932,7 +932,7 @@ class Action
 									WHERE record_id = '" . $data['id'] . "' 
 									AND record_table = '" . $data['source_table'] . "'
 									AND record_date = CURRENT_DATE() 
-									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
+									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 5
 								");
 		
 
