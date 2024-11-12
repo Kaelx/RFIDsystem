@@ -52,10 +52,13 @@
             </div>
             <script>
                 function toggleFullscreen() {
+                    const isFullscreen = !!document.fullscreenElement;
+
                     if (!document.fullscreenElement) {
                         $(document.documentElement).get(0).requestFullscreen().then(() => {
                             $('#fullscreenButton').hide();
                             $('body').addClass('hide-cursor');
+                            toggleSidebar(false);
                         })
                     }
                 }
@@ -65,13 +68,26 @@
                     if (document.fullscreenElement) {
                         // In full-screen mode, hide the button
                         $('#fullscreenButton').hide();
+                        toggleSidebar(false);
                         $('body').addClass('hide-cursor');
                     } else {
                         // Not in full-screen mode, show the button
                         $('#fullscreenButton').show();
+                        toggleSidebar(true);
                         $('body').removeClass('hide-cursor');
                     }
                 });
+
+
+                function toggleSidebar(show) {
+                    const sidebarToggleButton = $('[data-widget="pushmenu"]');
+                    const isSidebarVisible = $('body').hasClass('sidebar-collapse');
+
+                    // Toggle sidebar based on `show` parameter
+                    if ((show && isSidebarVisible) || (!show && !isSidebarVisible)) {
+                        sidebarToggleButton.trigger('click');
+                    }
+                }
             </script>
 
         </div>
