@@ -982,6 +982,11 @@ class Action
 			AND record_date = CURRENT_DATE()
 			AND timeout IS NULL
 		");
+
+					if ($data['source_table'] == 'visitor') {
+						$updateStat = $this->db->query("UPDATE visitors SET status = 1 WHERE id = " . $data['id']);
+					}
+
 				} else {
 					$insert = $this->db->query("INSERT INTO records (record_id, record_table, record_date, timeout) 
 				VALUES ('" . $data['id'] . "', '" . $data['source_table'] . "',CURRENT_DATE(), CURRENT_TIMESTAMP())
