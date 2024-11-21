@@ -97,7 +97,7 @@
     <footer class="mt-auto text-white py-4">
         <div class="container text-center">
             <p class="mb-2">EVSU-OC Verification Entry & Exit System. All Rights Reserved 2024-<span id="year"></span></p>
-            <p class="mb-2">Developed by <strong style="text-decoration: underline;">Elevatech Company</strong></p>
+            <p class="mb-2">A Capstone Project of <strong style="text-decoration: underline;">Elevatech Company</strong></p>
 
             <!-- Social Media Icons (Optional) -->
             <div>
