@@ -26,17 +26,13 @@ if (isset($_SESSION['login_id'])) {
 </head>
 
 <body>
-    <div class="container">
-
-
+    <div>
         <!-- content -->
         <?php
         $page = isset($_GET['page']) ? $_GET['page'] : "login";
         include $page . '.php';
         ?>
         <!-- end content -->
-
-
     </div>
 
 
