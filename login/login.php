@@ -69,7 +69,7 @@
                 <!-- Right Form (Login Form) -->
                 <div class="col-12 col-md-6 p-3">
                     <div class="container p-4">
-                        <h1 class="mb-4 text-center" style="font-weight:bold; font-size: 48px;">LOGIN</h1>
+                        <h1 class="mb-4 text-center" style="font-weight:bold; font-size: 48px;">Sign In</h1>
                         <form action="#" id="submit-form">
                             <div class="form-group mb-4">
                                 <label for="username" class="form-label">Username</label>
