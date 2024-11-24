@@ -18,7 +18,7 @@ if (!isset($_SESSION['login_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EVSU RFID</title>
 
-  <link rel="icon" type="image/png" href="assets/defaults/evsu.png">
+  <link rel="icon" type="image/png" href="assets/defaults/rfid.png">
 
   <?php
   include 'header.php';
@@ -59,8 +59,8 @@ if (!isset($_SESSION['login_id'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
-        <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">EVSU-OC RFID</span>
+        <img src="assets/defaults/rfid.png" alt="icon" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">RFID SYSTEM</span>
       </a>
 
       <!-- Sidebar -->
@@ -111,7 +111,7 @@ if (!isset($_SESSION['login_id'])) {
               </a>
             </li>
 
-            <li class="nav-header">Attendance</li>
+            <li class="nav-header">RFID</li>
 
             <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
 

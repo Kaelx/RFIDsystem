@@ -1,10 +1,9 @@
-*.jpg
-*.jpeg
-*.png
+# *.jpg
+# *.jpeg
+# *.png
 
 /node_modules
 /vendor
-/faker
 
 .env
 credentials.php

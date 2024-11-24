@@ -49,7 +49,7 @@
                                     <img src="../assets/defaults/elevatech.jpg" class="d-block w-100" alt="Second slide">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="../assets/defaults/rfid.jpg" class="d-block w-100" alt="Third slide">
+                                    <img src="../assets/defaults/rfid.png" class="d-block w-100" alt="Third slide">
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
