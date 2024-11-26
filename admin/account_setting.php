@@ -70,7 +70,7 @@ $member = mysqli_fetch_assoc($query);
 
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
-                                <img src="./assets/img/<?php echo !empty($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <img class="img-bordered" src="./assets/img/<?php echo !empty($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <input type="hidden" id="croppedImageData" name="croppedImageData">
                             </div>
                         </div>
@@ -248,7 +248,7 @@ $member = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label for="fname">First Name</label>
-                                <input type="text" class="form-control " name="fname" id="fname"  value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
+                                <input type="text" class="form-control " name="fname" id="fname" value="<?= isset($member['fname']) ? $member['fname'] : '' ?>">
                             </div>
 
                             <div class="col-md-1 form-group">
@@ -257,7 +257,7 @@ $member = mysqli_fetch_assoc($query);
                             </div>
                             <div class="col-md-3 form-group">
                                 <label for="lname">Last Name</label>
-                                <input type="text" class="form-control " name="lname" id="lname"  value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
+                                <input type="text" class="form-control " name="lname" id="lname" value="<?= isset($member['lname']) ? $member['lname'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="sname">Suffix</label>
@@ -269,11 +269,11 @@ $member = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-2 form-group">
                                 <label for="bdate">Birthdate</label>
-                                <input type="date" class="form-control " name="bdate" id="bdate"  value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
+                                <input type="date" class="form-control " name="bdate" id="bdate" value="<?= isset($member['bdate']) ? $member['bdate'] : '' ?>">
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="gender">Gender</label>
-                                <select class="form-control " name="gender" id="gender" >
+                                <select class="form-control " name="gender" id="gender">
                                     <option value="" disabled <?= empty($member['gender']) ? 'selected' : '' ?>>-- Select --</option>
                                     <option value="male" <?= isset($member['gender']) && $member['gender'] == 'male' ? 'selected' : '' ?>>Male</option>
                                     <option value="female" <?= isset($member['gender']) && $member['gender'] == 'female' ? 'selected' : '' ?>>Female</option>
@@ -282,7 +282,7 @@ $member = mysqli_fetch_assoc($query);
 
                             <div class="col-md-3 form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control " name="email" id="email"  value="<?= isset($member['email']) ? $member['email'] : '' ?>">
+                                <input type="email" class="form-control " name="email" id="email" value="<?= isset($member['email']) ? $member['email'] : '' ?>">
                             </div>
 
                         </div>
@@ -290,7 +290,7 @@ $member = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="school_id">School ID</label>
-                                <input type="text" class="form-control " name="school_id" id="school_id"  value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
+                                <input type="text" class="form-control " name="school_id" id="school_id" value="<?= isset($member['school_id']) ? $member['school_id'] : '' ?>">
                             </div>
 
                         </div>
@@ -298,7 +298,7 @@ $member = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-4 form-group">
                                 <label for="username">username</label>
-                                <input type="username" class="form-control " name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>" >
+                                <input type="username" class="form-control " name="username" id="username" value="<?= isset($member['username']) ? $member['username'] : '' ?>">
                             </div>
                         </div>
                         <div class="row">

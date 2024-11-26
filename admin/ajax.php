@@ -5,199 +5,190 @@ include 'admin_class.php';
 $crud = new Action();
 
 
-if($action == 'logout'){
+if ($action == 'logout') {
 	$logout = $crud->logout();
-	if($logout)
+	if ($logout)
 		echo $logout;
 }
 
 
-if($action == "save_category2"){
+if ($action == "save_category2") {
 	$save = $crud->save_category2();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "save_category3"){
+if ($action == "save_category3") {
 	$save = $crud->save_category3();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "save_category4"){
+if ($action == "save_category4") {
 	$save = $crud->save_category4();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "delete_category2"){
+if ($action == "delete_category2") {
 	$save = $crud->delete_category2();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "delete_category3"){
+if ($action == "delete_category3") {
 	$save = $crud->delete_category3();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "delete_category4"){
+if ($action == "delete_category4") {
 	$save = $crud->delete_category4();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "get_department"){
+if ($action == "get_department") {
 	$save = $crud->get_department();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 //register student
-if($action == "register"){
+if ($action == "register") {
 	$save = $crud->register();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 //register employee
-if($action == "register2"){
+if ($action == "register2") {
 	$save = $crud->register2();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 //register visitor
-if($action == "register3"){
+if ($action == "register3") {
 	$save = $crud->register3();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 //register vendors
-if($action == "register4"){
+if ($action == "register4") {
 	$save = $crud->register4();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "adduser"){
+if ($action == "adduser") {
 	$save = $crud->adduser();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "fetch_data"){
+if ($action == "fetch_data") {
 	$save = $crud->fetch_data();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "fetch_data_in"){
+if ($action == "fetch_data_in") {
 	$save = $crud->fetch_data_in();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "fetch_data_out"){
+if ($action == "fetch_data_out") {
 	$save = $crud->fetch_data_out();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "request_report"){
+if ($action == "request_report") {
 	$save = $crud->request_report();
-	if($save)
+	if ($save)
 		echo $save;
 }
-// if($action == "import"){
-// 	$save = $crud->import();
-// 	if($save)
-// 		echo $save;
-// }
 
 
-if($action == "archive_student"){
+if ($action == "archive_student") {
 	$save = $crud->archive_student();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "unarchive_student"){
+if ($action == "unarchive_student") {
 	$save = $crud->unarchive_student();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "archive_employee"){
+if ($action == "archive_employee") {
 	$save = $crud->archive_employee();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "unarchive_employee"){
+if ($action == "unarchive_employee") {
 	$save = $crud->unarchive_employee();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "archive_visitor"){
+if ($action == "archive_visitor") {
 	$save = $crud->archive_visitor();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "unarchive_visitor"){
+if ($action == "unarchive_visitor") {
 	$save = $crud->unarchive_visitor();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
 
-if($action == "archive_vendor"){
+if ($action == "archive_vendor") {
 	$save = $crud->archive_vendor();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "unarchive_vendor"){
+if ($action == "unarchive_vendor") {
 	$save = $crud->unarchive_vendor();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "archive_user"){
+if ($action == "archive_user") {
 	$save = $crud->archive_user();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
-if($action == "unarchive_user"){
+if ($action == "unarchive_user") {
 	$save = $crud->unarchive_user();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "get_record"){
+if ($action == "get_record") {
 	$save = $crud->get_record();
-	if($save)
+	if ($save)
 		echo $save;
 }
 
 
-if($action == "mode"){
+if ($action == "mode") {
 	$save = $crud->mode();
-	if($save)
+	if ($save)
 		echo $save;
 }
-
-
-
-?>

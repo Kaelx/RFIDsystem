@@ -62,7 +62,7 @@
 
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
-                                <img src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                <img class="img-bordered" src="assets/img/<?php echo isset($data['img_path']) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <input type="hidden" id="croppedImageData" name="croppedImageData">
                             </div>
                         </div>
