@@ -129,8 +129,8 @@
                             <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="stype" style="font-size: 42px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
-                            <h1 id="sdept_name" style="font-size: 38px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
-                            <h1 id="sprog_name" style="font-size: 38px; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="sdept_name" style="font-size: 42px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="sprog_name" style="font-size: 42px; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
                 </div>
@@ -302,6 +302,11 @@
     $('#rfid-form').keypress(function(e) {
         if (e.which === 13) {
             e.preventDefault();
+
+            // Validate the form before AJAX submission
+            if (!$(this).valid()) {
+                return;
+            }
 
             if (isSubmitting) return; // Prevent further submission if already submitting
             isSubmitting = true; // Lock further submissions
