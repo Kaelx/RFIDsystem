@@ -80,7 +80,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
                   <i class="fa-solid fa-user-tie nav-icon"></i>
@@ -113,7 +113,7 @@ if (!isset($_SESSION['login_id'])) {
 
             <li class="nav-header">RFID</li>
 
-            <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
+            <?php if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 3): ?>
               <li class="nav-item d-none d-xl-block">
                 <a href="index.php?page=rfid_in" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
@@ -136,7 +136,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
             ?>
 
               <li class="nav-header">Others</li>
@@ -166,7 +166,7 @@ if (!isset($_SESSION['login_id'])) {
             <?php endif; ?>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1) {
             ?>
 
               <li class="nav-item">
@@ -197,7 +197,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:45px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="right: 1px; padding: 1rem; z-index: 99999999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
