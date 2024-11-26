@@ -38,9 +38,9 @@ $data = mysqli_fetch_assoc($query);
                         <div class="form-group text-right mb-0 mr-5">
                             <div style="position: relative; display: inline-block;">
                                 <?php if (isset($data['img_path']) && !empty($data['img_path'])): ?>
-                                    <img src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                    <img class="img-bordered" src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <?php else: ?>
-                                    <img src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
+                                    <img class="img-bordered" src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <?php endif; ?>
 
                             </div>

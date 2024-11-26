@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
           <div class="small-box bg-info">
             <div class="inner">
               <?php
-              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
                 <a href="index.php?page=employee_data" style="text-decoration: none; color: inherit;">
 
@@ -70,7 +70,7 @@ if ($result->num_rows > 0) {
           <div class="small-box bg-success">
             <div class="inner">
               <?php
-              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
                 <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
 
@@ -97,7 +97,7 @@ if ($result->num_rows > 0) {
           <div class="small-box bg-warning">
             <div class="inner">
               <?php
-              if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+              if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
                 <a href="index.php?page=vendor_data" style="text-decoration: none; color: inherit;">
 
@@ -224,6 +224,7 @@ if ($result->num_rows > 0) {
         label: 'Entries',
         backgroundColor: 'rgba(60,141,188,0.9)',
         borderColor: 'rgba(60,141,188,0.8)',
+        borderWidth: 7,
         pointRadius: false,
         pointColor: '#3b8bba',
         pointStrokeColor: 'rgba(60,141,188,1)',

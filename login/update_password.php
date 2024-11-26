@@ -1,8 +1,8 @@
 <?php
 
-// if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
-//     header('location:index.php?page=login');
-// }
+if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
+    header('location:index.php?page=login');
+}
 
 ?>
 

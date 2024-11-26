@@ -31,7 +31,9 @@
                                 <?php
                                 $i = 1;
 
-                                $cats = $conn->query("select * from users where account_Type !=1 and status = 0;");
+                                $login_id = $_SESSION['login_id'];
+
+                                $cats = $conn->query("SELECT * FROM users WHERE account_type != 0 AND status = 0 AND id != $login_id;");
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=accountedit&uid=<?= $row['id'] ?>'">

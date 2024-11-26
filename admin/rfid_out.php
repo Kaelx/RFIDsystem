@@ -35,14 +35,61 @@
 
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <!-- Clock and Date Display -->
-            <center>
-                <div class="mb-3">
-                    <div id="clock" class="display-2 font-weight-bold"></div>
-                    <div id="date" class="h1"></div>
-                </div>
-            </center>
+        <div class="container-fluid position-relative">
+
+            <!-- Centered Clock and Date Display -->
+            <div class="text-center">
+                <div id="clock" class="display-2 font-weight-bold"></div>
+                <div id="date" class="h1"></div>
+            </div>
+
+            <!-- Right-aligned Icon Button -->
+            <div class="position-absolute" style="top: 0; left: 0; z-index:999;">
+                <button id="fullscreenButton" type="button" class="btn btn-lg" onclick="toggleFullscreen()">
+                    <i class="fa-solid fa-expand" style="font-size: 42px;"></i>
+                </button>
+
+            </div>
+            <script>
+                function toggleFullscreen() {
+                    const isFullscreen = !!document.fullscreenElement;
+
+                    if (!document.fullscreenElement) {
+                        $(document.documentElement).get(0).requestFullscreen().then(() => {
+                            $('#fullscreenButton').hide();
+                            $('body').addClass('hide-cursor');
+                            toggleSidebar(false);
+                        })
+                    }
+                }
+
+                // Listen for fullscreen change to show/hide the button
+                $(document).on('fullscreenchange', function() {
+                    if (document.fullscreenElement) {
+                        // In full-screen mode, hide the button
+                        $('#fullscreenButton').hide();
+                        toggleSidebar(false);
+                        $('body').addClass('hide-cursor');
+                    } else {
+                        // Not in full-screen mode, show the button
+                        $('#fullscreenButton').show();
+                        toggleSidebar(true);
+                        $('body').removeClass('hide-cursor');
+                    }
+                });
+
+
+                function toggleSidebar(show) {
+                    const sidebarToggleButton = $('[data-widget="pushmenu"]');
+                    const isSidebarVisible = $('body').hasClass('sidebar-collapse');
+
+                    // Toggle sidebar based on `show` parameter
+                    if ((show && isSidebarVisible) || (!show && !isSidebarVisible)) {
+                        sidebarToggleButton.trigger('click');
+                    }
+                }
+            </script>
+
         </div>
     </div>
 
@@ -79,11 +126,11 @@
                         <div class="col-md-5 ml-2" style="margin-top:50px;">
                             <h1 id="sname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="sschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
-                            <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
-                            <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
-                            <h1 id="stype" style="font-size: 42px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
-                            <h1 id="sdept_name" style="font-size: 38px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
-                            <h1 id="sprog_name" style="font-size: 38px; font-style:italic; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="sgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="srole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="stype" style="font-size: 42px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="sdept_name" style="font-size: 42px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="sprog_name" style="font-size: 42px; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
                 </div>
@@ -99,9 +146,9 @@
                         <div class="col-md-5 ml-2" style="margin-top:50px;">
                             <h1 id="ename" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
                             <h1 id="eschool_id" style="font-size: 58px; font-weight:bold; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
-                            <h1 id="egender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
-                            <h1 id="erole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
-                            <h1 id="etype" style="font-size: 42px; font-style:italic; font-family: Arial, sans-serif; margin-bottom:30px;"></h1>
+                            <h1 id="egender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="erole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
+                            <h1 id="etype" style="font-size: 42px; font-family:'Times New Roman', Times, serif ; margin-bottom:30px;"></h1>
                         </div>
                     </div>
                 </div>
@@ -117,8 +164,8 @@
                         </div>
                         <div class="col-md-5 ml-2" style="margin-top:50px;">
                             <h1 id="cvname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="cvgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
-                            <h1 id="cvrole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="cvgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="cvrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
                 </div>
@@ -134,8 +181,8 @@
                         </div>
                         <div class="col-md-5 ml-2" style="margin-top:50px;">
                             <h1 id="vname" style="font-size: 56px; font-weight:bold; color: #a91414; font-family:'Times New Roman', Times, serif ;"></h1>
-                            <h1 id="vgender" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
-                            <h1 id="vrole" style="font-size: 42px; font-weight:bold; font-family: Arial, sans-serif;"></h1>
+                            <h1 id="vgender" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
+                            <h1 id="vrole" style="font-size: 42px; font-weight:bold; font-family:'Times New Roman', Times, serif ;"></h1>
                         </div>
                     </div>
                 </div>
@@ -255,6 +302,11 @@
     $('#rfid-form').keypress(function(e) {
         if (e.which === 13) {
             e.preventDefault();
+
+            // Validate the form before AJAX submission
+            if (!$(this).valid()) {
+                return;
+            }
 
             if (isSubmitting) return; // Prevent further submission if already submitting
             isSubmitting = true; // Lock further submissions

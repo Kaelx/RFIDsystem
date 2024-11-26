@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 
-include 'db_connect.php';
+include '../admin/db_connect.php';
 
 if (isset($_SESSION['login_id'])) {
     header('Location: ../');
@@ -26,17 +26,13 @@ if (isset($_SESSION['login_id'])) {
 </head>
 
 <body>
-    <div class="container">
-
-
+    <div>
         <!-- content -->
         <?php
         $page = isset($_GET['page']) ? $_GET['page'] : "login";
         include $page . '.php';
         ?>
         <!-- end content -->
-
-
     </div>
 
 

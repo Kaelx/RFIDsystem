@@ -18,7 +18,7 @@ if (!isset($_SESSION['login_id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EVSU RFID</title>
 
-  <link rel="icon" type="image/png" href="assets/defaults/evsu.png">
+  <link rel="icon" type="image/png" href="assets/defaults/rfid.png">
 
   <?php
   include 'header.php';
@@ -46,9 +46,9 @@ if (!isset($_SESSION['login_id'])) {
           <a class="nav-link dropdown-toggle d-flex align-items-center text-white" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
           </a>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item " href="index.php?page=account_setting">Profile settings</a></li>
-            <li><a class="dropdown-item " href="ajax.php?action=logout">Logout</a></li>
+          <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="index.php?page=account_setting"><i class="fa-solid fa-user-gear"></i> Profile settings</a></li>
+            <li><a class="dropdown-item" href="ajax.php?action=logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
           </ul>
         </li>
 
@@ -59,8 +59,8 @@ if (!isset($_SESSION['login_id'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="" class="brand-link hover">
-        <img src="assets/defaults/evsu.png" alt="icon" class="brand-image img-circle elevation-3">
-        <span class="brand-text font-weight-light">EVSU-OC RFID</span>
+        <img src="assets/defaults/rfid.png" alt="icon" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light">RFID SYSTEM</span>
       </a>
 
       <!-- Sidebar -->
@@ -80,7 +80,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)): ?>
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2): ?>
               <li class="nav-item">
                 <a href="index.php?page=employee_data" class="nav-link">
                   <i class="fa-solid fa-user-tie nav-icon"></i>
@@ -111,45 +111,22 @@ if (!isset($_SESSION['login_id'])) {
               </a>
             </li>
 
-            <li class="nav-header">Attendance</li>
+            <li class="nav-header">RFID</li>
 
-            <?php if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 3)): ?>
-
-              <?php
-
-              $mode = $conn->query("SELECT * FROM settings ");
-              if ($mode->num_rows > 0) {
-                $row = $mode->fetch_assoc();
-                $mode = $row['mode']; // Fetch the 'mode' value
-              }
-
-              if ($mode == 1):
-              ?>
-                <li class="nav-item">
-                  <a href="index.php?page=rfid_in" class="nav-link">
-                    <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>SCAN ENTRY</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="index.php?page=rfid_out" class="nav-link">
-                    <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>SCAN EXIT</p>
-                  </a>
-                </li>
-
-              <?php elseif ($mode == 2): ?>
-
-                <li class="nav-item">
-                  <a href="index.php?page=rfid" class="nav-link">
-                    <i class="fa-solid fa-qrcode nav-icon"></i>
-                    <p>Scan RFID</p>
-                  </a>
-                </li>
-              <?php endif; ?>
-
+            <?php if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 3): ?>
+              <li class="nav-item d-none d-xl-block">
+                <a href="index.php?page=rfid_in" class="nav-link">
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>SCAN ENTRY</p>
+                </a>
+              </li>
+              <li class="nav-item d-none d-xl-block">
+                <a href="index.php?page=rfid_out" class="nav-link">
+                  <i class="fa-solid fa-qrcode nav-icon"></i>
+                  <p>SCAN EXIT</p>
+                </a>
+              </li>
             <?php endif; ?>
-
 
             <li class="nav-item">
               <a href="index.php?page=entrylogs" class="nav-link">
@@ -159,7 +136,7 @@ if (!isset($_SESSION['login_id'])) {
             </li>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && ($_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2)):
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
             ?>
 
               <li class="nav-header">Others</li>
@@ -189,7 +166,7 @@ if (!isset($_SESSION['login_id'])) {
             <?php endif; ?>
 
             <?php
-            if (isset($_SESSION['login_account_type']) && $_SESSION['login_account_type'] == 1) {
+            if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1) {
             ?>
 
               <li class="nav-item">
@@ -209,16 +186,6 @@ if (!isset($_SESSION['login_id'])) {
                   </p>
                 </a>
               </li>
-
-              <!-- <li class="nav-item">
-                <a href="index.php?page=settings" class="nav-link">
-                  <i class="fa-solid fa-gear nav-icon"></i>
-                  <p>
-                    Settings
-                  </p>
-                </a>
-              </li> -->
-
             <?php }; ?>
 
           </ul>
@@ -230,7 +197,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:45px; right: 25px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="right: 1px; padding: 1rem; z-index: 99999999;">
       <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-body text-white" style="font-size:18px;">
         </div>
