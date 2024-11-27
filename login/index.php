@@ -17,7 +17,7 @@ if (isset($_SESSION['login_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 
-    <link rel="icon" type="image/png" href="../assets/defaults/evsu.png">
+    <link rel="icon" type="image/png" href="../assets/defaults/rfid.png">
 
     <?php
     include 'header.php';
