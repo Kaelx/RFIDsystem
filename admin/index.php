@@ -218,7 +218,7 @@ if (!isset($_SESSION['login_id'])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary btn-custom" id='confirm' onclick="">Continue</button>
-            <button type="button" class="btn btn-secondary btn-custom" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger btn-custom" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>
