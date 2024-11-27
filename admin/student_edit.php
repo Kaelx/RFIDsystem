@@ -348,7 +348,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
+                                <button class="btn btn-danger btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                             </div>
                         </div>
                     </form>

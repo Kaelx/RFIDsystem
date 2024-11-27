@@ -344,7 +344,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=employee_view&uid=<?= $data['id'] ?>" class="btn btn-secondary btn-custom">Cancel</a>
+                                <a href="index.php?page=employee_view&uid=<?= $data['id'] ?>" class="btn btn-danger btn-custom">Cancel</a>
                             </div>
                         </div>
                     </form>

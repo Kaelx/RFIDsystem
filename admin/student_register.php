@@ -322,7 +322,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">Cancel</button>
+                            <button class="btn btn-danger btn-custom" onclick="window.history.back(); return false;">Cancel</button>
                         </div>
                     </form>
                 </div>

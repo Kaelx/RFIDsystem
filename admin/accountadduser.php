@@ -299,7 +299,7 @@
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <buttom onclick="window.history.back(); return false;" class="btn btn-secondary btn-custom">Cancel</buttom>
+                            <buttom onclick="window.history.back(); return false;" class="btn btn-danger btn-custom">Cancel</buttom>
                         </div>
 
 

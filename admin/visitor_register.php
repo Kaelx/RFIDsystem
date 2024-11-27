@@ -303,7 +303,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <a href="index.php?page=visitor_data" class="btn btn-secondary btn-custom">Cancel</a>
+                            <a href="index.php?page=visitor_data" class="btn btn-danger btn-custom">Cancel</a>
                         </div>
                     </form>
                 </div>
