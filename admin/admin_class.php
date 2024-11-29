@@ -35,7 +35,7 @@ class Action
 		foreach ($_SESSION as $key => $value) {
 			unset($_SESSION[$key]);
 		}
-		header('location:index');
+		header('location:index.php?page=');
 		exit();
 	}
 

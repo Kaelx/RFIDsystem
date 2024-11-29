@@ -224,14 +224,13 @@ if ($result->num_rows > 0) {
         label: 'Entries',
         backgroundColor: 'rgba(60,141,188,0.9)',
         borderColor: 'rgba(60,141,188,0.8)',
-        borderWidth: 7,
         pointRadius: false,
         pointColor: '#3b8bba',
         pointStrokeColor: 'rgba(60,141,188,1)',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
         data: last7DaysData,
-        fill: false
+        fill: true
       }]
     };
 

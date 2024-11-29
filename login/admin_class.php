@@ -7,23 +7,27 @@ use PHPMailer\PHPMailer\Exception;
 
 require '.././vendor/autoload.php';
 
-class Action{
+class Action
+{
 	private $db;
 
-	public function __construct(){
+	public function __construct()
+	{
 		ob_start();
 		include '../admin/db_connect.php';
 
 		$this->db = $conn;
 	}
 
-	function __destruct(){
+	function __destruct()
+	{
 		$this->db->close();
 		ob_end_flush();
 	}
 
 
-	function login(){
+	function login()
+	{
 		extract($_POST);
 
 		$qry = $this->db->query("SELECT * FROM users where status = 0 and username = '" . $username . "' ");
@@ -50,56 +54,59 @@ class Action{
 		return 3;
 	}
 
-	
 
-	function forgot_pass(){
+
+	function forgot_pass()
+	{
 		require '../credentials.php';
 		extract($_POST);
 
 		$qry = $this->db->query("SELECT * FROM users WHERE status = 0 AND email = '" . $email . "'");
 
-			if ($qry-> num_rows > 0) {
-				$otp = rand(100000, 999999);
-				$_SESSION['otp'] = $otp;
-				$_SESSION['mail'] = $email;
+		if ($qry->num_rows > 0) {
+			$otp = rand(100000, 999999);
+			$_SESSION['otp'] = $otp;
+			$_SESSION['mail'] = $email;
 
-				function sendOTP($email, $otp, $mailUsername, $mailPassword){
-					$mail = new PHPMailer;
-			
-					$mail->isSMTP();
-					$mail->Host = 'smtp.gmail.com';
-					$mail->Port = 587;
-					$mail->SMTPAuth = true;
-					$mail->SMTPSecure = 'tls';
-			
-					$mail->Username = $mailUsername; 
-					$mail->Password = $mailPassword;
-			
-					$mail->setFrom('evsuoc-rfid@gmail.com', 'EVSU-OC RFID Verification Code');
-					$mail->addAddress($email);
-			
-					$mail->isHTML(true);
-					$mail->Subject = "EVSU-OC RFID Verification Code";
-					$mail->Body = "<h5>Dear user, </h5> <h3>Your recovery OTP code is $otp <br></h3>";
-			
-					return $mail->send();
-				}
+			function sendOTP($email, $otp, $mailUsername, $mailPassword)
+			{
+				$mail = new PHPMailer;
 
-				if (!sendOTP($email, $otp, $mailUsername, $mailPassword)) {
-					return 4;
-				} else {
-					return 1;
-				}
-			}else{
-				return 3;
+				$mail->isSMTP();
+				$mail->Host = 'smtp.gmail.com';
+				$mail->Port = 587;
+				$mail->SMTPAuth = true;
+				$mail->SMTPSecure = 'tls';
+
+				$mail->Username = $mailUsername;
+				$mail->Password = $mailPassword;
+
+				$mail->setFrom('evsuoc-rfid@gmail.com', 'EVSU-OC RFID Verification Code');
+				$mail->addAddress($email);
+
+				$mail->isHTML(true);
+				$mail->Subject = "EVSU-OC RFID Verification Code";
+				$mail->Body = "<h4>Dear user, </h4> <h3>Your recovery OTP code is $otp <br></h3>";
+
+				return $mail->send();
 			}
+
+			if (!sendOTP($email, $otp, $mailUsername, $mailPassword)) {
+				return 4;
+			} else {
+				return 1;
+			}
+		} else {
+			return 3;
+		}
 	}
 
-	function updatepass(){
+	function updatepass()
+	{
 		extract($_POST);
 
 		if ($otpcode == $_SESSION['otp']) {
-			if($newpass == $confirmpass){
+			if ($newpass == $confirmpass) {
 				$newpass = password_hash($newpass, PASSWORD_DEFAULT);
 				$qry = $this->db->query("UPDATE users set password = '" . $newpass . "' where email = '" . $_SESSION['mail'] . "' ");
 				if ($qry) {
@@ -108,10 +115,8 @@ class Action{
 					return 1;
 				}
 				return 2;
-
 			}
 			return 3;
-
 		}
 		return 4;
 	}
@@ -119,17 +124,16 @@ class Action{
 
 
 
-	function save_log($log) {
+	function save_log($log)
+	{
 
-		
+
 		$qry = $this->db->query("INSERT INTO logs (user_id, action) 
 								VALUES ('" . $log['user_id'] . "', '" . $log['action'] . "')");
-	
+
 		// Check for errors
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
 	}
-
-	
 }
