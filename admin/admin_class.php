@@ -1126,7 +1126,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has archived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
+			'action' => ' has archived the account of ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
@@ -1145,7 +1145,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has unarchived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
+			'action' => ' has unarchived the account of ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
