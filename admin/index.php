@@ -234,7 +234,7 @@ if (!isset($_SESSION['login_id'])) {
 
     $restricted_1 = ['rfid_in', 'rfid_out']; // Pages restricted for admin
     $restricted_2 = ['rfid_in', 'rfid_out', 'system_log']; // Pages restricted for specific staff
-    $restricted_3 = ['employee_data', 'employee_view', 'student_data', 'student_view', 'vendor_data', 'vendor_view', 'archive_data', 'archived_employees', 'archived_students', 'archived_vendors', 'archived_visitors', 'category', 'accountmanage', 'accountadduser', 'accountmanage_archive', 'system_log']; // Pages restricted for security personnel
+    $restricted_3 = ['employee_data', 'employee_register', 'employee_view', 'student_data', 'student_register', 'student_view', 'vendor_data', 'vendor_register', 'vendor_view', 'archive_data', 'archived_employees', 'archived_students', 'archived_vendors', 'archived_visitors', 'category', 'accountmanage', 'accountadduser', 'accountmanage_archive', 'system_log']; // Pages restricted for security personnel
 
     $page = isset($_GET['page']) ? basename($_GET['page']) : 'home';
 
