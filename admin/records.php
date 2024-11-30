@@ -75,7 +75,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         <div class="card card-warning card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <?php if (isset($member['img_path']) && !empty($member['img_path'])): ?>
+                                    <?php if (isset($member['img_path']) && file_exists('assets/img/' . $member['img_path'])): ?>
                                         <img class="profile-user-img img-fluid img-circle" src="<?= 'assets/img/' . $member['img_path'] ?>" alt="User profile picture" id="profileImage">
                                     <?php else: ?>
                                         <img class="profile-user-img img-fluid img-circle" src="assets/img/blank-img.png" alt="Default Profile Picture" id="profileImage">
