@@ -2,8 +2,7 @@
 *.jpeg
 *.png
 
-/node_modules
 /vendor
+/node_modules
 
-.env
 credentials.php
