@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+ob_start();
 
 include '../admin/db_connect.php';
 
@@ -17,7 +18,7 @@ if (isset($_SESSION['login_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication</title>
 
-    <link rel="icon" type="image/png" href="../assets/defaults/evsu.png">
+    <link rel="icon" type="image/png" href="../assets/defaults/rfid.png">
 
     <?php
     include 'header.php';
@@ -26,14 +27,26 @@ if (isset($_SESSION['login_id'])) {
 </head>
 
 <body>
+
     <div>
         <!-- content -->
         <?php
-        $page = isset($_GET['page']) ? $_GET['page'] : "login";
+        $exclude = ['index'];
+        $page = isset($_GET['page']) ? basename($_GET['page']) : 'login';
+
+        if (in_array($page, $exclude) || !file_exists($page . '.php')) {
+            $page = 'login';
+
+            header('Location: index.php?page=' . $page);
+            exit;
+        }
+
         include $page . '.php';
         ?>
         <!-- end content -->
     </div>
+
+
 
 
     <!-- Toast Alert -->

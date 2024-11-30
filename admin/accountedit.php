@@ -103,15 +103,11 @@ $member = mysqli_fetch_assoc($query);
                                                     <img id="modalImg" src="assets/img/<?php echo !empty($member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Image Preview" class="img-fluid" style="max-height: 450px;" />
                                                 </div>
                                             </div>
-                                            <div class="modal-footer d-flex justify-content-between flex-wrap">
-                                                <!-- Reset Button -->
-                                                <div class="mb-2 mb-md-0">
-                                                    <button type="button" class="btn btn-danger" id="cropReset">Reset</button>
-                                                </div>
+                                            <div class="modal-footer">
                                                 <!-- Crop & Save and Cancel buttons -->
-                                                <div class="d-flex flex-column flex-md-row">
-                                                    <button type="button" class="btn btn-primary mr-2" id="btnCrop">Crop & Save</button>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <div>
+                                                    <button type="button" class="btn btn-primary" id="btnCrop">Crop & Save</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                                 </div>
                                             </div>
                                         </div>

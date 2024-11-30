@@ -1,14 +1,6 @@
 RewriteEngine On
 
-# Allow access to any .php file with query parameters
-RewriteCond %{QUERY_STRING} .
-RewriteRule ^(.*\.php)$ - [L]
-
-# Forbid access to any URL with .php without query parameters
+# Forbid access to any '.php' file without query parameters
 RewriteCond %{THE_REQUEST} \.php [NC]
+RewriteCond %{QUERY_STRING} ^$
 RewriteRule ^ - [F]
-
-# Remove .php extension from URLs
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.php -f
-RewriteRule ^(.*)$ $1.php [L]

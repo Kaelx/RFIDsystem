@@ -1,6 +1,7 @@
 <?php
 session_start();
-error_reporting(E_ALL);
+error_reporting(0);
+ob_start();
 
 include 'db_connect.php';
 
@@ -218,7 +219,7 @@ if (!isset($_SESSION['login_id'])) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary btn-custom" id='confirm' onclick="">Continue</button>
-            <button type="button" class="btn btn-secondary btn-custom" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger btn-custom" data-dismiss="modal">Cancel</button>
           </div>
         </div>
       </div>
@@ -229,7 +230,38 @@ if (!isset($_SESSION['login_id'])) {
 
     <!-- content -->
     <?php
-    $page = isset($_GET['page']) ? $_GET['page'] : "home";
+    $exclude = ['index'];
+
+    $restricted_1 = ['rfid_in', 'rfid_out']; // Pages restricted for admin
+    $restricted_2 = ['rfid_in', 'rfid_out', 'system_log']; // Pages restricted for specific staff
+    $restricted_3 = ['employee_data', 'employee_view', 'student_data', 'student_view', 'vendor_data', 'vendor_view', 'archive_data', 'archived_employees', 'archived_students', 'archived_vendors', 'archived_visitors', 'category', 'accountmanage', 'accountadduser', 'accountmanage_archive', 'system_log']; // Pages restricted for security personnel
+
+    $page = isset($_GET['page']) ? basename($_GET['page']) : 'home';
+
+    if ($_SESSION['login_account_type'] == 3 && in_array($page, $restricted_3)) {
+      $page = 'home';
+
+      header('Location: index.php?page=' . $page);
+      exit;
+    } elseif ($_SESSION['login_account_type'] == 2 && in_array($page, $restricted_2)) {
+      $page = 'home';
+
+      header('Location: index.php?page=' . $page);
+      exit;
+    } elseif ($_SESSION['login_account_type'] == 1 && in_array($page, $restricted_1)) {
+      $page = 'home';
+
+      header('Location: index.php?page=' . $page);
+      exit;
+    }
+
+    if (in_array($page, $exclude) || !file_exists($page . '.php')) {
+      $page = 'home';
+
+      header('Location: index.php?page=' . $page);
+      exit;
+    }
+
     include $page . '.php';
     ?>
     <!-- end content -->
@@ -246,31 +278,17 @@ if (!isset($_SESSION['login_id'])) {
 </body>
 
 <script>
-  var currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
-  var lastActivePage = sessionStorage.getItem('lastActivePage') || currentPage;
-  var found = false;
+  var activePage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
 
   $('ul.nav-sidebar a').each(function() {
     var href = $(this).attr('href');
 
-    if (href && href.indexOf('page=' + currentPage) !== -1) {
+    if (href && href.indexOf('page=' + activePage) !== -1) {
       $(this).addClass('active');
-      found = true;
-
-      sessionStorage.setItem('lastActivePage', currentPage);
     }
   });
-
-  if (!found) {
-    $('ul.nav-sidebar a').each(function() {
-      var href = $(this).attr('href');
-
-      if (href && href.indexOf('page=' + lastActivePage) !== -1) {
-        $(this).addClass('active');
-      }
-    });
-  }
 </script>
+
 
 
 

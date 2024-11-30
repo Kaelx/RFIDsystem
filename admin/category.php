@@ -446,7 +446,7 @@
     })
 
     $('.delete_cat4').click(function() {
-        _conf("Are you sure to delete this program?", "delete_cat4", [$(this).attr('data-id')])
+        _conf("Are you sure to delete this position?", "delete_cat4", [$(this).attr('data-id')])
     })
 
 

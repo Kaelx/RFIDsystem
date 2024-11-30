@@ -14,9 +14,9 @@ session_start();
 
 <body>
     <?php
-    if(!isset($_SESSION['login_id'])) {
+    if (!isset($_SESSION['login_id'])) {
         header('Location: login/');
-    }else{
+    } else {
         header('Location: admin/');
     }
     ?>
