@@ -37,7 +37,7 @@
                                             <td>
                                                 <?php
                                                 echo $row['fname'] . ' ' . $row['lname'] . ' (' .
-                                                    ($row['account_type'] == 1 || $row['account_type'] == 0 ? 'admin' : ($row['account_type'] == 2 ? 'staff' : ($row['account_type'] == 3 ? 'security personnel' : 'unknown')))
+                                                    ($row['account_type'] == 1 || $row['account_type'] == 0 ? 'Admin' : ($row['account_type'] == 2 ? 'Staff' : ($row['account_type'] == 3 ? 'Security personnel' : 'unknown')))
                                                     . ') ' . $row['action'];
                                                 ?>
                                             </td>

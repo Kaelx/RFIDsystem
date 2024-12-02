@@ -603,7 +603,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has archived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+			'action' => ' archived the employee data of ' . $employee['fname'] . ' ' . $employee['lname']
 		];
 
 		$this->save_log($log);
@@ -621,7 +621,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has unarchived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+			'action' => ' unarchived the employee data of ' . $employee['fname'] . ' ' . $employee['lname']
 		];
 
 		$this->save_log($log);
@@ -829,7 +829,7 @@ class Action
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
 
-			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+			$img_path = (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])) ? $data['img_path'] : 'blank-img.png';
 
 			$response = [
 				'success' => true,
@@ -851,7 +851,7 @@ class Action
 								WHERE record_id = '" . $data['id'] . "' 
 								AND record_table = '" . $data['source_table'] . "'
 								AND record_date = CURRENT_DATE() 
-								AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
+								AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 1
 							");
 
 			$cooldown_check2 = $this->db->query("
@@ -859,7 +859,7 @@ class Action
 							WHERE record_id = '" . $data['id'] . "' 
 							AND record_table = '" . $data['source_table'] . "'
 							AND record_date = CURRENT_DATE() 
-							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
+							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 1
 						");
 
 
@@ -927,7 +927,7 @@ class Action
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
 
-			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+			$img_path = (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])) ? $data['img_path'] : 'blank-img.png';
 
 			$response = [
 				'success' => true,
@@ -949,7 +949,7 @@ class Action
 										WHERE record_id = '" . $data['id'] . "' 
 										AND record_table = '" . $data['source_table'] . "'
 										AND record_date = CURRENT_DATE() 
-										AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
+										AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 1
 									");
 
 			$cooldown_check2 = $this->db->query("
@@ -957,7 +957,7 @@ class Action
 									WHERE record_id = '" . $data['id'] . "' 
 									AND record_table = '" . $data['source_table'] . "'
 									AND record_date = CURRENT_DATE() 
-									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
+									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 1
 								");
 
 
