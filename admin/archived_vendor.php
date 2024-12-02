@@ -28,7 +28,7 @@ $data = mysqli_fetch_assoc($query);
             <div class="card">
                 <div class="card-header text-bold text-center">Vendor Information</div>
                 <div class="card-body">
-                    <div class="form-group text-right mb-0 mr-5">
+                    <div class="form-group text-center text-md-right mb-0 mr-md-5">
                         <div style="position: relative; display: inline-block;">
                             <?php if (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])): ?>
                                 <img class="img-bordered" src="<?= 'assets/img/' . $data['img_path'] ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
@@ -76,22 +76,20 @@ $data = mysqli_fetch_assoc($query);
                     </div>
 
                     <div>
-                        <div class="row d-flex justify-content-between align-items-center">
-                            <!-- Left Column (Record Button) -->
-                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-6">
                                 <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
-                                    class="btn btn-info">
+                                    class="btn btn-info btn-custom">
                                     <i class="fa-solid fa-clipboard"></i> Record
                                 </a>
                             </div>
 
-                            <!-- Right Column (Unarchive and Back Buttons) -->
-                            <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
-                                <button class="btn btn-danger btn-custom unarchive_vendor mb-2 mb-md-0 mx-1"
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="btn btn-danger btn-custom mr-2 unarchive_employee"
                                     type="button" data-id="<?= $data['id'] ?>">
                                     Unarchive
                                 </button>
-                                <button class="btn btn-secondary btn-custom mx-1" onclick="window.history.back(); return false;">
+                                <button class="btn btn-secondary btn-custom" onclick="window.history.back(); return false;">
                                     Back
                                 </button>
                             </div>

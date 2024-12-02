@@ -66,7 +66,7 @@ $member = mysqli_fetch_assoc($query);
                                 <input type="hidden" name="id" value="<?= isset($member['id']) ? $member['id'] : '' ?>">
 
 
-                                <div class="form-group text-right mb-0 mr-5">
+                                <div class="form-group text-center text-md-right mb-0 mr-md-5">
                                     <div style="position: relative; display: inline-block;">
                                         <img class="img-bordered" src="assets/img/<?php echo isset($member['img_path']) && file_exists('assets/img/' . $member['img_path']) ? $member['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                         <input type="hidden" id="croppedImageData" name="croppedImageData">
