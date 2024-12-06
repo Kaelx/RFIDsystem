@@ -1,7 +1,7 @@
 <?php
+ob_start();
 session_start();
 error_reporting(0);
-ob_start();
 
 include '../admin/db_connect.php';
 
