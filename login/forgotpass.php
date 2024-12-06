@@ -90,7 +90,7 @@
     <footer class="mt-auto text-white py-4">
         <div class="container text-center">
             <p class="mb-2">
-                EVSU-OC Verification Entry & Exit System. All Rights Reserved &copy; 2024-<span id="year"></span>
+                EVSU-OC Entry & Exit Verification System. All Rights Reserved &copy; 2024-<span id="year"></span>
             </p>
             <p class="mb-2">
                 A Capstone Project by <a href="https://github.com/Kaelx" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: white;">Elevatech</a>
