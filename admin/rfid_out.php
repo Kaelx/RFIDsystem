@@ -110,8 +110,11 @@
 
             <div id="wew-card" class="card container bg-warning" style="margin-top: 150px;">
                 <div class="card-body">
-                    <div class="row justify-content-center">
-                        <p style="font-weight:bolder; font-size:48px;">PLEASE TAP YOUR ID IN THE SCANNER <i class="fa-solid fa-address-card"></i></p>
+                    <div class="text-center">
+                        <p style="font-weight:bold; font-size:54px;">PLEASE TAP YOUR ID IN THE SCANNER <i class="fa-solid fa-address-card"></i></p>
+                    </div>
+                    <div class="text-center mt-5">
+                        <p style="font-weight:bold; font-size:36px;">EXIT</p>
                     </div>
                 </div>
             </div>
@@ -340,7 +343,7 @@
                             audio.play();
                             return;
                         } else if (data.spam) {
-                            $('#spam-message').html(data.message + ' <i class="fa-solid fa-ban"></i>');
+                            $('#spam-message').html(data.message + ' <i class="fa-solid fa-circle-exclamation"></i>');
                             $('#spam-card').show();
                             $('#rfid').val("");
 

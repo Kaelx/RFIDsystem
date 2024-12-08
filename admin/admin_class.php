@@ -851,7 +851,7 @@ class Action
 								WHERE record_id = '" . $data['id'] . "' 
 								AND record_table = '" . $data['source_table'] . "'
 								AND record_date = CURRENT_DATE() 
-								AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 1
+								AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
 							");
 
 			$cooldown_check2 = $this->db->query("
@@ -859,7 +859,7 @@ class Action
 							WHERE record_id = '" . $data['id'] . "' 
 							AND record_table = '" . $data['source_table'] . "'
 							AND record_date = CURRENT_DATE() 
-							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 1
+							AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
 						");
 
 
@@ -867,13 +867,13 @@ class Action
 				$response = [
 					'success' => false,
 					'cooldown' => true,
-					'message' => 'You already scanned your RFID. You are verified'
+					'message' => 'You already scanned your ID. You can go in'
 				];
 			} elseif ($cooldown_check2->num_rows > 0) {
 				$response = [
 					'success' => false,
 					'spam' => true,
-					'message' => 'Please do not spam. Try again later'
+					'message' => 'Please wait a minute. Try again later'
 				];
 			} else {
 				// Insert new record since cooldown period has passed
@@ -949,7 +949,7 @@ class Action
 										WHERE record_id = '" . $data['id'] . "' 
 										AND record_table = '" . $data['source_table'] . "'
 										AND record_date = CURRENT_DATE() 
-										AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 1
+										AND TIMESTAMPDIFF(SECOND, timeout, CURRENT_TIMESTAMP()) <= 59
 									");
 
 			$cooldown_check2 = $this->db->query("
@@ -957,7 +957,7 @@ class Action
 									WHERE record_id = '" . $data['id'] . "' 
 									AND record_table = '" . $data['source_table'] . "'
 									AND record_date = CURRENT_DATE() 
-									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 1
+									AND TIMESTAMPDIFF(SECOND, timein, CURRENT_TIMESTAMP()) <= 59
 								");
 
 
@@ -966,13 +966,13 @@ class Action
 				$response = [
 					'success' => false,
 					'cooldown' => true,
-					'message' => 'You already scanned your RFID. You are verified'
+					'message' => 'You already scanned your ID. You can go out'
 				];
 			} elseif ($cooldown_check2->num_rows > 0) {
 				$response = [
 					'success' => false,
 					'spam' => true,
-					'message' => 'Please do not spam. Try again later'
+					'message' => 'Please wait a minute. Try again later'
 				];
 			} else {
 				$chk = $this->db->query("SELECT * FROM records 
