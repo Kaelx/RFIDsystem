@@ -8,7 +8,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
 
                     <div class="row">
@@ -45,7 +45,7 @@
                                     <tr onclick="window.location.href='index.php?page=student_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' .(!empty($row['mname']) ? $row['mname'].'.' : ''). ' ' . $row['lname'].' '.$row['sname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>

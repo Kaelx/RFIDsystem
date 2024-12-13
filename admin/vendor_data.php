@@ -8,7 +8,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -42,7 +42,7 @@
                                 ?>
                                     <tr onclick="window.location.href='index.php?page=vendor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
-                                        <td class="text-left"><?php echo $row['fname'] . ' ' .(!empty($row['mname']) ? $row['mname'].'.' : ''). ' ' . $row['lname'].' '.$row['sname']; ?></td>
+                                        <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td class="text-left"><?php echo $row['address']; ?></td>
                                         <td class="text-left"><?php echo $row['cellnum']; ?></td>
                                     </tr>

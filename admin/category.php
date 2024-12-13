@@ -12,7 +12,7 @@
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card  mb-4" id="card-school-department">
+            <div class="card shadow-lg mb-4" id="card-school-department">
                 <div class="card-header text-bold">
                     School Department
                     <div class="card-tools">
@@ -95,7 +95,7 @@
             <hr>
 
 
-            <div class="card mb-4 " id="card-school-program">
+            <div class="card shadow-lg mb-4 " id="card-school-program">
                 <div class="card-header text-bold">
                     School Program/Course
                     <div class="card-tools">
@@ -119,16 +119,19 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="dept_id">Department:</label>
+                                                <label for="dept_id"> Choose department</label>
                                                 <select class="form-control" name="dept_id" id="dept_id" required>
                                                     <option value="" selected disabled>-- Select --</option>
                                                     <?php
+                                                    $i = 1;
                                                     $program = $conn->query("SELECT * FROM department order by id asc ");
                                                     while ($row = $program->fetch_assoc()) :
                                                     ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['dept_name'] ?></option>
+                                                        <option value="<?php echo $row['id'] ?>"><?php echo $i . '. ' . $row['dept_name'] ?></option>
 
-                                                    <?php endwhile; ?>
+                                                    <?php
+                                                        $i++;
+                                                    endwhile; ?>
                                                 </select>
                                             </div>
 
@@ -189,7 +192,7 @@
             <hr>
 
 
-            <div class="card mb-4 " id="card-school-position">
+            <div class="card shadow-lg mb-4 " id="card-school-position">
                 <div class="card-header text-bold">
                     Employee Position
                     <div class="card-tools">

@@ -58,8 +58,8 @@ $member = mysqli_fetch_assoc($query);
     <section class="content">
         <div class="container-fluid">
 
-            <div class="card">
-                <div class="card-header text-bold text-center">Profile</div>
+            <div class="card shadow-lg">
+                <div class="card-header text-bold text-center">User Profile</div>
 
 
                 <div class="card-body">

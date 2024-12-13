@@ -14,7 +14,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table text-nowrap table-hover compact">

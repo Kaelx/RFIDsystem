@@ -8,7 +8,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
