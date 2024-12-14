@@ -325,7 +325,7 @@ $data = mysqli_fetch_assoc($query);
                                 </select>
                             </div>
 
-                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
+                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>" required>
                         </div>
 
                         <div class="row">

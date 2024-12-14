@@ -96,7 +96,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
 
                     </div>
                     <div class="col-md-9">
-                        <div class="card">
+                        <div class="card card-warning card-outline">
 
                             <div class="card-header">
 

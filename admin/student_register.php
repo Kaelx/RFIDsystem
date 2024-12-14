@@ -299,7 +299,7 @@
                                 </select>
                             </div>
 
-                            <input type="hidden" name="dept_id" id="dept_id">
+                            <input type="hidden" name="dept_id" id="dept_id" required>
                         </div>
 
                         <div class="row">
