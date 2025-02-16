@@ -100,7 +100,7 @@
                 EVSU-OC Entry & Exit Verification System. All Rights Reserved &copy; 2024-<span id="year"></span>
             </p>
             <p class="mb-2">
-                A Capstone Project by <a href="https://github.com/Kaelx" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: white;">Elevatech</a>
+                A Capstone Project by <a href="https://github.com/Kaelx" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: white;">Elevatech Team</a>
             </p>
         </div>
     </footer>
