@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
-                            <a href="index.php?page=vendor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                            <a href="?p=vendor_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -40,7 +40,7 @@
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=vendor_view&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=vendor_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td class="text-left"><?php echo $row['address']; ?></td>

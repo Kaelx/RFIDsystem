@@ -42,7 +42,7 @@ $result = $conn->query($query);
     <div class="container-fluid">
       <div class="text-right">
         <button class="btn btn-primary btn-custom" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-        <a href="index.php?page=entrylogs" class="btn btn-danger btn-custom">Cancel</a>
+        <a href="?p=entrylogs" class="btn btn-danger btn-custom">Cancel</a>
       </div>
     </div>
   </section>

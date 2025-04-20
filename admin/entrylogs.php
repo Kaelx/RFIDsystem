@@ -121,7 +121,7 @@ $result = $conn->query($query);
                         </div>
                         <div>
                             <div>
-                                <button class="btn btn-default ml-2" onclick="location.href='index.php?page=entrylogs'"><i class="fa-solid fa-rotate"></i></button>
+                                <button class="btn btn-default ml-2" onclick="location.href='?p=entrylogs'"><i class="fa-solid fa-rotate"></i></button>
                             </div>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ $result = $conn->query($query);
                                 $i = 1;
                                 while ($row = $result->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
+                                    <tr onclick="window.location.href='?p=records&uid=<?= $row['id']; ?>&type=<?= $row['record_table']; ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo (isset($row['school_id']) ? $row['school_id'] : 'N/A'); ?></td>
 
@@ -210,7 +210,7 @@ $result = $conn->query($query);
         let startDate, endDate;
 
 
-        location.href = `index.php?page=entrylogs&type=${encodeURIComponent(type)}&` + $(this).serialize();
+        location.href = `?p=entrylogs&type=${encodeURIComponent(type)}&` + $(this).serialize();
     });
 
 
@@ -219,7 +219,7 @@ $result = $conn->query($query);
         let endDate = document.getElementById('end_date').value;
 
         // Redirect with selected filter type
-        location.href = `index.php?page=entrylogs&type=${type}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        location.href = `?p=entrylogs&type=${type}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 
 
@@ -264,7 +264,7 @@ $result = $conn->query($query);
         document.getElementById('start_date').value = startDate;
         document.getElementById('end_date').value = endDate;
 
-        location.href = `index.php?page=entrylogs&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        location.href = `?p=entrylogs&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     }
 
 
@@ -296,6 +296,6 @@ $result = $conn->query($query);
         var startDate = $('#start_date').val();
         var endDate = $('#end_date').val();
 
-        window.location.href = `index.php?page=generate_report_record&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+        window.location.href = `?p=generate_report_record&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
     });
 </script>

@@ -315,7 +315,7 @@ $data = mysqli_fetch_assoc($query);
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                                <a href="index.php?page=visitor_view&uid=<?= $data['id'] ?>" class="btn btn-danger btn-custom">Cancel</a>
+                                <a href="?p=visitor_view&uid=<?= $data['id'] ?>" class="btn btn-danger btn-custom">Cancel</a>
                             </div>
                         </div>
                     </form>
@@ -360,13 +360,13 @@ $data = mysqli_fetch_assoc($query);
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=visitor_data'
+                        location.href = '?p=visitor_data'
                     }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.href = 'index.php?page=visitor_view&uid=' + <?= $data['id'] ?>
+                        location.href = '?p=visitor_view&uid=' + <?= $data['id'] ?>
                     }, 1000)
 
                 } else if (resp == 3) {

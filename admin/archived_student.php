@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['uid']) || empty($_GET['uid'])) {
-    header('Location: index.php?page=student_data');
+    header('Location: ?p=student_data');
 }
 $uid = $_GET['uid'];
 
@@ -106,7 +106,7 @@ $data = mysqli_fetch_assoc($query);
                     <div>
                         <div class="row d-flex justify-content-between">
                             <div class="col-6">
-                                <a href="index.php?page=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
+                                <a href="?p=records&uid=<?= $data['id'] ?>&type=<?= $data['type'] ?>"
                                     class="btn btn-info btn-custom">
                                     <i class="fa-solid fa-clipboard"></i> Record
                                 </a>

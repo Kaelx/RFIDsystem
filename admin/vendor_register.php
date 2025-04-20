@@ -303,7 +303,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-custom">Save</button>
-                            <a href="index.php?page=vendor_data" class="btn btn-danger btn-custom">Cancel</a>
+                            <a href="?p=vendor_data" class="btn btn-danger btn-custom">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -343,7 +343,7 @@
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=vendor_data';
+                        location.href = '?p=vendor_data';
                     }, 1000)
 
                 } else if (resp == 2) {

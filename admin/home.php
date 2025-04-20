@@ -45,7 +45,7 @@ if ($result->num_rows > 0) {
               <?php
               if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
-                <a href="index.php?page=employee_data" style="text-decoration: none; color: inherit;">
+                <a href="?p=employee_data" style="text-decoration: none; color: inherit;">
 
                 <?php endif; ?>
 
@@ -72,7 +72,7 @@ if ($result->num_rows > 0) {
               <?php
               if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
-                <a href="index.php?page=student_data" style="text-decoration: none; color: inherit;">
+                <a href="?p=student_data" style="text-decoration: none; color: inherit;">
 
                 <?php endif; ?>
                 <?php
@@ -99,7 +99,7 @@ if ($result->num_rows > 0) {
               <?php
               if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2):
               ?>
-                <a href="index.php?page=vendor_data" style="text-decoration: none; color: inherit;">
+                <a href="?p=vendor_data" style="text-decoration: none; color: inherit;">
 
                 <?php endif; ?>
                 <?php
@@ -123,7 +123,7 @@ if ($result->num_rows > 0) {
         <div class="col-lg-3 col-6">
           <div class="small-box bg-primary">
             <div class="inner">
-              <a href="index.php?page=visitor_data" style="text-decoration: none; color: inherit;">
+              <a href="?p=visitor_data" style="text-decoration: none; color: inherit;">
                 <?php
                 $sql = $conn->query("SELECT COUNT(*) as total FROM visitors where status=0");
                 $result = $sql->fetch_assoc();

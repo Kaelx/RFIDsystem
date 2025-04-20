@@ -37,7 +37,7 @@
                                 $i = 1;
                                 while ($row = $result->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=archived_student&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=archived_student&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?= $row['school_id']; ?></td>
                                         <td class="text-left"> <?= $row['fname'] .

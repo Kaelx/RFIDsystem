@@ -342,13 +342,13 @@
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=accountmanage'
+                        location.href = '?p=accountmanage'
                     }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=accountmanage'
+                        location.href = '?p=accountmanage'
                     }, 1000)
 
                 } else if (resp == 3) {
