@@ -77,7 +77,7 @@
                             </div>
                             <hr>
                             <div class="login-footer mt-3 text-center">
-                                <a href="index.php?page=login" style="text-decoration:underline;">Go back to Login</a>
+                                <a href="?p=login" style="text-decoration:underline;">Go back to Login</a>
                             </div>
                         </form>
                     </div>
@@ -126,7 +126,7 @@
                     if (resp == 1) {
                         alert_toast('OTP CODE has been sent to your email', 'success');
                         setTimeout(function() {
-                            location.href = 'index.php?page=update_password';
+                            location.href = '?p=update_password';
                         }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Wrong password', 'danger');

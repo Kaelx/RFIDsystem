@@ -84,7 +84,7 @@
                             </div>
                             <hr>
                             <div class="login-footer mt-3 text-center">
-                                <a href="index.php?page=forgotpass" style="text-decoration:underline;">Forgot Password?</a>
+                                <a href="?p=forgotpass" style="text-decoration:underline;">Forgot Password?</a>
                             </div>
                         </form>
                     </div>
@@ -145,7 +145,7 @@
                 success: function(resp) {
                     if (resp == 1) {
                         localStorage.setItem('failedAttempts', '0');
-                        location.href = 'index.php?page=';
+                        location.href = '?p=';
                     } else {
                         handleFailedLogin(resp);
                     }

@@ -32,12 +32,10 @@ if (isset($_SESSION['login_id'])) {
         <!-- content -->
         <?php
         $exclude = ['index'];
-        $page = isset($_GET['page']) ? basename($_GET['page']) : 'login';
+        $page = isset($_GET['p']) ? basename($_GET['p']) : 'login';
 
         if (in_array($page, $exclude) || !file_exists($page . '.php')) {
-            $page = 'login';
-
-            header('Location: index.php?page=' . $page);
+            header('Location: ?p=login');
             exit;
         }
 

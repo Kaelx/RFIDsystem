@@ -1,5 +1,11 @@
 <?php
 session_start();
+error_reporting(0);
+
+if (!isset($_SESSION['login_id'])) {
+	header('location:../');
+	exit();
+}
 
 class Action
 {
@@ -1201,6 +1207,7 @@ class Action
 	}
 
 
+
 	function save_log($log)
 	{
 
@@ -1211,5 +1218,54 @@ class Action
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
+	}
+
+
+
+	function fetch_logs()
+	{
+		// DataTables request variables
+		$start  = $_POST['start'] ?? 0;
+		$length = $_POST['length'] ?? 15;
+		$searchValue = $_POST['search']['value'] ?? '';
+
+		// Base query
+		$sql = "SELECT l.*, u.fname, u.lname, u.account_type FROM logs l 
+        LEFT JOIN users u ON u.id = l.user_id";
+
+		// Search logic
+		if (!empty($searchValue)) {
+			$sql .= " WHERE u.fname LIKE '%$searchValue%' 
+               OR u.lname LIKE '%$searchValue%' 
+               OR l.action LIKE '%$searchValue%'";
+		}
+
+		// Total records count (without filters)
+		$totalRecords = $this->db->query("SELECT COUNT(*) AS total FROM logs")->fetch_assoc()['total'];
+
+		// Filtered records count
+		$filteredRecords = $this->db->query($sql)->num_rows;
+
+		// Add pagination to the SQL query
+		$sql .= " ORDER BY l.id DESC LIMIT $start, $length";
+		$data = $this->db->query($sql)->fetch_all(MYSQLI_ASSOC);
+
+		// Format data for DataTables
+		$formattedData = [];
+		foreach ($data as $row) {
+			$formattedData[] = [
+				'description' => $row['fname'] . ' ' . $row['lname'] . ' (' .
+					($row['account_type'] == 1 || $row['account_type'] == 0 ? 'Admin' : ($row['account_type'] == 2 ? 'Staff' : ($row['account_type'] == 3 ? 'Security personnel' : 'Unknown')))
+					. ') ' . $row['action'],
+				'time' => date('F j, Y, g:i A', strtotime($row['timestamp']))
+			];
+		}
+
+		// Return JSON response
+		echo json_encode([
+			"recordsTotal" => $totalRecords,
+			"recordsFiltered" => $filteredRecords,
+			"data" => $formattedData
+		]);
 	}
 }
