@@ -192,3 +192,9 @@ if ($action == "mode") {
 	if ($save)
 		echo $save;
 }
+
+if ($action == "fetch_logs") {
+	$save = $crud->fetch_logs();
+	if ($save)
+		echo $save;
+}

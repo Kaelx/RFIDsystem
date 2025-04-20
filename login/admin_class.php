@@ -1,11 +1,12 @@
 <?php
 session_start();
+error_reporting(0);
+
+require '.././vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-require '.././vendor/autoload.php';
 
 class Action
 {
@@ -91,10 +92,10 @@ class Action
 				return $mail->send();
 			}
 
-			if (!sendOTP($email, $otp, $mailUsername, $mailPassword)) {
-				return 4;
-			} else {
+			if (sendOTP($email, $otp, $mailUsername, $mailPassword)) {
 				return 1;
+			} else {
+				return 4;
 			}
 		} else {
 			return 3;

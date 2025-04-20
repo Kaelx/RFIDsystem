@@ -1,7 +1,7 @@
 <?php
+ob_start();
 session_start();
 error_reporting(0);
-ob_start();
 
 include '../admin/db_connect.php';
 
@@ -32,12 +32,10 @@ if (isset($_SESSION['login_id'])) {
         <!-- content -->
         <?php
         $exclude = ['index'];
-        $page = isset($_GET['page']) ? basename($_GET['page']) : 'login';
+        $page = isset($_GET['p']) ? basename($_GET['p']) : 'login';
 
         if (in_array($page, $exclude) || !file_exists($page . '.php')) {
-            $page = 'login';
-
-            header('Location: index.php?page=' . $page);
+            header('Location: ?p=login');
             exit;
         }
 
@@ -50,7 +48,7 @@ if (isset($_SESSION['login_id'])) {
 
 
     <!-- Toast Alert -->
-    <div class="position-fixed" style="top:50px; right: 50px; padding: 1rem; z-index: 99999;">
+    <div class="position-fixed" style="top:50px; right: 1px; padding: 1rem; z-index: 99999;">
         <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body text-white" style="font-size:18px;">
             </div>

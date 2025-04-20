@@ -1,7 +1,7 @@
 <?php
+ob_start();
 session_start();
 error_reporting(0);
-ob_start();
 
 include 'db_connect.php';
 
@@ -239,26 +239,18 @@ if (!isset($_SESSION['login_id'])) {
     $page = isset($_GET['page']) ? basename($_GET['page']) : 'home';
 
     if ($_SESSION['login_account_type'] == 3 && in_array($page, $restricted_3)) {
-      $page = 'home';
-
-      header('Location: index.php?page=' . $page);
+      header('Location: index.php?page=home');
       exit;
     } elseif ($_SESSION['login_account_type'] == 2 && in_array($page, $restricted_2)) {
-      $page = 'home';
-
-      header('Location: index.php?page=' . $page);
+      header('Location: index.php?page=home');
       exit;
     } elseif ($_SESSION['login_account_type'] == 1 && in_array($page, $restricted_1)) {
-      $page = 'home';
-
-      header('Location: index.php?page=' . $page);
+      header('Location: index.php?page=home');
       exit;
     }
 
     if (in_array($page, $exclude) || !file_exists($page . '.php')) {
-      $page = 'home';
-
-      header('Location: index.php?page=' . $page);
+      header('Location: index.php?page=home');
       exit;
     }
 

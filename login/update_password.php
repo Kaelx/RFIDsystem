@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
-    header('location:index.php?page=login');
+    header('location:?p=login');
 }
 
 ?>
@@ -88,7 +88,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                     </div>
                     <hr>
                     <div class="login-footer mt-3">
-                        <a href="index.php?page=login" style="text-decoration:underline;">Go back to Login</a>
+                        <a href="?p=login" style="text-decoration:underline;">Go back to Login</a>
                     </div>
                 </form>
             </div>
@@ -121,7 +121,7 @@ if (!isset($_SESSION['otp']) && !isset($_SESSION['mail'])) {
                     if (resp == 1) {
                         alert_toast('Password successfully updated', 'success')
                         setTimeout(function() {
-                            location.replace('index.php?page=login')
+                            location.href = '?p=login';
                         }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Something went wrong', 'danger')

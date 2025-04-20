@@ -51,6 +51,11 @@ $query .= " ORDER BY r.id DESC";
 $result = $conn->query($query);
 ?>
 
+<!-- Preloader -->
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="assets/defaults/evsu.png" alt="AdminLTELogo" height="60" width="60">
+</div>
+
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -71,7 +76,7 @@ $result = $conn->query($query);
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="card">
+            <div class="card ">
                 <div class="card-header">
                     <div class="row">
                         <div>

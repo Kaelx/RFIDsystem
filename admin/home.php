@@ -149,7 +149,7 @@ if ($result->num_rows > 0) {
       <div class="row mt-2">
         <div class="col-md-12">
           <!-- LINE CHART -->
-          <div class="card">
+          <div class="card shadow-lg">
             <div class="card-header">
               <h3 class="card-title">Line Graph (Past 7 days)</h3>
             </div>
@@ -167,7 +167,7 @@ if ($result->num_rows > 0) {
       <div class="row mt-2">
         <div class="col-md-12">
           <!-- BAR CHART -->
-          <div class="card">
+          <div class="card shadow-lg">
             <div class="card-header">
               <p class="card-title">Bar Graph <?php echo '( Year ' . date("Y") . ' )'; ?></p>
             </div>

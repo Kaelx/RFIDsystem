@@ -77,7 +77,7 @@
                             </div>
                             <hr>
                             <div class="login-footer mt-3 text-center">
-                                <a href="index.php?page=login" style="text-decoration:underline;">Go back to Login</a>
+                                <a href="?p=login" style="text-decoration:underline;">Go back to Login</a>
                             </div>
                         </form>
                     </div>
@@ -90,10 +90,10 @@
     <footer class="mt-auto text-white py-4">
         <div class="container text-center">
             <p class="mb-2">
-                EVSU-OC Verification Entry & Exit System. All Rights Reserved &copy; 2024-<span id="year"></span>
+                EVSU-OC Entry & Exit Verification System. All Rights Reserved &copy; 2024-<span id="year"></span>
             </p>
             <p class="mb-2">
-                A Capstone Project by <a href="https://github.com/Kaelx" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: white;">Elevatech</a>
+                A Capstone Project by <a href="https://github.com/Kaelx" target="_blank" rel="noopener noreferrer" style="text-decoration: underline; color: white;">Elevatech Team</a>
             </p>
         </div>
     </footer>
@@ -126,7 +126,7 @@
                     if (resp == 1) {
                         alert_toast('OTP CODE has been sent to your email', 'success');
                         setTimeout(function() {
-                            location.replace('index.php?page=update_password')
+                            location.href = '?p=update_password';
                         }, 1000)
                     } else if (resp == 2) {
                         alert_toast('Wrong password', 'danger');

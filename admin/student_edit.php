@@ -76,7 +76,7 @@ $data = mysqli_fetch_assoc($query);
                     <form action="#" id="register">
                         <input type="hidden" name="id" value="<?= isset($data['id']) ? $data['id'] : '' ?>">
 
-                        <div class="form-group text-right mb-0 mr-5">
+                        <div class="form-group text-center text-md-right mb-0 mr-md-5">
                             <div style="position: relative; display: inline-block;">
                                 <img class="img-bordered" src="assets/img/<?php echo (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])) ? $data['img_path'] : 'blank-img.png'; ?>" alt="Profile Picture" id="profileImage" width="150" height="150" style="cursor: pointer; border-radius: 50%;">
                                 <input type="hidden" id="croppedImageData" name="croppedImageData">
@@ -325,7 +325,7 @@ $data = mysqli_fetch_assoc($query);
                                 </select>
                             </div>
 
-                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>">
+                            <input type="hidden" class="form-control " name="dept_id" id="dept_id" value="<?= isset($data['dept_id']) ? $data['dept_id'] : '' ?>" required>
                         </div>
 
                         <div class="row">

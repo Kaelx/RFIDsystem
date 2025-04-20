@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['login_id'])) {
+    header('Location: login/');
+} else {
+    header('Location: admin/');
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,14 +19,9 @@ session_start();
 </head>
 
 <body>
-    <?php
-    if (!isset($_SESSION['login_id'])) {
-        header('Location: login/');
-    } else {
-        header('Location: admin/');
-    }
-    ?>
-
+    <div>
+        <h1>Welcome to the Landing Page</h1>
+    </div>
 </body>
 
 </html>

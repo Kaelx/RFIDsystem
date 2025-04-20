@@ -1,5 +1,11 @@
 <?php
 session_start();
+error_reporting(0);
+
+if (!isset($_SESSION['login_id'])) {
+	header('location:../');
+	exit();
+}
 
 class Action
 {
@@ -603,7 +609,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has archived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+			'action' => ' archived the employee data of ' . $employee['fname'] . ' ' . $employee['lname']
 		];
 
 		$this->save_log($log);
@@ -621,7 +627,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has unarchived an employee ' . $employee['fname'] . ' ' . $employee['lname']
+			'action' => ' unarchived the employee data of ' . $employee['fname'] . ' ' . $employee['lname']
 		];
 
 		$this->save_log($log);
@@ -829,7 +835,7 @@ class Action
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
 
-			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+			$img_path = (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])) ? $data['img_path'] : 'blank-img.png';
 
 			$response = [
 				'success' => true,
@@ -867,13 +873,13 @@ class Action
 				$response = [
 					'success' => false,
 					'cooldown' => true,
-					'message' => 'You already scanned your RFID. You are verified'
+					'message' => 'You already scanned your ID. You can go in'
 				];
 			} elseif ($cooldown_check2->num_rows > 0) {
 				$response = [
 					'success' => false,
 					'spam' => true,
-					'message' => 'Please do not spam. Try again later'
+					'message' => 'Please wait a minute. Try again later'
 				];
 			} else {
 				// Insert new record since cooldown period has passed
@@ -927,7 +933,7 @@ class Action
 		if ($fetch->num_rows > 0) {
 			$data = $fetch->fetch_assoc();
 
-			$img_path = !empty($data['img_path']) ? $data['img_path'] : 'blank-img.png';
+			$img_path = (isset($data['img_path']) && file_exists('assets/img/' . $data['img_path'])) ? $data['img_path'] : 'blank-img.png';
 
 			$response = [
 				'success' => true,
@@ -966,13 +972,13 @@ class Action
 				$response = [
 					'success' => false,
 					'cooldown' => true,
-					'message' => 'You already scanned your RFID. You are verified'
+					'message' => 'You already scanned your ID. You can go out'
 				];
 			} elseif ($cooldown_check2->num_rows > 0) {
 				$response = [
 					'success' => false,
 					'spam' => true,
-					'message' => 'Please do not spam. Try again later'
+					'message' => 'Please wait a minute. Try again later'
 				];
 			} else {
 				$chk = $this->db->query("SELECT * FROM records 
@@ -1126,7 +1132,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has archived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
+			'action' => ' has archived the account of ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
@@ -1145,7 +1151,7 @@ class Action
 
 		$log = [
 			'user_id' => $_SESSION['login_id'],
-			'action' => ' has unarchived the account ' . $user['account_type'] . ' name ' . $user['fname'] . ' ' . $user['lname']
+			'action' => ' has unarchived the account of ' . $user['fname'] . ' ' . $user['lname']
 		];
 
 		$this->save_log($log);
@@ -1201,6 +1207,7 @@ class Action
 	}
 
 
+
 	function save_log($log)
 	{
 
@@ -1211,5 +1218,54 @@ class Action
 		if (!$qry) {
 			error_log("Error saving log: " . $this->db->error);
 		}
+	}
+
+
+
+	function fetch_logs()
+	{
+		// DataTables request variables
+		$start  = $_POST['start'] ?? 0;
+		$length = $_POST['length'] ?? 15;
+		$searchValue = $_POST['search']['value'] ?? '';
+
+		// Base query
+		$sql = "SELECT l.*, u.fname, u.lname, u.account_type FROM logs l 
+        LEFT JOIN users u ON u.id = l.user_id";
+
+		// Search logic
+		if (!empty($searchValue)) {
+			$sql .= " WHERE u.fname LIKE '%$searchValue%' 
+               OR u.lname LIKE '%$searchValue%' 
+               OR l.action LIKE '%$searchValue%'";
+		}
+
+		// Total records count (without filters)
+		$totalRecords = $this->db->query("SELECT COUNT(*) AS total FROM logs")->fetch_assoc()['total'];
+
+		// Filtered records count
+		$filteredRecords = $this->db->query($sql)->num_rows;
+
+		// Add pagination to the SQL query
+		$sql .= " ORDER BY l.id DESC LIMIT $start, $length";
+		$data = $this->db->query($sql)->fetch_all(MYSQLI_ASSOC);
+
+		// Format data for DataTables
+		$formattedData = [];
+		foreach ($data as $row) {
+			$formattedData[] = [
+				'description' => $row['fname'] . ' ' . $row['lname'] . ' (' .
+					($row['account_type'] == 1 || $row['account_type'] == 0 ? 'Admin' : ($row['account_type'] == 2 ? 'Staff' : ($row['account_type'] == 3 ? 'Security personnel' : 'Unknown')))
+					. ') ' . $row['action'],
+				'time' => date('F j, Y, g:i A', strtotime($row['timestamp']))
+			];
+		}
+
+		// Return JSON response
+		echo json_encode([
+			"recordsTotal" => $totalRecords,
+			"recordsFiltered" => $filteredRecords,
+			"data" => $formattedData
+		]);
 	}
 }
