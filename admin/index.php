@@ -270,12 +270,12 @@ if (!isset($_SESSION['login_id'])) {
 </body>
 
 <script>
-  var activePage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
+  var activePage = '<?php echo isset($_GET['p']) ? $_GET['p'] : 'home'; ?>';
 
   $('ul.nav-sidebar a').each(function() {
     var href = $(this).attr('href');
 
-    if (href && href.indexOf('page=' + activePage) !== -1) {
+    if (href && href.indexOf('p=' + activePage) !== -1) {
       $(this).addClass('active');
     }
   });
