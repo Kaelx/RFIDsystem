@@ -13,7 +13,7 @@
 
                     <div class="row">
                         <div class="col-sm-6">
-                            <a href="index.php?page=student_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                            <a href="?p=student_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=student_view&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=student_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
@@ -66,7 +66,7 @@
                 while ($result = $sql->fetch_assoc()) {
                 ?>
                     <div class="col-md-3 col-sm-6 col-12">
-                        <a href="index.php?page=department_student&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
+                        <a href="?p=department_student&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
                             <div class="info-box">
                                 <span class="info-box-icon text-white" style="background-color: <?= $result['color']; ?>"><i class="fa-solid fa-building"></i></span>
                                 <div class="info-box-content">

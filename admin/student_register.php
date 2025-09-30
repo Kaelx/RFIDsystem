@@ -384,7 +384,7 @@
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data';
+                        location.href = '?p=student_data';
                     }, 1000)
 
                 } else if (resp == 2) {

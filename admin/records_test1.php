@@ -54,13 +54,13 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
                         ";
                                 break;
 
-                                case 'vendor':
-                                    $query = "SELECT cv.id, cv.fname, cv.mname, cv.lname, cv.sname, NULL as school_id, r.role_name, NULL as employee_type, cv.rfid, cv.img_path, cv.gender
+                            case 'vendor':
+                                $query = "SELECT cv.id, cv.fname, cv.mname, cv.lname, cv.sname, NULL as school_id, r.role_name, NULL as employee_type, cv.rfid, cv.img_path, cv.gender
                             FROM vendors cv
                             LEFT JOIN role r ON cv.role_id = r.id
                             WHERE cv.id = '$uid'
                             ";
-                                    break;
+                                break;
 
                             default:
                                 die('Invalid type');
@@ -256,11 +256,11 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             var type = "<?php echo $type; ?>";
 
             if (type === 'student') {
-                window.location.href = 'index.php?page=student_view&uid=' + uid;
+                window.location.href = '?p=student_view&uid=' + uid;
             } else if (type === 'employee') {
-                window.location.href = 'index.php?page=employee_view&uid=' + uid;
+                window.location.href = '?p=employee_view&uid=' + uid;
             } else if (type === 'visitor') {
-                window.location.href = 'index.php?page=visitor_view&uid=' + uid;
+                window.location.href = '?p=visitor_view&uid=' + uid;
             } else {
                 console.error('Unknown user type:', type); // Optional: Handle unknown types
             }
@@ -275,7 +275,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             let startDate, endDate;
 
 
-            location.href = `index.php?page=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&` + $(this).serialize();
+            location.href = `?p=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&` + $(this).serialize();
         });
 
 
@@ -321,7 +321,7 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             document.getElementById('start_date').value = startDate;
             document.getElementById('end_date').value = endDate;
 
-            location.href = `index.php?page=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+            location.href = `?p=records&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         }
 
 
@@ -354,6 +354,6 @@ $end_date = isset($_GET['end_date']) ? ($_GET['end_date']) : '';
             var startDate = $('#start_date').val();
             var endDate = $('#end_date').val();
 
-            window.location.href = `index.php?page=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
+            window.location.href = `?p=generate_report&uid=${encodeURIComponent(uid)}&type=${encodeURIComponent(type)}&report_id=${encodeURIComponent(report_id)}&start_date=${encodeURIComponent(startDate)}&end_date=${encodeURIComponent(endDate)}`;
         });
     </script>

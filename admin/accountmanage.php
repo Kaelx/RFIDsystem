@@ -12,8 +12,8 @@
                 <div class="card-body">
                     <div class="text-right">
                         <div>
-                            <a href="index.php?page=accountadduser" class="btn btn-primary mr-3"><i class="fa-solid fa-user-pen"></i> Add user</a>
-                            <a href="index.php?page=accountmanage_archive" class="btn btn-info"><i class="fa-solid fa-file-zipper"></i> Archived</a>
+                            <a href="?p=accountadduser" class="btn btn-primary mr-3"><i class="fa-solid fa-user-pen"></i> Add user</a>
+                            <a href="?p=accountmanage_archive" class="btn btn-info"><i class="fa-solid fa-file-zipper"></i> Archived</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -36,7 +36,7 @@
                                 $cats = $conn->query("SELECT * FROM users WHERE account_type != 0 AND status = 0 AND id != $login_id;");
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=accountedit&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=accountedit&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?php echo $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>

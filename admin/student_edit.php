@@ -419,13 +419,13 @@ $data = mysqli_fetch_assoc($query);
                 if (resp == 1) {
                     alert_toast("Data successfully added", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_data'
+                        location.href = '?p=student_data'
                     }, 1000)
 
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.href = 'index.php?page=student_view&uid=' + <?= $data['id'] ?>
+                        location.href = '?p=student_view&uid=' + <?= $data['id'] ?>
                     }, 1000)
 
                 } else if (resp == 3) {

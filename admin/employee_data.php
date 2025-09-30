@@ -13,8 +13,8 @@
 
                     <div class="row">
                         <div class="col-sm-6">
-                            <a href="index.php?page=employee_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
-                            <!-- <a href="index.php?page=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
+                            <a href="?p=employee_register" class="btn btn-primary"><i class="fa-solid fa-user-pen"></i> Register</a>
+                            <!-- <a href="?p=import" class="btn btn-secondary"><i class="fa-solid fa-file-import"></i> Import</a> -->
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -39,7 +39,7 @@
 
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=employee_view&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=employee_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
@@ -64,7 +64,7 @@
                 while ($result = $sql->fetch_assoc()) {
                 ?>
                     <div class="col-md-3 col-sm-6 col-12">
-                        <a href="index.php?page=department_employee&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
+                        <a href="?p=department_employee&department=<?= $result['id']; ?>" style="text-decoration: none; color: inherit;">
                             <div class="info-box">
                                 <span class="info-box-icon text-white" style="background-color: <?= $result['color']; ?>"><i class="fa-solid fa-building"></i></span>
                                 <div class="info-box-content">

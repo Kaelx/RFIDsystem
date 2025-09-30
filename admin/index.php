@@ -48,7 +48,7 @@ if (!isset($_SESSION['login_id'])) {
             <i class="fas fa-user fa-fw mr-1"></i><?php echo $_SESSION['login_fname']; ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="index.php?page=account_setting"><i class="fa-solid fa-user-gear"></i> Profile settings</a></li>
+            <li><a class="dropdown-item" href="?p=account_setting"><i class="fa-solid fa-user-gear"></i> Profile settings</a></li>
             <li><a class="dropdown-item" href="ajax.php?action=logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
           </ul>
         </li>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['login_id'])) {
             <li class="nav-header">Main</li>
 
             <li class="nav-item">
-              <a href="index.php?page=home" class="nav-link">
+              <a href="?p=home" class="nav-link">
                 <i class="fa-solid fa-gauge nav-icon"></i>
                 <p>Dashboard</p>
               </a>
@@ -83,21 +83,21 @@ if (!isset($_SESSION['login_id'])) {
             <?php
             if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 1 || $_SESSION['login_account_type'] == 2): ?>
               <li class="nav-item">
-                <a href="index.php?page=employee_data" class="nav-link">
+                <a href="?p=employee_data" class="nav-link">
                   <i class="fa-solid fa-user-tie nav-icon"></i>
                   <p>Employees</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="index.php?page=student_data" class="nav-link">
+                <a href="?p=student_data" class="nav-link">
                   <i class="fa-solid fa-graduation-cap nav-icon"></i>
                   <p>Students</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="index.php?page=vendor_data" class="nav-link">
+                <a href="?p=vendor_data" class="nav-link">
                   <i class="fa-solid fa-store nav-icon"></i>
                   <p>Vendors</p>
                 </a>
@@ -106,7 +106,7 @@ if (!isset($_SESSION['login_id'])) {
             <?php endif; ?>
 
             <li class="nav-item">
-              <a href="index.php?page=visitor_data" class="nav-link">
+              <a href="?p=visitor_data" class="nav-link">
                 <i class="fa-solid fa-people-group nav-icon"></i>
                 <p>Visitors</p>
               </a>
@@ -116,13 +116,13 @@ if (!isset($_SESSION['login_id'])) {
 
             <?php if ($_SESSION['login_account_type'] == 0 || $_SESSION['login_account_type'] == 3): ?>
               <li class="nav-item d-none d-xl-block">
-                <a href="index.php?page=rfid_in" class="nav-link">
+                <a href="?p=rfid_in" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
                   <p>SCAN ENTRY</p>
                 </a>
               </li>
               <li class="nav-item d-none d-xl-block">
-                <a href="index.php?page=rfid_out" class="nav-link">
+                <a href="?p=rfid_out" class="nav-link">
                   <i class="fa-solid fa-qrcode nav-icon"></i>
                   <p>SCAN EXIT</p>
                 </a>
@@ -130,7 +130,7 @@ if (!isset($_SESSION['login_id'])) {
             <?php endif; ?>
 
             <li class="nav-item">
-              <a href="index.php?page=entrylogs" class="nav-link">
+              <a href="?p=entrylogs" class="nav-link">
                 <i class="fa-solid fa-clipboard-user nav-icon"></i>
                 <p>Records</p>
               </a>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
               <li class="nav-item">
-                <a href="index.php?page=archive_data" class="nav-link">
+                <a href="?p=archive_data" class="nav-link">
                   <i class="fa-solid fa-box-archive nav-icon"></i>
                   <p>
                     Archived Data
@@ -155,7 +155,7 @@ if (!isset($_SESSION['login_id'])) {
 
 
               <li class="nav-item">
-                <a href="index.php?page=category" class="nav-link">
+                <a href="?p=category" class="nav-link">
                   <i class="fa-solid fa-bars-progress nav-icon"></i>
                   <p>
                     Manage Category
@@ -171,7 +171,7 @@ if (!isset($_SESSION['login_id'])) {
             ?>
 
               <li class="nav-item">
-                <a href="index.php?page=accountmanage" class="nav-link">
+                <a href="?p=accountmanage" class="nav-link">
                   <i class="fa-solid fa-user-gear nav-icon"></i>
                   <p>
                     Manage Account
@@ -180,7 +180,7 @@ if (!isset($_SESSION['login_id'])) {
               </li>
 
               <li class="nav-item">
-                <a href="index.php?page=system_log" class="nav-link">
+                <a href="?p=system_log" class="nav-link">
                   <i class="fa-solid fa-font-awesome nav-icon"></i>
                   <p>
                     Audit Log
@@ -236,21 +236,21 @@ if (!isset($_SESSION['login_id'])) {
     $restricted_2 = ['rfid_in', 'rfid_out', 'system_log']; // Pages restricted for specific staff
     $restricted_3 = ['employee_data', 'employee_register', 'employee_view', 'student_data', 'student_register', 'student_view', 'vendor_data', 'vendor_register', 'vendor_view', 'archive_data', 'archived_employees', 'archived_students', 'archived_vendors', 'archived_visitors', 'category', 'accountmanage', 'accountadduser', 'accountmanage_archive', 'system_log']; // Pages restricted for security personnel
 
-    $page = isset($_GET['page']) ? basename($_GET['page']) : 'home';
+    $page = isset($_GET['p']) ? basename($_GET['p']) : 'home';
 
     if ($_SESSION['login_account_type'] == 3 && in_array($page, $restricted_3)) {
-      header('Location: index.php?page=home');
+      header('Location: ?p=home');
       exit;
     } elseif ($_SESSION['login_account_type'] == 2 && in_array($page, $restricted_2)) {
-      header('Location: index.php?page=home');
+      header('Location: ?p=home');
       exit;
     } elseif ($_SESSION['login_account_type'] == 1 && in_array($page, $restricted_1)) {
-      header('Location: index.php?page=home');
+      header('Location: ?p=home');
       exit;
     }
 
     if (in_array($page, $exclude) || !file_exists($page . '.php')) {
-      header('Location: index.php?page=home');
+      header('Location: ?p=home');
       exit;
     }
 
@@ -270,12 +270,12 @@ if (!isset($_SESSION['login_id'])) {
 </body>
 
 <script>
-  var activePage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home'; ?>';
+  var activePage = '<?php echo isset($_GET['p']) ? $_GET['p'] : 'home'; ?>';
 
   $('ul.nav-sidebar a').each(function() {
     var href = $(this).attr('href');
 
-    if (href && href.indexOf('page=' + activePage) !== -1) {
+    if (href && href.indexOf('p=' + activePage) !== -1) {
       $(this).addClass('active');
     }
   });

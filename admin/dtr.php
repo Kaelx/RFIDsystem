@@ -94,7 +94,7 @@ $monthFormatted = date('F', mktime(0, 0, 0, $currentMonth, 10));
         </div>
         <div class="col-6 text-right">
           <button class="btn btn-primary btn-custom" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
-          <a href="index.php?page=employee_data" class="btn btn-danger btn-custom">Cancel</a>
+          <a href="?p=employee_data" class="btn btn-danger btn-custom">Cancel</a>
         </div>
       </div>
     </div>
@@ -212,5 +212,4 @@ $monthFormatted = date('F', mktime(0, 0, 0, $currentMonth, 10));
     info: false,
     paging: false
   });
-
 </script>

@@ -56,7 +56,7 @@ ORDER BY s.id ASC");
                                 <?php
                                 while ($row = $cats->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=student_view&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=student_view&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-center"><?php echo $row['school_id']; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>

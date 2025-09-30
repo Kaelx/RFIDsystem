@@ -385,7 +385,7 @@ $member = mysqli_fetch_assoc($query);
                 } else if (resp == 2) {
                     alert_toast("Data successfully updated", 'info')
                     setTimeout(function() {
-                        location.href = 'index.php?page=accountmanage'
+                        location.href = '?p=accountmanage'
                     }, 1000)
 
                 } else if (resp == 3) {
@@ -427,7 +427,7 @@ $member = mysqli_fetch_assoc($query);
                 if (resp == 1) {
                     alert_toast("Data successfully archived", 'success')
                     setTimeout(function() {
-                        location.href = 'index.php?page=accountmanage'
+                        location.href = '?p=accountmanage'
                     }, 1000)
                 } else {
                     alert_toast("An error occured", 'danger')

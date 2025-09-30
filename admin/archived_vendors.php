@@ -38,7 +38,7 @@
                                 $i = 1;
                                 while ($row = $result->fetch_assoc()):
                                 ?>
-                                    <tr onclick="window.location.href='index.php?page=archived_vendor&uid=<?= $row['id'] ?>'">
+                                    <tr onclick="window.location.href='?p=archived_vendor&uid=<?= $row['id'] ?>'">
                                         <td class="text-center"><?= $i++; ?></td>
                                         <td class="text-left"><?php echo $row['fname'] . ' ' . (!empty($row['mname']) ? $row['mname'] . '.' : '') . ' ' . $row['lname'] . ' ' . $row['sname']; ?></td>
                                         <td class="text-left"><?= $row['address'] ?></td>
